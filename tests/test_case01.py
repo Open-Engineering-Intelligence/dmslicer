@@ -31,6 +31,7 @@ def test_case01_reimports_step_into_exactly_three_solid_regions(tmp_path: Path) 
     assert result["manifest"]["imported_solid_count"] == 3
     assert len(result["regions"]) == 3
     assert all(region["validation"]["is_valid"] for region in result["regions"])
+    assert {region["source_locator"]["source_ordinal"] for region in result["regions"]} == {0, 1, 2}
     for filename in (
         "manifest.json",
         "regions.json",

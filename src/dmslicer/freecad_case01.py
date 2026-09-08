@@ -56,11 +56,12 @@ def _face_record(face, index):
     }
 
 
-def _solid_record(shape, semantic):
+def _solid_record(shape, semantic, source_ordinal):
     faces = [_face_record(face, index) for index, face in enumerate(shape.Faces)]
     return {
         "semantic_id": semantic["semantic_id"],
         "source_label": semantic["source_label"],
+        "source_ordinal": source_ordinal,
         "shape_type": shape.ShapeType,
         "volume_mm3": float(shape.Volume),
         "area_mm2": float(shape.Area),
@@ -118,8 +119,8 @@ def _source_objects(document, semantics):
             continue
         if not hasattr(obj, "Shape") or len(obj.Shape.Solids) != 1:
             continue
-        objects.append((semantic_by_label[obj.Label], obj.Shape.Solids[0]))
-    labels = [semantic["source_label"] for semantic, _ in objects]
+        objects.append((semantic_by_label[obj.Label], obj.Shape.Solids[0], len(objects)))
+    labels = [semantic["source_label"] for semantic, _, _ in objects]
     expected_labels = sorted(semantic_by_label)
     if sorted(labels) != expected_labels or len(labels) != len(set(labels)):
         raise RuntimeError(
@@ -197,9 +198,9 @@ def _analyze(request):
         raise RuntimeError("Import.open did not create an active FreeCAD document")
     try:
         source_objects = _source_objects(document, semantics)
-        regions = [_solid_record(shape, semantic) for semantic, shape in source_objects]
+        regions = [_solid_record(shape, semantic, source_ordinal) for semantic, shape, source_ordinal in source_objects]
         region_by_semantic = {record["semantic_id"]: record for record in regions}
-        shape_by_semantic = {semantic["semantic_id"]: shape for semantic, shape in source_objects}
+        shape_by_semantic = {semantic["semantic_id"]: shape for semantic, shape, _ in source_objects}
 
         candidates = []
         relations = []

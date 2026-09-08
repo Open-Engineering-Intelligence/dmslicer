@@ -188,7 +188,7 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
                     "document_id": source_document_id,
                     "product_path": [raw_region["source_label"]],
                     "entity_kind": "SOLID",
-                    "source_ordinal": raw_region["semantic_id"],
+                    "source_ordinal": raw_region["source_ordinal"],
                     "persistent_label": raw_region["source_label"],
                     "geometry_digest": solid_fingerprint,
                     "identity_schema": "case01-geometry:v1",
