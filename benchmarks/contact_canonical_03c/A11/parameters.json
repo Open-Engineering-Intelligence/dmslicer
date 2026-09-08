@@ -1,0 +1,12 @@
+{
+  "analytic_area_formula": "2*a_f*b_f",
+  "case_id": "A11",
+  "geometry": "one connected bridge solid with two 12×16 mm feet, separated by 24 mm clearance, on a 60×40 mm plate",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    60.0,
+    40.0,
+    20.0
+  ],
+  "scale": 1.3363062095621219
+}

@@ -9,6 +9,7 @@ from pathlib import Path
 from .runner import analyze_case01, generate_case01_fixture, run_capability_probe, run_repeatability
 from .contact_canonical_03a import analyze_contact_canonical, generate_contact_canonical, run_contact_canonical_repeatability, run_contact_canonical_suite
 from .contact_canonical_03b import analyze_contact_canonical_analytic, generate_contact_canonical_analytic, run_contact_canonical_analytic_repeatability, run_contact_canonical_analytic_suite
+from .contact_canonical_03c import analyze_contact_canonical_interface_topology, generate_contact_canonical_interface_topology, run_contact_canonical_interface_topology_repeatability, run_contact_canonical_interface_topology_suite
 
 
 def main() -> None:
@@ -60,6 +61,21 @@ def main() -> None:
     analytic_suite.add_argument("fixture_root", type=Path)
     analytic_suite.add_argument("output_root", type=Path)
 
+    topology_generate = commands.add_parser("generate-contact-canonical-interface-topology", help="generate A11-A12 topology STEP fixtures")
+    topology_generate.add_argument("fixture_root", type=Path)
+
+    topology_analyze = commands.add_parser("analyze-contact-canonical-interface-topology", help="analyze one tracked A11/A12 STEP fixture")
+    topology_analyze.add_argument("step_path", type=Path)
+    topology_analyze.add_argument("output_dir", type=Path)
+
+    topology_repeat = commands.add_parser("repeat-contact-canonical-interface-topology", help="compare two A11/A12 analyses in independent FreeCADCmd processes")
+    topology_repeat.add_argument("step_path", type=Path)
+    topology_repeat.add_argument("output_dir", type=Path)
+
+    topology_suite = commands.add_parser("run-contact-canonical-interface-topology-suite", help="publish 03C topology evidence, debug models, and repeatability")
+    topology_suite.add_argument("fixture_root", type=Path)
+    topology_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -83,6 +99,14 @@ def main() -> None:
         result = run_contact_canonical_analytic_repeatability(arguments.step_path, arguments.output_dir)
     elif arguments.command == "run-contact-canonical-analytic-suite":
         result = run_contact_canonical_analytic_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "generate-contact-canonical-interface-topology":
+        result = generate_contact_canonical_interface_topology(arguments.fixture_root)
+    elif arguments.command == "analyze-contact-canonical-interface-topology":
+        result = analyze_contact_canonical_interface_topology(arguments.step_path, arguments.output_dir)
+    elif arguments.command == "repeat-contact-canonical-interface-topology":
+        result = run_contact_canonical_interface_topology_repeatability(arguments.step_path, arguments.output_dir)
+    elif arguments.command == "run-contact-canonical-interface-topology-suite":
+        result = run_contact_canonical_interface_topology_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
