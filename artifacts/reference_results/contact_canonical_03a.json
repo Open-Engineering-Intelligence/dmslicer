@@ -1,0 +1,174 @@
+{
+  "artifact_classification": "VERIFIED_REFERENCE_RESULT_NOT_PRODUCTION_INPUT",
+  "cases": {
+    "A01": {
+      "absolute_error": 4.956746124662459e-11,
+      "actual_measure": {
+        "area_mm2": 3333.3333333333826
+      },
+      "case_id": "A01",
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "dimension": "2D",
+      "expected_measure": {
+        "area_mm2": 3333.333333333333
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": 1,
+      "provenance_scope": "actual_brep_direct_common",
+      "relation": "full_full",
+      "step_sha256": "112f3297dcf60dfd20ba528e14b3a70dc24b4af468e15dc06ee24fe48a9f469f"
+    },
+    "A02": {
+      "absolute_error": 4.411049303598702e-11,
+      "actual_measure": {
+        "area_mm2": 1515.1515151515594
+      },
+      "case_id": "A02",
+      "coverage_a": 0.6000000000000077,
+      "coverage_b": 0.6000000000000077,
+      "dimension": "2D",
+      "expected_measure": {
+        "area_mm2": 1515.1515151515152
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": 1,
+      "provenance_scope": "actual_brep_direct_common",
+      "relation": "partial_partial",
+      "step_sha256": "6459fa9c35d8e2e157d359eaff6fece9a918cfb72b838be5dd68fee94b6883fc"
+    },
+    "A03": {
+      "absolute_error": 7.275957614183426e-12,
+      "actual_measure": {
+        "area_mm2": 666.6666666666592
+      },
+      "case_id": "A03",
+      "coverage_a": 0.19999999999999482,
+      "coverage_b": 1.0,
+      "dimension": "2D",
+      "expected_measure": {
+        "area_mm2": 666.6666666666665
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": 1,
+      "provenance_scope": "actual_brep_direct_common",
+      "relation": "small_face_contained_in_large_face",
+      "step_sha256": "d39f5b4ac8402bd490bf22c4cba433a257e143e70a1910ab87cb8b9855c1d969"
+    },
+    "A04": {
+      "absolute_error": 0.0,
+      "actual_measure": {
+        "point_count": 1
+      },
+      "case_id": "A04",
+      "coverage_a": "not_applicable",
+      "coverage_b": "not_applicable",
+      "dimension": "0D",
+      "expected_measure": {
+        "point_count": 1.0
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": "not_applicable",
+      "provenance_scope": "not_applicable",
+      "relation": "point_touch",
+      "step_sha256": "b64af9f97961f688f6b0b1166d6f4935ce42019b717f8024cc14a47d95f714b1"
+    },
+    "A05": {
+      "absolute_error": 7.815970093361102e-14,
+      "actual_measure": {
+        "length_mm": 42.640143271122
+      },
+      "case_id": "A05",
+      "coverage_a": "not_applicable",
+      "coverage_b": "not_applicable",
+      "dimension": "1D",
+      "expected_measure": {
+        "length_mm": 42.64014327112208
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": "not_applicable",
+      "provenance_scope": "not_applicable",
+      "relation": "edge_touch",
+      "step_sha256": "84bf546a231ac53224f12105ac155a59a979e955af5f3f98c070199df78b8664"
+    },
+    "A06": {
+      "absolute_error": 1.262087607756257e-07,
+      "actual_measure": {
+        "volume_mm3": 29259.210532641297
+      },
+      "case_id": "A06",
+      "coverage_a": "not_applicable",
+      "coverage_b": "not_applicable",
+      "dimension": "3D",
+      "expected_measure": {
+        "volume_mm3": 29259.210532767505
+      },
+      "freecad_version": [
+        "1",
+        "1",
+        "1",
+        "20260414 (Git shallow)",
+        "Unknown",
+        "2026/04/14 22:09:59",
+        "(HEAD detached at 0108fd4b4)",
+        "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+      ],
+      "occt_version": "7.8.1",
+      "patch_component_count": "not_applicable",
+      "provenance_scope": "not_applicable",
+      "relation": "solid_material_interference",
+      "step_sha256": "5ea3edccbcc3445c6e75b08f961b1b81297b3c2fc1a8685fb50833e0bf73c573"
+    }
+  },
+  "schema_version": 1
+}

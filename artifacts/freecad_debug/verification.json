@@ -1,0 +1,49 @@
+{
+  "artifact_classification": "NON_AUTHORITATIVE_HUMAN_INSPECTION",
+  "cases": {
+    "A01": {
+      "body_count": 2,
+      "dimension": "2D",
+      "measure": 3333.3333333333826,
+      "relation": "full_full",
+      "result_object": "Actual_Result"
+    },
+    "A02": {
+      "body_count": 2,
+      "dimension": "2D",
+      "measure": 1515.1515151515594,
+      "relation": "partial_partial",
+      "result_object": "Actual_Result"
+    },
+    "A03": {
+      "body_count": 2,
+      "dimension": "2D",
+      "measure": 666.6666666666592,
+      "relation": "small_face_contained_in_large_face",
+      "result_object": "Actual_Result"
+    },
+    "A04": {
+      "body_count": 2,
+      "dimension": "0D",
+      "measure": 1.0,
+      "relation": "point_touch",
+      "result_object": "Actual_Result"
+    },
+    "A05": {
+      "body_count": 2,
+      "dimension": "1D",
+      "measure": 42.640143271122,
+      "relation": "edge_touch",
+      "result_object": "Actual_Result"
+    },
+    "A06": {
+      "body_count": 2,
+      "dimension": "3D",
+      "measure": 29259.210532641297,
+      "relation": "solid_material_interference",
+      "result_object": "Actual_Result"
+    }
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

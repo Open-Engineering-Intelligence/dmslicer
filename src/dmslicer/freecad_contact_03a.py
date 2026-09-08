@@ -192,6 +192,30 @@ def _analyze(request):
         FreeCAD.closeDocument(document.Name)
 
 
+def _verify_debug(request):
+    document = FreeCAD.openDocument(request["fcstd_path"])
+    try:
+        first = document.getObject("Body_1")
+        second = document.getObject("Body_2")
+        result = document.getObject("Actual_Result")
+        if first is None or second is None or result is None:
+            raise RuntimeError("debug artifact is missing Body_1, Body_2, or Actual_Result")
+        dimension = result.Dimension
+        measure = float(result.Shape.Area if dimension == "2D" else result.Shape.Length if dimension == "1D" else result.Shape.Volume if dimension == "3D" else len(result.Shape.Vertexes))
+        return {
+            "case_id": result.CaseID,
+            "relation": result.Relation,
+            "dimension": dimension,
+            "measure": measure,
+            "body_count": 2,
+            "result_object": result.Name,
+            "freecad_version": list(FreeCAD.Version()),
+            "occt_version": str(getattr(Part, "OCC_VERSION", getattr(Part, "OCC_VERSION_STRING", "unavailable"))),
+        }
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
 def _main():
     response_path = Path(os.environ["DMSLICER_FREECAD_RESPONSE"])
     try:
@@ -200,6 +224,8 @@ def _main():
             response = _generate(request)
         elif request["action"] == "analyze":
             response = _analyze(request)
+        elif request["action"] == "verify_debug":
+            response = _verify_debug(request)
         else:
             raise ValueError(f"unknown action: {request['action']}")
         response["status"] = "SUCCEEDED"

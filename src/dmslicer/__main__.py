@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .runner import analyze_case01, generate_case01_fixture, run_capability_probe, run_repeatability
 from .contact_canonical_03a import analyze_contact_canonical, generate_contact_canonical, run_contact_canonical_repeatability, run_contact_canonical_suite
+from .contact_artifacts_03r import package_contact_artifacts
 
 
 def main() -> None:
@@ -44,6 +45,10 @@ def main() -> None:
     canonical_suite.add_argument("fixture_root", type=Path)
     canonical_suite.add_argument("output_root", type=Path)
 
+    package_artifacts = commands.add_parser("package-contact-artifacts", help="package stable 03A reference and FreeCAD inspection artifacts")
+    package_artifacts.add_argument("output_root", type=Path)
+    package_artifacts.add_argument("artifact_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -59,6 +64,8 @@ def main() -> None:
         result = run_contact_canonical_repeatability(arguments.step_path, arguments.output_dir)
     elif arguments.command == "run-contact-canonical-suite":
         result = run_contact_canonical_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "package-contact-artifacts":
+        result = package_contact_artifacts(arguments.output_root, arguments.artifact_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
