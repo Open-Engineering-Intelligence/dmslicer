@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from decimal import Decimal, ROUND_HALF_UP
-from hashlib import sha256
 import json
+from decimal import ROUND_HALF_UP, Decimal
+from hashlib import sha256
 from typing import Any
-
 
 _QUANTUM = Decimal("0.000000001")
 

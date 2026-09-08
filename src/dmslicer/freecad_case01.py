@@ -8,15 +8,14 @@ on the host from the raw B-rep facts emitted here.
 import itertools
 import json
 import os
-from pathlib import Path
 import sys
 import tempfile
 import traceback
+from pathlib import Path
 
 import FreeCAD
 import Import
 import Part
-
 
 AREA_EPSILON_MM2 = 1e-8
 

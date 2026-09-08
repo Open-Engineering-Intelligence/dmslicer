@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 import time
+from pathlib import Path
 from typing import Any
 
-from .evidence import artifact_digest, git_metadata, read_json, sha256_file, write_json
+from .evidence import git_metadata, read_json, sha256_file, write_json
 from .identity import (
     canonical_digest,
     document_id,
@@ -22,7 +22,6 @@ from .identity import (
     solid_geometry_fingerprint,
     source_face_id,
 )
-
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 FREECAD_SCRIPT = Path(__file__).with_name("freecad_case01.py")
@@ -619,4 +618,3 @@ def run_capability_probe(output_path: Path) -> dict[str, Any]:
     ]
     write_json(Path(output_path), probe)
     return probe
-    occurrence_locator_digest,

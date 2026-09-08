@@ -1,16 +1,15 @@
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
 from dmslicer.evidence import sha256_file
 from dmslicer.identity import canonical_digest, region_id
 from dmslicer.runner import (
-    ValidationError,
     analyze_case01,
     generate_case01_fixture,
     run_capability_probe,
