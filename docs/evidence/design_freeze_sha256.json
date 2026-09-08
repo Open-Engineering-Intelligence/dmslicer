@@ -1,0 +1,62 @@
+{
+  "algorithm": "SHA-256",
+  "legacy_root": "D:\\Agent\\raw\\gradient-slicing\\legacy-code\\Slicer\\DMSlicer-AI-mod",
+  "copied_root": "D:\\Agent\\projects\\Open-Engineering-Intelligence\\dmslicer\\docs\\research_v2",
+  "files": [
+    {
+      "file": "00_legacy_baseline.md",
+      "source_sha256": "7ae590bf1a8cc9070ddb31badd8c7b217f4d50faa8d16fb6528807424feafe5a",
+      "copied_sha256": "7ae590bf1a8cc9070ddb31badd8c7b217f4d50faa8d16fb6528807424feafe5a",
+      "byte_identical": true
+    },
+    {
+      "file": "01_research_problem.md",
+      "source_sha256": "82f4ee15ad40de43ebedc0c7eb1e482b23a139beeda86b861b9ffe1e728cd0d2",
+      "copied_sha256": "82f4ee15ad40de43ebedc0c7eb1e482b23a139beeda86b861b9ffe1e728cd0d2",
+      "byte_identical": true
+    },
+    {
+      "file": "02_domain_model.md",
+      "source_sha256": "167c30e6abd07a25135963ff9a6eed7ca1e362d04f7be5df577d20d8c2b41a01",
+      "copied_sha256": "167c30e6abd07a25135963ff9a6eed7ca1e362d04f7be5df577d20d8c2b41a01",
+      "byte_identical": true
+    },
+    {
+      "file": "03_interface_engine_design.md",
+      "source_sha256": "d1f71481d87538d95bdfa60bdf50ccc7f2a29ef064b4ecc88e599ad3a71b1a43",
+      "copied_sha256": "d1f71481d87538d95bdfa60bdf50ccc7f2a29ef064b4ecc88e599ad3a71b1a43",
+      "byte_identical": true
+    },
+    {
+      "file": "04_fixture_and_ground_truth_spec.md",
+      "source_sha256": "82038933ef3a0a105f09f56b8b9668ee0d085bbcbf9a1d48f9af72c8368c6957",
+      "copied_sha256": "82038933ef3a0a105f09f56b8b9668ee0d085bbcbf9a1d48f9af72c8368c6957",
+      "byte_identical": true
+    },
+    {
+      "file": "05_experiment_design.md",
+      "source_sha256": "32e635f39b926b24edd96baf70698fe02b85faebf96ce90e623a73282e9bac99",
+      "copied_sha256": "32e635f39b926b24edd96baf70698fe02b85faebf96ce90e623a73282e9bac99",
+      "byte_identical": true
+    },
+    {
+      "file": "06_old_to_v2_mapping.md",
+      "source_sha256": "1bf5d3b353c21e7a5b08b2928caac365933fbd57e8e9f90570494e550bc5ad7d",
+      "copied_sha256": "1bf5d3b353c21e7a5b08b2928caac365933fbd57e8e9f90570494e550bc5ad7d",
+      "byte_identical": true
+    },
+    {
+      "file": "07_mvp_scope.md",
+      "source_sha256": "d3c021ce0177128f65416b289c276cb402bfc75c24361637f5409afd5ace1637",
+      "copied_sha256": "d3c021ce0177128f65416b289c276cb402bfc75c24361637f5409afd5ace1637",
+      "byte_identical": true
+    },
+    {
+      "file": "README.md",
+      "source_sha256": "026bbc1451008f2e20c6968101e2431205594262ba52a30b623aa0628fba3251",
+      "copied_sha256": "026bbc1451008f2e20c6968101e2431205594262ba52a30b623aa0628fba3251",
+      "byte_identical": true
+    }
+  ],
+  "all_byte_identical": true
+}

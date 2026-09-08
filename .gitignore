@@ -1,0 +1,39 @@
+# Python bytecode and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Python tool caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Generated run artifacts and temporary work
+outputs/
+tmp/
+temp/
+*.log
+logs/
+
+# FreeCAD/CAD generated backup and recovery files
+*.FCStd1
+*.FCBak
+*.FCStd.autosave
+
+# Local IDE and editor state
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Intentionally not ignored: STEP/STP fixtures, research configuration,
+# expected JSON ground truth, documentation, and tests.

@@ -1,0 +1,2 @@
+# Preserve DESIGN FREEZE Markdown byte-for-byte in Git objects and checkouts.
+docs/research_v2/*.md -text
