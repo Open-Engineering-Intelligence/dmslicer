@@ -1,0 +1,11 @@
+# 03B Contact Canonical Analytic Curves — implementation note
+
+Scope: semantic-free, two-body STEP/B-rep analysis for the frozen Level A analytic curved-contact cases A07--A09.  Inputs are only the tracked STEP fixtures, their two re-imported occurrences, and explicit mm/mm² tolerances.  Expected truth is loaded only after actual evidence has been written.
+
+| Frozen case | Surface and raw geometry definition | Expected relation / dimension | Independent analytic truth | Planned files |
+|---|---|---|---|---|
+| A07 | Cylinder: shaft `r=10 mm`, engagement `l=30 mm`; matching bore has inner radius `10 mm`, outer radius `20 mm`, and extends from `z=-5` to `z=35 mm`. | `exact`, `2D`, independent-B-rep interface | `2πrl`, one full-period cylindrical band; two geometric boundaries, one hole. | `src/dmslicer/contact_canonical_03b.py`, `src/dmslicer/freecad_contact_03b.py`, `src/dmslicer/__main__.py`, `tests/test_contact_canonical_03b.py` |
+| A08 | Sphere/cavity wall: sphere `r=10 mm`; the matching concave spherical cavity cap is the upper hemisphere (`α=90°`) of a shell with outer radius `15 mm`. | `solid_cavity_wall_touch`, `2D`, exact independent-B-rep interface | `2πr²(1-cos α) = 2πr²`, one connected trimmed spherical cap, zero holes. | same |
+| A09 | Cone: matching conical frustum with `r0=10 mm`, `r1=20 mm`, half-angle `β=45°`, axial height `10 mm`; the `5 mm` radial-wall seat extends from `z=-5` to `z=12 mm` so both end faces have clearance. | `exact`, `2D`, independent-B-rep interface | `π(r0+r1)g`, where `g=(r1-r0)/sin β`; one full-period conical band, two geometric boundaries, one hole. | same |
+
+All three nominal constructions are normalized by their independently specified combined raw bounding-box diagonal to `L=100 mm`; their exact raw dimensions, scale, units and analytic measure are stored in each `parameters.json` and `expected.json`.  The STEP generator never supplies a shape to analysis.  Direct face-common results remain the only source of contact geometry; expected truth does not select bodies, faces, relation, area, coverage, component information, or provenance.  The 03B adapter records raw common faces separately from contract patches and computes connected components by geometric adjacency, so a periodic representation seam cannot be counted as a disconnected patch merely because it yields multiple raw faces.

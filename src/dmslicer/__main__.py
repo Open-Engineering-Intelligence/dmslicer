@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .runner import analyze_case01, generate_case01_fixture, run_capability_probe, run_repeatability
 from .contact_canonical_03a import analyze_contact_canonical, generate_contact_canonical, run_contact_canonical_repeatability, run_contact_canonical_suite
+from .contact_canonical_03b import analyze_contact_canonical_analytic, generate_contact_canonical_analytic, run_contact_canonical_analytic_repeatability, run_contact_canonical_analytic_suite
 
 
 def main() -> None:
@@ -44,6 +45,21 @@ def main() -> None:
     canonical_suite.add_argument("fixture_root", type=Path)
     canonical_suite.add_argument("output_root", type=Path)
 
+    analytic_generate = commands.add_parser("generate-contact-canonical-analytic", help="generate A07-A09 analytic curve STEP fixtures")
+    analytic_generate.add_argument("fixture_root", type=Path)
+
+    analytic_analyze = commands.add_parser("analyze-contact-canonical-analytic", help="analyze one tracked A07-A09 STEP fixture")
+    analytic_analyze.add_argument("step_path", type=Path)
+    analytic_analyze.add_argument("output_dir", type=Path)
+
+    analytic_repeat = commands.add_parser("repeat-contact-canonical-analytic", help="compare two A07-A09 analyses in independent FreeCADCmd processes")
+    analytic_repeat.add_argument("step_path", type=Path)
+    analytic_repeat.add_argument("output_dir", type=Path)
+
+    analytic_suite = commands.add_parser("run-contact-canonical-analytic-suite", help="publish 03B evidence, debug models, and repeatability")
+    analytic_suite.add_argument("fixture_root", type=Path)
+    analytic_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -59,6 +75,14 @@ def main() -> None:
         result = run_contact_canonical_repeatability(arguments.step_path, arguments.output_dir)
     elif arguments.command == "run-contact-canonical-suite":
         result = run_contact_canonical_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "generate-contact-canonical-analytic":
+        result = generate_contact_canonical_analytic(arguments.fixture_root)
+    elif arguments.command == "analyze-contact-canonical-analytic":
+        result = analyze_contact_canonical_analytic(arguments.step_path, arguments.output_dir)
+    elif arguments.command == "repeat-contact-canonical-analytic":
+        result = run_contact_canonical_analytic_repeatability(arguments.step_path, arguments.output_dir)
+    elif arguments.command == "run-contact-canonical-analytic-suite":
+        result = run_contact_canonical_analytic_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))

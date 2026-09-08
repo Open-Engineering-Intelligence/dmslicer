@@ -208,4 +208,5 @@ def _main():
     response_path.write_text(json.dumps(response, sort_keys=True), encoding="utf-8")
 
 
-_main()
+if __name__ == "__main__":
+    _main()
