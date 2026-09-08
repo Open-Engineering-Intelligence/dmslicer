@@ -7,7 +7,12 @@ from pathlib import Path
 
 import pytest
 
-from dmslicer.contact_canonical_03c import analyze_contact_canonical_interface_topology, compare_topology_relations
+from dmslicer.contact_canonical_03c import (
+    _validate,
+    analyze_contact_canonical_interface_topology,
+    compare_topology_relations,
+    generate_contact_canonical_interface_topology,
+)
 
 
 CASE_EXPECTATIONS = {
@@ -38,8 +43,7 @@ def test_topology_generator_creates_only_frozen_a11_and_a12(tmp_path: Path) -> N
         assert expected["case_id"] == case_id
         assert expected["dimension"] == "2D"
         assert expected["ground_truth_mode"] == "analytic"
-        assert expected["validation_tolerances"]["area_mm2"] == pytest.approx(0.05)
-        assert expected["validation_tolerances"]["coverage"] == pytest.approx(1e-4)
+        assert "validation_tolerances" not in expected
         assert expected["patch_topology"]["component_count"] == topology["components"]
         assert expected["patch_topology"]["boundary_component_count"] == topology["boundaries"]
         assert expected["patch_topology"]["hole_count"] == topology["holes"]
@@ -73,6 +77,48 @@ def test_topology_analysis_reimports_two_connected_solids_and_reports_actual_com
     assert all(component["source_face_linkage"] for component in relation["components"])
     assert all(patch["source_face_linkage"] for patch in relation["patches"])
     assert actual["validation"]["status"] == "PASS"
+
+
+def test_a12_direct_normalized_generation_preserves_analytic_faces_before_and_after_step(tmp_path: Path) -> None:
+    generated = generate_contact_canonical_interface_topology(tmp_path / "fixtures", case_ids=("A12",))
+
+    assert [entry["case_id"] for entry in generated["cases"]] == ["A12"]
+    evidence = generated["cases"][0]["generation_evidence"]
+    for stage in ("pre_export", "post_step_import"):
+        target = evidence[stage]
+        assert target["surface_type"] == "Plane"
+        assert target["boundary_curve_types"] == ["Circle", "Circle"]
+        assert target["area_mm2"] == pytest.approx(1803.7852556496418, abs=1e-8, rel=0)
+        assert target["coverage"] == pytest.approx([0.37699111843077515, 1.0], abs=1e-7, rel=0)
+
+
+def test_tracked_a12_reimport_keeps_analytic_geometry_and_strict_area_coverage_contract(tmp_path: Path) -> None:
+    fixture = Path(__file__).resolve().parents[1] / "benchmarks" / "contact_canonical_03c" / "A12" / "fixture.step"
+    actual = analyze_contact_canonical_interface_topology(fixture, tmp_path / "analysis")
+    relation = actual["relation"]
+
+    assert relation["analytic_geometry"]["surface_type"] == "Plane"
+    assert relation["analytic_geometry"]["boundary_curve_types"] == ["Circle", "Circle"]
+    assert relation["area_mm2"] == pytest.approx(1803.7852556496418, abs=1e-8, rel=0)
+    assert [relation["coverage_a"], relation["coverage_b"]] == pytest.approx([0.37699111843077515, 1.0], abs=1e-7, rel=0)
+    assert (relation["patch_count"], relation["component_count"], relation["boundary_component_count"], relation["hole_count"]) == (1, 1, 2, 1)
+
+
+def test_a12_strict_validation_rejects_old_area_and_excess_coverage_without_digest_shortcut(tmp_path: Path) -> None:
+    generated = generate_contact_canonical_interface_topology(tmp_path / "fixtures", case_ids=("A12",))
+    fixture = Path(generated["cases"][0]["step"])
+    actual = analyze_contact_canonical_interface_topology(fixture, tmp_path / "analysis")
+    expected = json.loads(fixture.with_name("expected.json").read_text(encoding="utf-8"))
+
+    old_area = copy.deepcopy(actual)
+    old_area["relation"]["area_mm2"] = 1803.7424900293495
+    area_failures = _validate(old_area, expected)["failures"]
+    assert any(failure["kind"] == "area_mm2" for failure in area_failures)
+
+    old_coverage = copy.deepcopy(actual)
+    old_coverage["relation"]["coverage_b"] = 1.0 - 2e-7
+    coverage_failures = _validate(old_coverage, expected)["failures"]
+    assert any(failure["kind"] == "coverage_b" for failure in coverage_failures)
 
 
 def test_topology_expected_mutation_fails_closed_without_changing_actual_evidence(tmp_path: Path) -> None:

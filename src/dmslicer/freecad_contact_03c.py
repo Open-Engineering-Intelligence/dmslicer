@@ -31,6 +31,26 @@ def _face_patches(shape_a, shape_b, area_epsilon):
     return raw
 
 
+def _analytic_common_evidence(shape_a, shape_b, area_epsilon):
+    """Describe the one positive A12 face common by observed B-rep geometry."""
+    records = []
+    for index_a, face_a in enumerate(shape_a.Faces, start=1):
+        for index_b, face_b in enumerate(shape_b.Faces, start=1):
+            common = face_a.common(face_b)
+            for face in common.Faces:
+                if face.Area > area_epsilon:
+                    records.append({
+                        "source_face_linkage": {"source_face_a": f"Face{index_a}", "source_face_b": f"Face{index_b}"},
+                        "surface_type": type(face.Surface).__name__,
+                        "boundary_curve_types": sorted(type(edge.Curve).__name__ for edge in face.Edges),
+                        "area_mm2": float(face.Area),
+                        "coverage": [float(face.Area / face_a.Area), float(face.Area / face_b.Area)],
+                    })
+    if len(records) != 1:
+        raise RuntimeError(f"expected one positive analytic A12 common face, found {len(records)}")
+    return records[0]
+
+
 def _contract_patches(raw):
     patches = []
     by_geometry = {}
@@ -176,19 +196,22 @@ def _debug_document(debug_path, case_id, label_a, shape_a, label_b, shape_b, rel
 
 def _generate(request):
     vector, scale, case_id = FreeCAD.Vector, float(request["scale"]), request["case_id"]
-    plate = Part.makeBox(60, 40, 5, vector(0, 0, -5)) if case_id == "A11" else Part.makeBox(50, 50, 5, vector(-25, -25, -5))
     if case_id == "A11":
+        plate = Part.makeBox(60, 40, 5, vector(0, 0, -5))
         left = Part.makeBox(12, 16, 15, vector(6, 12, 0))
         right = Part.makeBox(12, 16, 15, vector(42, 12, 0))
         bridge = Part.makeBox(48, 8, 5, vector(6, 16, 10))
         contact_body = left.fuse(right).fuse(bridge).removeSplitter()
+        matrix = FreeCAD.Matrix()
+        matrix.scale(scale, scale, scale)
+        plate, contact_body = plate.transformGeometry(matrix), contact_body.transformGeometry(matrix)
     elif case_id == "A12":
-        contact_body = Part.makeCylinder(20, 10).cut(Part.makeCylinder(10, 10))
+        # Construct at normalized dimensions to preserve the A12 Plane/Circle
+        # representation; TopoShape.transformGeometry converts it to B-splines.
+        plate = Part.makeBox(50 * scale, 50 * scale, 5 * scale, vector(-25 * scale, -25 * scale, -5 * scale))
+        contact_body = Part.makeCylinder(20 * scale, 10 * scale).cut(Part.makeCylinder(10 * scale, 10 * scale))
     else:
         raise ValueError(f"unsupported canonical topology case: {case_id}")
-    matrix = FreeCAD.Matrix()
-    matrix.scale(scale, scale, scale)
-    plate, contact_body = plate.transformGeometry(matrix), contact_body.transformGeometry(matrix)
     document = FreeCAD.newDocument("ContactCanonical03CGenerator")
     try:
         first, second = document.addObject("Part::Feature", "Body_1"), document.addObject("Part::Feature", "Body_2")
@@ -196,8 +219,17 @@ def _generate(request):
         document.recompute()
         step_path = Path(request["step_path"])
         step_path.parent.mkdir(parents=True, exist_ok=True)
+        generation_evidence = _analytic_common_evidence(plate, contact_body, 1e-8) if case_id == "A12" else None
         Import.export([first, second], str(step_path))
-        return {"case_id": case_id, "step_path": str(step_path)}
+        if case_id == "A12":
+            imported = FreeCAD.newDocument("ContactCanonical03CA12PostStep")
+            try:
+                Import.insert(str(step_path), imported.Name)
+                (_, imported_a), (_, imported_b) = _objects(imported)
+                generation_evidence = {"pre_export": generation_evidence, "post_step_import": _analytic_common_evidence(imported_a, imported_b, 1e-8)}
+            finally:
+                FreeCAD.closeDocument(imported.Name)
+        return {"case_id": case_id, "step_path": str(step_path), "generation_evidence": generation_evidence}
     finally:
         FreeCAD.closeDocument(document.Name)
 
@@ -259,6 +291,8 @@ def _analyze(request):
             "patches": [{key: value for key, value in patch.items() if key != "shape"} for patch in patches],
             "components": components,
         }
+        if request["case_id"] == "A12":
+            relation["analytic_geometry"] = _analytic_common_evidence(shape_a, shape_b, float(request["tolerances"]["area_epsilon_mm2"]))
         result_shape = Part.makeCompound(component_shapes)
         relation["evidence"] = {"source": "actual_brep_direct_common", "geometry_digest": _shape_digest(result_shape)}
         debug = _debug_document(Path(request["debug_path"]), request["case_id"], label_a, shape_a, label_b, shape_b, relation, component_shapes, boundary_shapes) if request.get("debug_path") else None

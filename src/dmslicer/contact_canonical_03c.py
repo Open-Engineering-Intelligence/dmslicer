@@ -21,9 +21,6 @@ TOLERANCES = {
     "area_epsilon_mm2": 1e-8,
     "engineering_tolerance_mm": 0.1,
 }
-VALIDATION_TOLERANCES = {"area_mm2": 0.05, "coverage": 1e-4}
-
-
 class CanonicalTopologyValidationError(RuntimeError):
     """Raised only after actual evidence and a failed validation are persisted."""
 
@@ -89,13 +86,19 @@ def _case_definitions() -> dict[str, dict[str, Any]]:
     return raw
 
 
-def generate_contact_canonical_interface_topology(root: Path) -> dict[str, Any]:
+def generate_contact_canonical_interface_topology(root: Path, *, case_ids: tuple[str, ...] | None = None) -> dict[str, Any]:
     root = Path(root)
+    definitions = _case_definitions()
+    selected_case_ids = tuple(definitions) if case_ids is None else case_ids
+    unknown = set(selected_case_ids) - set(definitions)
+    if unknown:
+        raise ValueError(f"unknown canonical topology case IDs: {sorted(unknown)}")
     generated = []
-    for case_id, definition in _case_definitions().items():
+    for case_id in selected_case_ids:
+        definition = definitions[case_id]
         case_dir = root / case_id
         step_path = case_dir / "fixture.step"
-        _run_freecad({"action": "generate", "case_id": case_id, "step_path": str(step_path), "scale": definition["scale"]})
+        generated_fixture = _run_freecad({"action": "generate", "case_id": case_id, "step_path": str(step_path), "scale": definition["scale"]})
         expected = {
             "schema_version": 1,
             "case_id": case_id,
@@ -104,7 +107,6 @@ def generate_contact_canonical_interface_topology(root: Path) -> dict[str, Any]:
             "dimension": "2D",
             "units": {"length": "mm", "area": "mm2"},
             "tolerances": TOLERANCES,
-            "validation_tolerances": VALIDATION_TOLERANCES,
             "measures": {"area_mm2": definition["expected_area"]},
             "coverage": definition["coverage"],
             "support_surface_family": "plane",
@@ -122,7 +124,7 @@ def generate_contact_canonical_interface_topology(root: Path) -> dict[str, Any]:
         }
         write_json(case_dir / "expected.json", expected)
         write_json(case_dir / "parameters.json", parameters)
-        generated.append({"case_id": case_id, "step": str(step_path), "step_sha256": sha256_file(step_path)})
+        generated.append({"case_id": case_id, "step": str(step_path), "step_sha256": sha256_file(step_path), "generation_evidence": generated_fixture.get("generation_evidence")})
     return {"cases": generated}
 
 
@@ -132,11 +134,11 @@ def _validate(actual: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any
         if relation.get(field) != expected.get(field):
             failures.append({"kind": field, "expected": expected.get(field), "actual": relation.get(field)})
     area = relation.get("area_mm2")
-    area_tolerance = expected["validation_tolerances"]["area_mm2"]
+    area_tolerance = TOLERANCES["area_epsilon_mm2"]
     if area is None or abs(area - expected["measures"]["area_mm2"]) > area_tolerance:
         failures.append({"kind": "area_mm2", "expected": expected["measures"]["area_mm2"], "actual": area, "tolerance": area_tolerance})
     for key, value in zip(("coverage_a", "coverage_b"), expected["coverage"]):
-        if abs(relation.get(key, -1.0) - value) > expected["validation_tolerances"]["coverage"]:
+        if abs(relation.get(key, -1.0) - value) > 1e-7:
             failures.append({"kind": key, "expected": value, "actual": relation.get(key)})
     for key, value in expected["patch_topology"].items():
         if relation.get(key) != value:
