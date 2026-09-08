@@ -5,7 +5,7 @@
 - Initialization date: `2026-09-08` (Asia/Shanghai)
 - New repository path: `D:\Agent\projects\Open-Engineering-Intelligence\dmslicer`
 - New branch: `main`
-- Root commit SHA: `ROOT_COMMIT_SHA_PENDING`
+- Root commit SHA: `22025019b7139d6e329fbc33a0a192a59834bf4a`
 - Legacy baseline SHA: `1207c97f88df047b29218c324084a1c8e542f386`
 - Remote configured: `NO`
 - Pushed: `NO`
