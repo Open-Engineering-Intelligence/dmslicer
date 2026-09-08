@@ -10,6 +10,7 @@ from .runner import analyze_case01, generate_case01_fixture, run_capability_prob
 from .contact_canonical_03a import analyze_contact_canonical, generate_contact_canonical, run_contact_canonical_repeatability, run_contact_canonical_suite
 from .contact_canonical_03b import analyze_contact_canonical_analytic, generate_contact_canonical_analytic, run_contact_canonical_analytic_repeatability, run_contact_canonical_analytic_suite
 from .contact_canonical_03c import analyze_contact_canonical_interface_topology, generate_contact_canonical_interface_topology, run_contact_canonical_interface_topology_repeatability, run_contact_canonical_interface_topology_suite
+from .contact_partition_union_04a import run_contact_partition_union, run_contact_partition_union_suite
 
 
 def main() -> None:
@@ -76,6 +77,13 @@ def main() -> None:
     topology_suite.add_argument("fixture_root", type=Path)
     topology_suite.add_argument("output_root", type=Path)
 
+    partition_union = commands.add_parser("run-contact-partition-union", help="partition actual common faces and fuse one A02/A08 STEP pair")
+    partition_union.add_argument("step_path", type=Path)
+    partition_union.add_argument("output_dir", type=Path)
+
+    partition_union_suite = commands.add_parser("run-contact-partition-union-suite", help="publish 04A A02/A08 operation evidence and repeatability")
+    partition_union_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -107,6 +115,10 @@ def main() -> None:
         result = run_contact_canonical_interface_topology_repeatability(arguments.step_path, arguments.output_dir)
     elif arguments.command == "run-contact-canonical-interface-topology-suite":
         result = run_contact_canonical_interface_topology_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "run-contact-partition-union":
+        result = run_contact_partition_union(arguments.step_path, arguments.output_dir)
+    elif arguments.command == "run-contact-partition-union-suite":
+        result = run_contact_partition_union_suite(arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
