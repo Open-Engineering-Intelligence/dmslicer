@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import subprocess
@@ -151,21 +152,62 @@ def _expected_manifest() -> dict[str, Any]:
     return manifest
 
 
-def generate_case01_fixture(step_path: Path, expected_path: Path | None = None) -> dict[str, Any]:
+def _semantics_manifest() -> dict[str, Any]:
+    """Return CASE01 input roles without any expected geometry truth."""
+    return {
+        "schema_version": 1,
+        "case_id": "CASE01_planar_agb_exact",
+        "semantic_order": ["A", "G", "B"],
+        "occurrences": [
+            {
+                "product_path": ["A"],
+                "source_label": "A",
+                "semantic_id": "A",
+                "semantic_role": "SOURCE",
+                "material_key": "A",
+                "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                "source_boundary": {"boundary_role": "SOURCE_A", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 0.0},
+            },
+            {
+                "product_path": ["G"],
+                "source_label": "G",
+                "semantic_id": "G",
+                "semantic_role": "GRADIENT",
+                "material_key": "Gradient",
+                "participation_policy": {"mode": "ACTIVE", "source_eligible": False, "gradient_eligible": True},
+            },
+            {
+                "product_path": ["B"],
+                "source_label": "B",
+                "semantic_id": "B",
+                "semantic_role": "SOURCE",
+                "material_key": "B",
+                "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                "source_boundary": {"boundary_role": "SOURCE_B", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 1.0},
+            },
+        ],
+    }
+
+
+def generate_case01_fixture(
+    step_path: Path, expected_path: Path | None = None, semantics_path: Path | None = None
+) -> dict[str, Any]:
     """Generate the real three-solid STEP fixture through FreeCAD/Part."""
     step_path = Path(step_path)
     expected_path = Path(expected_path) if expected_path is not None else step_path.with_name("expected.json")
+    semantics_path = Path(semantics_path) if semantics_path is not None else step_path.with_name("semantics.json")
     response = _run_freecad({"action": "generate", "step_path": str(step_path)})
     if not step_path.is_file():
         raise RuntimeError("FreeCAD reported STEP generation success but no STEP file was written")
     write_json(expected_path, _expected_manifest())
-    return {**response, "step_sha256": sha256_file(step_path), "expected_path": str(expected_path)}
+    write_json(semantics_path, _semantics_manifest())
+    return {**response, "step_sha256": sha256_file(step_path), "expected_path": str(expected_path), "semantics_path": str(semantics_path)}
 
 
 def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]]) -> tuple[str, list[dict[str, Any]], dict[str, dict[int, str]]]:
     source_document_id = document_id(step_sha256)
     regions = []
-    face_ids_by_semantic: dict[str, dict[int, str]] = {}
+    face_ids_by_occurrence: dict[str, dict[int, str]] = {}
     for raw_region in raw_regions:
         face_fingerprints = [face_geometry_fingerprint(face) for face in raw_region["faces"]]
         solid_fingerprint = solid_geometry_fingerprint(raw_region, face_fingerprints)
@@ -189,16 +231,13 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
                     "wire_count": face["wire_count"],
                 }
             )
-        face_ids_by_semantic[raw_region["semantic_id"]] = face_ids_by_index
+        face_ids_by_occurrence[raw_region["occurrence_key"]] = face_ids_by_index
         regions.append(
             {
                 "region_id": identifier,
                 "source_document_id": source_document_id,
-                "semantic_id": raw_region["semantic_id"],
-                "semantic_role": raw_region["semantic_role"],
-                "material_key": raw_region["material_key"],
-                "participation_policy": raw_region["participation_policy"],
-                "source_boundary": raw_region.get("source_boundary"),
+                "occurrence_key": raw_region["occurrence_key"],
+                "source_label": raw_region["source_label"],
                 "source_locator": {
                     "document_id": source_document_id,
                     "product_path": occurrence_locator["product_path"],
@@ -220,7 +259,7 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
                 "faces": sorted(faces, key=lambda face: face["face_id"]),
             }
         )
-    return source_document_id, sorted(regions, key=lambda region: region["region_id"]), face_ids_by_semantic
+    return source_document_id, sorted(regions, key=lambda region: region["region_id"]), face_ids_by_occurrence
 
 
 def _region_lookup(regions: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -328,22 +367,54 @@ def validate_case01(result: dict[str, Any], expected: dict[str, Any], evidence_d
     return validation
 
 
-def _semantic_pair_order(expected: dict[str, Any], pair: list[str]) -> list[str]:
-    """Render a geometry pair using the benchmark manifest's semantic order."""
-    for expected_relation in expected["expected_relation_matrix"]:
-        if frozenset(expected_relation["semantic_pair"]) == frozenset(pair):
-            return expected_relation["semantic_pair"]
-    return sorted(pair)
+def _semantic_pair_order(semantics: dict[str, Any], pair: list[str]) -> list[str]:
+    """Render semantic pairs using input semantics, never expected truth."""
+    order = {semantic_id: index for index, semantic_id in enumerate(semantics["semantic_order"])}
+    return sorted(pair, key=lambda semantic_id: (order.get(semantic_id, len(order)), semantic_id))
 
 
-def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[str, Any], elapsed_ms: float) -> dict[str, Any]:
+def _materialize_analysis(step_path: Path, semantics: dict[str, Any], raw: dict[str, Any], elapsed_ms: float) -> dict[str, Any]:
     step_sha256 = sha256_file(step_path)
-    source_document_id, regions, face_ids_by_semantic = _materialize_identities(step_sha256, raw["regions"])
+    source_document_id, regions, face_ids_by_occurrence = _materialize_identities(step_sha256, raw["regions"])
+    geometry = {
+        "schema_version": 1,
+        "source_document_id": source_document_id,
+        "regions": regions,
+        "candidates": raw["candidates"],
+        "relations": raw["relations"],
+        "interface_patches": raw["patches"],
+    }
+    geometry_digest = "sha256:" + canonical_digest(geometry)
+    semantic_by_source_label = {
+        item["source_label"]: item for item in semantics["occurrences"]
+    }
+    actual_source_labels = {region["source_label"] for region in regions}
+    if actual_source_labels != set(semantic_by_source_label):
+        raise RuntimeError(
+            "CASE01 semantic input must map each imported occurrence exactly once: "
+            + repr({"semantic_labels": sorted(semantic_by_source_label), "actual_labels": sorted(actual_source_labels)})
+        )
+    regions = [
+        {
+            **region,
+            **{
+                key: semantic_by_source_label[region["source_label"]][key]
+                for key in ("semantic_id", "semantic_role", "material_key", "participation_policy", "source_boundary")
+                if key in semantic_by_source_label[region["source_label"]]
+            },
+        }
+        for region in regions
+    ]
     region_by_semantic = _region_lookup(regions)
+    semantic_by_occurrence_key = {
+        region["occurrence_key"]: region["semantic_id"] for region in regions
+    }
 
     candidates = []
     for candidate in raw["candidates"]:
-        semantic_pair = _semantic_pair_order(expected, candidate["semantic_pair"])
+        semantic_pair = _semantic_pair_order(
+            semantics, [semantic_by_occurrence_key[key] for key in candidate["occurrence_pair"]]
+        )
         candidates.append(
             {
                 **candidate,
@@ -361,15 +432,17 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
 
     relations = []
     for relation in raw["relations"]:
-        semantic_pair = _semantic_pair_order(expected, relation["semantic_pair"])
+        semantic_pair = _semantic_pair_order(
+            semantics, [semantic_by_occurrence_key[key] for key in relation["occurrence_pair"]]
+        )
         relations.append(
             {
                 **relation,
                 "semantic_pair": semantic_pair,
-                "region_pair": sorted(region_by_semantic[semantic]["region_id"] for semantic in relation["semantic_pair"]),
+                "region_pair": sorted(region_by_semantic[semantic]["region_id"] for semantic in semantic_pair),
                 "relation_id": "relation:v1:" + canonical_digest(
                     {
-                        "pair": sorted(region_by_semantic[semantic]["region_id"] for semantic in relation["semantic_pair"]),
+                        "pair": sorted(region_by_semantic[semantic]["region_id"] for semantic in semantic_pair),
                         "relation_type": relation["relation_type"],
                         "intersection_dimension": relation["intersection_dimension"],
                     }
@@ -380,12 +453,12 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
     patches = []
     provenance = []
     for raw_patch in raw["patches"]:
-        semantic_a, semantic_b = raw_patch["semantic_pair"]
-        semantic_pair = _semantic_pair_order(expected, raw_patch["semantic_pair"])
+        semantic_a, semantic_b = [semantic_by_occurrence_key[key] for key in raw_patch["occurrence_pair"]]
+        semantic_pair = _semantic_pair_order(semantics, [semantic_a, semantic_b])
         region_a = region_by_semantic[semantic_a]
         region_b = region_by_semantic[semantic_b]
-        source_face_a = face_ids_by_semantic[semantic_a][raw_patch["source_face_index_a"]]
-        source_face_b = face_ids_by_semantic[semantic_b][raw_patch["source_face_index_b"]]
+        source_face_a = face_ids_by_occurrence[raw_patch["occurrence_pair"][0]][raw_patch["source_face_index_a"]]
+        source_face_b = face_ids_by_occurrence[raw_patch["occurrence_pair"][1]][raw_patch["source_face_index_b"]]
         if region_a["region_id"] > region_b["region_id"]:
             region_a, region_b = region_b, region_a
             source_face_a, source_face_b = source_face_b, source_face_a
@@ -452,7 +525,7 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
     source_boundaries, semantic_digest = _semantic_layer(regions, patches)
     manifest = {
         "schema_version": 1,
-        "case_id": expected["case_id"],
+        "case_id": semantics["case_id"],
         "backend": "step_brep_interface",
         "analysis_input": raw["analysis_input"],
         "step_sha256": step_sha256,
@@ -472,6 +545,7 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
         "provenance_method": "DIRECT_BREP_FACE_COMMON",
         "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
         "semantic_digest": semantic_digest,
+        "geometry_digest": geometry_digest,
         "failure_rejection_information": [
             candidate for candidate in candidates if candidate["status"] == "FILTERED_OUT"
         ],
@@ -497,10 +571,13 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
         "provenance": sorted(provenance, key=lambda record: record["provenance_id"]),
         "interface_source_boundaries": source_boundaries,
         "semantic_digest": semantic_digest,
+        "geometry": {**geometry, "geometry_digest": geometry_digest},
+        "geometry_digest": geometry_digest,
     }
 
 
 def _write_analysis_evidence(output_dir: Path, result: dict[str, Any]) -> None:
+    write_json(output_dir / "geometry.json", result["geometry"])
     write_json(output_dir / "manifest.json", result["manifest"])
     write_json(output_dir / "regions.json", {"regions": result["regions"]})
     write_json(output_dir / "relations.json", {"candidates": result["candidates"], "relations": result["relations"]})
@@ -509,24 +586,57 @@ def _write_analysis_evidence(output_dir: Path, result: dict[str, Any]) -> None:
     write_json(output_dir / "interface_source_boundaries.json", {"interface_source_boundaries": result["interface_source_boundaries"], "semantic_digest": result["semantic_digest"]})
 
 
-def analyze_case01(step_path: Path, output_dir: Path) -> dict[str, Any]:
+def analyze_case01(
+    step_path: Path,
+    output_dir: Path,
+    *,
+    expected_path: Path | None = None,
+    semantics_path: Path | None = None,
+) -> dict[str, Any]:
     """Re-import a CASE01 STEP file and publish its B-rep evidence package."""
     step_path = Path(step_path)
     output_dir = Path(output_dir)
-    expected_path = step_path.with_name("expected.json")
-    if not expected_path.is_file():
-        raise FileNotFoundError(f"CASE01 semantic manifest is required beside the STEP fixture: {expected_path}")
-    expected = read_json(expected_path)
+    expected_path = Path(expected_path) if expected_path is not None else step_path.with_name("expected.json")
+    semantics_path = Path(semantics_path) if semantics_path is not None else step_path.with_name("semantics.json")
+    if not semantics_path.is_file():
+        raise RuntimeError(f"CASE01 independent semantic input is required beside the STEP fixture: {semantics_path}")
+    semantics = read_json(semantics_path)
     started = time.perf_counter()
     raw = _run_freecad(
         {
             "action": "analyze",
             "step_path": str(step_path),
-            "semantics": expected["regions"],
             "tolerances": TOLERANCES,
         }
     )
-    result = _materialize_analysis(step_path, expected, raw, (time.perf_counter() - started) * 1000.0)
+    result = _materialize_analysis(step_path, semantics, raw, (time.perf_counter() - started) * 1000.0)
+    _write_analysis_evidence(output_dir, result)
+    if not expected_path.is_file():
+        validation = {
+            "schema_version": 1,
+            "status": "FAIL",
+            "expected_truth_digest": None,
+            "failures": [{"kind": "expected_truth_unavailable", "path": str(expected_path)}],
+        }
+        write_json(output_dir / "validation.json", validation)
+        result["validation"] = validation
+        result["manifest"]["validation_status"] = validation["status"]
+        write_json(output_dir / "manifest.json", result["manifest"])
+        raise ValidationError("CASE01 expected-truth validation could not load expected.json; geometry evidence was published")
+    try:
+        expected = read_json(expected_path)
+    except (OSError, json.JSONDecodeError) as error:
+        validation = {
+            "schema_version": 1,
+            "status": "FAIL",
+            "expected_truth_digest": None,
+            "failures": [{"kind": "expected_truth_unavailable", "path": str(expected_path), "detail": str(error)}],
+        }
+        write_json(output_dir / "validation.json", validation)
+        result["validation"] = validation
+        result["manifest"]["validation_status"] = validation["status"]
+        write_json(output_dir / "manifest.json", result["manifest"])
+        raise ValidationError("CASE01 expected-truth validation could not parse expected.json; geometry evidence was published") from error
     validation = validate_case01(result, expected, output_dir)
     result["validation"] = validation
     result["manifest"]["validation_status"] = validation["status"]

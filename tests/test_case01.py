@@ -10,6 +10,7 @@ import pytest
 from dmslicer.evidence import sha256_file
 from dmslicer.identity import canonical_digest, region_id
 from dmslicer.runner import (
+    ValidationError,
     analyze_case01,
     generate_case01_fixture,
     run_capability_probe,
@@ -32,6 +33,141 @@ def analyze_fixture(tmp_path: Path) -> tuple[Path, dict]:
 
 def relation_by_pair(result: dict, semantic_pair: list[str]) -> dict:
     return next(relation for relation in result["relations"] if relation["semantic_pair"] == semantic_pair)
+
+
+def write_semantics(path: Path) -> None:
+    """Write CASE01 input roles, deliberately separate from expected truth."""
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "case_id": "CASE01_planar_agb_exact",
+                "semantic_order": ["A", "G", "B"],
+                "occurrences": [
+                    {
+                        "product_path": ["A"],
+                        "source_label": "A",
+                        "semantic_id": "A",
+                        "semantic_role": "SOURCE",
+                        "material_key": "A",
+                        "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                        "source_boundary": {"boundary_role": "SOURCE_A", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 0.0},
+                    },
+                    {
+                        "product_path": ["G"],
+                        "source_label": "G",
+                        "semantic_id": "G",
+                        "semantic_role": "GRADIENT",
+                        "material_key": "Gradient",
+                        "participation_policy": {"mode": "ACTIVE", "source_eligible": False, "gradient_eligible": True},
+                    },
+                    {
+                        "product_path": ["B"],
+                        "source_label": "B",
+                        "semantic_id": "B",
+                        "semantic_role": "SOURCE",
+                        "material_key": "B",
+                        "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                        "source_boundary": {"boundary_role": "SOURCE_B", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 1.0},
+                    },
+                ],
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+
+
+def refresh_truth_digest(expected: dict) -> None:
+    payload = {key: value for key, value in expected.items() if key != "truth_digest"}
+    expected["truth_digest"] = "sha256:" + canonical_digest(payload)
+
+
+def geometry_evidence(output_dir: Path) -> dict:
+    return json.loads((output_dir / "geometry.json").read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("mutation", ["relation", "area", "region_order", "region_label"])
+def test_expected_truth_mutations_cannot_change_frozen_geometry(tmp_path: Path, mutation: str) -> None:
+    """Catches expected truth leaking into actual geometry construction or ordering."""
+    step_path = make_fixture(tmp_path)
+    semantics_path = tmp_path / "semantics.json"
+    write_semantics(semantics_path)
+    expected_path = tmp_path / "expected.json"
+    baseline_dir = tmp_path / "baseline"
+    baseline = analyze_case01(step_path, baseline_dir, expected_path=expected_path, semantics_path=semantics_path)
+
+    expected = json.loads(expected_path.read_text(encoding="utf-8"))
+    if mutation == "relation":
+        expected["expected_relation_matrix"][0]["relation_type"] = "FACE_CONTACT"
+    elif mutation == "area":
+        expected["expected_relation_matrix"][0]["area_mm2"] = 399.0
+    elif mutation == "region_order":
+        expected["regions"].reverse()
+    else:
+        expected["regions"][0]["source_label"] = "not-an-occurrence"
+    refresh_truth_digest(expected)
+    expected_path.write_text(json.dumps(expected), encoding="utf-8")
+
+    mutated_dir = tmp_path / mutation
+    if mutation in {"relation", "area"}:
+        with pytest.raises(ValidationError):
+            analyze_case01(step_path, mutated_dir, expected_path=expected_path, semantics_path=semantics_path)
+    else:
+        changed = analyze_case01(step_path, mutated_dir, expected_path=expected_path, semantics_path=semantics_path)
+        if mutation == "region_label":
+            assert changed["semantic_digest"] == baseline["semantic_digest"]
+
+    assert geometry_evidence(mutated_dir) == geometry_evidence(baseline_dir)
+    assert baseline["geometry_digest"] == geometry_evidence(baseline_dir)["geometry_digest"]
+
+
+def test_semantic_input_can_change_boundaries_without_changing_geometry(tmp_path: Path) -> None:
+    """Catches a semantic role changing the B-rep geometry result."""
+    step_path = make_fixture(tmp_path)
+    expected_path = tmp_path / "expected.json"
+    semantics_path = tmp_path / "semantics.json"
+    write_semantics(semantics_path)
+    baseline_dir = tmp_path / "baseline"
+    baseline = analyze_case01(step_path, baseline_dir, expected_path=expected_path, semantics_path=semantics_path)
+
+    semantics = json.loads(semantics_path.read_text(encoding="utf-8"))
+    semantics["occurrences"][0]["source_boundary"]["scalar_value"] = 0.25
+    semantics_path.write_text(json.dumps(semantics), encoding="utf-8")
+    changed_dir = tmp_path / "semantic-change"
+    changed = analyze_case01(step_path, changed_dir, expected_path=expected_path, semantics_path=semantics_path)
+
+    assert geometry_evidence(changed_dir) == geometry_evidence(baseline_dir)
+    assert changed["semantic_digest"] != baseline["semantic_digest"]
+
+
+def test_geometry_evidence_is_published_before_missing_expected_fails_validation(tmp_path: Path) -> None:
+    """Catches a missing expected.json preventing independent geometry analysis."""
+    step_path = make_fixture(tmp_path)
+    semantics_path = tmp_path / "semantics.json"
+    write_semantics(semantics_path)
+    output_dir = tmp_path / "missing-expected"
+
+    with pytest.raises(ValidationError):
+        analyze_case01(step_path, output_dir, expected_path=tmp_path / "missing.json", semantics_path=semantics_path)
+
+    assert geometry_evidence(output_dir)["geometry_digest"].startswith("sha256:")
+
+
+def test_geometry_evidence_is_published_before_invalid_expected_fails_validation(tmp_path: Path) -> None:
+    """Catches malformed expected truth aborting before actual geometry is preserved."""
+    step_path = make_fixture(tmp_path)
+    semantics_path = tmp_path / "semantics.json"
+    write_semantics(semantics_path)
+    expected_path = tmp_path / "invalid.json"
+    expected_path.write_text("{ not-json", encoding="utf-8")
+    output_dir = tmp_path / "invalid-expected"
+
+    with pytest.raises(ValidationError):
+        analyze_case01(step_path, output_dir, expected_path=expected_path, semantics_path=semantics_path)
+
+    assert geometry_evidence(output_dir)["geometry_digest"].startswith("sha256:")
+    assert json.loads((output_dir / "validation.json").read_text(encoding="utf-8"))["status"] == "FAIL"
 
 
 def test_case01_reimports_step_into_exactly_three_solid_regions(tmp_path: Path) -> None:

@@ -55,15 +55,11 @@ def _face_record(face, index):
     }
 
 
-def _solid_record(shape, semantic, source_ordinal, source_occurrence_locator):
+def _solid_record(shape, source_ordinal, source_occurrence_locator):
     faces = [_face_record(face, index) for index, face in enumerate(shape.Faces)]
     return {
-        "semantic_id": semantic["semantic_id"],
-        "source_label": semantic["source_label"],
-        "semantic_role": semantic["semantic_role"],
-        "material_key": semantic["material_key"],
-        "participation_policy": semantic["participation_policy"],
-        "source_boundary": semantic.get("source_boundary"),
+        "source_label": source_occurrence_locator["display_label"],
+        "occurrence_key": source_occurrence_locator["product_path"][0],
         "source_occurrence_locator": source_occurrence_locator,
         "source_ordinal": source_ordinal,
         "shape_type": shape.ShapeType,
@@ -115,30 +111,16 @@ def _shape_summary(shape):
     return summary
 
 
-def _source_objects(document, semantics):
-    semantic_by_label = {item["source_label"]: item for item in semantics}
+def _source_objects(document):
+    """Enumerate every imported leaf solid without semantic or expected input."""
     objects = []
     for obj in document.Objects:
-        if obj.TypeId != "Part::Feature" or obj.Label not in semantic_by_label:
+        if obj.TypeId != "Part::Feature":
             continue
         if not hasattr(obj, "Shape") or len(obj.Shape.Solids) != 1:
             continue
-        objects.append(
-            (
-                semantic_by_label[obj.Label],
-                obj.Shape.Solids[0],
-                len(objects),
-                {"product_path": [obj.Name], "persistent_label": obj.Name, "display_label": obj.Label},
-            )
-        )
-    labels = [semantic["source_label"] for semantic, _, _, _ in objects]
-    expected_labels = sorted(semantic_by_label)
-    if sorted(labels) != expected_labels or len(labels) != len(set(labels)):
-        raise RuntimeError(
-            "STEP import did not expose exactly one Part::Feature solid for every semantic source label: "
-            + repr({"expected": expected_labels, "actual": labels})
-        )
-    return sorted(objects, key=lambda item: item[0]["semantic_id"])
+        objects.append((obj.Shape.Solids[0], {"product_path": [obj.Name], "persistent_label": obj.Name, "display_label": obj.Label}))
+    return [(shape, ordinal, locator) for ordinal, (shape, locator) in enumerate(sorted(objects, key=lambda item: item[1]["product_path"]))]
 
 
 def _face_contacts(shape_a, shape_b):
@@ -203,30 +185,29 @@ def _generate(request):
 
 def _analyze(request):
     step_path = request["step_path"]
-    semantics = request["semantics"]
     candidate_tolerance = float(request["tolerances"]["candidate_tolerance_mm"])
     near_miss_band = float(request["tolerances"]["near_miss_max_gap_mm"])
     document = Import.open(step_path) or FreeCAD.ActiveDocument
     if document is None:
         raise RuntimeError("Import.open did not create an active FreeCAD document")
     try:
-        source_objects = _source_objects(document, semantics)
-        regions = [_solid_record(shape, semantic, source_ordinal, locator) for semantic, shape, source_ordinal, locator in source_objects]
-        region_by_semantic = {record["semantic_id"]: record for record in regions}
-        shape_by_semantic = {semantic["semantic_id"]: shape for semantic, shape, _, _ in source_objects}
+        source_objects = _source_objects(document)
+        regions = [_solid_record(shape, source_ordinal, locator) for shape, source_ordinal, locator in source_objects]
+        region_by_occurrence = {record["occurrence_key"]: record for record in regions}
+        shape_by_occurrence = {locator["product_path"][0]: shape for shape, _, locator in source_objects}
 
         candidates = []
         relations = []
         patches = []
-        for semantic_a, semantic_b in itertools.combinations(sorted(region_by_semantic), 2):
-            record_a = region_by_semantic[semantic_a]
-            record_b = region_by_semantic[semantic_b]
-            shape_a = shape_by_semantic[semantic_a]
-            shape_b = shape_by_semantic[semantic_b]
+        for occurrence_a, occurrence_b in itertools.combinations(sorted(region_by_occurrence), 2):
+            record_a = region_by_occurrence[occurrence_a]
+            record_b = region_by_occurrence[occurrence_b]
+            shape_a = shape_by_occurrence[occurrence_a]
+            shape_b = shape_by_occurrence[occurrence_b]
             bounds_gap = _aabb_gap(record_a["bounding_box_mm"], record_b["bounding_box_mm"])
             candidates.append(
                 {
-                    "semantic_pair": [semantic_a, semantic_b],
+                    "occurrence_pair": [occurrence_a, occurrence_b],
                     "broad_phase_method": "AABB",
                     "bounds_gap_mm": bounds_gap,
                     "candidate_tolerance_mm": candidate_tolerance,
@@ -272,7 +253,7 @@ def _analyze(request):
 
             relations.append(
                 {
-                    "semantic_pair": [semantic_a, semantic_b],
+                    "occurrence_pair": [occurrence_a, occurrence_b],
                     "relation_type": relation_type,
                     "intersection_dimension": dimension,
                     "confirmed": True,
@@ -284,7 +265,7 @@ def _analyze(request):
             for contact in contacts:
                 patches.append(
                     {
-                        "semantic_pair": [semantic_a, semantic_b],
+                        "occurrence_pair": [occurrence_a, occurrence_b],
                         "source_face_index_a": contact["source_face_index_a"],
                         "source_face_index_b": contact["source_face_index_b"],
                         "relation_type": relation_type,
