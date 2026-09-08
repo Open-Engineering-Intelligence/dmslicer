@@ -646,7 +646,48 @@ def analyze_case01(
     return result
 
 
+_PATCH_COMPARISON_FIELDS = (
+    "area_mm2",
+    "coverage_a",
+    "coverage_b",
+    "provenance_id",
+    "source_face_a_id",
+    "source_face_b_id",
+    "provenance_input_entity_ids",
+    "provenance_output_entity_ids",
+)
+
+
 def _repeatability_snapshot(result: dict[str, Any]) -> dict[str, Any]:
+    """Freeze patch/provenance evidence for comparison without losing linkage order."""
+    provenance_by_id = {record["provenance_id"]: record for record in result["provenance"]}
+    patches = []
+    patch_errors = []
+    for patch in result["interface_patches"]:
+        patch_id = patch.get("patch_id")
+        values = {field: patch.get(field) for field in ("area_mm2", "coverage_a", "coverage_b", "provenance_id", "source_face_a_id", "source_face_b_id")}
+        for field, value in values.items():
+            if value is None:
+                patch_errors.append({"patch_id": patch_id, "category": field, "detail": "required patch field is missing"})
+        provenance = provenance_by_id.get(values["provenance_id"])
+        if provenance is None:
+            patch_errors.append({"patch_id": patch_id, "category": "provenance_id", "detail": "linked provenance record is missing"})
+            input_entity_ids = None
+            output_entity_ids = None
+        else:
+            input_entity_ids = provenance.get("input_entity_ids")
+            output_entity_ids = provenance.get("output_entity_ids")
+            for field, value in (("input_entity_ids", input_entity_ids), ("output_entity_ids", output_entity_ids)):
+                if not value:
+                    patch_errors.append({"patch_id": patch_id, "category": field, "detail": "required provenance linkage is missing"})
+        patches.append(
+            {
+                "patch_id": patch_id,
+                **values,
+                "provenance_input_entity_ids": input_entity_ids,
+                "provenance_output_entity_ids": output_entity_ids,
+            }
+        )
     return {
         "document_id": result["manifest"]["source_document_id"],
         "region_ids": sorted(region["region_id"] for region in result["regions"]),
@@ -660,28 +701,51 @@ def _repeatability_snapshot(result: dict[str, Any]) -> dict[str, Any]:
             }
             for relation in result["relations"]
         ],
-        "patches": [
-            {
-                "patch_id": patch["patch_id"],
-                "area_mm2": patch["area_mm2"],
-                "source_face_a_id": patch["source_face_a_id"],
-                "source_face_b_id": patch["source_face_b_id"],
-            }
-            for patch in result["interface_patches"]
-        ],
+        "patches": sorted(patches, key=lambda patch: patch["patch_id"]),
+        "patch_comparison_errors": sorted(patch_errors, key=lambda error: (str(error["patch_id"]), error["category"])),
         "semantic_digest": result["semantic_digest"],
         "source_boundaries": result["interface_source_boundaries"],
         "region_geometry_fingerprints": sorted(region["geometry_fingerprint"] for region in result["regions"]),
         "candidate_final_status": sorted((candidate["semantic_pair"], candidate["status"]) for candidate in result["candidates"]),
-        "provenance": [
-            {
-                "patch_id": patch["patch_id"],
-                "provenance_method": patch["provenance_method"],
-                "provenance_status": patch["provenance_status"],
-            }
-            for patch in result["interface_patches"]
-        ],
     }
+
+
+def _compare_repeatability_snapshots(
+    first_snapshot: dict[str, Any], second_snapshot: dict[str, Any]
+) -> tuple[dict[str, bool], list[dict[str, Any]]]:
+    """Compare frozen evidence and report every patch-level mismatch by stable ID."""
+    failures = [
+        {"run": run, **error}
+        for run, snapshot in (("first", first_snapshot), ("second", second_snapshot))
+        for error in snapshot["patch_comparison_errors"]
+    ]
+    first_patches = {patch["patch_id"]: patch for patch in first_snapshot["patches"]}
+    second_patches = {patch["patch_id"]: patch for patch in second_snapshot["patches"]}
+    for patch_identifier in sorted(set(first_patches) | set(second_patches)):
+        first_patch = first_patches.get(patch_identifier)
+        second_patch = second_patches.get(patch_identifier)
+        if first_patch is None or second_patch is None:
+            failures.append({"patch_id": patch_identifier, "category": "patch_id", "detail": "patch is missing from one snapshot"})
+            continue
+        for field in _PATCH_COMPARISON_FIELDS:
+            if first_patch[field] != second_patch[field]:
+                failures.append({"patch_id": patch_identifier, "category": field, "first": first_patch[field], "second": second_patch[field]})
+    patch_mappings_match = not failures
+    comparison = {
+        "document_ids_match": first_snapshot["document_id"] == second_snapshot["document_id"],
+        "region_ids_match": first_snapshot["region_ids"] == second_snapshot["region_ids"],
+        "face_ids_match": first_snapshot["face_ids"] == second_snapshot["face_ids"],
+        "patch_ids_match": first_snapshot["patch_ids"] == second_snapshot["patch_ids"],
+        "relation_mappings_match": first_snapshot["relations"] == second_snapshot["relations"],
+        "patch_mappings_match": patch_mappings_match,
+        "area_mappings_match": patch_mappings_match,
+        "provenance_mappings_match": patch_mappings_match,
+        "semantic_digest_match": first_snapshot["semantic_digest"] == second_snapshot["semantic_digest"],
+        "source_boundary_mappings_match": first_snapshot["source_boundaries"] == second_snapshot["source_boundaries"],
+        "region_geometry_fingerprints_match": first_snapshot["region_geometry_fingerprints"] == second_snapshot["region_geometry_fingerprints"],
+        "candidate_final_status_match": first_snapshot["candidate_final_status"] == second_snapshot["candidate_final_status"],
+    }
+    return comparison, failures
 
 
 def run_repeatability(step_path: Path, output_dir: Path) -> dict[str, Any]:
@@ -691,25 +755,14 @@ def run_repeatability(step_path: Path, output_dir: Path) -> dict[str, Any]:
     second = analyze_case01(step_path, output_dir / "repeatability_run_2")
     first_snapshot = _repeatability_snapshot(first)
     second_snapshot = _repeatability_snapshot(second)
-    comparison = {
-        "document_ids_match": first_snapshot["document_id"] == second_snapshot["document_id"],
-        "region_ids_match": first_snapshot["region_ids"] == second_snapshot["region_ids"],
-        "face_ids_match": first_snapshot["face_ids"] == second_snapshot["face_ids"],
-        "patch_ids_match": first_snapshot["patch_ids"] == second_snapshot["patch_ids"],
-        "relation_mappings_match": first_snapshot["relations"] == second_snapshot["relations"],
-        "area_mappings_match": first_snapshot["patches"] == second_snapshot["patches"],
-        "provenance_mappings_match": first_snapshot["provenance"] == second_snapshot["provenance"],
-        "semantic_digest_match": first_snapshot["semantic_digest"] == second_snapshot["semantic_digest"],
-        "source_boundary_mappings_match": first_snapshot["source_boundaries"] == second_snapshot["source_boundaries"],
-        "region_geometry_fingerprints_match": first_snapshot["region_geometry_fingerprints"] == second_snapshot["region_geometry_fingerprints"],
-        "candidate_final_status_match": first_snapshot["candidate_final_status"] == second_snapshot["candidate_final_status"],
-    }
+    comparison, comparison_failures = _compare_repeatability_snapshots(first_snapshot, second_snapshot)
     report = {
         "schema_version": 1,
         "input_step_sha256": sha256_file(Path(step_path)),
         "processes": 2,
         "status": "PASS" if all(comparison.values()) else "FAIL",
         "comparison": comparison,
+        "comparison_failures": comparison_failures,
         "first_snapshot": first_snapshot,
         "second_snapshot": second_snapshot,
     }

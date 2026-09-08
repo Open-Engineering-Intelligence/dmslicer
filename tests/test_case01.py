@@ -11,6 +11,8 @@ from dmslicer.evidence import sha256_file
 from dmslicer.identity import canonical_digest, region_id
 from dmslicer.runner import (
     ValidationError,
+    _compare_repeatability_snapshots,
+    _repeatability_snapshot,
     analyze_case01,
     generate_case01_fixture,
     run_capability_probe,
@@ -332,6 +334,85 @@ def test_case01_ids_relations_and_provenance_are_repeatable_across_processes(tmp
     assert repeatability["comparison"]["region_geometry_fingerprints_match"] is True
     assert repeatability["comparison"]["candidate_final_status_match"] is True
     assert (tmp_path / "evidence" / "repeatability.json").is_file()
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected_category"),
+    [
+        ("coverage_a", "coverage_a"),
+        ("coverage_b", "coverage_b"),
+        ("provenance_id", "provenance_id"),
+        ("provenance_input", "provenance_input_entity_ids"),
+        ("provenance_output", "provenance_output_entity_ids"),
+        ("source_face_a", "source_face_a_id"),
+        ("missing_coverage", "coverage_a"),
+    ],
+)
+def test_repeatability_rejects_patch_and_provenance_mutations(
+    tmp_path: Path, mutation: str, expected_category: str
+) -> None:
+    """Catches snapshot omissions that would let changed patch evidence report PASS."""
+    _, actual = analyze_fixture(tmp_path)
+    changed = deepcopy(actual)
+    patch = changed["interface_patches"][0]
+    provenance = next(record for record in changed["provenance"] if record["provenance_id"] == patch["provenance_id"])
+    if mutation == "coverage_a":
+        patch["coverage_a"] = 0.25
+    elif mutation == "coverage_b":
+        patch["coverage_b"] = 0.25
+    elif mutation == "provenance_id":
+        patch["provenance_id"] = "provenance:v1:changed"
+    elif mutation == "provenance_input":
+        provenance["input_entity_ids"][0] = "region:v1:changed"
+    elif mutation == "provenance_output":
+        provenance["output_entity_ids"][0] = "patch:v1:changed"
+    elif mutation == "source_face_a":
+        patch["source_face_a_id"] = "face:v1:changed"
+    else:
+        del patch["coverage_a"]
+
+    comparison, failures = _compare_repeatability_snapshots(
+        _repeatability_snapshot(actual), _repeatability_snapshot(changed)
+    )
+
+    assert comparison["patch_mappings_match"] is False
+    assert any(
+        failure["patch_id"] == actual["interface_patches"][0]["patch_id"]
+        and failure["category"] == expected_category
+        for failure in failures
+    )
+    assert not all(comparison.values())
+
+
+def test_repeatability_snapshot_accepts_identical_records_and_unordered_output(tmp_path: Path) -> None:
+    """Catches comparison logic that mistakes non-semantic list order for evidence change."""
+    _, actual = analyze_fixture(tmp_path)
+    reordered = deepcopy(actual)
+    reordered["interface_patches"].reverse()
+    reordered["provenance"].reverse()
+
+    comparison, failures = _compare_repeatability_snapshots(
+        _repeatability_snapshot(actual), _repeatability_snapshot(reordered)
+    )
+
+    assert all(comparison.values())
+    assert failures == []
+
+
+def test_repeatability_snapshot_rejects_two_missing_required_fields(tmp_path: Path) -> None:
+    """Catches two absent values being treated as equal repeatability evidence."""
+    _, actual = analyze_fixture(tmp_path)
+    first = deepcopy(actual)
+    second = deepcopy(actual)
+    del first["interface_patches"][0]["coverage_a"]
+    del second["interface_patches"][0]["coverage_a"]
+
+    comparison, failures = _compare_repeatability_snapshots(
+        _repeatability_snapshot(first), _repeatability_snapshot(second)
+    )
+
+    assert comparison["patch_mappings_match"] is False
+    assert any(failure["category"] == "coverage_a" for failure in failures)
 
 
 def test_capability_probe_records_actual_boolean_history_limit_and_face_common_path(tmp_path: Path) -> None:
