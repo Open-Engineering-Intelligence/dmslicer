@@ -15,6 +15,7 @@ from .identity import (
     canonical_digest,
     document_id,
     face_geometry_fingerprint,
+    occurrence_locator_digest,
     patch_id,
     quantized_number,
     region_id,
@@ -34,6 +35,14 @@ TOLERANCES = {
     "area_epsilon_mm2": 1e-8,
     "angular_same_domain_tolerance_rad": 1e-6,
 }
+
+
+class ValidationError(RuntimeError):
+    """Raised only after structured CASE01 validation failure evidence is written."""
+
+
+def _area_close(actual: float, expected: float, tolerance: float) -> bool:
+    return abs(actual - expected) <= tolerance
 
 
 def _freecad_executable() -> Path:
@@ -103,6 +112,7 @@ def _expected_manifest() -> dict[str, Any]:
                 "semantic_role": "SOURCE",
                 "material_key": "A",
                 "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                "source_boundary": {"boundary_role": "SOURCE_A", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 0.0},
                 "bounds_mm": {"x": [0, 10], "y": [0, 20], "z": [0, 20]},
             },
             {
@@ -119,12 +129,13 @@ def _expected_manifest() -> dict[str, Any]:
                 "semantic_role": "SOURCE",
                 "material_key": "B",
                 "participation_policy": {"mode": "ACTIVE", "source_eligible": True, "gradient_eligible": False},
+                "source_boundary": {"boundary_role": "SOURCE_B", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 1.0},
                 "bounds_mm": {"x": [20, 30], "y": [0, 20], "z": [0, 20]},
             },
         ],
         "expected_relation_matrix": [
-            {"semantic_pair": ["A", "G"], "relation_type": "FACE_CONTACT", "intersection_dimension": 2, "area_mm2": 400.0},
-            {"semantic_pair": ["G", "B"], "relation_type": "FACE_CONTACT", "intersection_dimension": 2, "area_mm2": 400.0},
+            {"semantic_pair": ["A", "G"], "relation_type": "FULL_FACE_OVERLAP", "intersection_dimension": 2, "area_mm2": 400.0},
+            {"semantic_pair": ["G", "B"], "relation_type": "FULL_FACE_OVERLAP", "intersection_dimension": 2, "area_mm2": 400.0},
             {"semantic_pair": ["A", "B"], "relation_type": "DISJOINT", "intersection_dimension": None, "area_mm2": 0.0},
         ],
         "expected_patch_count": 2,
@@ -159,7 +170,8 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
     for raw_region in raw_regions:
         face_fingerprints = [face_geometry_fingerprint(face) for face in raw_region["faces"]]
         solid_fingerprint = solid_geometry_fingerprint(raw_region, face_fingerprints)
-        identifier = region_id(source_document_id, solid_fingerprint)
+        occurrence_locator = {**raw_region["source_occurrence_locator"], "entity_kind": "SOLID"}
+        identifier = region_id(source_document_id, solid_fingerprint, occurrence_locator)
         faces = []
         face_ids_by_index = {}
         for face in raw_region["faces"]:
@@ -184,14 +196,20 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
                 "region_id": identifier,
                 "source_document_id": source_document_id,
                 "semantic_id": raw_region["semantic_id"],
+                "semantic_role": raw_region["semantic_role"],
+                "material_key": raw_region["material_key"],
+                "participation_policy": raw_region["participation_policy"],
+                "source_boundary": raw_region.get("source_boundary"),
                 "source_locator": {
                     "document_id": source_document_id,
-                    "product_path": [raw_region["source_label"]],
+                    "product_path": occurrence_locator["product_path"],
                     "entity_kind": "SOLID",
                     "source_ordinal": raw_region["source_ordinal"],
-                    "persistent_label": raw_region["source_label"],
+                    "persistent_label": occurrence_locator["persistent_label"],
                     "geometry_digest": solid_fingerprint,
-                    "identity_schema": "case01-geometry:v1",
+                    "occurrence_locator_digest": occurrence_locator_digest(occurrence_locator),
+                    "identity_schema": "case01-geometry-occurrence:v2",
+                    "identity_scope": "stable within this imported STEP only; cross-STEP correspondence is not claimed",
                 },
                 "geometry_fingerprint": solid_fingerprint,
                 "shape_type": raw_region["shape_type"],
@@ -208,6 +226,107 @@ def _materialize_identities(step_sha256: str, raw_regions: list[dict[str, Any]])
 
 def _region_lookup(regions: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {region["semantic_id"]: region for region in regions}
+
+
+def _semantic_layer(regions: list[dict[str, Any]], patches: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], str]:
+    """Activate CASE01 Γ boundaries from semantic roles plus confirmed patches.
+
+    Geometry only supplies patches.  The explicit fixture semantic manifest
+    supplies SOURCE/GRADIENT roles; neither physical ordering nor case IDs are
+    used to create the mapping.
+    """
+    by_semantic = _region_lookup(regions)
+    gradient_regions = [region for region in regions if region["semantic_role"] == "GRADIENT" and region["participation_policy"]["gradient_eligible"]]
+    if len(gradient_regions) != 1:
+        raise RuntimeError("CASE01 semantic activation requires exactly one gradient region")
+    gradient = gradient_regions[0]
+    domain_id = "gradient-domain:v1:" + canonical_digest({"region_ids": [gradient["region_id"]]})
+    boundaries = []
+    for patch in patches:
+        semantic_a, semantic_b = patch["semantic_pair"]
+        source_semantic = semantic_b if by_semantic[semantic_a]["region_id"] == gradient["region_id"] else semantic_a if by_semantic[semantic_b]["region_id"] == gradient["region_id"] else None
+        if source_semantic is None:
+            continue
+        source = by_semantic[source_semantic]
+        boundary_spec = source.get("source_boundary")
+        if source["semantic_role"] != "SOURCE" or not source["participation_policy"]["source_eligible"] or not boundary_spec:
+            continue
+        value = boundary_spec["scalar_value"]
+        boundary_payload = {
+            "gradient_domain_id": domain_id,
+            "source_material_region_id": source["region_id"],
+            "interface_patch_id": patch["patch_id"],
+            "condition_kind": boundary_spec["condition_kind"],
+            "scalar_value": value,
+        }
+        boundary_id = "source-boundary:v1:" + canonical_digest(boundary_payload)
+        boundaries.append(
+            {
+                "source_boundary_id": boundary_id,
+                "interface_patch_id": patch["patch_id"],
+                "gradient_domain_region_id": gradient["region_id"],
+                "gradient_domain_id": domain_id,
+                "source_material_region_id": source["region_id"],
+                "boundary_role": boundary_spec["boundary_role"],
+                "condition_kind": boundary_spec["condition_kind"],
+                "boundary_value_placeholder": value,
+                "selection": {"mode": "AUTO", "basis": "explicit benchmark semantic role + confirmed 2D patch"},
+                "provenance_linkage": {"patch_provenance_id": patch["provenance_id"], "selection_operation": "SELECT_SOURCE_BOUNDARY"},
+            }
+        )
+    boundaries = sorted(boundaries, key=lambda boundary: boundary["source_boundary_id"])
+    semantic_digest = "sha256:" + canonical_digest({"domain_id": domain_id, "source_boundaries": boundaries})
+    return boundaries, semantic_digest
+
+
+def validate_case01(result: dict[str, Any], expected: dict[str, Any], evidence_dir: Path) -> dict[str, Any]:
+    """Compare measured output to tracked truth; never contribute to geometry calculation."""
+    failures: list[dict[str, Any]] = []
+    expected_without_digest = {key: value for key, value in expected.items() if key != "truth_digest"}
+    computed_truth_digest = "sha256:" + canonical_digest(expected_without_digest)
+    if expected.get("truth_digest") != computed_truth_digest:
+        failures.append({"kind": "expected_truth_digest", "expected": computed_truth_digest, "actual": expected.get("truth_digest")})
+    expected_pair_rows = [tuple(truth["semantic_pair"]) for truth in expected["expected_relation_matrix"]]
+    actual_pair_rows = [tuple(relation["semantic_pair"]) for relation in result["relations"]]
+    if len(expected_pair_rows) != len(set(expected_pair_rows)):
+        failures.append({"kind": "duplicate_expected_relation", "semantic_pairs": [list(pair) for pair in expected_pair_rows]})
+    if len(actual_pair_rows) != len(set(actual_pair_rows)):
+        failures.append({"kind": "duplicate_actual_relation", "semantic_pairs": [list(pair) for pair in actual_pair_rows]})
+    actual_relations = {tuple(relation["semantic_pair"]): relation for relation in result["relations"]}
+    actual_patches = result["interface_patches"]
+    expected_pairs = set(expected_pair_rows)
+    if len(actual_pair_rows) != len(expected_pair_rows):
+        failures.append({"kind": "relation_cardinality", "expected": len(expected_pair_rows), "actual": len(actual_pair_rows)})
+    for pair in sorted(set(actual_relations) - expected_pairs):
+        failures.append({"kind": "unexpected_relation", "semantic_pair": list(pair), "actual": actual_relations[pair]})
+    for patch in actual_patches:
+        pair = tuple(patch["semantic_pair"])
+        if pair not in expected_pairs:
+            failures.append({"kind": "unexpected_interface_patch", "semantic_pair": list(pair), "actual": patch})
+    if result["manifest"]["imported_solid_count"] != len(expected["regions"]):
+        failures.append({"kind": "solid_count", "expected": len(expected["regions"]), "actual": result["manifest"]["imported_solid_count"]})
+    if len(actual_patches) != expected["expected_patch_count"]:
+        failures.append({"kind": "interface_patch_count", "expected": expected["expected_patch_count"], "actual": len(actual_patches)})
+    area_tolerance = float(expected["tolerance_contract"]["area_epsilon_mm2"])
+    for truth in expected["expected_relation_matrix"]:
+        pair = tuple(truth["semantic_pair"])
+        actual = actual_relations.get(pair)
+        if actual is None:
+            failures.append({"kind": "missing_relation", "semantic_pair": list(pair), "expected": truth})
+            continue
+        for field in ("relation_type", "intersection_dimension"):
+            if actual[field] != truth[field]:
+                failures.append({"kind": field, "semantic_pair": list(pair), "expected": truth[field], "actual": actual[field]})
+        actual_area = sum(patch["area_mm2"] for patch in actual_patches if patch["semantic_pair"] == list(pair))
+        if not _area_close(actual_area, float(truth["area_mm2"]), area_tolerance):
+            failures.append({"kind": "interface_area_mm2", "semantic_pair": list(pair), "expected": truth["area_mm2"], "actual": actual_area, "tolerance": area_tolerance})
+    expected_semantics = {item["semantic_id"]: item for item in expected["regions"]}
+    actual_semantics = {item["semantic_id"] for item in result["regions"]}
+    if set(expected_semantics) != actual_semantics:
+        failures.append({"kind": "semantic_mappings", "expected": sorted(expected_semantics), "actual": sorted(actual_semantics)})
+    validation = {"schema_version": 1, "status": "PASS" if not failures else "FAIL", "expected_truth_digest": expected.get("truth_digest"), "failures": failures}
+    write_json(Path(evidence_dir) / "validation.json", validation)
+    return validation
 
 
 def _semantic_pair_order(expected: dict[str, Any], pair: list[str]) -> list[str]:
@@ -281,7 +400,7 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
                 "source_document_id": source_document_id,
                 "source_face_ids": sorted([source_face_a, source_face_b]),
                 "operation": "FACE_COMMON",
-                "method": "explicit_geometric_matching",
+                "method": "DIRECT_BREP_FACE_COMMON",
             }
         )
         patch = {
@@ -292,20 +411,22 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
             "relation_type": raw_patch["relation_type"],
             "intersection_dimension": raw_patch["intersection_dimension"],
             "area_mm2": quantized_number(raw_patch["area_mm2"]),
+            "coverage_a": quantized_number(raw_patch["coverage_a"]),
+            "coverage_b": quantized_number(raw_patch["coverage_b"]),
             "geometry_fingerprint": patch_fingerprint,
             "source_face_a_id": source_face_a,
             "source_face_b_id": source_face_b,
             "extraction_method": raw_patch["extraction_method"],
             "tolerance": TOLERANCES,
-            "provenance_method": "explicit_geometric_matching",
-            "provenance_status": "COMPLETE",
+            "provenance_method": "DIRECT_BREP_FACE_COMMON",
+            "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
             "provenance_id": provenance_identifier,
         }
         patches.append(patch)
         provenance.append(
             {
                 "provenance_id": provenance_identifier,
-                "provenance_completeness": "COMPLETE",
+                "provenance_completeness": "COMPLETE_FOR_DIRECT_COMMON",
                 "operation": "FACE_COMMON",
                 "backend": "freecad_part",
                 "backend_version": {"freecad": raw["freecad_version"], "occt": raw["opencascade_version"]},
@@ -324,11 +445,12 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
                     ),
                     "common_geometry_fingerprint": patch_fingerprint,
                 },
-                "provenance_method": "explicit_geometric_matching",
-                "provenance_status": "COMPLETE",
+                "provenance_method": "DIRECT_BREP_FACE_COMMON",
+                "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
             }
         )
 
+    source_boundaries, semantic_digest = _semantic_layer(regions, patches)
     manifest = {
         "schema_version": 1,
         "case_id": expected["case_id"],
@@ -348,7 +470,9 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
         "candidate_pairs": candidates,
         "confirmed_relations": [{"semantic_pair": relation["semantic_pair"], "relation_type": relation["relation_type"]} for relation in relations],
         "interface_areas_mm2": [patch["area_mm2"] for patch in patches],
-        "provenance_method": "explicit_geometric_matching",
+        "provenance_method": "DIRECT_BREP_FACE_COMMON",
+        "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
+        "semantic_digest": semantic_digest,
         "failure_rejection_information": [
             candidate for candidate in candidates if candidate["status"] == "FILTERED_OUT"
         ],
@@ -372,6 +496,8 @@ def _materialize_analysis(step_path: Path, expected: dict[str, Any], raw: dict[s
         "relations": sorted(relations, key=lambda relation: relation["relation_id"]),
         "interface_patches": sorted(patches, key=lambda patch: patch["patch_id"]),
         "provenance": sorted(provenance, key=lambda record: record["provenance_id"]),
+        "interface_source_boundaries": source_boundaries,
+        "semantic_digest": semantic_digest,
     }
 
 
@@ -381,6 +507,7 @@ def _write_analysis_evidence(output_dir: Path, result: dict[str, Any]) -> None:
     write_json(output_dir / "relations.json", {"candidates": result["candidates"], "relations": result["relations"]})
     write_json(output_dir / "interface_patches.json", {"interface_patches": result["interface_patches"]})
     write_json(output_dir / "provenance.json", {"provenance": result["provenance"]})
+    write_json(output_dir / "interface_source_boundaries.json", {"interface_source_boundaries": result["interface_source_boundaries"], "semantic_digest": result["semantic_digest"]})
 
 
 def analyze_case01(step_path: Path, output_dir: Path) -> dict[str, Any]:
@@ -401,7 +528,12 @@ def analyze_case01(step_path: Path, output_dir: Path) -> dict[str, Any]:
         }
     )
     result = _materialize_analysis(step_path, expected, raw, (time.perf_counter() - started) * 1000.0)
+    validation = validate_case01(result, expected, output_dir)
+    result["validation"] = validation
+    result["manifest"]["validation_status"] = validation["status"]
     _write_analysis_evidence(output_dir, result)
+    if validation["status"] != "PASS":
+        raise ValidationError("CASE01 expected-truth validation failed; see validation.json")
     return result
 
 
@@ -428,6 +560,10 @@ def _repeatability_snapshot(result: dict[str, Any]) -> dict[str, Any]:
             }
             for patch in result["interface_patches"]
         ],
+        "semantic_digest": result["semantic_digest"],
+        "source_boundaries": result["interface_source_boundaries"],
+        "region_geometry_fingerprints": sorted(region["geometry_fingerprint"] for region in result["regions"]),
+        "candidate_final_status": sorted((candidate["semantic_pair"], candidate["status"]) for candidate in result["candidates"]),
         "provenance": [
             {
                 "patch_id": patch["patch_id"],
@@ -454,6 +590,10 @@ def run_repeatability(step_path: Path, output_dir: Path) -> dict[str, Any]:
         "relation_mappings_match": first_snapshot["relations"] == second_snapshot["relations"],
         "area_mappings_match": first_snapshot["patches"] == second_snapshot["patches"],
         "provenance_mappings_match": first_snapshot["provenance"] == second_snapshot["provenance"],
+        "semantic_digest_match": first_snapshot["semantic_digest"] == second_snapshot["semantic_digest"],
+        "source_boundary_mappings_match": first_snapshot["source_boundaries"] == second_snapshot["source_boundaries"],
+        "region_geometry_fingerprints_match": first_snapshot["region_geometry_fingerprints"] == second_snapshot["region_geometry_fingerprints"],
+        "candidate_final_status_match": first_snapshot["candidate_final_status"] == second_snapshot["candidate_final_status"],
     }
     report = {
         "schema_version": 1,
@@ -479,3 +619,4 @@ def run_capability_probe(output_path: Path) -> dict[str, Any]:
     ]
     write_json(Path(output_path), probe)
     return probe
+    occurrence_locator_digest,

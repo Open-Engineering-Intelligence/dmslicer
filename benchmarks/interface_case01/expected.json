@@ -5,7 +5,7 @@
     {
       "area_mm2": 400.0,
       "intersection_dimension": 2,
-      "relation_type": "FACE_CONTACT",
+      "relation_type": "FULL_FACE_OVERLAP",
       "semantic_pair": [
         "A",
         "G"
@@ -14,7 +14,7 @@
     {
       "area_mm2": 400.0,
       "intersection_dimension": 2,
-      "relation_type": "FACE_CONTACT",
+      "relation_type": "FULL_FACE_OVERLAP",
       "semantic_pair": [
         "G",
         "B"
@@ -58,6 +58,11 @@
         "gradient_eligible": false,
         "mode": "ACTIVE",
         "source_eligible": true
+      },
+      "source_boundary": {
+        "boundary_role": "SOURCE_A",
+        "condition_kind": "DIRICHLET_SCALAR",
+        "scalar_value": 0.0
       },
       "semantic_id": "A",
       "semantic_role": "SOURCE",
@@ -109,6 +114,11 @@
         "mode": "ACTIVE",
         "source_eligible": true
       },
+      "source_boundary": {
+        "boundary_role": "SOURCE_B",
+        "condition_kind": "DIRICHLET_SCALAR",
+        "scalar_value": 1.0
+      },
       "semantic_id": "B",
       "semantic_role": "SOURCE",
       "source_label": "B"
@@ -124,7 +134,7 @@
     "near_miss_max_gap_mm": 0.05,
     "nominal_fuzzy_value_mm": 0.0
   },
-  "truth_digest": "sha256:b8bf3cd9f6ebf7b333dee4398444df2e263fd7ade6ba965decdb0524de25e67c",
+  "truth_digest": "sha256:9817ea951def9a559d35d6ccce138e7041fc567a52fce79db0ae46e7137a7a7d",
   "units": {
     "area": "mm2",
     "length": "mm",

@@ -63,8 +63,30 @@ def document_id(step_sha256: str) -> str:
     return f"stepdoc:v1:{step_sha256}"
 
 
-def region_id(source_document_id: str, solid_fingerprint: str) -> str:
-    return f"region:v1:{source_document_id}:{canonical_digest({'solid': solid_fingerprint})}"
+def occurrence_locator_digest(locator: dict[str, Any]) -> str:
+    """Identify a source occurrence without pretending to solve cross-STEP naming.
+
+    The locator is stable only within the imported STEP document.  It uses the
+    importer-visible product path/label, with the geometric digest retained as
+    corroborating evidence.  Traversal ordinal is diagnostic only and is not
+    an identity input.
+    """
+    payload = {
+        "schema": "step-occurrence-locator:v1",
+        "product_path": locator.get("product_path", []),
+        "persistent_label": locator.get("persistent_label"),
+        "entity_kind": locator.get("entity_kind", "SOLID"),
+    }
+    return f"occurrence:v1:{canonical_digest(payload)}"
+
+
+def region_id(source_document_id: str, solid_fingerprint: str, occurrence_locator: dict[str, Any]) -> str:
+    """Return an occurrence-aware region ID for one STEP document.
+
+    This deliberately makes two congruent occurrences distinct.  It does not
+    claim correspondence after a different CAD export or across STEP files.
+    """
+    return f"region:v1:{source_document_id}:{canonical_digest({'solid': solid_fingerprint, 'occurrence': occurrence_locator_digest(occurrence_locator)})}"
 
 
 def source_face_id(region_identifier: str, face_fingerprint: str) -> str:

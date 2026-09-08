@@ -56,11 +56,16 @@ def _face_record(face, index):
     }
 
 
-def _solid_record(shape, semantic, source_ordinal):
+def _solid_record(shape, semantic, source_ordinal, source_occurrence_locator):
     faces = [_face_record(face, index) for index, face in enumerate(shape.Faces)]
     return {
         "semantic_id": semantic["semantic_id"],
         "source_label": semantic["source_label"],
+        "semantic_role": semantic["semantic_role"],
+        "material_key": semantic["material_key"],
+        "participation_policy": semantic["participation_policy"],
+        "source_boundary": semantic.get("source_boundary"),
+        "source_occurrence_locator": source_occurrence_locator,
         "source_ordinal": source_ordinal,
         "shape_type": shape.ShapeType,
         "volume_mm3": float(shape.Volume),
@@ -119,8 +124,15 @@ def _source_objects(document, semantics):
             continue
         if not hasattr(obj, "Shape") or len(obj.Shape.Solids) != 1:
             continue
-        objects.append((semantic_by_label[obj.Label], obj.Shape.Solids[0], len(objects)))
-    labels = [semantic["source_label"] for semantic, _, _ in objects]
+        objects.append(
+            (
+                semantic_by_label[obj.Label],
+                obj.Shape.Solids[0],
+                len(objects),
+                {"product_path": [obj.Name], "persistent_label": obj.Name, "display_label": obj.Label},
+            )
+        )
+    labels = [semantic["source_label"] for semantic, _, _, _ in objects]
     expected_labels = sorted(semantic_by_label)
     if sorted(labels) != expected_labels or len(labels) != len(set(labels)):
         raise RuntimeError(
@@ -143,6 +155,8 @@ def _face_contacts(shape_a, shape_b):
                         "source_face_index_a": index_a,
                         "source_face_index_b": index_b,
                         "area_mm2": float(common_face.Area),
+                        "source_face_a_area_mm2": float(face_a.Area),
+                        "source_face_b_area_mm2": float(face_b.Area),
                         "geometry": {
                             "surface_type": _surface_type(common_face),
                             "area_mm2": float(common_face.Area),
@@ -198,9 +212,9 @@ def _analyze(request):
         raise RuntimeError("Import.open did not create an active FreeCAD document")
     try:
         source_objects = _source_objects(document, semantics)
-        regions = [_solid_record(shape, semantic, source_ordinal) for semantic, shape, source_ordinal in source_objects]
+        regions = [_solid_record(shape, semantic, source_ordinal, locator) for semantic, shape, source_ordinal, locator in source_objects]
         region_by_semantic = {record["semantic_id"]: record for record in regions}
-        shape_by_semantic = {semantic["semantic_id"]: shape for semantic, shape, _ in source_objects}
+        shape_by_semantic = {semantic["semantic_id"]: shape for semantic, shape, _, _ in source_objects}
 
         candidates = []
         relations = []
@@ -217,7 +231,7 @@ def _analyze(request):
                     "broad_phase_method": "AABB",
                     "bounds_gap_mm": bounds_gap,
                     "candidate_tolerance_mm": candidate_tolerance,
-                    "status": "PENDING" if bounds_gap <= candidate_tolerance else "FILTERED_OUT",
+                    "status": "EVALUATED" if bounds_gap <= candidate_tolerance else "FILTERED_OUT",
                 }
             )
 
@@ -236,7 +250,13 @@ def _analyze(request):
                 relation_type = "VOLUME_OVERLAP"
                 dimension = 3
             elif contacts:
-                relation_type = "FACE_CONTACT"
+                coverage_a = max(contact["area_mm2"] / contact["source_face_a_area_mm2"] for contact in contacts)
+                coverage_b = max(contact["area_mm2"] / contact["source_face_b_area_mm2"] for contact in contacts)
+                relation_type = (
+                    "FULL_FACE_OVERLAP"
+                    if abs(1.0 - coverage_a) <= 1e-9 and abs(1.0 - coverage_b) <= 1e-9
+                    else "PARTIAL_FACE_OVERLAP"
+                )
                 dimension = 2
             elif distance_mm > near_miss_band:
                 relation_type = "DISJOINT"
@@ -248,12 +268,17 @@ def _analyze(request):
                 relation_type = "NEAR_MISS"
                 dimension = None
 
+            if candidates[-1]["status"] == "EVALUATED" and contacts:
+                candidates[-1]["status"] = "CONFIRMED"
+
             relations.append(
                 {
                     "semantic_pair": [semantic_a, semantic_b],
                     "relation_type": relation_type,
                     "intersection_dimension": dimension,
                     "confirmed": True,
+                    "coverage_a": coverage_a if contacts else None,
+                    "coverage_b": coverage_b if contacts else None,
                     "evidence": evidence,
                 }
             )
@@ -263,9 +288,11 @@ def _analyze(request):
                         "semantic_pair": [semantic_a, semantic_b],
                         "source_face_index_a": contact["source_face_index_a"],
                         "source_face_index_b": contact["source_face_index_b"],
-                        "relation_type": "FACE_CONTACT",
+                        "relation_type": relation_type,
                         "intersection_dimension": 2,
                         "area_mm2": contact["area_mm2"],
+                        "coverage_a": contact["area_mm2"] / contact["source_face_a_area_mm2"],
+                        "coverage_b": contact["area_mm2"] / contact["source_face_b_area_mm2"],
                         "geometry": contact["geometry"],
                         "extraction_method": "face_common_brep",
                     }
