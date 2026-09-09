@@ -16,13 +16,13 @@ FreeCAD 后端只读取实际 STEP 重导入后的 B-rep。它用 `face.normalAt
 
 ## Partition、Fuse 与 provenance
 
-实际 common faces 以完整 B-rep geometry digest 去重，不能仅按面积去重。组件以 `distToShape <= linear_epsilon` 分组。每个 source carrier member Face 分别执行 `face.cut(linked_common)`；结果保留 source member linkage，零结果以显式 `EMPTY` JSON 与 FCStd 节点表示。双方分别检查面积守恒、Common/Remaining 正面积无交叠，以及双向 B-rep cut 所证明的无遗漏和无越界。Coverage 使用唯一 common 面积除以所选 FaceSet 总面积，超界直接失败，绝不 clamp。
+实际 common faces 以可解释、可重读的几何特征摘要去重，不能仅按面积去重。摘要由面积、包围盒、面/边数量、曲面与边界曲线类型等组成；它不使用 FreeCAD 原始 BREP 序列化字节来判断几何等价，因为等价几何在重写后可能有不同字节表示。组件以 `distToShape <= linear_epsilon` 分组。每个 source carrier member Face 分别执行 `face.cut(linked_common)`；结果保留 source member linkage，零结果以显式 `EMPTY` JSON 与 FCStd 节点表示。双方分别检查面积守恒、Common/Remaining 正面积无交叠，以及双向 B-rep cut 所证明的无遗漏和无越界。Coverage 使用唯一 common 面积除以所选 FaceSet 总面积，超界直接失败，绝不 clamp。
 
 成功路径在校正后 Fuse，并检查单一 valid closed Solid、体积守恒以及每个 common patch 都未作为正面积外边界残留。Corrected assembly 和 fused STEP 均重导入；重导入检查角色、support plane、residual gap、patch/component/loop/hole topology、coverage、remaining、solid validity、closedness 与 volume。
 
 每个 FaceSet 保存成员、support/normal 与选择证据。每个 Common patch 保存 source STEP hash、双方 occurrence、双方 FaceSet、source member pair、实际 common digest、component id 和操作类型；每个 selected source member 都保存一项或多项 partition outcome，完全被 common 消耗的成员也有带 source FaceSet/member digest 与 linked common digests 的显式 `EMPTY` 记录。当前 FreeCAD binding 未提供可信的 native Generated/Modified/Deleted 历史，因此证据明确标注 `native_history_claimed=false`，只声称直接 B-rep 几何 provenance。
 
-Host 为每个发布 artifact 保存 SHA-256，并启动独立 FreeCADCmd 进程重新读取 common、逐 patch BREP、remaining BREP、corrected assembly STEP 与 fused STEP；validator 再进行一次 artifact-backed 重读，核对 FaceSet support/gap、patch/component/provenance parity、完整 round-trip 字段和文件 hash。这样仅篡改 JSON、替换 BREP/STEP 或伪造摘要都不能保持 PASS。
+Host 为每个发布 artifact 保存文件 SHA-256（仅证明文件未被替换），并启动独立 FreeCADCmd 进程重新读取 common、逐 patch BREP、remaining BREP、corrected assembly STEP 与 fused STEP；validator 再进行一次 artifact-backed 重读，核对 FaceSet support/gap、patch/component/provenance parity、空间 partition、fused boundary、完整 round-trip 字段和文件 hash。这样仅篡改 JSON、替换 BREP/STEP 或伪造几何特征摘要都不能保持 PASS，同时不会把 BREP 序列化差异误判为几何差异。
 
 ## 验证与限制
 

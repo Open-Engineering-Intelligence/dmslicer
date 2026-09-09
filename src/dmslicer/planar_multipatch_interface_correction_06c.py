@@ -743,7 +743,8 @@ def validate_multipatch_evidence(
         else:
             for patch, verified in zip(patches, verified_patches):
                 if (
-                    not _close(patch.get("area_mm2"), verified.get("area_mm2"), area_epsilon)
+                    patch.get("geometry_digest") != verified.get("geometry_digest")
+                    or not _close(patch.get("area_mm2"), verified.get("area_mm2"), area_epsilon)
                     or verified.get("face_count") != 1
                     or verified.get("surface_types") != [patch.get("surface_type")]
                     or verified.get("boundary_curve_types")
@@ -765,6 +766,31 @@ def validate_multipatch_evidence(
             failures.append({"kind": "artifact_corrected_step_parity"})
         if verification.get("fused") != fused_reimport:
             failures.append({"kind": "artifact_fused_step_parity"})
+        if verification.get("artifact_patch_geometry_equivalent") is not True:
+            failures.append({"kind": "artifact_patch_geometry_equivalence"})
+        verified_spatial = verification.get("spatial_validation", {})
+        for side in ("Side_1", "Side_2"):
+            for name in (
+                "common_remaining_overlap_area_mm2",
+                "coverage_missing_area_mm2",
+                "outside_area_mm2",
+                "source_area_mm2",
+                "result_area_mm2",
+            ):
+                if not _close(
+                    verified_spatial.get(side, {}).get(name),
+                    spatial.get(side, {}).get(name),
+                    area_epsilon,
+                ):
+                    failures.append({"kind": "artifact_spatial_parity", "field": f"{side}.{name}"})
+            if verified_spatial.get(side, {}).get("within_area_epsilon") is not True:
+                failures.append({"kind": "artifact_spatial_partition", "field": side})
+        if not _close(
+            verification.get("fused_boundary_overlap_area_mm2"),
+            boundary_overlap,
+            area_epsilon,
+        ):
+            failures.append({"kind": "artifact_fused_boundary_parity"})
     elif status in {
         "MOTION_NOT_AUTHORIZED",
         "ENGINEERING_TOLERANCE_EXCEEDED",
@@ -789,14 +815,28 @@ def validate_multipatch_evidence(
     if not isinstance(recorded_hashes, dict):
         failures.append({"kind": "artifact_hash"})
         recorded_hashes = {}
+    required_hashes = set(_artifact_names(operation.get("artifacts", {})))
+    if operation.get("view_reopen") is not None:
+        required_hashes.add("operation_debug.FCStd")
+    valid_manifest = set(recorded_hashes) == required_hashes and all(
+        isinstance(value, str)
+        and value.startswith("sha256:")
+        and len(value) == 71
+        and all(character in "0123456789abcdef" for character in value[7:])
+        for value in recorded_hashes.values()
+    )
+    if not valid_manifest:
+        failures.append({"kind": "artifact_hash_manifest"})
     if artifact_root is not None:
         artifact_root = Path(artifact_root)
+        artifact_hashes_match = valid_manifest
         for name, recorded_hash in recorded_hashes.items():
             path = artifact_root / name
             actual_hash = "sha256:" + sha256_file(path) if path.is_file() else None
             if actual_hash != recorded_hash:
                 failures.append({"kind": "artifact_hash", "artifact": name})
-        if status == "SUPPORTED_UNIQUE_INTERFACE_FACESET":
+                artifact_hashes_match = False
+        if status == "SUPPORTED_UNIQUE_INTERFACE_FACESET" and artifact_hashes_match:
             try:
                 observed = _run_freecad(
                     {

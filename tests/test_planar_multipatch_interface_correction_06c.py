@@ -318,6 +318,61 @@ def test_validator_rejects_artifact_bytes_that_do_not_match_recorded_hash(tmp_pa
     assert any(failure["kind"] == "artifact_hash" for failure in validation["failures"])
 
 
+def test_validator_rejects_coordinated_patch_digest_fabrication(tmp_path: Path) -> None:
+    """Break caught: changing every JSON reference to one false digest evades artifact binding."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    evidence = copy.deepcopy(result["operation"])
+    patch = evidence["partition"]["common_patches"][0]
+    old = patch["geometry_digest"]
+    fake = "sha256:" + "f" * 64
+    patch["geometry_digest"] = fake
+    component = next(
+        item for item in evidence["topology"]["components"]
+        if old in item["patch_geometry_digests"]
+    )
+    component["patch_geometry_digests"] = [
+        fake if digest == old else digest for digest in component["patch_geometry_digests"]
+    ]
+    for record in evidence["provenance"]["common_patches"]:
+        if record["actual_common_digest"] == old:
+            record["actual_common_digest"] = fake
+    for record in evidence["partition"]["member_level_partition"]:
+        record["linked_common_digests"] = [
+            fake if digest == old else digest for digest in record["linked_common_digests"]
+        ]
+    evidence["provenance"]["remaining_patches"] = copy.deepcopy(
+        evidence["partition"]["member_level_partition"]
+    )
+    assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_requires_complete_hash_manifest_for_every_material_artifact(tmp_path: Path) -> None:
+    """Break caught: removing a hash entry silently exempts that artifact from verification."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    for name in (
+        "corrected_assembly.step", "fused.step", "common.brep",
+        "common_patch_1.brep", "common_patch_2.brep", "side_1_remaining.brep",
+    ):
+        evidence = copy.deepcopy(result["operation"])
+        evidence["artifact_sha256"].pop(name)
+        validation = module.validate_multipatch_evidence(
+            evidence, result["expected"], artifact_root=Path(result["output_dir"])
+        )
+        assert validation["status"] == "FAIL", name
+        assert any(failure["kind"] == "artifact_hash_manifest" for failure in validation["failures"])
+
+
+def test_artifact_reverification_recomputes_spatial_partition_and_fused_boundary(tmp_path: Path) -> None:
+    """Break caught: acceptance-critical spatial and fused-boundary checks are only self-reported."""
+    result = _run(tmp_path, "P10")
+    operation = result["operation"]
+    verification = operation["artifact_verification"]
+    assert verification["spatial_validation"] == operation["partition"]["spatial_validation"]
+    assert verification["fused_boundary_overlap_area_mm2"] == pytest.approx(0.0, abs=1e-8)
+
+
 def test_full_coverage_emits_one_explicit_partition_outcome_per_source_member(tmp_path: Path) -> None:
     """Break caught: fully consumed Side_2 members vanish instead of producing EMPTY provenance."""
     result = _run(tmp_path, "P10")
@@ -371,6 +426,62 @@ def test_curved_interface_is_structured_unsupported_not_no_positive_area_or_back
     assert operation.get("preflight", {}).get("reason") == "NO_ROLE_MATCHED_PLANAR_FACESETS"
     assert operation.get("motion", {}).get("executed_translation_norm_mm") == 0.0
     assert operation.get("fuse", {}).get("executed") is False
+
+
+def test_negative_planar_gap_is_structured_penetration_out_of_scope(tmp_path: Path) -> None:
+    """Break caught: penetration is mislabeled as no positive-area interface."""
+    module = _module()
+    step = tmp_path / "penetration.step"
+    module._run_freecad(
+        {"action": "generate_unsupported_probe", "kind": "penetration", "step_path": str(step)}
+    )
+    response = module._run_freecad(
+        {
+            "action": "analyze",
+            "scenario_id": "UNSUPPORTED_PENETRATION_PROBE",
+            "step_path": str(step),
+            "policy": module.POLICY,
+            "rules": module.RULES,
+            "output_dir": str(tmp_path / "output"),
+            "create_view": False,
+            "traversal_order": "normal",
+        }
+    )
+    operation = response["operation"]
+    assert operation["status"] == "UNSUPPORTED"
+    assert operation["preflight"]["reason"] == "PENETRATION_SEPARATION_OUT_OF_SCOPE"
+    assert operation["motion"]["executed_translation_norm_mm"] == 0.0
+    assert operation["fuse"]["executed"] is False
+
+
+def test_negative_support_gap_without_lateral_overlap_is_not_penetration(tmp_path: Path) -> None:
+    """Break caught: unrelated laterally separated planes are mislabeled as penetration."""
+    module = _module()
+    step = tmp_path / "separated.step"
+    module._run_freecad(
+        {"action": "generate_unsupported_probe", "kind": "penetration_lateral", "step_path": str(step)}
+    )
+    operation = module._run_freecad(
+        {
+            "action": "analyze",
+            "scenario_id": "NEGATIVE_GAP_WITHOUT_OVERLAP",
+            "step_path": str(step),
+            "policy": module.POLICY,
+            "rules": module.RULES,
+            "output_dir": str(tmp_path / "output"),
+            "create_view": False,
+            "traversal_order": "normal",
+        }
+    )["operation"]
+    assert operation["status"] == "NO_POSITIVE_AREA_INTERFACE"
+
+
+def test_stable_geometry_identity_distinguishes_equal_statistics_hole_layouts() -> None:
+    """Break caught: equal area/bounds/perimeter hole layouts collide as one geometry."""
+    module = _module()
+    probe = module._run_freecad({"action": "probe_geometry_identity_collision"})
+    assert probe["symmetric_difference_area_mm2"] > module.RULES["area_epsilon_mm2"]
+    assert probe["first_digest"] != probe["second_digest"]
 
 
 def test_failed_validation_cannot_replace_prior_success_or_emit_p12_success_step(tmp_path: Path, monkeypatch) -> None:

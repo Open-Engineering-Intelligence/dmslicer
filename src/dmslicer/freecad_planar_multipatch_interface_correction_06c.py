@@ -19,10 +19,70 @@ class UnsupportedComponentTopology(RuntimeError):
     pass
 
 
+def _rounded(value):
+    return round(float(value), 8)
+
+
+def _bounds(shape):
+    box = shape.BoundBox
+    return [_rounded(value) for value in (
+        box.XMin, box.XMax, box.YMin, box.YMax, box.ZMin, box.ZMax
+    )]
+
+
+def _center(shape):
+    try:
+        center = shape.CenterOfMass
+        return [_rounded(center.x), _rounded(center.y), _rounded(center.z)]
+    except Exception:
+        return None
+
+
+def _geometry_signature(shape):
+    """Canonical geometry identity that survives BREP write/read serialization."""
+    faces = []
+    for face in shape.Faces:
+        wires = []
+        for wire in face.Wires:
+            try:
+                enclosed_area = _rounded(Part.Face(wire).Area)
+            except Exception:
+                enclosed_area = None
+            wires.append({
+                "length_mm": _rounded(wire.Length),
+                "bounds_mm": _bounds(wire),
+                "enclosed_area_mm2": enclosed_area,
+                "curve_types": sorted(type(edge.Curve).__name__ for edge in wire.Edges),
+            })
+        wires.sort(key=lambda value: json.dumps(value, sort_keys=True))
+        faces.append({
+            "surface_type": type(face.Surface).__name__,
+            "area_mm2": _rounded(face.Area),
+            "center_mm": _center(face),
+            "bounds_mm": _bounds(face),
+            "wire_count": len(face.Wires),
+            "wires": wires,
+            "boundary_curve_types": sorted(
+                type(edge.Curve).__name__ for edge in face.Edges
+            ),
+        })
+    faces.sort(key=lambda value: json.dumps(value, sort_keys=True))
+    return {
+        "shape_type": shape.ShapeType,
+        "area_mm2": _rounded(shape.Area),
+        "length_mm": _rounded(shape.Length),
+        "bounds_mm": _bounds(shape),
+        "face_count": len(shape.Faces),
+        "edge_count": len(shape.Edges),
+        "faces": faces,
+    }
+
+
 def _digest(shape):
-    return "sha256:" + hashlib.sha256(
-        shape.exportBrepToString().encode("utf-8")
-    ).hexdigest()
+    payload = json.dumps(
+        _geometry_signature(shape), sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return "sha256:" + hashlib.sha256(payload).hexdigest()
 
 
 def _closed(shape):
@@ -185,6 +245,7 @@ def _common_patches(first_group, second_group, area_epsilon, reverse=False):
                     {
                         "shape": common_face,
                         "geometry_digest": _digest(common_face),
+                        "geometry_signature": _geometry_signature(common_face),
                         "area_mm2": float(common_face.Area),
                         "surface_type": type(common_face.Surface).__name__,
                         "boundary_curve_types": sorted(
@@ -326,6 +387,28 @@ def _candidate_pairs(first, second, policy, rules, reverse=False):
             )
     eligible.sort(key=lambda pair: pair["record"]["pair_id"])
     return first_sets, second_sets, eligible
+
+
+def _negative_overlap_gaps(first, second, first_sets, second_sets, rules, reverse=False):
+    overlaps = []
+    for first_set in first_sets:
+        for second_set in second_sets:
+            gap = float(second_set["support_coordinate_mm"] - first_set["support_coordinate_mm"])
+            if gap >= -rules["linear_epsilon_mm"]:
+                continue
+            preview = second.copy()
+            preview.translate(FreeCAD.Vector(0.0, 0.0, -gap))
+            moved_set = _translated_group(
+                preview, -1.0, first_set["support_coordinate_mm"], rules, reverse
+            )
+            if moved_set is None:
+                continue
+            _, patches = _common_patches(
+                first_set, moved_set, rules["area_epsilon_mm2"], reverse
+            )
+            if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
+                overlaps.append(gap)
+    return overlaps
 
 
 def _component_groups(patches, linear_epsilon):
@@ -940,6 +1023,29 @@ def _analyze(request):
                 )
             return operation
         if not candidates:
+            penetration_gaps = _negative_overlap_gaps(
+                first, second, first_sets, second_sets, rules, reverse
+            )
+            if penetration_gaps:
+                return {
+                    "schema_version": 1,
+                    "scenario_id": request["scenario_id"],
+                    "status": "UNSUPPORTED",
+                    "preflight": {
+                        "reason": "PENETRATION_SEPARATION_OUT_OF_SCOPE",
+                        "signed_gaps_mm": penetration_gaps,
+                    },
+                    "face_sets": face_set_evidence,
+                    "motion": base_motion,
+                    "partition": {},
+                    "topology": {},
+                    "fuse": {"executed": False},
+                    "provenance": {
+                        "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                        "operation_kind": "STRUCTURED_SCOPE_REJECTION",
+                        "native_history_claimed": False,
+                    },
+                }
             numeric_policy = all(
                 type(policy.get(name)) in (int, float)
                 and not isinstance(policy.get(name), bool)
@@ -1252,12 +1358,15 @@ def _verify_artifacts(request):
     rules = request["rules"]
     common = _read_brep(output / artifacts["common_brep"])
     patches = []
+    patch_shapes = []
     for name in artifacts["common_patch_breps"]:
         shape = _read_brep(output / name)
+        patch_shapes.append(shape)
         patches.append(
             {
                 "artifact": name,
                 "geometry_digest": _digest(shape),
+                "geometry_signature": _geometry_signature(shape),
                 "area_mm2": float(shape.Area),
                 "face_count": len(shape.Faces),
                 "surface_types": sorted(type(face.Surface).__name__ for face in shape.Faces),
@@ -1280,6 +1389,7 @@ def _verify_artifacts(request):
                 "area_mm2": float(shape.Area),
                 "face_count": len(shape.Faces),
             }
+    spatial = _verify_spatial_artifacts(output, artifacts, rules, common, patch_shapes)
     return {
         "status": "SUCCEEDED",
         "common": {
@@ -1294,6 +1404,112 @@ def _verify_artifacts(request):
             output / artifacts["corrected_assembly_step"], rules
         ),
         "fused": _reimport_fused(output / artifacts["fused_step"]),
+        "spatial_validation": spatial["spatial_validation"],
+        "fused_boundary_overlap_area_mm2": spatial[
+            "fused_boundary_overlap_area_mm2"
+        ],
+        "artifact_patch_geometry_equivalent": spatial[
+            "artifact_patch_geometry_equivalent"
+        ],
+    }
+
+
+def _verify_spatial_artifacts(output, artifacts, rules, common, artifact_patches):
+    corrected_document = FreeCAD.newDocument("VerifyCorrectedSpatial06C")
+    try:
+        Import.insert(
+            str(output / artifacts["corrected_assembly_step"]),
+            corrected_document.Name,
+        )
+        first, second = _roles(corrected_document)
+        first_sets = _face_sets(first, "Side_1", 1.0, rules["linear_epsilon_mm"])
+        second_sets = _face_sets(second, "Side_2", -1.0, rules["linear_epsilon_mm"])
+        matches = []
+        for first_set in first_sets:
+            for second_set in second_sets:
+                gap = second_set["support_coordinate_mm"] - first_set["support_coordinate_mm"]
+                if abs(gap) > rules["linear_epsilon_mm"]:
+                    continue
+                _, patches = _common_patches(
+                    first_set, second_set, rules["area_epsilon_mm2"]
+                )
+                if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
+                    matches.append((first_set, second_set, patches))
+        if len(matches) != 1:
+            raise RuntimeError("cannot independently identify corrected interface FaceSets")
+        first_set, second_set, reconstructed_patches = matches[0]
+        unmatched = list(artifact_patches)
+        for reconstructed in reconstructed_patches:
+            equivalent_index = next(
+                (
+                    index for index, artifact in enumerate(unmatched)
+                    if reconstructed["shape"].cut(artifact).Area
+                    + artifact.cut(reconstructed["shape"]).Area
+                    <= rules["area_epsilon_mm2"]
+                ),
+                None,
+            )
+            if equivalent_index is not None:
+                unmatched.pop(equivalent_index)
+        patch_geometry_equivalent = (
+            len(reconstructed_patches) == len(artifact_patches) and not unmatched
+        )
+        remaining_shapes = {}
+        for role in ("Side_1", "Side_2"):
+            name = artifacts[role.lower() + "_remaining_brep"]
+            remaining_shapes[role] = [] if name == "EMPTY" else list(
+                _read_brep(output / name).Faces
+            )
+        spatial_validation = {
+            "Side_1": _spatial_partition(
+                first_set, common, remaining_shapes["Side_1"], rules["area_epsilon_mm2"]
+            ),
+            "Side_2": _spatial_partition(
+                second_set, common, remaining_shapes["Side_2"], rules["area_epsilon_mm2"]
+            ),
+        }
+    finally:
+        FreeCAD.closeDocument(corrected_document.Name)
+
+    fused_document = FreeCAD.newDocument("VerifyFusedBoundary06C")
+    try:
+        Import.insert(str(output / artifacts["fused_step"]), fused_document.Name)
+        fused_objects = _objects(fused_document)
+        fused_solids = [solid for _, shape in fused_objects for solid in shape.Solids]
+        if len(fused_solids) != 1:
+            raise RuntimeError("fused STEP does not contain exactly one solid")
+        overlap = sum(
+            common_face.common(fused_face).Area
+            for common_face in common.Faces
+            for fused_face in fused_solids[0].Faces
+        )
+    finally:
+        FreeCAD.closeDocument(fused_document.Name)
+    return {
+        "spatial_validation": spatial_validation,
+        "fused_boundary_overlap_area_mm2": float(overlap),
+        "artifact_patch_geometry_equivalent": patch_geometry_equivalent,
+    }
+
+
+def _probe_geometry_identity_collision():
+    outer = Part.makePlane(100.0, 100.0, FreeCAD.Vector(-50.0, -50.0, 0.0))
+
+    def perforated(centers):
+        result = outer.copy()
+        for x, y in centers:
+            circle = Part.Wire(Part.makeCircle(5.0, FreeCAD.Vector(x, y, 0.0)))
+            result = result.cut(Part.Face(circle))
+        return result.Faces[0]
+
+    first = perforated([(-20.0, 0.0), (20.0, 0.0)])
+    second = perforated([(0.0, -20.0), (0.0, 20.0)])
+    difference = first.cut(second).Area + second.cut(first).Area
+    return {
+        "status": "SUCCEEDED",
+        "first_digest": _digest(first),
+        "second_digest": _digest(second),
+        "symmetric_difference_area_mm2": float(difference),
     }
 
 
@@ -1319,10 +1535,16 @@ def _probe_connected_multiface_topology(request):
 
 
 def _generate_unsupported_probe(request):
-    if request.get("kind") != "sphere":
-        raise ValueError("unknown unsupported probe kind")
     first = Part.makeBox(60.0, 60.0, 5.0, FreeCAD.Vector(-30.0, -30.0, 0.0))
-    second = Part.makeSphere(5.0, FreeCAD.Vector(0.0, 0.0, 10.0))
+    if request.get("kind") == "sphere":
+        second = Part.makeSphere(5.0, FreeCAD.Vector(0.0, 0.0, 10.0))
+    elif request.get("kind") in {"penetration", "penetration_lateral"}:
+        x = -6.0 if request.get("kind") == "penetration" else 100.0
+        second = Part.makeBox(
+            12.0, 16.0, 15.0, FreeCAD.Vector(x, -8.0, 4.95)
+        )
+    else:
+        raise ValueError("unknown unsupported probe kind")
     document = FreeCAD.newDocument("Unsupported06CProbe")
     try:
         objects = []
@@ -1356,6 +1578,8 @@ def _main():
             response = _probe_connected_multiface_topology(request)
         elif request["action"] == "generate_unsupported_probe":
             response = _generate_unsupported_probe(request)
+        elif request["action"] == "probe_geometry_identity_collision":
+            response = _probe_geometry_identity_collision()
         else:
             raise ValueError("unknown 06C action " + str(request["action"]))
     except Exception:
