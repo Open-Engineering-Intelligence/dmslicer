@@ -1,0 +1,46 @@
+{
+  "construction": {
+    "Side_1": {
+      "bounds_mm": [
+        0,
+        60,
+        0,
+        40,
+        0,
+        5
+      ],
+      "kind": "box"
+    },
+    "Side_2": {
+      "kind": "connected_fused_feet_bridge",
+      "left_foot_bounds_mm": [
+        6,
+        18,
+        12,
+        28,
+        5.05,
+        20.05
+      ],
+      "right_foot_bounds_mm": [
+        42,
+        54,
+        12,
+        28,
+        5.05,
+        20.05
+      ],
+      "upper_bridge_bounds_mm": [
+        6,
+        54,
+        16,
+        24,
+        15.05,
+        20.05
+      ]
+    }
+  },
+  "scenario_id": "P10",
+  "schema_version": 1,
+  "truth_source": "analytic_dimensions_not_production_geometry",
+  "units": "mm"
+}

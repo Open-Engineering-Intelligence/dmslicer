@@ -1,0 +1,27 @@
+{
+  "construction": {
+    "Side_1": {
+      "bounds_mm": [
+        -30,
+        30,
+        -30,
+        30,
+        0,
+        5
+      ],
+      "kind": "box"
+    },
+    "Side_2": {
+      "base_z_mm": 5.05,
+      "height_mm": 10.0,
+      "inner_radius_mm": 10.0,
+      "kind": "direct_analytic_annular_cylinder",
+      "outer_radius_mm": 20.0,
+      "transformGeometry_used": false
+    }
+  },
+  "scenario_id": "P11",
+  "schema_version": 1,
+  "truth_source": "analytic_dimensions_not_production_geometry",
+  "units": "mm"
+}

@@ -1,0 +1,26 @@
+{
+  "numeric_rules": {
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "operation": "PLANAR_MULTIPATCH_INTERFACE_CORRECTION_06C",
+  "scenarios": [
+    {
+      "scenario_id": "P10",
+      "status": "SUPPORTED_UNIQUE_INTERFACE_FACESET",
+      "step_sha256": "sha256:7d09b46f01acea67655b6cff38ea135dc78849adc56b4fa4701b018d62ba3794"
+    },
+    {
+      "scenario_id": "P11",
+      "status": "SUPPORTED_UNIQUE_INTERFACE_FACESET",
+      "step_sha256": "sha256:e1ef8e37727ba9d3edfbdad15db26b93c28c4257023770e2f2ff12423a249a1b"
+    },
+    {
+      "scenario_id": "P12",
+      "status": "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET",
+      "step_sha256": "sha256:fbba5c074127d61ced1d5e2f460b7a17b9d3664c49cc120be21059a5a91b1c0a"
+    }
+  ],
+  "schema_version": 1
+}
