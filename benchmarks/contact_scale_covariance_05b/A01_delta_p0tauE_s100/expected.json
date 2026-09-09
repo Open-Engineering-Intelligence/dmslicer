@@ -1,0 +1,12 @@
+{
+  "case_id": "A01",
+  "contact_area_mm2": 33333333.333333332,
+  "engineering_state": "exact",
+  "exact_intersection_dimension": "2D",
+  "ground_truth_mode": "construction_derived",
+  "intended_relation_dimension": "2D",
+  "pilot_level": "LEVEL_B_SCALE_PILOT",
+  "scale": 100.0,
+  "schema_version": 1,
+  "set_signed_offset_mm": 0.0
+}

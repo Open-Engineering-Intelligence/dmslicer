@@ -102,9 +102,9 @@ def _debug(path, case_id, first, second, common, fuse, facts):
         for name, shape, visible in (("Actual_Input_1", first, True), ("Actual_Input_2", second, True), ("Actual_Intersection", common, has_intersection), ("Direct_Fuse", fuse, False)):
             obj = doc.addObject("Part::Feature", name); obj.Shape = shape; obj.Visibility = visible
             if name.startswith("Actual_Input_") and obj.ViewObject is not None: obj.ViewObject.Transparency = 65
-            for key in ("MeasuredDeltaMm", "EngineeringState", "ExactDimension", "SolidCount"):
+            for key in ("MeasuredDeltaMm", "TauEMm", "Lmm", "EngineeringState", "ExactDimension", "SolidCount"):
                 obj.addProperty("App::PropertyString", key, "Tolerance Pilot")
-            obj.MeasuredDeltaMm = str(facts.get("measured_signed_offset_mm", "UNSUPPORTED")); obj.EngineeringState = str(facts.get("engineering_state", "UNSUPPORTED")); obj.ExactDimension = facts["geometry_state"]["exact_intersection_dimension"]; obj.SolidCount = str(facts["direct_fuse"]["solid_count"])
+            obj.MeasuredDeltaMm = str(facts.get("measured_signed_offset_mm", "UNSUPPORTED")); obj.TauEMm = str(facts.get("tauE_mm", "UNSUPPORTED")); obj.Lmm = str(facts.get("L_mm", "UNSUPPORTED")); obj.EngineeringState = str(facts.get("engineering_state", "UNSUPPORTED")); obj.ExactDimension = facts["geometry_state"]["exact_intersection_dimension"]; obj.SolidCount = str(facts["direct_fuse"]["solid_count"])
         doc.recompute(); doc.saveAs(str(path))
     finally: FreeCAD.closeDocument(doc.Name)
 

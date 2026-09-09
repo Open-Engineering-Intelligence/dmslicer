@@ -1,0 +1,38 @@
+{
+  "case_id": "A07",
+  "construction_invariants": {
+    "combined_L_mm": 10000.0,
+    "interface_length_mm": 4330.127018922193,
+    "lower_end_clearance_mm": 721.6878364870322,
+    "shaft_radius_mm": 1443.3756729740644,
+    "shaft_z_max_mm": 4330.127018922193,
+    "shaft_z_min_mm": 0.0,
+    "sleeve_length_mm": 5773.502691896258,
+    "sleeve_outer_radius_mm": 2886.751345948129,
+    "sleeve_z_max_mm": 5051.814855409225,
+    "sleeve_z_min_mm": -721.6878364870322,
+    "upper_end_clearance_mm": 721.6878364870317
+  },
+  "delta_over_tauE": -0.5,
+  "geometry": {
+    "bore_cutter_z_max_mm": 7216.878364870321,
+    "bore_cutter_z_min_mm": -1443.3756729740644,
+    "scale": 144.33756729740642,
+    "shaft_radius_mm": 1443.3756729740644,
+    "shaft_z_max_mm": 4330.127018922193,
+    "shaft_z_min_mm": 0.0,
+    "sleeve_outer_radius_mm": 2886.751345948129,
+    "sleeve_z_max_mm": 5051.814855409225,
+    "sleeve_z_min_mm": -721.6878364870322
+  },
+  "normalization": "05A nominal L=100 mm; all dimensions and tauE co-scaled; perturbation is not renormalized",
+  "perturbation_kind": "construction_variant",
+  "pilot_level": "LEVEL_B_SCALE_PILOT",
+  "sample_id": "A07_delta_m0_5tauE_s100",
+  "scale": 100.0,
+  "scale_mode": "co-scaled-tauE",
+  "schema_version": 1,
+  "set_signed_offset_mm": -5.0,
+  "tauE_mm": 10.0,
+  "tauK_mm": "NOT_AVAILABLE"
+}
