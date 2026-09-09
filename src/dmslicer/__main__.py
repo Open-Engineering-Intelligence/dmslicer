@@ -12,6 +12,7 @@ from .contact_canonical_03b import analyze_contact_canonical_analytic, generate_
 from .contact_canonical_03c import analyze_contact_canonical_interface_topology, generate_contact_canonical_interface_topology, run_contact_canonical_interface_topology_repeatability, run_contact_canonical_interface_topology_suite
 from .contact_partition_union_04a import run_contact_partition_union, run_contact_partition_union_suite, validate_partition_union_facts_file
 from .shell_fill_04a2 import generate_shell_fill_cases, run_shell_fill_case, run_shell_fill_suite
+from .cylinder_partition_union_04b import generate_cylinder_fit_cases, run_cylinder_fit_case, run_cylinder_fit_suite
 
 
 def main() -> None:
@@ -100,6 +101,17 @@ def main() -> None:
     shell_fill_suite.add_argument("fixture_root", type=Path)
     shell_fill_suite.add_argument("output_root", type=Path)
 
+    cylinder_generate = commands.add_parser("generate-cylinder-fit-cases", help="generate tracked U04-U06 cylinder STEP bundles")
+    cylinder_generate.add_argument("fixture_root", type=Path)
+
+    cylinder_case = commands.add_parser("run-cylinder-fit-case", help="run one U04-U06 cylindrical partition and union operation")
+    cylinder_case.add_argument("case_dir", type=Path)
+    cylinder_case.add_argument("output_dir", type=Path)
+
+    cylinder_suite = commands.add_parser("run-cylinder-fit-suite", help="run U04-U06 with two-process repeatability")
+    cylinder_suite.add_argument("fixture_root", type=Path)
+    cylinder_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -143,6 +155,12 @@ def main() -> None:
         result = run_shell_fill_case(arguments.case_dir, arguments.output_dir)
     elif arguments.command == "run-shell-fill-suite":
         result = run_shell_fill_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "generate-cylinder-fit-cases":
+        result = generate_cylinder_fit_cases(arguments.fixture_root)
+    elif arguments.command == "run-cylinder-fit-case":
+        result = run_cylinder_fit_case(arguments.case_dir, arguments.output_dir)
+    elif arguments.command == "run-cylinder-fit-suite":
+        result = run_cylinder_fit_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
