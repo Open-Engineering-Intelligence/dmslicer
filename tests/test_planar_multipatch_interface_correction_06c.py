@@ -125,6 +125,7 @@ def test_p11_retains_one_analytic_annulus_with_outer_and_hole_loops(tmp_path: Pa
     assert operation["fuse"]["executed"] is True
     assert "Fused_Solid" in operation["view_reopen"]["visible_objects"]
     assert "Original_Side_1" not in operation["view_reopen"]["visible_objects"]
+    assert "Annular_Common" in operation["view_reopen"]["objects"]
     assert {path.name for path in Path(result["output_dir"]).iterdir()} >= {
         "corrected_assembly.step", "fused.step", "common.brep",
         "side_1_remaining.brep", "side_2_remaining_EMPTY.json",
@@ -237,7 +238,10 @@ def test_validator_rejects_deleted_duplicated_or_misassigned_common_patches(tmp_
     duplicated["partition"]["common_patches"].append(copy.deepcopy(duplicated["partition"]["common_patches"][0]))
     assert module.validate_multipatch_evidence(duplicated, result["expected"])["status"] == "FAIL"
     remapped = copy.deepcopy(source)
-    remapped["partition"]["common_patches"][0]["component_id"] = "Component_999"
+    first_id = remapped["partition"]["common_patches"][0]["component_id"]
+    second_id = remapped["partition"]["common_patches"][1]["component_id"]
+    remapped["partition"]["common_patches"][0]["component_id"] = second_id
+    remapped["partition"]["common_patches"][1]["component_id"] = first_id
     assert module.validate_multipatch_evidence(remapped, result["expected"])["status"] == "FAIL"
 
 
@@ -252,6 +256,121 @@ def test_validator_rejects_lost_p11_hole_and_boundary_loop(tmp_path: Path) -> No
         else:
             evidence["topology"]["components"][0]["boundary_loops"].pop()
         assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_binds_facesets_patches_provenance_and_step_reimports(tmp_path: Path) -> None:
+    """Break caught: self-consistent-looking JSON can contradict the B-rep evidence chain."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    source = result["operation"]
+    mutations = []
+
+    impossible_support = copy.deepcopy(source)
+    impossible_support["face_sets"]["selected_pair"]["Side_1"]["support_coordinate_mm"] += 1.0
+    mutations.append(impossible_support)
+
+    fabricated_digest = copy.deepcopy(source)
+    fabricated_digest["partition"]["common_patches"][0]["geometry_digest"] = "sha256:" + "0" * 64
+    fabricated_digest["provenance"]["common_patches"][0]["actual_common_digest"] = "sha256:" + "0" * 64
+    mutations.append(fabricated_digest)
+
+    fabricated_linkage = copy.deepcopy(source)
+    link = fabricated_linkage["partition"]["common_patches"][0]["source_face_linkage"][0]
+    link["Side_2"] = "Face999"
+    fabricated_linkage["provenance"]["common_patches"][0]["source_face_member_pair"][0]["Side_2"] = "Face999"
+    mutations.append(fabricated_linkage)
+
+    for field, value in (
+        ("roles", ["Wrong_1", "Wrong_2"]),
+        ("common_area_mm2", 1.0),
+        ("coverage", {"Side_1": 1.0, "Side_2": 1.0}),
+        ("remaining_area_mm2", {"Side_1": 0.0, "Side_2": 0.0}),
+        ("boundary_component_count", 99),
+        ("valid", False),
+        ("closed", False),
+        ("solid_counts", [0, 0]),
+        ("volumes_mm3", [0.0, 0.0]),
+    ):
+        evidence = copy.deepcopy(source)
+        evidence["step_reimport"]["corrected_assembly"][field] = value
+        mutations.append(evidence)
+    for field, value in (
+        ("solid_count", 0), ("valid", False), ("closed", False), ("volume_mm3", 0.0)
+    ):
+        evidence = copy.deepcopy(source)
+        evidence["step_reimport"]["fused"][field] = value
+        mutations.append(evidence)
+
+    for evidence in mutations:
+        assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_rejects_artifact_bytes_that_do_not_match_recorded_hash(tmp_path: Path) -> None:
+    """Break caught: JSON evidence remains PASS after a published BREP is replaced."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    artifact_root = Path(result["output_dir"])
+    (artifact_root / "common.brep").write_bytes(b"not a B-rep")
+    validation = module.validate_multipatch_evidence(
+        result["operation"], result["expected"], artifact_root=artifact_root
+    )
+    assert validation["status"] == "FAIL"
+    assert any(failure["kind"] == "artifact_hash" for failure in validation["failures"])
+
+
+def test_full_coverage_emits_one_explicit_partition_outcome_per_source_member(tmp_path: Path) -> None:
+    """Break caught: fully consumed Side_2 members vanish instead of producing EMPTY provenance."""
+    result = _run(tmp_path, "P10")
+    operation = result["operation"]
+    records = operation["partition"]["member_level_partition"]
+    assert len(records) == 3
+    side_2 = [record for record in records if record["role"] == "Side_2"]
+    assert len(side_2) == 2
+    assert all(record["status"] == "EMPTY" and record["area_mm2"] == 0.0 for record in side_2)
+    assert all(record["linked_common_digests"] for record in side_2)
+    assert operation["provenance"]["remaining_patches"] == records
+
+
+def test_connected_multiface_component_boundary_is_rejected_instead_of_guessing_holes() -> None:
+    """Break caught: shared/internal wires are counted as outer or hole boundaries."""
+    module = _module()
+    try:
+        response = module._run_freecad(
+            {"action": "probe_connected_multiface_topology", "rules": module.RULES}
+        )
+    except RuntimeError:
+        response = {}
+    assert response.get("topology_status") == "UNSUPPORTED_COMPLEX_MULTIFACE_COMPONENT_BOUNDARY"
+
+
+def test_curved_interface_is_structured_unsupported_not_no_positive_area_or_backend_failure(tmp_path: Path) -> None:
+    """Break caught: an out-of-scope curved carrier is misreported as a planar no-overlap case."""
+    module = _module()
+    step = tmp_path / "unsupported_sphere.step"
+    output = tmp_path / "output"
+    try:
+        module._run_freecad(
+            {"action": "generate_unsupported_probe", "kind": "sphere", "step_path": str(step)}
+        )
+        response = module._run_freecad(
+            {
+                "action": "analyze",
+                "scenario_id": "UNSUPPORTED_SPHERE_PROBE",
+                "step_path": str(step),
+                "policy": module.POLICY,
+                "rules": module.RULES,
+                "output_dir": str(output),
+                "create_view": False,
+                "traversal_order": "normal",
+            }
+        )
+    except RuntimeError:
+        response = {"operation": {}}
+    operation = response["operation"]
+    assert operation.get("status") == "UNSUPPORTED"
+    assert operation.get("preflight", {}).get("reason") == "NO_ROLE_MATCHED_PLANAR_FACESETS"
+    assert operation.get("motion", {}).get("executed_translation_norm_mm") == 0.0
+    assert operation.get("fuse", {}).get("executed") is False
 
 
 def test_failed_validation_cannot_replace_prior_success_or_emit_p12_success_step(tmp_path: Path, monkeypatch) -> None:

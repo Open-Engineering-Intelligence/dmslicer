@@ -41,6 +41,7 @@ def _main():
                 "reopened": True,
                 "gui_visibility_persisted": True,
                 "groups": groups,
+                "objects": sorted(obj.Name for obj in reopened.Objects),
                 "visible_objects": actual,
                 "requested_visible_objects": sorted(visible_names),
                 "profile_matches": actual == sorted(visible_names),

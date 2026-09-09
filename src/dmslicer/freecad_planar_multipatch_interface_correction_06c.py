@@ -15,6 +15,10 @@ import Part
 REFERENCE = FreeCAD.Vector(0.0, 0.0, 1.0)
 
 
+class UnsupportedComponentTopology(RuntimeError):
+    pass
+
+
 def _digest(shape):
     return "sha256:" + hashlib.sha256(
         shape.exportBrepToString().encode("utf-8")
@@ -365,6 +369,10 @@ def _wire_descriptor(wire):
 
 def _topology(patches, linear_epsilon):
     groups = _component_groups(patches, linear_epsilon)
+    if any(len(group) > 1 for group in groups):
+        raise UnsupportedComponentTopology(
+            "UNSUPPORTED_COMPLEX_MULTIFACE_COMPONENT_BOUNDARY"
+        )
     records = []
     for patch_indices in groups:
         component_patches = [patches[index] for index in patch_indices]
@@ -385,6 +393,9 @@ def _topology(patches, linear_epsilon):
                 "patch_indices": patch_indices,
                 "geometry_digest": _digest(shape),
                 "area_mm2": float(sum(patch["area_mm2"] for patch in component_patches)),
+                "patch_geometry_digests": sorted(
+                    patch["geometry_digest"] for patch in component_patches
+                ),
                 "boundary_loops": loops,
                 "source_face_linkage": sorted(
                     {
@@ -443,14 +454,32 @@ def _remaining(first_group, second_group, patches, area_epsilon):
     for role, group in (("Side_1", first_group), ("Side_2", second_group)):
         for member in group["members"]:
             linked = []
+            linked_digests = []
             face_label = member["descriptor"]["human_face_label"]
             for patch in patches:
                 if any(link[role] == face_label for link in patch["source_face_linkage"]):
                     linked.append(patch["shape"])
+                    linked_digests.append(patch["geometry_digest"])
             tool = Part.makeCompound(linked) if linked else Part.Shape()
             remainder = member["shape"].cut(tool) if linked else member["shape"].copy()
             faces = [face for face in remainder.Faces if face.Area > area_epsilon]
-            for face in faces:
+            if not faces:
+                records.append(
+                    {
+                        "role": role,
+                        "source_face_set": group["face_set_id"],
+                        "source_member_face": face_label,
+                        "source_member_geometry_digest": member["descriptor"][
+                            "geometry_digest"
+                        ],
+                        "linked_common_digests": sorted(linked_digests),
+                        "status": "EMPTY",
+                        "result_digest": None,
+                        "area_mm2": 0.0,
+                        "operation_kind": "FACE_CUT_REMAINDER",
+                    }
+                )
+            for result_index, face in enumerate(faces, start=1):
                 result[role].append(face)
                 records.append(
                     {
@@ -460,6 +489,9 @@ def _remaining(first_group, second_group, patches, area_epsilon):
                         "source_member_geometry_digest": member["descriptor"][
                             "geometry_digest"
                         ],
+                        "linked_common_digests": sorted(linked_digests),
+                        "status": "NONEMPTY",
+                        "result_patch_index": result_index,
                         "result_digest": _digest(face),
                         "area_mm2": float(face.Area),
                         "operation_kind": "FACE_CUT_REMAINDER",
@@ -648,7 +680,8 @@ def _debug_document(
             common_group = _add_group(document, "Common_Patches")
             for index, patch in enumerate(patches, start=1):
                 label = "Annular Common" if scenario_id == "P11" else "Common " + str(index)
-                _add_feature(document, common_group, "Common_" + str(index), label, patch["shape"])
+                name = "Annular_Common" if scenario_id == "P11" else "Common_" + str(index)
+                _add_feature(document, common_group, name, label, patch["shape"])
             component_group = _add_group(document, "Components")
             for index, component in enumerate(components, start=1):
                 _add_feature(
@@ -855,6 +888,23 @@ def _analyze(request):
             "scale_executed": False,
             "deformation_executed": False,
         }
+        if not first_sets or not second_sets:
+            return {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": "UNSUPPORTED",
+                "preflight": {"reason": "NO_ROLE_MATCHED_PLANAR_FACESETS"},
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "operation_kind": "STRUCTURED_SCOPE_REJECTION",
+                    "native_history_claimed": False,
+                },
+            }
         if len(candidates) > 1:
             status = "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET"
             operation = {
@@ -967,10 +1017,55 @@ def _analyze(request):
             rules,
             reverse,
         )
+        original_descriptors = {
+            member["descriptor"]["human_face_label"]: member["descriptor"]
+            for member in selected["second"]["members"]
+        }
+        for member in corrected_second["members"]:
+            label = member["descriptor"]["human_face_label"]
+            if label in original_descriptors:
+                member["descriptor"] = original_descriptors[label]
         raw, patches = _common_patches(
             selected["first"], corrected_second, rules["area_epsilon_mm2"], reverse
         )
-        topology, component_shapes = _topology(patches, rules["linear_epsilon_mm"])
+        try:
+            topology, component_shapes = _topology(patches, rules["linear_epsilon_mm"])
+        except UnsupportedComponentTopology as error:
+            status = str(error)
+            selected_public = dict(selected["record"])
+            selected_public["selection_reason"] = status
+            face_set_evidence["selected_pair"] = selected_public
+            operation = {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": status,
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {"status": status},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "operation_kind": "DIRECT_BREP_COMPONENT_BOUNDARY_REJECTION",
+                    "native_history_claimed": False,
+                },
+            }
+            if request.get("create_view"):
+                operation["view_reopen"] = _debug_document(
+                    output / "operation_debug.FCStd",
+                    request["scenario_id"],
+                    first,
+                    second,
+                    status,
+                    candidates,
+                    None,
+                    None,
+                    [],
+                    [],
+                    {"Side_1": [], "Side_2": []},
+                    Part.Shape(),
+                )
+            return operation
         remaining, remaining_provenance, common_shape = _remaining(
             selected["first"], corrected_second, patches, rules["area_epsilon_mm2"]
         )
@@ -1012,6 +1107,10 @@ def _analyze(request):
             "corrected_assembly_step": corrected_step,
             "fused_step": fused_step,
             "common_brep": _export_brep(output, "common", common_shape),
+            "common_patch_breps": [
+                _export_brep(output, "common_patch_" + str(index), patch["shape"])
+                for index, patch in enumerate(patches, start=1)
+            ],
         }
         for role in ("Side_1", "Side_2"):
             if remaining[role]:
@@ -1057,6 +1156,7 @@ def _analyze(request):
             "partition": {
                 "raw_common_face_count": len(raw),
                 "common_area_mm2": common_area,
+                "common_geometry_digest": _digest(common_shape),
                 "common_patches": _public_patches(patches),
                 "carrier_area_mm2": carrier_areas,
                 "coverage": {
@@ -1080,6 +1180,27 @@ def _analyze(request):
                     abs(fused.Volume - (first.Volume + corrected.Volume - material_common.Volume))
                 ),
                 "boundary_overlap_area_mm2": boundary_overlap,
+                "volume_mm3": float(fused.Volume),
+            },
+            "body_evidence": {
+                "Side_1": {
+                    "solid_count": len(first.Solids),
+                    "valid": bool(first.isValid()),
+                    "closed": bool(_closed(first)),
+                    "volume_mm3": float(first.Volume),
+                },
+                "Side_2_before": {
+                    "solid_count": len(second.Solids),
+                    "valid": bool(second.isValid()),
+                    "closed": bool(_closed(second)),
+                    "volume_mm3": float(second.Volume),
+                },
+                "Side_2_after": {
+                    "solid_count": len(corrected.Solids),
+                    "valid": bool(corrected.isValid()),
+                    "closed": bool(_closed(corrected)),
+                    "volume_mm3": float(corrected.Volume),
+                },
             },
             "provenance": {
                 "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
@@ -1117,16 +1238,126 @@ def _analyze(request):
         FreeCAD.closeDocument(document.Name)
 
 
+def _read_brep(path):
+    shape = Part.Shape()
+    shape.read(str(path))
+    if shape.isNull():
+        raise RuntimeError("empty BREP artifact: " + str(path))
+    return shape
+
+
+def _verify_artifacts(request):
+    output = Path(request["output_dir"])
+    artifacts = request["artifacts"]
+    rules = request["rules"]
+    common = _read_brep(output / artifacts["common_brep"])
+    patches = []
+    for name in artifacts["common_patch_breps"]:
+        shape = _read_brep(output / name)
+        patches.append(
+            {
+                "artifact": name,
+                "geometry_digest": _digest(shape),
+                "area_mm2": float(shape.Area),
+                "face_count": len(shape.Faces),
+                "surface_types": sorted(type(face.Surface).__name__ for face in shape.Faces),
+                "boundary_curve_types": sorted(
+                    type(edge.Curve).__name__ for face in shape.Faces for edge in face.Edges
+                ),
+            }
+        )
+    remaining = {}
+    for role in ("Side_1", "Side_2"):
+        name = artifacts[role.lower() + "_remaining_brep"]
+        if name == "EMPTY":
+            remaining[role] = {"status": "EMPTY", "area_mm2": 0.0}
+        else:
+            shape = _read_brep(output / name)
+            remaining[role] = {
+                "status": "NONEMPTY",
+                "artifact": name,
+                "geometry_digest": _digest(shape),
+                "area_mm2": float(shape.Area),
+                "face_count": len(shape.Faces),
+            }
+    return {
+        "status": "SUCCEEDED",
+        "common": {
+            "artifact": artifacts["common_brep"],
+            "geometry_digest": _digest(common),
+            "area_mm2": float(common.Area),
+            "face_count": len(common.Faces),
+        },
+        "common_patches": patches,
+        "remaining": remaining,
+        "corrected_assembly": _reimport_corrected(
+            output / artifacts["corrected_assembly_step"], rules
+        ),
+        "fused": _reimport_fused(output / artifacts["fused_step"]),
+    }
+
+
+def _probe_connected_multiface_topology(request):
+    first = Part.makePlane(10.0, 10.0, FreeCAD.Vector(0.0, 0.0, 0.0))
+    second = Part.makePlane(10.0, 10.0, FreeCAD.Vector(10.0, 0.0, 0.0))
+    patches = [
+        {
+            "shape": shape,
+            "geometry_digest": _digest(shape),
+            "area_mm2": float(shape.Area),
+            "source_face_linkage": [
+                {"Side_1": "Face1", "Side_2": "Face1"}
+            ],
+        }
+        for shape in (first, second)
+    ]
+    try:
+        _topology(patches, request["rules"]["linear_epsilon_mm"])
+    except UnsupportedComponentTopology as error:
+        return {"status": "SUCCEEDED", "topology_status": str(error)}
+    return {"status": "SUCCEEDED", "topology_status": "INCORRECTLY_SUPPORTED"}
+
+
+def _generate_unsupported_probe(request):
+    if request.get("kind") != "sphere":
+        raise ValueError("unknown unsupported probe kind")
+    first = Part.makeBox(60.0, 60.0, 5.0, FreeCAD.Vector(-30.0, -30.0, 0.0))
+    second = Part.makeSphere(5.0, FreeCAD.Vector(0.0, 0.0, 10.0))
+    document = FreeCAD.newDocument("Unsupported06CProbe")
+    try:
+        objects = []
+        for role, shape in (("Side_1", first), ("Side_2", second)):
+            obj = document.addObject("Part::Feature", role)
+            obj.Label = role
+            obj.Shape = shape
+            objects.append(obj)
+        document.recompute()
+        path = Path(request["step_path"])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        Import.export(objects, str(path))
+        return {"status": "SUCCEEDED", "step_path": str(path)}
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
 def _main():
     response_path = Path(os.environ["DMSLICER_FREECAD_RESPONSE"])
     try:
         request = json.loads(
             Path(os.environ["DMSLICER_FREECAD_REQUEST"]).read_text(encoding="utf-8")
         )
-        response = _generate(request) if request["action"] == "generate" else {
-            "status": "SUCCEEDED",
-            "operation": _analyze(request),
-        }
+        if request["action"] == "generate":
+            response = _generate(request)
+        elif request["action"] == "analyze":
+            response = {"status": "SUCCEEDED", "operation": _analyze(request)}
+        elif request["action"] == "verify_artifacts":
+            response = _verify_artifacts(request)
+        elif request["action"] == "probe_connected_multiface_topology":
+            response = _probe_connected_multiface_topology(request)
+        elif request["action"] == "generate_unsupported_probe":
+            response = _generate_unsupported_probe(request)
+        else:
+            raise ValueError("unknown 06C action " + str(request["action"]))
     except Exception:
         response = {"status": "FAILED", "traceback": traceback.format_exc()}
     response_path.write_text(json.dumps(response, sort_keys=True), encoding="utf-8")
