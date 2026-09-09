@@ -48,3 +48,11 @@ Without separate authorization, do not push, merge, release, publish a package, 
 6. Whether generated outputs are committed remains governed by `.gitignore` and the repository artifact policy; remote synchronization does not mean uploading every file.
 7. If a task fails or reaches a STOP condition, do not present unverified results as a completed commit. A WIP branch may be preserved when needed, but it must be labeled explicitly.
 8. Every completion report must include the branch, local HEAD, remote branch SHA, push status, and working tree status.
+
+## Workflow documentation
+
+Use `docs/workflow/README.md` as the human entry point and
+`docs/workflow/workflow.json` as the machine-readable capability index. When an
+implementation or repair stage is completed, update the affected workflow step
+and any applicable `PIT-*` evidence index; preserve historical reports and link a
+later correction instead of rewriting frozen history.

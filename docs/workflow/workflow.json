@@ -1,0 +1,598 @@
+{
+  "schema_version": 1,
+  "document_kind": "WORKFLOW_DESCRIPTION_NOT_EXECUTION_ENGINE",
+  "documentation_baseline": "fa4436a2784574ffa336e87a9df898c35780a587",
+  "status_vocabulary": [
+    "DESIGN_ONLY",
+    "IMPLEMENTED",
+    "DOCUMENTED_VALIDATION",
+    "EVIDENCE_AVAILABLE",
+    "KNOWN_LIMITATION",
+    "PLANNED",
+    "NOT_VERIFIED"
+  ],
+  "notes": [
+    "Steps are dependency-aware and are not an unconditional linear pipeline.",
+    "Geometry facts, material semantics, and authorization for geometry-changing actions are separate records.",
+    "Repository-relative references identify the fixed baseline; ignored outputs and local absolute paths are not required inputs."
+  ],
+  "stages": [
+    {
+      "stage_id": "G00",
+      "purpose": "Probe the exact software, kernel, binding, version, import/export, topology, Boolean, measurement, provenance-history, timeout, and error capabilities before mapping a backend.",
+      "depends_on": [],
+      "required_capabilities": [
+        "launch_or_import_backend",
+        "report_backend_and_kernel_versions",
+        "execute_isolated_minimal_geometry_probes"
+      ],
+      "inputs": [
+        "target backend software, kernel, binding, and version",
+        "a disposable planar two-solid probe",
+        "requested capability subset and operation permission"
+      ],
+      "outputs": [
+        "versioned capability matrix",
+        "AVAILABLE/PARTIAL/UNSUPPORTED/NOT_VERIFIED status per capability",
+        "captured error, timeout, and empty-result semantics"
+      ],
+      "preconditions": [
+        "The exact target runtime is available without modifying production data.",
+        "Probe geometry is disposable and does not authorize operations on user inputs."
+      ],
+      "acceptance_properties": [
+        "Every required capability has an explicit status and observed result.",
+        "Binding availability is measured directly rather than inferred from kernel documentation.",
+        "Software, kernel, binding, version, process boundary, and tolerance settings are recorded separately."
+      ],
+      "negative_checks": [
+        "Do not infer FreeCAD Python support from an OCCT C++ symbol.",
+        "Do not count two call layers over the same OCCT kernel as independent-kernel validation.",
+        "Do not silently replace B-rep operations with mesh approximations."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Record missing binding functions as UNSUPPORTED with the checked symbols.",
+        "Record timeout, exception, empty result, invalid result, and unavailable history distinctly.",
+        "Stop before adapter mapping when a required truth-preserving capability is absent; optionally narrow the declared scope."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/runner.py::run_capability_probe",
+        "src/dmslicer/freecad_case01.py::_capability_probe"
+      ],
+      "test_refs": [
+        "tests/test_case01.py::test_capability_probe_records_actual_boolean_history_limit_and_face_common_path"
+      ],
+      "evidence_refs": [
+        "docs/implementation/02b_step_interface_case01.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "KNOWN_LIMITATION", "NOT_VERIFIED"],
+      "limitations": [
+        "The recorded FreeCAD probe reports native_boolean_history as NOT_AVAILABLE while direct face common is AVAILABLE.",
+        "The probe is not a universal CAD conformance suite."
+      ],
+      "source_commit": [
+        "7b424f5f2dce10b0b01ecc8f753cecfa7935d97f",
+        "fa4436a2784574ffa336e87a9df898c35780a587"
+      ]
+    },
+    {
+      "stage_id": "G01",
+      "purpose": "Import Solid/Face geometry while preserving units, placement, direction, occurrence identity, source identity, validity, and closedness needed by downstream truth and provenance.",
+      "depends_on": [
+        "G00"
+      ],
+      "required_capabilities": [
+        "STEP import",
+        "solid and face traversal",
+        "units and placement access",
+        "copy and transform semantics",
+        "validity and closedness checks",
+        "stable content and occurrence provenance"
+      ],
+      "inputs": [
+        "immutable geometry file plus SHA-256",
+        "declared unit convention",
+        "occurrence labels or an explicit occurrence locator contract"
+      ],
+      "outputs": [
+        "imported solid/face records",
+        "unit and placement records",
+        "validity and closedness records",
+        "document, region, occurrence, and source-face identifiers"
+      ],
+      "preconditions": [
+        "Input bytes are fixed before analysis.",
+        "Occurrence identity is not derived from traversal order alone."
+      ],
+      "acceptance_properties": [
+        "Analysis re-imports the tracked STEP instead of reusing generator objects.",
+        "Equal geometry at different occurrences receives distinct region identity.",
+        "Transforms or copies used by later operations do not mutate the archived originals."
+      ],
+      "negative_checks": [
+        "Reject missing or ambiguous required roles instead of falling back to object order.",
+        "Do not use FaceN, random UUIDs, process counters, or list indexes as persistent identity.",
+        "Do not treat display mesh coordinates as B-rep truth."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Return UNSUPPORTED when the input's occurrence or role semantics cannot be recovered within the declared scope.",
+        "Return INVALID_INPUT for invalid/non-solid geometry when downstream stages require valid closed solids.",
+        "Preserve the input hash and importer diagnostics on failure."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/freecad_case01.py::_source_objects",
+        "src/dmslicer/freecad_case01.py::_solid_record",
+        "src/dmslicer/identity.py::document_id",
+        "src/dmslicer/identity.py::region_id",
+        "src/dmslicer/freecad_contact_tolerance_pilot_05a.py::_a01_role_sources"
+      ],
+      "test_refs": [
+        "tests/test_case01.py::test_case01_reimports_step_into_exactly_three_solid_regions",
+        "tests/test_case01.py::test_region_ids_distinguish_identical_geometry_at_different_occurrences",
+        "tests/test_contact_tolerance_pilot_05a.py::test_a01_rejects_missing_or_duplicate_roles_on_the_production_step_path"
+      ],
+      "evidence_refs": [
+        "benchmarks/interface_case01/case01.step",
+        "benchmarks/interface_case01/expected.json",
+        "tests/data/contact_fixed_tolerance_05c/MANIFEST.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "EVIDENCE_AVAILABLE", "KNOWN_LIMITATION", "NOT_VERIFIED"],
+      "limitations": [
+        "General assembly occurrence graphs, arbitrary STEP dialects, and complete unit/placement semantics are NOT_VERIFIED.",
+        "A01 role binding is intentionally limited to explicit Side_1/Side_2 conventions."
+      ],
+      "source_commit": [
+        "e6d9a865aea19afab82e466132e7baaae21c403b",
+        "fa4436a2784574ffa336e87a9df898c35780a587"
+      ]
+    },
+    {
+      "stage_id": "G02",
+      "purpose": "Generate conservative candidates and select corresponding interface entities without confusing proximity, supporting surfaces, material semantics, or traversal order with confirmed correspondence.",
+      "depends_on": [
+        "G01"
+      ],
+      "required_capabilities": [
+        "bounding-box candidate evidence",
+        "surface-family and orientation inspection",
+        "role- or geometry-constrained face correspondence",
+        "direct face-level intersection"
+      ],
+      "inputs": [
+        "imported occurrence and face records",
+        "candidate-generation tolerances",
+        "declared correspondence roles when the task depends on them"
+      ],
+      "outputs": [
+        "candidate pairs with reasons",
+        "selected corresponding face pairs with method labels",
+        "rejected/ambiguous candidate records"
+      ],
+      "preconditions": [
+        "Candidate generation is separated from exact relation confirmation.",
+        "Required semantic roles are explicit before a role-constrained measure is computed."
+      ],
+      "acceptance_properties": [
+        "A candidate relation never becomes a confirmed relation without G03 evidence.",
+        "Signed offset is measured between the intended corresponding interface faces and uses outward-normal semantics where required.",
+        "Ambiguous or absent correspondence fails closed."
+      ],
+      "negative_checks": [
+        "Do not minimize over arbitrary parallel supporting planes when the contract requires role-constrained interfaces.",
+        "Do not treat a surface Axis as an oriented outward face normal.",
+        "Do not select by FaceN or enumeration position."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Return UNSUPPORTED with role_missing, role_ambiguous, or nonparallel reason when correspondence cannot be established.",
+        "Retain all candidate evidence needed to audit a wrong selection.",
+        "Do not fabricate a zero-area face for an empty selection."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/freecad_case01.py::_aabb_gap",
+        "src/dmslicer/freecad_case01.py::_face_contacts",
+        "src/dmslicer/freecad_contact_tolerance_pilot_05a.py::_measure",
+        "src/dmslicer/freecad_contact_tolerance_pilot_05a.py::_plane"
+      ],
+      "test_refs": [
+        "tests/test_case01.py::test_case01_has_two_full_face_overlaps_and_one_disjoint_relation",
+        "tests/test_contact_tolerance_pilot_05a.py::test_a01_role_constrained_measurement_uses_tracked_penetration_interface",
+        "tests/test_contact_tolerance_pilot_05a.py::test_a01_measurement_is_independent_of_its_parent_directory"
+      ],
+      "evidence_refs": [
+        "docs/analysis/05c_a01_candidate_probe.md",
+        "artifacts/reference_results/05c_a01_candidate_probe.json",
+        "docs/analysis/05c_a01_role_offset_fix.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "EVIDENCE_AVAILABLE", "KNOWN_LIMITATION"],
+      "limitations": [
+        "There is no general automatic corresponding-interface solver for arbitrary STEP assemblies.",
+        "The A01 repair must not be generalized beyond inputs satisfying its explicit role convention."
+      ],
+      "source_commit": [
+        "52db2a869f63a88faffada15a1b2ad8b8dabecb2",
+        "0d681a9de1bc4e6a6978849e65c1518bfed10c61",
+        "fa4436a2784574ffa336e87a9df898c35780a587"
+      ]
+    },
+    {
+      "stage_id": "G03",
+      "purpose": "Determine exact geometric relation and intersection dimension, then measure applicable distance, length, area, and volume without collapsing exact geometry into engineering-tolerance state.",
+      "depends_on": [
+        "G02"
+      ],
+      "required_capabilities": [
+        "solid common",
+        "section or equivalent dimensional evidence",
+        "face common",
+        "distance, length, area, and volume measurement",
+        "surface normals and orientation",
+        "explicit tolerance units"
+      ],
+      "inputs": [
+        "confirmed candidate entity pairs",
+        "nominal geometry tolerance tauK",
+        "engineering tolerance tauE when classification requires it"
+      ],
+      "outputs": [
+        "exact relation and 0D/1D/2D/3D dimension",
+        "applicable measures with units",
+        "separate exact-geometry and engineering-state records"
+      ],
+      "preconditions": [
+        "G02 correspondence is sufficient for any signed measure.",
+        "Tolerance roles and units are declared before classification."
+      ],
+      "acceptance_properties": [
+        "0D, 1D, 2D, and 3D relations are distinguished.",
+        "Area and volume are only compared when applicable; positive gap keeps a zero-intersection check.",
+        "Raw and normalized errors are both retained when scale analysis is performed."
+      ],
+      "negative_checks": [
+        "Do not label positive common volume as a material gap because one unrelated plane pair is separated.",
+        "Do not combine engineering tolerance, kernel tolerance, acceptance epsilon, and movement budget.",
+        "Do not call a numeric over-limit result floating-point noise without evidence or relax truth after seeing actual."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Return AMBIGUOUS or UNSUPPORTED for conflicting or unavailable dimension evidence.",
+        "Keep method mismatch in the denominator and preserve the measured value.",
+        "Distinguish NOT_APPLICABLE measures from missing measurements."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/freecad_contact_03a.py::_analyze",
+        "src/dmslicer/freecad_contact_03b.py::_analyze",
+        "src/dmslicer/freecad_contact_tolerance_pilot_05a.py::_measure",
+        "src/dmslicer/contact_scale_covariance_pilot_05b.py::validate_scale_actual",
+        "src/dmslicer/contact_fixed_tolerance_pilot_05c.py::validate_fixed_actual"
+      ],
+      "test_refs": [
+        "tests/test_contact_canonical_03a.py::test_canonical_analysis_reimports_step_and_reports_actual_brep_dimension",
+        "tests/test_contact_canonical_03b.py::test_analytic_analysis_reimports_step_and_reports_curved_brep_evidence",
+        "tests/test_contact_scale_covariance_pilot_05b.py::test_scale_validation_uses_cubed_scale_for_volume",
+        "tests/test_contact_fixed_tolerance_pilot_05c.py::test_expected_mutation_cannot_change_actual_and_missing_values_cannot_pass"
+      ],
+      "evidence_refs": [
+        "docs/benchmark_design/contact_problem_taxonomy.md",
+        "docs/benchmark_design/contact_scale_covariance_05b.md",
+        "docs/analysis/05c_failure_breakdown.md",
+        "artifacts/reference_results/05c_failure_breakdown.json"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "EVIDENCE_AVAILABLE", "KNOWN_LIMITATION", "NOT_VERIFIED"],
+      "limitations": [
+        "Arbitrary NURBS, non-manifold, noisy external, and large assembly inputs are NOT_VERIFIED.",
+        "Known 05B/05C numeric over-limit results remain part of the record."
+      ],
+      "source_commit": [
+        "bd831be5664dda92b9d9d0e3dba71d941fce0090",
+        "5e96906f4103f103b9522a4c6e8462ad238c74af",
+        "1de21fd41aac05e437f6ebb839344af171b6e878",
+        "fa4436a2784574ffa336e87a9df898c35780a587"
+      ]
+    },
+    {
+      "stage_id": "G04",
+      "purpose": "Construct and describe common regions, remaining regions, topology, coverage, and source provenance from actual geometry while retaining raw evidence.",
+      "depends_on": [
+        "G03"
+      ],
+      "required_capabilities": [
+        "face-level common",
+        "face cut",
+        "geometric adjacency and connected components",
+        "boundary-loop and hole inspection",
+        "source-to-result provenance or an explicit limited fallback"
+      ],
+      "inputs": [
+        "actual confirmed face/solid relations",
+        "participating source faces",
+        "area and linear epsilons with units"
+      ],
+      "outputs": [
+        "raw common pieces",
+        "contract patches and connected components",
+        "remaining carrier regions",
+        "coverage denominators and ratios",
+        "source mappings with provenance method and completeness status"
+      ],
+      "preconditions": [
+        "G03 established the relation and applicability of patch construction.",
+        "Coverage denominator is the declared participating carrier region, not an incidental raw-face partition."
+      ],
+      "acceptance_properties": [
+        "For each participating face F, area(F) approximately equals area(common)+area(remainder).",
+        "Positive-area overlap between common and remainder is zero and their union stays on F.",
+        "Periodic seams do not create false semantic components; holes and disconnected components are measured geometrically.",
+        "Many-to-many source linkage is retained when one semantic patch spans multiple raw faces."
+      ],
+      "negative_checks": [
+        "Do not require the same raw face count or FaceN across backends.",
+        "Do not infer provenance solely from a plausible-looking result face.",
+        "Do not emit a fake zero-area Face for an empty remainder."
+      ],
+      "failure_or_unsupported_behavior": [
+        "If native face history is absent, record that capability boundary and label direct-face-common provenance separately.",
+        "If required provenance cannot be established, fail closed or narrow the accepted output scope.",
+        "Retain raw pieces when contract grouping is ambiguous."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/freecad_contact_03c.py::_contract_patches",
+        "src/dmslicer/freecad_contact_03c.py::_component_groups",
+        "src/dmslicer/freecad_contact_03c.py::_component_boundary_loops",
+        "src/dmslicer/freecad_partition_union_04a.py::_face_common",
+        "src/dmslicer/freecad_partition_union_04a.py::_patches_for_face"
+      ],
+      "test_refs": [
+        "tests/test_contact_canonical_03c.py::test_topology_analysis_reimports_two_connected_solids_and_reports_actual_components",
+        "tests/test_contact_canonical_03c.py::test_topology_repeatability_and_debug_models_publish_durable_component_views",
+        "tests/test_contact_partition_union_04a.py::test_partition_union_exports_actual_patches_and_a_valid_connected_union"
+      ],
+      "evidence_refs": [
+        "docs/implementation/03c_contact_canonical_interface_topology.md",
+        "docs/implementation/04a_contact_partition_and_union.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "KNOWN_LIMITATION"],
+      "limitations": [
+        "Native Boolean Modified/Generated/Deleted history is not exposed by the probed FreeCAD binding.",
+        "Direct-face-common provenance is real but is not equivalent to full native Boolean history."
+      ],
+      "source_commit": [
+        "1c227cf75caadbb5508e261f3277b736dfc97cfd",
+        "944d321f4017c7cf6a3c9caa7dbe8029830c98ae"
+      ]
+    },
+    {
+      "stage_id": "G05",
+      "purpose": "Perform an optional geometry-changing operation such as cut, split, or fuse only when explicitly authorized, supported, and needed by the requested capability.",
+      "depends_on": [
+        "G04"
+      ],
+      "required_capabilities": [
+        "explicit action authorization",
+        "copy-before-operation semantics",
+        "cut, split/general-fuse, or fuse as requested",
+        "validity, closedness, connectedness, and material conservation checks"
+      ],
+      "inputs": [
+        "archived original shapes",
+        "authorized operation and parameters",
+        "actual G04 common/remainder geometry",
+        "operation-specific acceptance budget"
+      ],
+      "outputs": [
+        "new result shape without mutating originals",
+        "operation status and diagnostics",
+        "material common/remainder and conservation evidence"
+      ],
+      "preconditions": [
+        "The task explicitly authorizes geometry modification.",
+        "G00 reports the exact operation as supported within the declared scope.",
+        "Detection-only tasks bypass this stage."
+      ],
+      "acceptance_properties": [
+        "The operation uses copies and preserves original inputs for audit.",
+        "Expected truth is not used to construct or select actual operation geometry.",
+        "The final gate includes validity, closedness, connectedness, volume/material conservation, and target-shape properties."
+      ],
+      "negative_checks": [
+        "Do not force Fuse for detection-only work.",
+        "Do not convert semantic activation into operation authorization.",
+        "Do not accept a wrong target merely because it is valid, closed, connected, or equal-volume."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Return NOT_AUTHORIZED without changing geometry when permission is absent.",
+        "Return UNSUPPORTED when the backend cannot preserve the required B-rep operation semantics.",
+        "Return FAIL with structured failed properties when the target-shape contract is not met."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/freecad_partition_union_04a.py::_run",
+        "src/dmslicer/freecad_shell_fill_04a2.py::_analyze",
+        "src/dmslicer/freecad_shell_fill_04a2.py::_validate_shape",
+        "src/dmslicer/freecad_cylinder_partition_union_04b.py::_analyze",
+        "src/dmslicer/freecad_cylinder_partition_union_04b.py::_validate_shape"
+      ],
+      "test_refs": [
+        "tests/test_contact_partition_union_04a.py::test_production_validation_rejects_invalid_or_disconnected_union",
+        "tests/test_shell_fill_04a2.py::test_tracked_shell_fill_case_validates_actual_shape_not_only_closedness",
+        "tests/test_cylinder_partition_union_04b.py::test_negative_candidates_reject_filled_blind_hole_and_truncated_extension"
+      ],
+      "evidence_refs": [
+        "docs/implementation/04a2_shell_fill_shape_acceptance.md",
+        "docs/implementation/04b_cylinder_partition_union.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "KNOWN_LIMITATION", "PLANNED", "NOT_VERIFIED"],
+      "limitations": [
+        "No general automatic repair or movement planner is implemented.",
+        "06A is outside this baseline and is recorded as PLANNED/NOT_VERIFIED here."
+      ],
+      "source_commit": [
+        "944d321f4017c7cf6a3c9caa7dbe8029830c98ae",
+        "19354277520c40bf61193525cbf213946dbbb511",
+        "5ce13c7050c84623b1f5092c94bd67d649fc1336"
+      ]
+    },
+    {
+      "stage_id": "G06",
+      "purpose": "Validate geometry facts, material semantics, and any authorized operation independently against immutable truth and negative cases.",
+      "depends_on": [
+        "G03"
+      ],
+      "optional_dependencies": [
+        "G04",
+        "G05"
+      ],
+      "required_capabilities": [
+        "immutable independent expected truth",
+        "property-based geometry comparison",
+        "semantic validation separated from geometry",
+        "negative candidates and fail-closed status aggregation"
+      ],
+      "inputs": [
+        "actual evidence written before expected truth is read",
+        "independent analytic or construction-derived truth",
+        "declared applicability, denominators, units, and tolerances"
+      ],
+      "outputs": [
+        "separate geometry, semantics, provenance, and operation verdicts",
+        "structured failures and unsupported capabilities",
+        "coverage and denominator records"
+      ],
+      "preconditions": [
+        "Actual geometry evidence is immutable before expected data is loaded.",
+        "Truth source and construction independence are documented."
+      ],
+      "acceptance_properties": [
+        "Mutating expected truth changes validation but never actual evidence.",
+        "Every recorded check that is required by the contract participates in the final verdict.",
+        "Cross-backend comparison uses relations, dimensions, common/remainder properties, coverage, material/void, bidirectional differences, and provenance when required."
+      ],
+      "negative_checks": [
+        "Do not compare FaceN, raw face count, STEP bytes, or serialized B-rep hashes as geometric equivalence.",
+        "Do not let an expected file select actual faces or construct actual result geometry.",
+        "Do not reinterpret an old report PASS as a current or second-backend PASS."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Missing required actual values fail; non-applicable values are marked NOT_APPLICABLE.",
+        "Unsupported provenance or topology prevents a complete verdict rather than being silently ignored.",
+        "Samples outside their construction domain remain in the denominator but are not labeled method failures."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/runner.py::validate_case01",
+        "src/dmslicer/contact_canonical_03a.py::_validate",
+        "src/dmslicer/contact_partition_union_04a.py::evaluate_partition_union_validation",
+        "src/dmslicer/contact_scale_covariance_pilot_05b.py::validate_scale_actual",
+        "src/dmslicer/contact_fixed_tolerance_pilot_05c.py::validate_fixed_actual"
+      ],
+      "test_refs": [
+        "tests/test_case01.py::test_expected_truth_mutations_cannot_change_frozen_geometry",
+        "tests/test_contact_partition_union_04a.py::test_operation_does_not_consume_expected_json_for_actual_geometry",
+        "tests/test_shell_fill_04a2.py::test_u03_rejects_filled_lower_cavity",
+        "tests/test_contact_scale_covariance_pilot_05b.py::test_revalidation_reports_missing_actual_as_incomplete"
+      ],
+      "evidence_refs": [
+        "benchmarks/interface_case01/expected.json",
+        "benchmarks/interface_case01/semantics.json",
+        "docs/benchmark_design/benchmark_protocol.md",
+        "docs/benchmark_design/contact_fixed_tolerance_05c.md"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "EVIDENCE_AVAILABLE", "KNOWN_LIMITATION"],
+      "limitations": [
+        "Existing pytest code includes FreeCAD-dependent tests and is not an out-of-the-box backend-neutral suite.",
+        "Truth inputs and acceptance properties are reusable; backend adapters and backend-internal assertions require classification and adaptation."
+      ],
+      "source_commit": [
+        "07655b8ed6b0030811f7431986c4658453855bf3",
+        "19354277520c40bf61193525cbf213946dbbb511",
+        "1de21fd41aac05e437f6ebb839344af171b6e878",
+        "bb2eb899999841aac16f386f3be233bf5dab09e3"
+      ]
+    },
+    {
+      "stage_id": "G07",
+      "purpose": "Export, re-import, replay, and archive enough versioned evidence to reproduce the declared result without depending on a chat, an absolute drive path, or ignored local outputs.",
+      "depends_on": [
+        "G06"
+      ],
+      "required_capabilities": [
+        "geometry export and re-import",
+        "input hashing",
+        "machine-readable manifests and verdicts",
+        "independent-process replay",
+        "repository-relative evidence indexing"
+      ],
+      "inputs": [
+        "validated actual result",
+        "input and configuration hashes",
+        "backend, kernel, binding, and version records",
+        "declared evidence retention policy"
+      ],
+      "outputs": [
+        "exported geometry where applicable",
+        "re-import validation",
+        "repeatability comparison",
+        "versioned manifest, evidence index, and limitations"
+      ],
+      "preconditions": [
+        "Required G06 verdicts are complete or explicitly limited.",
+        "Every durable reference resolves from repository-relative tracked content or is labeled LOCAL_ONLY."
+      ],
+      "acceptance_properties": [
+        "Original file hashes identify exact inputs; geometric equivalence and cross-process repeatability are separate checks.",
+        "Independent processes compare semantic/property snapshots rather than unstable enumeration.",
+        "If a historical output is ignored or absent, its producing commit and tracked inputs/tests/docs are used to locate it without inventing a path."
+      ],
+      "negative_checks": [
+        "Do not require byte-identical STEP or B-rep serialization for equivalent shapes.",
+        "Do not cite an ignored outputs directory as the sole durable evidence source.",
+        "Do not start duplicate FreeCAD/pytest runs or report old logs as new execution."
+      ],
+      "failure_or_unsupported_behavior": [
+        "Label untracked evidence LOCAL_ONLY and keep it out of claims requiring durable evidence.",
+        "Record export/re-import failures independently from in-memory geometry validation.",
+        "If a referenced historical artifact is absent, locate it through git log, commit trees, and tracked producer inputs; report absence explicitly."
+      ],
+      "freecad_implementation_refs": [
+        "src/dmslicer/evidence.py::sha256_file",
+        "src/dmslicer/evidence.py::git_metadata",
+        "src/dmslicer/runner.py::run_repeatability",
+        "src/dmslicer/shell_fill_04a2.py::run_shell_fill_repeatability",
+        "src/dmslicer/cylinder_partition_union_04b.py::run_cylinder_fit_repeatability"
+      ],
+      "test_refs": [
+        "tests/test_case01.py::test_case01_ids_relations_and_provenance_are_repeatable_across_processes",
+        "tests/test_case01.py::test_repeatability_snapshot_accepts_identical_records_and_unordered_output",
+        "tests/test_shell_fill_04a2.py::test_shell_fill_suite_publishes_chinese_view_index_and_two_process_repeatability",
+        "tests/test_cylinder_partition_union_04b.py::test_suite_publishes_chinese_view_index_and_two_process_repeatability"
+      ],
+      "evidence_refs": [
+        "docs/implementation/04b_case01_fixture_integrity.md",
+        "artifacts/reference_results/05c_failure_breakdown.json",
+        "artifacts/reference_results/05c_a01_candidate_probe.json"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "verification_status": "DOCUMENTED_VALIDATION",
+      "status_labels": ["IMPLEMENTED", "DOCUMENTED_VALIDATION", "EVIDENCE_AVAILABLE", "KNOWN_LIMITATION"],
+      "limitations": [
+        "Many generated outputs are intentionally not tracked; tracked summaries do not replace raw measurements.",
+        "A repository-wide archival policy for every future backend is DESIGN_ONLY."
+      ],
+      "source_commit": [
+        "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+        "e50e1b8e7735f29a15175929000e799a54a83451",
+        "5dd035951528250ea44a6a2636737865fe5f5a1a"
+      ]
+    }
+  ]
+}
