@@ -37,3 +37,14 @@ This is a research-first repository. Every change must preserve the distinction 
 ## External actions
 
 Without separate authorization, do not push, merge, release, publish a package, configure a GitHub remote, or create a GitHub repository.
+
+## Completion Git Policy
+
+1. Every completed and verified Goal must leave its working tree clean.
+2. Every formal source, test, documentation, or fixture change must be recorded in a local Git commit.
+3. This repository has ongoing authorization for remote synchronization: after completing a stage or Goal, push the current feature branch to `origin`.
+4. Never merge `main` automatically.
+5. Never force-push.
+6. Whether generated outputs are committed remains governed by `.gitignore` and the repository artifact policy; remote synchronization does not mean uploading every file.
+7. If a task fails or reaches a STOP condition, do not present unverified results as a completed commit. A WIP branch may be preserved when needed, but it must be labeled explicitly.
+8. Every completion report must include the branch, local HEAD, remote branch SHA, push status, and working tree status.
