@@ -13,6 +13,7 @@ from .contact_canonical_03c import analyze_contact_canonical_interface_topology,
 from .contact_partition_union_04a import run_contact_partition_union, run_contact_partition_union_suite, validate_partition_union_facts_file
 from .shell_fill_04a2 import generate_shell_fill_cases, run_shell_fill_case, run_shell_fill_suite
 from .cylinder_partition_union_04b import generate_cylinder_fit_cases, run_cylinder_fit_case, run_cylinder_fit_suite
+from .contact_tolerance_pilot_05a import generate_contact_tolerance_pilot, run_contact_tolerance_pilot_suite
 
 
 def main() -> None:
@@ -112,6 +113,12 @@ def main() -> None:
     cylinder_suite.add_argument("fixture_root", type=Path)
     cylinder_suite.add_argument("output_root", type=Path)
 
+    tolerance_generate = commands.add_parser("generate-contact-tolerance-pilot", help="generate limited A01/A07 tolerance-pilot STEP bundles")
+    tolerance_generate.add_argument("fixture_root", type=Path)
+    tolerance_suite = commands.add_parser("run-contact-tolerance-pilot-suite", help="run the limited A01/A07 tolerance pilot")
+    tolerance_suite.add_argument("fixture_root", type=Path)
+    tolerance_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -161,6 +168,10 @@ def main() -> None:
         result = run_cylinder_fit_case(arguments.case_dir, arguments.output_dir)
     elif arguments.command == "run-cylinder-fit-suite":
         result = run_cylinder_fit_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "generate-contact-tolerance-pilot":
+        result = generate_contact_tolerance_pilot(arguments.fixture_root)
+    elif arguments.command == "run-contact-tolerance-pilot-suite":
+        result = run_contact_tolerance_pilot_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))

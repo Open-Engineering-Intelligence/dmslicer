@@ -1,0 +1,17 @@
+{
+  "case_id": "A01",
+  "delta_over_tauE": 0.9,
+  "geometry": {
+    "a_mm": 57.735026918962575,
+    "b_mm": 57.735026918962575,
+    "h_mm": 28.867513459481287,
+    "scale": 2.8867513459481287
+  },
+  "normalization": "nominal configuration L=100 mm; perturbation is not renormalized",
+  "perturbation_kind": "rigid_pose",
+  "pilot_level": "LEVEL_B_PILOT",
+  "sample_id": "A01_delta_p0_9tauE",
+  "schema_version": 1,
+  "set_signed_offset_mm": 0.09000000000000001,
+  "tauE_mm": 0.1
+}

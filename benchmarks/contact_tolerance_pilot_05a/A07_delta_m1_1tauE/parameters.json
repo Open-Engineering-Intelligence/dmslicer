@@ -1,0 +1,17 @@
+{
+  "case_id": "A07",
+  "delta_over_tauE": -1.1,
+  "geometry": {
+    "length_mm": 43.30127018922193,
+    "scale": 1.4433756729740643,
+    "shaft_radius_mm": 14.433756729740644,
+    "wall_mm": 7.216878364870322
+  },
+  "normalization": "nominal configuration L=100 mm; perturbation is not renormalized",
+  "perturbation_kind": "construction_variant",
+  "pilot_level": "LEVEL_B_PILOT",
+  "sample_id": "A07_delta_m1_1tauE",
+  "schema_version": 1,
+  "set_signed_offset_mm": -0.11000000000000001,
+  "tauE_mm": 0.1
+}
