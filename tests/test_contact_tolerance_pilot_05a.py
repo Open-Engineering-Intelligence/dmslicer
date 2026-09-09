@@ -105,6 +105,14 @@ def test_actual_measurement_uses_the_reimported_a01_gap_not_truth(tmp_path: Path
     assert result["actual"]["geometry_state"]["exact_intersection_dimension"] == "none"
 
 
+def test_a01_role_constrained_measurement_uses_tracked_penetration_interface(tmp_path: Path) -> None:
+    fixtures = Path("outputs/contact_fixed_tolerance_05c/inputs")
+    result = run_contact_tolerance_pilot_case(fixtures / "A01_delta_m2tauE_s0_01", tmp_path / "actual")
+    assert result["actual"]["measured_signed_offset_mm"] == pytest.approx(-0.2, abs=1e-9)
+    assert result["actual"]["engineering_state"] == "penetration_beyond_tolerance"
+    assert result["actual"]["geometry_state"]["exact_intersection_dimension"] == "3D"
+
+
 def test_gap_view_exports_real_inputs_without_gui_view_provider(tmp_path: Path) -> None:
     fixtures = tmp_path / "fixtures"
     generate_contact_tolerance_pilot(fixtures)

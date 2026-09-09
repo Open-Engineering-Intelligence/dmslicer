@@ -54,19 +54,25 @@ def _cylinder(face):
 
 def _measure(case_id, first, second):
     if case_id == "A01":
-        candidates = []
-        for face_a in first.Faces:
-            plane_a = _plane(face_a)
-            if not plane_a or abs(plane_a.Axis.z) < 1 - 1e-7: continue
-            for face_b in second.Faces:
-                plane_b = _plane(face_b)
-                if not plane_b or abs(plane_b.Axis.z) < 1 - 1e-7: continue
-                normal_a = plane_a.Axis.normalize()
-                signed = (plane_b.Position - plane_a.Position).dot(normal_a)
-                candidates.append((abs(signed), signed))
-        if not candidates: return {"status": "UNSUPPORTED", "reason": "opposing planar carriers not found"}
-        _, signed = min(candidates)
-        return {"status": "SUPPORTED", "measured_signed_offset_mm": float(signed), "measurement_kind": "parallel_planes"}
+        # Limited A01 adapter: Side_1 is the base occurrence and Side_2 the translated occurrence.
+        # It intentionally does not infer design intent for arbitrary STEP input.
+        def role_face(shape, sign):
+            found = []
+            for index, face in enumerate(shape.Faces, 1):
+                plane = _plane(face)
+                if not plane: continue
+                try: normal = face.normalAt(0, 0).normalize()
+                except Exception: continue
+                if normal.z * sign > 1 - 1e-7: found.append((index, face, plane, normal))
+            return found
+        positive, negative = role_face(first, 1), role_face(second, -1)
+        if len(positive) != 1 or len(negative) != 1:
+            return {"status": "UNSUPPORTED", "reason": "A01 role-constrained interface faces are missing or ambiguous", "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET"}
+        ia, fa, pa, normal = positive[0]; ib, fb, pb, _ = negative[0]
+        if abs(normal.dot(pb.Axis.normalize())) < 1 - 1e-7:
+            return {"status": "UNSUPPORTED", "reason": "A01 role-constrained planes are not parallel", "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET"}
+        signed = (pb.Position - pa.Position).dot(normal)
+        return {"status": "SUPPORTED", "measured_signed_offset_mm": float(signed), "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET", "selection_source": "A01 limited adapter: Side_1 +z interface; Side_2 -z interface", "selected_faces": {"first": "Face%d" % ia, "second": "Face%d" % ib}, "reference_direction": [normal.x, normal.y, normal.z], "plane_points_mm": {"first": [pa.Position.x, pa.Position.y, pa.Position.z], "second": [pb.Position.x, pb.Position.y, pb.Position.z]}}
     candidates = []
     for face_a in first.Faces:
         cyl_a = _cylinder(face_a)
