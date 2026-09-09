@@ -1,0 +1,104 @@
+{
+  "base_case_id": "P10",
+  "base_representation_families": {
+    "post_boundary_curve": [
+      "Line"
+    ],
+    "post_surface": [
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Line"
+    ],
+    "pre_surface": [
+      "Plane"
+    ]
+  },
+  "base_step_sha256": "sha256:eec8c032422ef1d3aa12c9c85eacbbb81889cf98674b6c9f2c3bb8277462c434",
+  "construction": {
+    "Side_1": {
+      "bounds_mm": [
+        0,
+        60,
+        0,
+        40,
+        0,
+        5
+      ],
+      "kind": "box"
+    },
+    "Side_2": {
+      "kind": "connected_fused_feet_bridge",
+      "left_foot_bounds_mm": [
+        6,
+        18,
+        12,
+        28,
+        5.05,
+        20.05
+      ],
+      "right_foot_bounds_mm": [
+        42,
+        54,
+        12,
+        28,
+        5.05,
+        20.05
+      ],
+      "upper_bridge_bounds_mm": [
+        6,
+        54,
+        16,
+        24,
+        15.05,
+        20.05
+      ]
+    }
+  },
+  "reference_direction": [
+    0.26726124191242434,
+    0.5345224838248486,
+    0.8017837257372733
+  ],
+  "representation_families": {
+    "post_boundary_curve": [
+      "Line"
+    ],
+    "post_surface": [
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Line"
+    ],
+    "pre_surface": [
+      "Plane"
+    ]
+  },
+  "roll_degrees": 37.0,
+  "rotation_matrix": [
+    [
+      0.7192591863143812,
+      -0.6412781389333359,
+      0.26726124191242434
+    ],
+    [
+      0.443062375686225,
+      0.7197092784847177,
+      0.5345224838248486
+    ],
+    [
+      -0.5351279792289436,
+      -0.266046806012033,
+      0.8017837257372733
+    ]
+  ],
+  "scenario_id": "D02",
+  "schema_version": 1,
+  "transformGeometry_used": false,
+  "transform_applied": true,
+  "translation_vector": [
+    -41.0,
+    13.0,
+    27.0
+  ]
+}

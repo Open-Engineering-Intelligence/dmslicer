@@ -1,0 +1,93 @@
+{
+  "base_case_id": "P11",
+  "base_representation_families": {
+    "post_boundary_curve": [
+      "Circle",
+      "Line"
+    ],
+    "post_surface": [
+      "Cylinder",
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Circle",
+      "Line"
+    ],
+    "pre_surface": [
+      "Cylinder",
+      "Plane"
+    ]
+  },
+  "base_step_sha256": "sha256:829a3ce330d1e979583909fb6fa470b3bf8bf4a0f2dd5f010910b4fc47d14e14",
+  "construction": {
+    "Side_1": {
+      "bounds_mm": [
+        -30,
+        30,
+        -30,
+        30,
+        0,
+        5
+      ],
+      "kind": "box"
+    },
+    "Side_2": {
+      "base_z_mm": 5.05,
+      "height_mm": 10.0,
+      "inner_radius_mm": 10.0,
+      "kind": "direct_analytic_annular_cylinder",
+      "outer_radius_mm": 20.0,
+      "transformGeometry_used": false
+    }
+  },
+  "reference_direction": [
+    -0.23424946126864435,
+    -0.6101883166354406,
+    0.756833804832314
+  ],
+  "representation_families": {
+    "post_boundary_curve": [
+      "Circle",
+      "Line"
+    ],
+    "post_surface": [
+      "Cylinder",
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Circle",
+      "Line"
+    ],
+    "pre_surface": [
+      "Cylinder",
+      "Plane"
+    ]
+  },
+  "roll_degrees": null,
+  "rotation_matrix": [
+    [
+      0.8443669823171057,
+      -0.481841871435074,
+      -0.23424946126864435
+    ],
+    [
+      0.25814889290500137,
+      0.7490189365653778,
+      -0.6101883166354406
+    ],
+    [
+      0.46947156278589086,
+      0.45475162847252804,
+      0.756833804832314
+    ]
+  ],
+  "scenario_id": "D03",
+  "schema_version": 1,
+  "transformGeometry_used": false,
+  "transform_applied": true,
+  "translation_vector": [
+    29.0,
+    47.0,
+    -18.0
+  ]
+}

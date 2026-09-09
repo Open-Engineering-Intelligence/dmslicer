@@ -1,0 +1,89 @@
+{
+  "base_case_id": "P07",
+  "base_representation_families": {
+    "post_boundary_curve": [
+      "Line"
+    ],
+    "post_surface": [
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Line"
+    ],
+    "pre_surface": [
+      "Plane"
+    ]
+  },
+  "base_step_sha256": "sha256:ab05a176d6788290398670a491af21eee17a29355eb62c57e45e27dac40e964f",
+  "construction": {
+    "Side_1": {
+      "bounds_mm": [
+        0,
+        40,
+        0,
+        20,
+        0,
+        10
+      ],
+      "kind": "box"
+    },
+    "Side_2": {
+      "bounds_mm": [
+        16,
+        56,
+        0,
+        20,
+        10.05,
+        20.05
+      ],
+      "kind": "box"
+    },
+    "base_case": "P07"
+  },
+  "reference_direction": [
+    0.7071067811865476,
+    0.0,
+    0.7071067811865475
+  ],
+  "representation_families": {
+    "post_boundary_curve": [
+      "Line"
+    ],
+    "post_surface": [
+      "Plane"
+    ],
+    "pre_boundary_curve": [
+      "Line"
+    ],
+    "pre_surface": [
+      "Plane"
+    ]
+  },
+  "roll_degrees": 0.0,
+  "rotation_matrix": [
+    [
+      0.7071067811865475,
+      0.0,
+      0.7071067811865476
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      -0.7071067811865476,
+      0.0,
+      0.7071067811865475
+    ]
+  ],
+  "scenario_id": "D01",
+  "schema_version": 1,
+  "transformGeometry_used": false,
+  "transform_applied": true,
+  "translation_vector": [
+    17.0,
+    -23.0,
+    31.0
+  ]
+}

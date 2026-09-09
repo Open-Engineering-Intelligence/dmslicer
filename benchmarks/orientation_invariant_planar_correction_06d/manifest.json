@@ -1,0 +1,23 @@
+{
+  "numeric_rules": {
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "operation": "ORIENTATION_INVARIANT_PLANAR_CORRECTION_06D",
+  "scenarios": [
+    {
+      "scenario_id": "D01",
+      "step_sha256": "sha256:69e87c59350a770e08853794bc612673b89a338fe2d5c238c20983d989bef72e"
+    },
+    {
+      "scenario_id": "D02",
+      "step_sha256": "sha256:9bab430d3809b07f8e92f6b290f3f1f0796f54e83f6c1eadf924f951c0a398bf"
+    },
+    {
+      "scenario_id": "D03",
+      "step_sha256": "sha256:9007a2bcdf244c8f4306b10865da77f4b6673e6719fddd32de2639c37c27b4fb"
+    }
+  ],
+  "schema_version": 1
+}
