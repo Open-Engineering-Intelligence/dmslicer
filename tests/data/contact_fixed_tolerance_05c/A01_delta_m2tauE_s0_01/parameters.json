@@ -1,0 +1,22 @@
+{
+  "case_id": "A01",
+  "construction_domain": {
+    "status": "CONSTRUCTIBLE"
+  },
+  "delta_over_tauE": -2,
+  "geometry": {
+    "a_mm": 0.5773502691896257,
+    "b_mm": 0.5773502691896257,
+    "h_mm": 0.28867513459481287,
+    "scale": 0.028867513459481287
+  },
+  "perturbation_kind": "rigid_pose",
+  "pilot_level": "LEVEL_B_FIXED_ABSOLUTE_TOLERANCE_PILOT",
+  "sample_id": "A01_delta_m2tauE_s0_01",
+  "scale": 0.01,
+  "scale_mode": "fixed-absolute-tauE",
+  "schema_version": 1,
+  "set_signed_offset_mm": -0.2,
+  "tauE_mm": 0.1,
+  "tauK_mm": "NOT_AVAILABLE"
+}

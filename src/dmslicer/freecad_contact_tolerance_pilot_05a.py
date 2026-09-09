@@ -38,6 +38,19 @@ def _objects(doc):
     return sorted([(obj.Label, obj.Shape.Solids[0]) for obj in doc.Objects if obj.TypeId == "Part::Feature" and hasattr(obj, "Shape") and len(obj.Shape.Solids) == 1], key=lambda item: item[0])
 
 
+def _a01_role_sources(sources):
+    """Resolve the deliberately small A01 STEP role convention without guessing."""
+    matches = []
+    for role in ("Side_1", "Side_2"):
+        role_matches = [(label, shape) for label, shape in sources if label == role]
+        if len(role_matches) != 1:
+            return None, {"status": "UNSUPPORTED", "reason": f"A01 role {role} is missing or duplicated", "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET"}
+        matches.append(role_matches[0])
+    if len(sources) != 2:
+        return None, {"status": "UNSUPPORTED", "reason": "A01 input contains solids outside the Side_1/Side_2 limited convention", "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET"}
+    return (matches[0][1], matches[1][1]), {"Side_1": matches[0][0], "Side_2": matches[1][0]}
+
+
 def _digest(shape):
     return "sha256:" + hashlib.sha256(shape.exportBrepToString().encode("utf-8")).hexdigest()
 
@@ -52,7 +65,7 @@ def _cylinder(face):
     return surface if "cylinder" in type(surface).__name__.lower() else None
 
 
-def _measure(case_id, first, second):
+def _measure(case_id, first, second, *, role_binding=None):
     if case_id == "A01":
         # Limited A01 adapter: Side_1 is the base occurrence and Side_2 the translated occurrence.
         # It intentionally does not infer design intent for arbitrary STEP input.
@@ -72,7 +85,7 @@ def _measure(case_id, first, second):
         if abs(normal.dot(pb.Axis.normalize())) < 1 - 1e-7:
             return {"status": "UNSUPPORTED", "reason": "A01 role-constrained planes are not parallel", "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET"}
         signed = (pb.Position - pa.Position).dot(normal)
-        return {"status": "SUPPORTED", "measured_signed_offset_mm": float(signed), "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET", "selection_source": "A01 limited adapter: Side_1 +z interface; Side_2 -z interface", "selected_faces": {"first": "Face%d" % ia, "second": "Face%d" % ib}, "reference_direction": [normal.x, normal.y, normal.z], "plane_points_mm": {"first": [pa.Position.x, pa.Position.y, pa.Position.z], "second": [pb.Position.x, pb.Position.y, pb.Position.z]}}
+        return {"status": "SUPPORTED", "measured_signed_offset_mm": float(signed), "measurement_kind": "ROLE_CONSTRAINED_INTERFACE_SIGNED_OFFSET", "role_binding": role_binding, "selection_source": "A01 limited adapter: Side_1 +z interface; Side_2 -z interface", "selected_faces": {"first": "Face%d" % ia, "second": "Face%d" % ib}, "reference_direction": [normal.x, normal.y, normal.z], "plane_points_mm": {"first": [pa.Position.x, pa.Position.y, pa.Position.z], "second": [pb.Position.x, pb.Position.y, pb.Position.z]}}
     candidates = []
     for face_a in first.Faces:
         cyl_a = _cylinder(face_a)
@@ -111,6 +124,14 @@ def _debug(path, case_id, first, second, common, fuse, facts):
             for key in ("MeasuredDeltaMm", "TauEMm", "Lmm", "EngineeringState", "ExactDimension", "SolidCount"):
                 obj.addProperty("App::PropertyString", key, "Tolerance Pilot")
             obj.MeasuredDeltaMm = str(facts.get("measured_signed_offset_mm", "UNSUPPORTED")); obj.TauEMm = str(facts.get("tauE_mm", "UNSUPPORTED")); obj.Lmm = str(facts.get("L_mm", "UNSUPPORTED")); obj.EngineeringState = str(facts.get("engineering_state", "UNSUPPORTED")); obj.ExactDimension = facts["geometry_state"]["exact_intersection_dimension"]; obj.SolidCount = str(facts["direct_fuse"]["solid_count"])
+        selected = facts.get("measurement", {}).get("selected_faces", {})
+        for name, shape, key in (("Selected_Interface_Side_1", first, "first"), ("Selected_Interface_Side_2", second, "second")):
+            token = selected.get(key, "")
+            if token.startswith("Face") and token[4:].isdigit():
+                index = int(token[4:]) - 1
+                if 0 <= index < len(shape.Faces):
+                    obj = doc.addObject("Part::Feature", name); obj.Shape = shape.Faces[index]; obj.Visibility = True
+                    obj.addProperty("App::PropertyString", "SelectionRole", "Tolerance Pilot"); obj.SelectionRole = key
         doc.recompute(); doc.saveAs(str(path))
     finally: FreeCAD.closeDocument(doc.Name)
 
@@ -119,9 +140,16 @@ def _analyze(request):
     doc = FreeCAD.newDocument("TolerancePilot05AAnalysis")
     try:
         Import.insert(request["step_path"], doc.Name); sources = _objects(doc)
-        if len(sources) != 2: raise RuntimeError("expected exactly two imported solids")
-        _, first = sources[0]; _, second = sources[1]
-        measure = _measure(request["case_id"], first, second)
+        if request["case_id"] == "A01":
+            resolved, binding = _a01_role_sources(sources)
+            if resolved is None:
+                return {"schema_version": 1, "case_id": "A01", "analysis_input": "reimported_step", "measurement": binding, "measured_signed_offset_mm": None, "tauE_mm": float(request["tauE_mm"]), "tauK_mm": "NOT_AVAILABLE", "L_mm": None, "tauE_over_L": None, "engineering_state": "UNSUPPORTED", "geometry_state": {"minimum_distance_mm": None, "material_common_volume_mm3": None, "exact_intersection_dimension": "UNSUPPORTED", "positive_common_area_mm2": None}, "direct_fuse": {"executed": False, "reason": binding["reason"], "solid_count": 0, "valid": False, "closed": False, "one_valid_connected_solid": False}, "geometry_digest": []}
+            first, second = resolved
+            measure = _measure(request["case_id"], first, second, role_binding=binding)
+        else:
+            if len(sources) != 2: raise RuntimeError("expected exactly two imported solids")
+            _, first = sources[0]; _, second = sources[1]
+            measure = _measure(request["case_id"], first, second)
         tolerance = float(request["tauE_mm"])
         common = first.common(second); volume = float(common.Volume)
         face_common = Part.Shape()

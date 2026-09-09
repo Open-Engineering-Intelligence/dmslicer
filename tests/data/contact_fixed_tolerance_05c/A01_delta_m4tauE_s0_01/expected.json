@@ -1,0 +1,20 @@
+{
+  "case_id": "A01",
+  "construction_status": "CONSTRUCTIBLE",
+  "engineering_state": "penetration_beyond_tolerance",
+  "exact_intersection_dimension": "3D",
+  "geometry": {
+    "a_mm": 0.5773502691896257,
+    "b_mm": 0.5773502691896257,
+    "h_mm": 0.28867513459481287,
+    "scale": 0.028867513459481287
+  },
+  "ground_truth_mode": "construction_derived",
+  "intended_relation_dimension": "2D",
+  "material_common_volume_mm3": 0.0591167563965419,
+  "pilot_level": "LEVEL_B_FIXED_ABSOLUTE_TOLERANCE_PILOT",
+  "q": -4,
+  "scale": 0.01,
+  "schema_version": 1,
+  "set_signed_offset_mm": -0.4
+}

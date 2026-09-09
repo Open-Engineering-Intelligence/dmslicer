@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 
 import pytest
 
@@ -12,6 +13,11 @@ from dmslicer.contact_tolerance_pilot_05a import (
     run_contact_tolerance_pilot_case,
     validate_tolerance_actual,
 )
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ROLE_FIXTURES = REPO_ROOT / "tests" / "data" / "contact_fixed_tolerance_05c"
+TRACKED_05A = REPO_ROOT / "benchmarks" / "contact_tolerance_pilot_05a"
 
 
 def _actual(state: str) -> dict:
@@ -106,11 +112,70 @@ def test_actual_measurement_uses_the_reimported_a01_gap_not_truth(tmp_path: Path
 
 
 def test_a01_role_constrained_measurement_uses_tracked_penetration_interface(tmp_path: Path) -> None:
-    fixtures = Path("outputs/contact_fixed_tolerance_05c/inputs")
-    result = run_contact_tolerance_pilot_case(fixtures / "A01_delta_m2tauE_s0_01", tmp_path / "actual")
+    result = run_contact_tolerance_pilot_case(ROLE_FIXTURES / "A01_delta_m2tauE_s0_01", tmp_path / "actual")
     assert result["actual"]["measured_signed_offset_mm"] == pytest.approx(-0.2, abs=1e-9)
     assert result["actual"]["engineering_state"] == "penetration_beyond_tolerance"
     assert result["actual"]["geometry_state"]["exact_intersection_dimension"] == "3D"
+    assert result["actual"]["measurement"]["role_binding"] == {"Side_1": "Side_1", "Side_2": "Side_2"}
+
+
+def test_a01_role_constrained_measurement_uses_archived_minus_four_interface(tmp_path: Path) -> None:
+    result = run_contact_tolerance_pilot_case(ROLE_FIXTURES / "A01_delta_m4tauE_s0_01", tmp_path / "actual")
+
+    assert result["actual"]["measured_signed_offset_mm"] == pytest.approx(-0.4, abs=1e-9)
+    assert result["actual"]["engineering_state"] == "penetration_beyond_tolerance"
+    assert result["actual"]["measurement"]["role_binding"] == {"Side_1": "Side_1", "Side_2": "Side_2"}
+
+
+@pytest.mark.parametrize(("sample_id", "expected_offset", "expected_state"), [
+    ("A01_delta_m1tauE", -0.1, "penetration_within_tolerance"),
+    ("A01_delta_p0tauE", 0.0, "exact"),
+    ("A01_delta_p0_5tauE", 0.05, "positive_gap_within_tolerance"),
+])
+def test_a01_role_fixture_controls_use_reimported_geometry(tmp_path: Path, sample_id: str, expected_offset: float, expected_state: str) -> None:
+    result = run_contact_tolerance_pilot_case(TRACKED_05A / sample_id, tmp_path / "actual")
+
+    assert result["actual"]["measured_signed_offset_mm"] == pytest.approx(expected_offset, abs=1e-9)
+    assert result["actual"]["engineering_state"] == expected_state
+
+
+@pytest.mark.parametrize(("replacement", "reason"), [
+    ("Missing_1", "A01 role Side_1 is missing or duplicated"),
+    # FreeCAD's STEP importer disambiguates the two duplicate labels; the
+    # resulting imported convention is still explicitly rejected as Side_2
+    # missing rather than being position-guessed.
+    ("Side_1", "A01 role Side_2 is missing or duplicated"),
+])
+def test_a01_rejects_missing_or_duplicate_roles_on_the_production_step_path(tmp_path: Path, replacement: str, reason: str) -> None:
+    """Exercise the normal STEP import/analyze path, not an isolated role helper."""
+    source = ROLE_FIXTURES / "A01_delta_m2tauE_s0_01"
+    # The runner derives the base case from the bundle name, as do real bundles.
+    case = tmp_path / "A01_delta_role_malformed"
+    shutil.copytree(source, case)
+    step = case / "inputs.step"
+    text = step.read_text(encoding="utf-8")
+    if replacement == "Missing_1":
+        text = text.replace("Side_1", replacement)
+    else:
+        text = text.replace("Side_2", replacement)
+    step.write_text(text, encoding="utf-8", newline="\n")
+
+    result = run_contact_tolerance_pilot_case(case, tmp_path / "actual")
+
+    assert result["actual"]["engineering_state"] == "UNSUPPORTED"
+    assert result["actual"]["measurement"]["reason"] == reason
+    assert result["actual"]["direct_fuse"]["executed"] is False
+
+
+def test_a01_measurement_is_independent_of_its_parent_directory(tmp_path: Path) -> None:
+    source = ROLE_FIXTURES / "A01_delta_m2tauE_s0_01"
+    relocated = tmp_path / "arbitrary" / "nested" / source.name
+    relocated.parent.mkdir(parents=True)
+    shutil.copytree(source, relocated)
+
+    result = run_contact_tolerance_pilot_case(relocated, tmp_path / "actual")
+
+    assert result["actual"]["measured_signed_offset_mm"] == pytest.approx(-0.2, abs=1e-9)
 
 
 def test_gap_view_exports_real_inputs_without_gui_view_provider(tmp_path: Path) -> None:
