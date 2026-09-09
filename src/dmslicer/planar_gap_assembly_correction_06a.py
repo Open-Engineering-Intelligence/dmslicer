@@ -131,63 +131,139 @@ def decide_correction(offset_mm: float, policy: dict[str, Any], numeric_rules: d
     }
 
 
-def _close(actual: float, expected: float, epsilon: float) -> bool:
-    return math.isfinite(float(actual)) and abs(float(actual) - float(expected)) <= epsilon
+def _finite_number(value: Any) -> bool:
+    return type(value) in {int, float} and math.isfinite(float(value))
+
+
+def _required_number(
+    value: Any,
+    field: str,
+    failures: list[dict[str, Any]],
+    *,
+    nonnegative: bool = False,
+    positive: bool = False,
+) -> float | None:
+    """Read a required finite scalar without allowing bool, NaN, or infinity."""
+    if not _finite_number(value):
+        failures.append({"kind": "invalid_numeric", "field": field, "actual": value})
+        return None
+    number = float(value)
+    if (nonnegative and number < 0.0) or (positive and number <= 0.0):
+        failures.append(
+            {
+                "kind": "numeric_constraint",
+                "field": field,
+                "constraint": "positive" if positive else "nonnegative",
+                "actual": value,
+            }
+        )
+        return None
+    return number
+
+
+def _required_vector(
+    value: Any,
+    field: str,
+    failures: list[dict[str, Any]],
+    *,
+    unit: bool = False,
+    unit_epsilon: float = 1e-7,
+) -> list[float] | None:
+    if not isinstance(value, list) or len(value) != 3:
+        failures.append({"kind": "invalid_numeric", "field": field, "actual": value})
+        return None
+    vector = []
+    for index, component in enumerate(value):
+        number = _required_number(component, f"{field}.{index}", failures)
+        if number is None:
+            return None
+        vector.append(number)
+    if unit and abs(math.sqrt(sum(component**2 for component in vector)) - 1.0) > unit_epsilon:
+        failures.append({"kind": "numeric_constraint", "field": field, "constraint": "unit_vector", "actual": value})
+        return None
+    return vector
+
+
+def _close(actual: float | None, expected: float | None, epsilon: float) -> bool:
+    return actual is not None and expected is not None and math.isfinite(actual) and math.isfinite(expected) and abs(actual - expected) <= epsilon
 
 
 def validate_operation_evidence(evidence: dict[str, Any], expected: str | dict[str, Any]) -> dict[str, Any]:
     """Independently validate saved operation facts; expected never drives geometry."""
     expected_status = expected if isinstance(expected, str) else expected.get("status")
     rules = {**DEFAULT_NUMERIC_RULES, **(expected.get("numeric_rules", {}) if isinstance(expected, dict) else {})}
-    linear = float(rules["linear_epsilon_mm"])
-    area_epsilon = float(rules["area_epsilon_mm2"])
-    volume_epsilon = float(rules["volume_epsilon_mm3"])
     failures: list[dict[str, Any]] = []
+    linear = _required_number(rules.get("linear_epsilon_mm"), "numeric_rules.linear_epsilon_mm", failures, nonnegative=True)
+    area_epsilon = _required_number(rules.get("area_epsilon_mm2"), "numeric_rules.area_epsilon_mm2", failures, nonnegative=True)
+    volume_epsilon = _required_number(rules.get("volume_epsilon_mm3"), "numeric_rules.volume_epsilon_mm3", failures, nonnegative=True)
+    angular_epsilon = _required_number(rules.get("angular_epsilon"), "numeric_rules.angular_epsilon", failures, nonnegative=True)
+    if None in {linear, area_epsilon, volume_epsilon, angular_epsilon}:
+        return {"schema_version": 1, "status": "FAIL", "expected_status": expected_status, "failures": failures}
     if evidence.get("status") != expected_status:
         failures.append({"kind": "status", "expected": expected_status, "actual": evidence.get("status")})
     decision = evidence.get("decision", {})
-    vector = decision.get("executed_translation_mm", [0.0, 0.0, 0.0])
-    norm = decision.get("executed_translation_norm_mm")
-    if not isinstance(vector, list) or len(vector) != 3 or not all(isinstance(v, (int, float)) for v in vector):
-        failures.append({"kind": "translation_vector", "actual": vector})
-        vector_norm = math.inf
-    else:
-        vector_norm = math.sqrt(sum(float(v) ** 2 for v in vector))
-    if not isinstance(norm, (int, float)) or not _close(norm, vector_norm, linear):
+    vector = _required_vector(decision.get("executed_translation_mm"), "decision.executed_translation_mm", failures)
+    norm = _required_number(decision.get("executed_translation_norm_mm"), "decision.executed_translation_norm_mm", failures, nonnegative=True)
+    vector_norm = math.sqrt(sum(component**2 for component in vector)) if vector is not None else None
+    if not _close(norm, vector_norm, linear):
         failures.append({"kind": "translation_norm", "reported": norm, "actual": vector_norm})
     policy = evidence.get("policy", {})
-    if isinstance(norm, (int, float)) and float(norm) > float(policy.get("max_translation_mm", 0.0)) + linear:
-        failures.append({"kind": "translation_budget", "budget": policy.get("max_translation_mm"), "actual": norm})
     pre = evidence.get("pre_measurement", {})
-    offset = pre.get("measured_signed_offset_mm")
-    normal = pre.get("reference_direction")
+    offset = _required_number(pre.get("measured_signed_offset_mm"), "pre_measurement.measured_signed_offset_mm", failures)
+    normal = _required_vector(pre.get("reference_direction"), "pre_measurement.reference_direction", failures, unit=True, unit_epsilon=angular_epsilon)
     if evidence.get("status") == "CORRECTED_AND_FUSED":
-        if not isinstance(offset, (int, float)) or not isinstance(normal, list) or len(normal) != 3:
-            failures.append({"kind": "motion_basis", "pre_measurement": pre})
-        else:
-            expected_vector = [-float(offset) * float(component) for component in normal]
+        tau_e = _required_number(policy.get("tauE_mm"), "policy.tauE_mm", failures, nonnegative=True)
+        budget = _required_number(policy.get("max_translation_mm"), "policy.max_translation_mm", failures, nonnegative=True)
+        if policy.get("policy_valid") is not True:
+            failures.append({"kind": "authorization", "field": "policy.policy_valid", "actual": policy.get("policy_valid")})
+        if policy.get("allow_motion") is not True:
+            failures.append({"kind": "authorization", "field": "policy.allow_motion", "actual": policy.get("allow_motion")})
+        if decision.get("motion_authorized") is not True:
+            failures.append({"kind": "authorization", "field": "decision.motion_authorized", "actual": decision.get("motion_authorized")})
+        if offset is not None and offset <= linear:
+            failures.append({"kind": "motion_basis", "field": "pre_measurement.measured_signed_offset_mm", "constraint": "positive_gap", "actual": offset})
+        if offset is not None and tau_e is not None and offset > tau_e + linear:
+            failures.append({"kind": "policy_constraint", "field": "policy.tauE_mm", "actual": tau_e, "required_offset_mm": offset})
+        if norm is not None and budget is not None and norm > budget + linear:
+            failures.append({"kind": "translation_budget", "field": "policy.max_translation_mm", "budget": budget, "actual": norm})
+        if offset is not None and normal is not None and vector is not None:
+            expected_vector = [-offset * component for component in normal]
             if any(not _close(vector[i], expected_vector[i], linear) for i in range(3)):
                 failures.append({"kind": "translation_direction", "expected": expected_vector, "actual": vector})
-    elif evidence.get("status") not in {"ALREADY_CONTACT", "POSTCHECK_FAILED"} and isinstance(norm, (int, float)) and float(norm) > linear:
-        failures.append({"kind": "rejected_motion_executed", "actual": norm})
+    elif evidence.get("status") == "ALREADY_CONTACT":
+        if offset is not None and abs(offset) > linear:
+            failures.append({"kind": "motion_basis", "field": "pre_measurement.measured_signed_offset_mm", "constraint": "already_contact", "actual": offset})
+        if norm is not None and norm > linear:
+            failures.append({"kind": "already_contact_motion_executed", "actual": norm})
+    elif evidence.get("status") != "POSTCHECK_FAILED":
+        if norm is not None and norm > linear:
+            failures.append({"kind": "rejected_motion_executed", "actual": norm})
+        if evidence.get("fuse", {}).get("executed") is not False:
+            failures.append({"kind": "rejected_fuse_executed", "actual": evidence.get("fuse", {}).get("executed")})
 
     if evidence.get("status") in {"CORRECTED_AND_FUSED", "ALREADY_CONTACT"}:
         post = evidence.get("post_measurement", {})
-        if not isinstance(post.get("measured_signed_offset_mm"), (int, float)) or abs(float(post["measured_signed_offset_mm"])) > linear:
+        residual = _required_number(post.get("measured_signed_offset_mm"), "post_measurement.measured_signed_offset_mm", failures)
+        if residual is None or abs(residual) > linear:
             failures.append({"kind": "residual_offset", "actual": post.get("measured_signed_offset_mm")})
         patch = evidence.get("contact_patch", {})
-        if patch.get("dimension") != "2D" or float(patch.get("area_mm2", 0.0)) <= area_epsilon:
+        patch_area = _required_number(patch.get("area_mm2"), "contact_patch.area_mm2", failures, positive=True)
+        side_1_area = _required_number(patch.get("side_1_area_mm2"), "contact_patch.side_1_area_mm2", failures, positive=True)
+        side_2_area = _required_number(patch.get("side_2_area_mm2"), "contact_patch.side_2_area_mm2", failures, positive=True)
+        boundary_overlap = _required_number(patch.get("fused_boundary_overlap_area_mm2"), "contact_patch.fused_boundary_overlap_area_mm2", failures, nonnegative=True)
+        if patch.get("dimension") != "2D" or patch_area is None or patch_area <= area_epsilon:
             failures.append({"kind": "contact_patch", "actual": patch})
         else:
-            for key in ("side_1_area_mm2", "side_2_area_mm2"):
-                if not _close(patch.get("area_mm2", math.inf), patch.get(key, -math.inf), area_epsilon):
-                    failures.append({"kind": "full_coverage", "field": key, "actual": patch})
-            if float(patch.get("fused_boundary_overlap_area_mm2", math.inf)) > area_epsilon:
+            for key, side_area in (("side_1_area_mm2", side_1_area), ("side_2_area_mm2", side_2_area)):
+                if not _close(patch_area, side_area, area_epsilon):
+                    failures.append({"kind": "full_coverage", "field": f"contact_patch.{key}", "actual": patch})
+            if boundary_overlap is None or boundary_overlap > area_epsilon:
                 failures.append({"kind": "internal_interface_retained", "actual": patch.get("fused_boundary_overlap_area_mm2")})
         fuse = evidence.get("fuse", {})
         if not (fuse.get("executed") is True and fuse.get("solid_count") == 1 and fuse.get("valid") is True and fuse.get("closed") is True):
             failures.append({"kind": "fuse", "actual": fuse})
-        if not isinstance(fuse.get("volume_conservation_error_mm3"), (int, float)) or float(fuse["volume_conservation_error_mm3"]) > volume_epsilon:
+        volume_error = _required_number(fuse.get("volume_conservation_error_mm3"), "fuse.volume_conservation_error_mm3", failures, nonnegative=True)
+        if volume_error is None or volume_error > volume_epsilon:
             failures.append({"kind": "volume_conservation", "actual": fuse.get("volume_conservation_error_mm3")})
         invariants = evidence.get("invariants", {})
         required = (
@@ -206,11 +282,15 @@ def validate_operation_evidence(evidence: dict[str, Any], expected: str | dict[s
         reimport = evidence.get("reimport", {})
         assembly = reimport.get("corrected_assembly", {})
         fused = reimport.get("fused", {})
-        if assembly.get("role_binding") != {"Side_1": "Side_1", "Side_2": "Side_2"} or abs(float(assembly.get("residual_offset_mm", math.inf))) > linear or assembly.get("contact_dimension") != "2D":
+        reimport_residual = _required_number(assembly.get("residual_offset_mm"), "reimport.corrected_assembly.residual_offset_mm", failures)
+        if assembly.get("role_binding") != {"Side_1": "Side_1", "Side_2": "Side_2"} or reimport_residual is None or abs(reimport_residual) > linear or assembly.get("contact_dimension") != "2D":
             failures.append({"kind": "corrected_step_reimport", "actual": assembly})
         if not (fused.get("solid_count") == 1 and fused.get("valid") is True and fused.get("closed") is True):
             failures.append({"kind": "fused_step_reimport", "actual": fused})
-    else:
+    elif evidence.get("status") == "POSTCHECK_FAILED":
+        if evidence.get("fuse", {}).get("executed") is True:
+            failures.append({"kind": "postcheck_failed_not_publishable"})
+    elif evidence.get("status") not in {"CORRECTED_AND_FUSED", "ALREADY_CONTACT"}:
         if evidence.get("fuse", {}).get("executed") is True:
             failures.append({"kind": "rejected_fuse_executed"})
     return {"schema_version": 1, "status": "PASS" if not failures else "FAIL", "expected_status": expected_status, "failures": failures}
@@ -346,9 +426,13 @@ def _main() -> None:
     parser.add_argument("--view", action="store_true")
     args = parser.parse_args()
     if args.action == "run":
-        run_planar_gap_suite(args.manifest, args.output)
+        result = run_planar_gap_suite(args.manifest, args.output)
+        if result["status"] != "PASS":
+            raise SystemExit(1)
     else:
-        run_planar_gap_case(args.manifest, args.scenario, args.output, create_view=args.view)
+        result = run_planar_gap_case(args.manifest, args.scenario, args.output, create_view=args.view)
+        if result["validation"]["status"] != "PASS":
+            raise SystemExit(1)
 
 
 if __name__ == "__main__":
