@@ -6,11 +6,67 @@ from pathlib import Path
 
 import pytest
 
+from dmslicer.contact_partition_union_04a import evaluate_partition_union_validation
+
 
 CASES = {
     "A02": "contact_canonical_03a",
     "A08": "contact_canonical_03b",
 }
+
+
+def test_production_validation_rejects_excess_volume_error() -> None:
+    """Catches volume_error_mm3 being recorded but omitted from overall status."""
+    facts = {
+        "common_not_on_union_boundary": True,
+        "common_not_on_reimported_boundary": True,
+        "input_material_retained": True,
+        "no_added_material": True,
+        "volume_error_mm3": 1.1e-6,
+        "solid_count": 1,
+        "valid": True,
+        "closed": True,
+        "roundtrip_solid_count": 1,
+        "roundtrip_valid": True,
+        "roundtrip_volume_error_mm3": 0.0,
+    }
+
+    validation = evaluate_partition_union_validation(facts, volume_epsilon_mm3=1e-6)
+
+    assert validation["status"] == "FAIL"
+    assert {failure["kind"] for failure in validation["failures"]} == {"volume_error_mm3"}
+
+
+def test_production_validation_rejects_invalid_or_disconnected_union() -> None:
+    """Catches solid connectivity, validity, or closure being recorded but not gated."""
+    facts = {
+        "common_not_on_union_boundary": True, "common_not_on_reimported_boundary": True,
+        "input_material_retained": True, "no_added_material": True, "volume_error_mm3": 0.0,
+        "solid_count": 2, "valid": False, "closed": False,
+        "roundtrip_solid_count": 1, "roundtrip_valid": True, "roundtrip_volume_error_mm3": 0.0,
+    }
+
+    validation = evaluate_partition_union_validation(facts, volume_epsilon_mm3=1e-6)
+
+    assert validation["status"] == "FAIL"
+    assert {failure["kind"] for failure in validation["failures"]} == {"solid_count", "valid", "closed"}
+
+
+def test_validation_cli_returns_nonzero_for_excess_volume_error(tmp_path: Path) -> None:
+    """Catches the CLI ignoring a FAIL returned by the production final status gate."""
+    facts = {
+        "common_not_on_union_boundary": True, "common_not_on_reimported_boundary": True,
+        "input_material_retained": True, "no_added_material": True, "volume_error_mm3": 2e-6,
+        "solid_count": 1, "valid": True, "closed": True,
+        "roundtrip_solid_count": 1, "roundtrip_valid": True, "roundtrip_volume_error_mm3": 0.0,
+    }
+    facts_path = tmp_path / "facts.json"
+    facts_path.write_text(json.dumps(facts), encoding="utf-8")
+
+    completed = _command("validate-contact-partition-union-facts", str(facts_path), "1e-6")
+
+    assert completed.returncode != 0
+    assert "volume_error_mm3" in completed.stderr
 
 
 def _command(*arguments: str) -> subprocess.CompletedProcess[str]:

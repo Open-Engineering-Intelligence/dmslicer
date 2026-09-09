@@ -39,6 +39,18 @@ def _run_freecad(request: dict[str, Any]) -> dict[str, Any]:
         return response
 
 
+def evaluate_partition_union_validation(facts: dict[str, Any], volume_epsilon_mm3: float) -> dict[str, Any]:
+    """Exercise the same FreeCAD-side final status gate used by actual operations."""
+    return _run_freecad({"action": "validate", "facts": facts, "volume_epsilon_mm3": volume_epsilon_mm3})["validation"]
+
+
+def validate_partition_union_facts_file(facts_path: Path, volume_epsilon_mm3: float) -> dict[str, Any]:
+    validation = evaluate_partition_union_validation(read_json(Path(facts_path)), volume_epsilon_mm3)
+    if validation["status"] != "PASS":
+        raise RuntimeError(f"partition/union validation failed: {validation['failures']}")
+    return validation
+
+
 def run_contact_partition_union(step_path: Path, output_dir: Path) -> dict[str, Any]:
     step_path, output_dir = Path(step_path), Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -75,5 +87,5 @@ def run_contact_partition_union_suite(output_root: Path) -> dict[str, Any]:
         rows[case_id] = {"validation": response["validation"]["status"], "repeatability": repeatability["status"], "common_area_mm2": sum(record["area_mm2"] for record in response["operation"]["common_patches"]), "union": response["operation"]["union"]}
     summary = {"status": "PASS" if all(row["validation"] == "PASS" and row["repeatability"] == "PASS" for row in rows.values()) else "FAIL", "cases": rows}
     write_json(output_root / "summary.json", summary)
-    (output_root / "VIEW_INDEX.md").write_text("# 04A contact partition and union — view index\n\nOpen each `operation_debug.FCStd`. `Originals` contains transparent inputs. Enable `Partitions` to inspect the actual common face and each side's remaining non-contact face area. Enable `Union_Result` and hide `Originals` to inspect the fused material solid; for A08 the spherical cavity boundary remains visible while its former common cap is absent from the fused boundary.\n", encoding="utf-8")
+    (output_root / "VIEW_INDEX.md").write_text("# 04A contact partition and union — view index\n\nOpen each `operation_debug.FCStd`. `Union_Result` is the intended default view. Enable `Originals` to inspect the transparent inputs, or `Partitions` to inspect the actual common face and each side's remaining non-contact face area. A08 is a full small solid sphere plus only the upper half of a larger spherical shell. After fusion, the exposed lower hemisphere of the small sphere is an exterior material boundary, not a residual closed cavity wall; the shell-side inner spherical cap is entirely common and has no remaining patch.\n", encoding="utf-8")
     return summary

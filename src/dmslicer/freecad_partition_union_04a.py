@@ -63,6 +63,30 @@ def _add_string_properties(obj, values):
         setattr(obj, name, str(value))
 
 
+def _finalize_validation(facts, volume_epsilon):
+    checks = (
+        ("common_not_on_union_boundary", facts.get("common_not_on_union_boundary") is True),
+        ("common_not_on_reimported_boundary", facts.get("common_not_on_reimported_boundary") is True),
+        ("input_material_retained", facts.get("input_material_retained") is True),
+        ("no_added_material", facts.get("no_added_material") is True),
+        ("volume_error_mm3", facts.get("volume_error_mm3", float("inf")) <= volume_epsilon),
+        ("solid_count", facts.get("solid_count") == 1),
+        ("valid", facts.get("valid") is True),
+        ("closed", facts.get("closed") is True),
+        ("roundtrip_solid_count", facts.get("roundtrip_solid_count") == 1),
+        ("roundtrip_valid", facts.get("roundtrip_valid") is True),
+        ("roundtrip_volume_error_mm3", facts.get("roundtrip_volume_error_mm3", float("inf")) <= volume_epsilon),
+    )
+    failures = []
+    for kind, passed in checks:
+        if not passed:
+            failure = {"kind": kind, "actual": facts.get(kind)}
+            if kind in {"volume_error_mm3", "roundtrip_volume_error_mm3"}:
+                failure["tolerance_mm3"] = volume_epsilon
+            failures.append(failure)
+    return {**facts, "status": "PASS" if not failures else "FAIL", "failures": failures}
+
+
 def _debug(output, case_id, shape_a, shape_b, commons, remaining_a, remaining_b, union, metadata):
     doc = FreeCAD.newDocument("ContactPartitionUnion04A")
     try:
@@ -82,7 +106,10 @@ def _debug(output, case_id, shape_a, shape_b, commons, remaining_a, remaining_b,
         fused = doc.addObject("Part::Feature", "Fused_Union"); fused.Shape = union
         _add_string_properties(fused, {"SourceIDs": metadata["source_ids"], "OperationType": "solid_fuse", "Volume": union.Volume, "SolidCount": len(union.Solids), "ShellCount": len(union.Shells), "Valid": union.isValid(), "Closed": all(shell.isClosed() for shell in union.Shells), "Validation": metadata["validation"], "InputStepHash": metadata["step_hash"]})
         union_group.addObject(fused)
-        originals.Visibility = True; partitions.Visibility = True; union_group.Visibility = False
+        for obj in originals.Group + partitions.Group:
+            obj.Visibility = False
+        fused.Visibility = True
+        originals.Visibility = False; partitions.Visibility = False; union_group.Visibility = True
         doc.recompute(); doc.saveAs(str(output / "operation_debug.FCStd"))
     finally:
         FreeCAD.closeDocument(doc.Name)
@@ -148,8 +175,8 @@ def _run(request):
             reimported = imported[0][1]
             common_on_boundary = any(patch["shape"].common(face).Area > epsilon for patch in commons for face in union.Faces)
             reimported_common = any(patch["shape"].common(face).Area > epsilon for patch in commons for face in reimported.Faces)
-            validation = {"status": "PASS", "common_not_on_union_boundary": not common_on_boundary, "common_not_on_reimported_boundary": not reimported_common, "input_material_retained": shape_a.cut(union).Volume <= volume_epsilon and shape_b.cut(union).Volume <= volume_epsilon, "no_added_material": union.cut(shape_a.fuse(shape_b)).Volume <= volume_epsilon, "volume_error_mm3": float(abs(union.Volume - (shape_a.Volume + shape_b.Volume - material_common.Volume)),), "roundtrip_solid_count": len(reimported.Solids), "roundtrip_valid": reimported.isValid(), "roundtrip_volume_error_mm3": float(abs(reimported.Volume - union.Volume))}
-            validation["status"] = "PASS" if all([validation["common_not_on_union_boundary"], validation["common_not_on_reimported_boundary"], validation["input_material_retained"], validation["no_added_material"], validation["roundtrip_solid_count"] == 1, validation["roundtrip_valid"], validation["roundtrip_volume_error_mm3"] <= volume_epsilon]) else "FAIL"
+            facts = {"common_not_on_union_boundary": not common_on_boundary, "common_not_on_reimported_boundary": not reimported_common, "input_material_retained": shape_a.cut(union).Volume <= volume_epsilon and shape_b.cut(union).Volume <= volume_epsilon, "no_added_material": union.cut(shape_a.fuse(shape_b)).Volume <= volume_epsilon, "volume_error_mm3": float(abs(union.Volume - (shape_a.Volume + shape_b.Volume - material_common.Volume))), "solid_count": len(union.Solids), "valid": union.isValid(), "closed": all(shell.isClosed() for shell in union.Shells), "roundtrip_solid_count": len(reimported.Solids), "roundtrip_valid": reimported.isValid(), "roundtrip_volume_error_mm3": float(abs(reimported.Volume - union.Volume))}
+            validation = _finalize_validation(facts, volume_epsilon)
         finally:
             FreeCAD.closeDocument(roundtrip.Name)
         metadata = {"source_ids": json.dumps({"side_1": label_a, "side_2": label_b}), "step_hash": request["step_hash"], "validation": validation["status"]}
@@ -164,7 +191,9 @@ def _run(request):
 def _main():
     response_path = Path(os.environ["DMSLICER_FREECAD_RESPONSE"])
     try:
-        response = _run(json.loads(Path(os.environ["DMSLICER_FREECAD_REQUEST"]).read_text(encoding="utf-8")))
+        request = json.loads(Path(os.environ["DMSLICER_FREECAD_REQUEST"]).read_text(encoding="utf-8"))
+        response = ({"validation": _finalize_validation(request["facts"], float(request["volume_epsilon_mm3"]))}
+                    if request.get("action") == "validate" else _run(request))
         response["status"] = "SUCCEEDED"
     except Exception:
         response = {"status": "FAILED", "traceback": traceback.format_exc()}

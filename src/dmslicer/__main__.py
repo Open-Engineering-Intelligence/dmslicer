@@ -10,7 +10,8 @@ from .runner import analyze_case01, generate_case01_fixture, run_capability_prob
 from .contact_canonical_03a import analyze_contact_canonical, generate_contact_canonical, run_contact_canonical_repeatability, run_contact_canonical_suite
 from .contact_canonical_03b import analyze_contact_canonical_analytic, generate_contact_canonical_analytic, run_contact_canonical_analytic_repeatability, run_contact_canonical_analytic_suite
 from .contact_canonical_03c import analyze_contact_canonical_interface_topology, generate_contact_canonical_interface_topology, run_contact_canonical_interface_topology_repeatability, run_contact_canonical_interface_topology_suite
-from .contact_partition_union_04a import run_contact_partition_union, run_contact_partition_union_suite
+from .contact_partition_union_04a import run_contact_partition_union, run_contact_partition_union_suite, validate_partition_union_facts_file
+from .shell_fill_04a2 import generate_shell_fill_cases, run_shell_fill_case, run_shell_fill_suite
 
 
 def main() -> None:
@@ -84,6 +85,21 @@ def main() -> None:
     partition_union_suite = commands.add_parser("run-contact-partition-union-suite", help="publish 04A A02/A08 operation evidence and repeatability")
     partition_union_suite.add_argument("output_root", type=Path)
 
+    partition_union_validate = commands.add_parser("validate-contact-partition-union-facts", help="apply the production 04A final status gate to recorded facts")
+    partition_union_validate.add_argument("facts_path", type=Path)
+    partition_union_validate.add_argument("volume_epsilon_mm3", type=float)
+
+    shell_fill_generate = commands.add_parser("generate-shell-fill-cases", help="generate tracked-style U01-U03 shell-fill STEP bundles")
+    shell_fill_generate.add_argument("fixture_root", type=Path)
+
+    shell_fill_case = commands.add_parser("run-shell-fill-case", help="run one tracked U01-U03 shell-fill operation")
+    shell_fill_case.add_argument("case_dir", type=Path)
+    shell_fill_case.add_argument("output_dir", type=Path)
+
+    shell_fill_suite = commands.add_parser("run-shell-fill-suite", help="run U01-U03 with two-process repeatability")
+    shell_fill_suite.add_argument("fixture_root", type=Path)
+    shell_fill_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -119,6 +135,14 @@ def main() -> None:
         result = run_contact_partition_union(arguments.step_path, arguments.output_dir)
     elif arguments.command == "run-contact-partition-union-suite":
         result = run_contact_partition_union_suite(arguments.output_root)
+    elif arguments.command == "validate-contact-partition-union-facts":
+        result = validate_partition_union_facts_file(arguments.facts_path, arguments.volume_epsilon_mm3)
+    elif arguments.command == "generate-shell-fill-cases":
+        result = generate_shell_fill_cases(arguments.fixture_root)
+    elif arguments.command == "run-shell-fill-case":
+        result = run_shell_fill_case(arguments.case_dir, arguments.output_dir)
+    elif arguments.command == "run-shell-fill-suite":
+        result = run_shell_fill_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
