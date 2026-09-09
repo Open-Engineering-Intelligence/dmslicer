@@ -91,6 +91,8 @@ def test_p10_selects_two_coplanar_feet_and_preserves_two_equal_distinct_patches(
     assert operation["fuse"]["executed"] is True
     assert operation["fuse"]["solid_count"] == 1
     assert operation["fuse"]["valid"] is True and operation["fuse"]["closed"] is True
+    assert "Fused_Solid" in operation["view_reopen"]["visible_objects"]
+    assert "Original_Side_1" not in operation["view_reopen"]["visible_objects"]
     assert {path.name for path in Path(result["output_dir"]).iterdir()} >= {
         "corrected_assembly.step", "fused.step", "common.brep",
         "side_1_remaining.brep", "side_2_remaining_EMPTY.json",
@@ -121,6 +123,8 @@ def test_p11_retains_one_analytic_annulus_with_outer_and_hole_loops(tmp_path: Pa
     assert operation["step_reimport"]["corrected_assembly"]["hole_count"] == 1
     assert operation["step_reimport"]["corrected_assembly"]["boundary_component_count"] == 2
     assert operation["fuse"]["executed"] is True
+    assert "Fused_Solid" in operation["view_reopen"]["visible_objects"]
+    assert "Original_Side_1" not in operation["view_reopen"]["visible_objects"]
     assert {path.name for path in Path(result["output_dir"]).iterdir()} >= {
         "corrected_assembly.step", "fused.step", "common.brep",
         "side_1_remaining.brep", "side_2_remaining_EMPTY.json",
@@ -142,6 +146,10 @@ def test_p12_reports_both_valid_candidates_and_refuses_to_choose_nearest(tmp_pat
     assert operation["motion"]["executed_translation_mm"] == [0.0, 0.0, 0.0]
     assert operation["motion"]["executed_translation_norm_mm"] == 0.0
     assert operation["fuse"]["executed"] is False
+    assert {"Original_Side_1", "Original_Side_2", "Ambiguity_Rejection"} <= set(
+        operation["view_reopen"]["visible_objects"]
+    )
+    assert not any(name.startswith("Candidate_Set_") for name in operation["view_reopen"]["visible_objects"])
     artifacts = operation.get("artifacts", {})
     assert "corrected_assembly_step" not in artifacts
     assert "fused_step" not in artifacts

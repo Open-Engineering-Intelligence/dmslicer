@@ -19,6 +19,7 @@ FIXTURE_ROOT = REPO_ROOT / "benchmarks" / "planar_multipatch_interface_correctio
 FREECAD_SCRIPT = Path(__file__).with_name(
     "freecad_planar_multipatch_interface_correction_06c.py"
 )
+VISIBILITY_SCRIPT = Path(__file__).with_name("freecad_visibility_profile_06c.py")
 RULES = {
     "linear_epsilon_mm": 1e-7,
     "area_epsilon_mm2": 1e-8,
@@ -116,6 +117,52 @@ def _run_freecad(request: dict[str, Any]) -> dict[str, Any]:
                 f"stdout={result.stdout}; stderr={result.stderr}"
             )
         return response
+
+
+def _apply_visibility_profile(fcstd_path: Path, visible_objects: list[str]) -> dict[str, Any]:
+    gui_executable = _freecad_executable().with_name("FreeCAD.exe")
+    if not gui_executable.is_file():
+        raise FileNotFoundError("FreeCAD.exe was not found for persisted GUI visibility")
+    with tempfile.TemporaryDirectory(prefix="dmslicer_visibility_06c_") as temporary:
+        request_path = Path(temporary) / "request.json"
+        response_path = Path(temporary) / "response.json"
+        write_json(
+            request_path,
+            {"fcstd_path": str(fcstd_path), "visible_objects": visible_objects},
+        )
+        environment = os.environ.copy()
+        environment.update(
+            {
+                "DMSLICER_VISIBILITY_REQUEST": str(request_path),
+                "DMSLICER_VISIBILITY_RESPONSE": str(response_path),
+            }
+        )
+        startupinfo = None
+        if os.name == "nt":
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            startupinfo.wShowWindow = subprocess.SW_HIDE
+        result = subprocess.run(
+            [str(gui_executable), "--safe-mode", str(VISIBILITY_SCRIPT)],
+            env=environment,
+            text=True,
+            capture_output=True,
+            timeout=180,
+            check=False,
+            startupinfo=startupinfo,
+        )
+        if not response_path.is_file():
+            raise RuntimeError(
+                "FreeCAD GUI visibility helper did not write a response; "
+                f"exit={result.returncode}; stdout={result.stdout}; stderr={result.stderr}"
+            )
+        response = read_json(response_path)
+        if result.returncode or response.get("status") != "SUCCEEDED" or response.get("profile_matches") is not True:
+            raise RuntimeError(
+                f"FreeCAD GUI visibility profile failed; exit={result.returncode}; "
+                f"response={response}; stdout={result.stdout}; stderr={result.stderr}"
+            )
+        return {key: value for key, value in response.items() if key != "status"}
 
 
 def _source_commit() -> str | None:
@@ -536,6 +583,21 @@ def run_multipatch_case(
         }
     )
     operation = response["operation"]
+    if create_view:
+        fcstd_path = staged / "operation_debug.FCStd"
+        if operation.get("status") == "SUPPORTED_UNIQUE_INTERFACE_FACESET":
+            visible_objects = ["Fused_Result", "Fused_Solid"]
+        else:
+            visible_objects = [
+                "Originals",
+                "Original_Side_1",
+                "Original_Side_2",
+                "Rejection_Evidence",
+                "Ambiguity_Rejection",
+            ]
+        operation["view_reopen"] = _apply_visibility_profile(
+            fcstd_path, visible_objects
+        )
     input_step_sha256 = "sha256:" + sha256_file(step)
     operation["input_step_sha256"] = input_step_sha256
     provenance = operation.setdefault("provenance", {})
