@@ -14,6 +14,26 @@ This is a research-first repository. Every change must preserve the distinction 
 6. `MaterialRegion` is not `InterfaceSourceBoundary`.
 7. A gradient semantic role is not a volumetric field.
 
+## Geometry equivalence and hash policy
+
+1. Raw FreeCAD/OCCT B-rep serialization hashes, `exportBrepToString()` hashes,
+   STEP export hashes, and shape digests prove only exact representation identity.
+   A mismatch proves only that the representation differs.
+2. Never use a raw or quantized geometry hash as the final predicate for geometry
+   equivalence, patch deduplication or correspondence, component/FaceSet matching,
+   STEP round-trip acceptance, corrected/reference equality, scientific validation,
+   or cross-process geometry repeatability.
+3. Prove geometry equivalence with actual B-rep operations and declared unit-bearing
+   tolerances: validity/closedness, area or volume, bidirectional `cut`, actual common,
+   minimum distance, support surface, boundary/component/hole topology, and provenance
+   as applicable. Apply an inverse rigid transform before comparing transformed shapes.
+4. Compare continuous values directly against declared `mm`, `mm²`, `mm³`, or angle
+   epsilons. Do not round or quantize values and then hash them into a binary decision.
+5. If actual B-rep equivalence cannot be proved, report
+   `GEOMETRIC_EQUIVALENCE_NOT_PROVEN` or `UNSUPPORTED`; never substitute a hash mismatch.
+6. File hashes remain required for input integrity, exact-byte evidence, caching, and
+   debugging, but those uses must stay separate from geometric acceptance.
+
 ## Provenance and reproducibility
 
 8. Stable provenance is mandatory for imported and derived entities.

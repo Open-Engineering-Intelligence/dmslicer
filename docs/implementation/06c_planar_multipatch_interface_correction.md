@@ -4,7 +4,7 @@
 
 ## FaceSet 构造与选择
 
-FreeCAD 后端只读取实际 STEP 重导入后的 B-rep。它用 `face.normalAt()` 判断 outward normal，以 supporting Plane 上一点与参考方向的点积记录 support coordinate，再以 `abs(si-sj) <= linear_epsilon` 分组。Plane 自身 Axis 的符号不替代 face outward normal。FaceSet 成员按几何摘要稳定序列化；Face ordinal 只是本次运行的人类标签。
+FreeCAD 后端只读取实际 STEP 重导入后的 B-rep。它用 `face.normalAt()` 判断 outward normal，以 supporting Plane 上一点与参考方向的点积记录 support coordinate，再以 `abs(si-sj) <= linear_epsilon` 分组。Plane 自身 Axis 的符号不替代 face outward normal。FaceSet 成员按实际空间位置排序并获得本次 operation 内的 `member_id`；排序只服务稳定序列化，不承担几何等价证明。Face ordinal 只是本次运行的人类标签。
 
 程序对所有相向、平行、正间隙且位于 `tauE` 与 motion budget 内的 FaceSet pair，在 Side_2 整体 disposable copy 上执行 prospective 纯法向平移，然后重新按同一几何语义寻找 FaceSet，并计算实际 face-pair B-rep common。只有一个合规 pair 时执行；多个 pair 时返回 `UNSUPPORTED_AMBIGUOUS_INTERFACE_SET`，不会按最近距离、最大面积、成员数或遍历顺序挑选。原始平面 FaceSet 与 eligible pair 分别记录，因此 P10 远处 bridge underside 仍保留为真实 B-rep 证据，但不进入可校正候选。
 
@@ -16,13 +16,13 @@ FreeCAD 后端只读取实际 STEP 重导入后的 B-rep。它用 `face.normalAt
 
 ## Partition、Fuse 与 provenance
 
-实际 common faces 以可解释、可重读的几何特征摘要去重，不能仅按面积去重。摘要由面积、包围盒、面/边数量、曲面与边界曲线类型等组成；它不使用 FreeCAD 原始 BREP 序列化字节来判断几何等价，因为等价几何在重写后可能有不同字节表示。组件以 `distToShape <= linear_epsilon` 分组。每个 source carrier member Face 分别执行 `face.cut(linked_common)`；结果保留 source member linkage，零结果以显式 `EMPTY` JSON 与 FCStd 节点表示。双方分别检查面积守恒、Common/Remaining 正面积无交叠，以及双向 B-rep cut 所证明的无遗漏和无越界。Coverage 使用唯一 common 面积除以所选 FaceSet 总面积，超界直接失败，绝不 clamp。
+实际 common faces 以 B-rep 证据去重，不能仅按面积、摘要或 hash 去重。两个 Face 只有在 support surface 类型一致、最短距离不超过 `linear_epsilon_mm`、面积差和 `A.cut(B)` / `B.cut(A)` 双向差面积均不超过 `area_epsilon_mm2`，且 actual common 为正面积时，才视为同一 patch。去重完成后分配本次 operation 内的 `patch_id`。组件以 `distToShape <= linear_epsilon` 分组。每个 source carrier member Face 分别执行 `face.cut(linked_common)`；结果保留 source member linkage，零结果以显式 `EMPTY` JSON 与 FCStd 节点表示。双方分别检查面积守恒、Common/Remaining 正面积无交叠，以及双向 B-rep cut 所证明的无遗漏和无越界。Coverage 使用唯一 common 面积除以所选 FaceSet 总面积，超界直接失败，绝不 clamp。
 
 成功路径在校正后 Fuse，并检查单一 valid closed Solid、体积守恒以及每个 common patch 都未作为正面积外边界残留。Corrected assembly 和 fused STEP 均重导入；重导入检查角色、support plane、residual gap、patch/component/loop/hole topology、coverage、remaining、solid validity、closedness 与 volume。
 
-每个 FaceSet 保存成员、support/normal 与选择证据。每个 Common patch 保存 source STEP hash、双方 occurrence、双方 FaceSet、source member pair、实际 common digest、component id 和操作类型；每个 selected source member 都保存一项或多项 partition outcome，完全被 common 消耗的成员也有带 source FaceSet/member digest 与 linked common digests 的显式 `EMPTY` 记录。当前 FreeCAD binding 未提供可信的 native Generated/Modified/Deleted 历史，因此证据明确标注 `native_history_claimed=false`，只声称直接 B-rep 几何 provenance。
+每个 FaceSet 保存成员、support/normal 与选择证据。每个 Common patch 保存 source STEP hash、双方 occurrence、双方 FaceSet、source member ID pair、`patch_id`、component id 和操作类型；每个 selected source member 都保存一项或多项 partition outcome，完全被 common 消耗的成员也有带 source FaceSet/member ID 与 linked patch IDs 的显式 `EMPTY` 记录。这些 ID 只表示本次 operation 中已经由实际 B-rep 运算建立的关系，不是持久几何身份。当前 FreeCAD binding 未提供可信的 native Generated/Modified/Deleted 历史，因此证据明确标注 `native_history_claimed=false`，只声称直接 B-rep 几何 provenance。
 
-Host 为每个发布 artifact 保存文件 SHA-256（仅证明文件未被替换），并启动独立 FreeCADCmd 进程重新读取 common、逐 patch BREP、remaining BREP、corrected assembly STEP 与 fused STEP；validator 再进行一次 artifact-backed 重读，核对 FaceSet support/gap、patch/component/provenance parity、空间 partition、fused boundary、完整 round-trip 字段和文件 hash。这样仅篡改 JSON、替换 BREP/STEP 或伪造几何特征摘要都不能保持 PASS，同时不会把 BREP 序列化差异误判为几何差异。
+Host 为每个发布 artifact 保存文件 SHA-256（只证明 exact byte / exact representation identity 和文件未被替换），并启动独立 FreeCADCmd 进程重新读取 common、逐 patch BREP、remaining BREP、corrected assembly STEP 与 fused STEP；validator 再进行一次 artifact-backed 重读，核对 FaceSet support/gap、实际 B-rep patch 一一等价、patch/component/provenance ID parity、空间 partition、fused boundary 和完整 round-trip 字段。连续量直接按有单位的 linear/area/volume epsilon 比较。跨进程 repeatability 比较这些容差化数值、拓扑和 provenance，不比较 shape-derived hash。若双向 B-rep 等价无法证明，返回 `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`，不能用 hash mismatch 代替。
 
 ## 验证与限制
 

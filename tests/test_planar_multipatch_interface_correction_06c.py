@@ -80,7 +80,7 @@ def test_p10_selects_two_coplanar_feet_and_preserves_two_equal_distinct_patches(
     partition = operation["partition"]
     assert partition["common_area_mm2"] == pytest.approx(384.0, abs=1e-8)
     assert [patch["area_mm2"] for patch in partition["common_patches"]] == pytest.approx([192.0, 192.0], abs=1e-8)
-    assert len({patch["geometry_digest"] for patch in partition["common_patches"]}) == 2
+    assert [patch["patch_id"] for patch in partition["common_patches"]] == ["Patch_1", "Patch_2"]
     assert partition["coverage"] == pytest.approx({"Side_1": 0.16, "Side_2": 1.0})
     assert partition["remaining_area_mm2"] == pytest.approx({"Side_1": 2016.0, "Side_2": 0.0}, abs=1e-8)
     assert partition["remaining_empty"]["Side_2"] is True
@@ -269,10 +269,10 @@ def test_validator_binds_facesets_patches_provenance_and_step_reimports(tmp_path
     impossible_support["face_sets"]["selected_pair"]["Side_1"]["support_coordinate_mm"] += 1.0
     mutations.append(impossible_support)
 
-    fabricated_digest = copy.deepcopy(source)
-    fabricated_digest["partition"]["common_patches"][0]["geometry_digest"] = "sha256:" + "0" * 64
-    fabricated_digest["provenance"]["common_patches"][0]["actual_common_digest"] = "sha256:" + "0" * 64
-    mutations.append(fabricated_digest)
+    fabricated_patch_id = copy.deepcopy(source)
+    fabricated_patch_id["partition"]["common_patches"][0]["patch_id"] = "Patch_999"
+    fabricated_patch_id["provenance"]["common_patches"][0]["actual_common_patch_id"] = "Patch_999"
+    mutations.append(fabricated_patch_id)
 
     fabricated_linkage = copy.deepcopy(source)
     link = fabricated_linkage["partition"]["common_patches"][0]["source_face_linkage"][0]
@@ -318,28 +318,28 @@ def test_validator_rejects_artifact_bytes_that_do_not_match_recorded_hash(tmp_pa
     assert any(failure["kind"] == "artifact_hash" for failure in validation["failures"])
 
 
-def test_validator_rejects_coordinated_patch_digest_fabrication(tmp_path: Path) -> None:
-    """Break caught: changing every JSON reference to one false digest evades artifact binding."""
+def test_validator_rejects_coordinated_patch_id_fabrication(tmp_path: Path) -> None:
+    """Break caught: changing every relational ID can evade artifact-backed patch binding."""
     module = _module()
     result = _run(tmp_path, "P10")
     evidence = copy.deepcopy(result["operation"])
     patch = evidence["partition"]["common_patches"][0]
-    old = patch["geometry_digest"]
-    fake = "sha256:" + "f" * 64
-    patch["geometry_digest"] = fake
+    old = patch["patch_id"]
+    fake = "Patch_999"
+    patch["patch_id"] = fake
     component = next(
         item for item in evidence["topology"]["components"]
-        if old in item["patch_geometry_digests"]
+        if old in item["patch_ids"]
     )
-    component["patch_geometry_digests"] = [
-        fake if digest == old else digest for digest in component["patch_geometry_digests"]
+    component["patch_ids"] = [
+        fake if patch_id == old else patch_id for patch_id in component["patch_ids"]
     ]
     for record in evidence["provenance"]["common_patches"]:
-        if record["actual_common_digest"] == old:
-            record["actual_common_digest"] = fake
+        if record["actual_common_patch_id"] == old:
+            record["actual_common_patch_id"] = fake
     for record in evidence["partition"]["member_level_partition"]:
-        record["linked_common_digests"] = [
-            fake if digest == old else digest for digest in record["linked_common_digests"]
+        record["linked_patch_ids"] = [
+            fake if patch_id == old else patch_id for patch_id in record["linked_patch_ids"]
         ]
     evidence["provenance"]["remaining_patches"] = copy.deepcopy(
         evidence["partition"]["member_level_partition"]
@@ -382,7 +382,7 @@ def test_full_coverage_emits_one_explicit_partition_outcome_per_source_member(tm
     side_2 = [record for record in records if record["role"] == "Side_2"]
     assert len(side_2) == 2
     assert all(record["status"] == "EMPTY" and record["area_mm2"] == 0.0 for record in side_2)
-    assert all(record["linked_common_digests"] for record in side_2)
+    assert all(record["linked_patch_ids"] for record in side_2)
     assert operation["provenance"]["remaining_patches"] == records
 
 
@@ -476,12 +476,52 @@ def test_negative_support_gap_without_lateral_overlap_is_not_penetration(tmp_pat
     assert operation["status"] == "NO_POSITIVE_AREA_INTERFACE"
 
 
-def test_stable_geometry_identity_distinguishes_equal_statistics_hole_layouts() -> None:
-    """Break caught: equal area/bounds/perimeter hole layouts collide as one geometry."""
+def test_actual_brep_equivalence_keeps_distinct_equal_statistics_hole_layouts() -> None:
+    """Break caught: equal statistics replace B-rep evidence and collapse distinct patches."""
     module = _module()
     probe = module._run_freecad({"action": "probe_geometry_identity_collision"})
     assert probe["symmetric_difference_area_mm2"] > module.RULES["area_epsilon_mm2"]
-    assert probe["first_digest"] != probe["second_digest"]
+    assert probe["geometric_equivalence"] == "FAIL"
+    assert probe["deduplicated_patch_count"] == 2
+
+
+def test_different_brep_representation_can_still_be_geometrically_equivalent() -> None:
+    """Break caught: representation difference is treated as geometry difference."""
+    module = _module()
+    probe = module._run_freecad({"action": "probe_representation_equivalence", "rules": module.RULES})
+    assert probe["representation_identity"] == "DIFFERENT"
+    assert probe["geometric_equivalence"] == "PASS"
+    assert probe["first_minus_second_area_mm2"] <= module.RULES["area_epsilon_mm2"]
+    assert probe["second_minus_first_area_mm2"] <= module.RULES["area_epsilon_mm2"]
+    assert probe["minimum_distance_mm"] <= module.RULES["linear_epsilon_mm"]
+
+
+def test_operation_relations_use_explicit_ids_without_shape_derived_hashes(tmp_path: Path) -> None:
+    """Break caught: shape-derived hashes remain authoritative relationship keys."""
+    operation = _run(tmp_path, "P10")["operation"]
+    patches = operation["partition"]["common_patches"]
+    assert [patch["patch_id"] for patch in patches] == ["Patch_1", "Patch_2"]
+    assert all("geometry_digest" not in patch for patch in patches)
+    assert all("geometry_digest" not in member for side in ("Side_1", "Side_2")
+               for member in operation["face_sets"]["selected_pair"][side]["member_face_descriptors"])
+    assert {patch_id for component in operation["topology"]["components"]
+            for patch_id in component["patch_ids"]} == {"Patch_1", "Patch_2"}
+    assert {record["actual_common_patch_id"] for record in operation["provenance"]["common_patches"]} == {
+        "Patch_1", "Patch_2"
+    }
+
+
+def test_repeatability_uses_unit_tolerances_and_ignores_representation_identity(tmp_path: Path) -> None:
+    """Break caught: exact dict/hash equality turns harmless representation drift into failure."""
+    module = _module()
+    first = _run(tmp_path, "P10")["operation"]
+    equivalent = copy.deepcopy(first)
+    equivalent["partition"]["common_patches"][0]["area_mm2"] += module.RULES["area_epsilon_mm2"] / 2
+    equivalent["partition"]["common_patches"][0]["representation_identity"] = "DIFFERENT"
+    assert module.compare_multipatch_repeatability(first, equivalent)["status"] == "PASS"
+    different = copy.deepcopy(first)
+    different["partition"]["common_patches"][0]["area_mm2"] += module.RULES["area_epsilon_mm2"] * 2
+    assert module.compare_multipatch_repeatability(first, different)["status"] == "FAIL"
 
 
 def test_failed_validation_cannot_replace_prior_success_or_emit_p12_success_step(tmp_path: Path, monkeypatch) -> None:

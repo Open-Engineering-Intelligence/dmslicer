@@ -185,6 +185,66 @@ def _artifact_names(value: Any) -> list[str]:
     return []
 
 
+def _comparison_epsilon(path: tuple[str, ...]) -> float:
+    field = ".".join(path).lower()
+    if "volume" in field:
+        return RULES["volume_epsilon_mm3"]
+    if "area" in field:
+        return RULES["area_epsilon_mm2"]
+    if "coverage" in field:
+        return 1.0e-7
+    if any(
+        token in field
+        for token in ("_mm", "length", "gap", "support", "distance", "spread", "normal")
+    ):
+        return RULES["linear_epsilon_mm"]
+    return 0.0
+
+
+def _semantic_equal(first: Any, second: Any, path: tuple[str, ...] = ()) -> bool:
+    """Compare measured evidence with declared unit tolerances, never hashes."""
+    ignored = {
+        "representation_identity",
+        "artifact_sha256",
+        "input_step_sha256",
+        "source_step_sha256",
+        "validator_source_commit",
+    }
+    if isinstance(first, bool) or isinstance(second, bool):
+        return type(first) is type(second) and first == second
+    if isinstance(first, (int, float)) and isinstance(second, (int, float)):
+        if not math.isfinite(float(first)) or not math.isfinite(float(second)):
+            return False
+        epsilon = _comparison_epsilon(path)
+        return abs(float(first) - float(second)) <= epsilon
+    if isinstance(first, dict) and isinstance(second, dict):
+        first_keys = set(first) - ignored
+        second_keys = set(second) - ignored
+        return first_keys == second_keys and all(
+            _semantic_equal(first[key], second[key], path + (str(key),))
+            for key in first_keys
+        )
+    if isinstance(first, list) and isinstance(second, list):
+        return len(first) == len(second) and all(
+            _semantic_equal(left, right, path + (str(index),))
+            for index, (left, right) in enumerate(zip(first, second))
+        )
+    return type(first) is type(second) and first == second
+
+
+def compare_multipatch_repeatability(
+    first: dict[str, Any], second: dict[str, Any]
+) -> dict[str, Any]:
+    equivalent = _semantic_equal(
+        _repeatable_projection(first), _repeatable_projection(second)
+    )
+    return {
+        "status": "PASS" if equivalent else "FAIL",
+        "comparison": "UNIT_TOLERANCED_GEOMETRY_AND_TOPOLOGY_EVIDENCE",
+        "representation_hash_used": False,
+    }
+
+
 def generate_multipatch_fixtures(root: Path) -> dict[str, Any]:
     """Generate independent STEP, construction, policy, and analytic truth bundles."""
     root = Path(root)
@@ -299,8 +359,14 @@ def _validate_faceset_record(
     if record.get("member_face_count") != len(descriptors):
         failures.append({"kind": "faceset_member_count", "field": field})
     labels = [descriptor.get("human_face_label") for descriptor in descriptors]
+    member_ids = [descriptor.get("member_id") for descriptor in descriptors]
     if record.get("member_faces") != labels:
         failures.append({"kind": "faceset_member_labels", "field": field})
+    if (
+        any(not isinstance(member_id, str) or not member_id for member_id in member_ids)
+        or len(set(member_ids)) != len(member_ids)
+    ):
+        failures.append({"kind": "faceset_member_ids", "field": field})
     coordinates = []
     areas = []
     for index, descriptor in enumerate(descriptors):
@@ -319,9 +385,6 @@ def _validate_faceset_record(
             coordinates.append(coordinate)
         if area is not None:
             areas.append(area)
-        digest = descriptor.get("geometry_digest")
-        if not isinstance(digest, str) or not digest.startswith("sha256:"):
-            failures.append({"kind": "faceset_member_digest", "field": field})
         normal = descriptor.get("outward_normal")
         if not isinstance(normal, list) or len(normal) != 3 or not all(_finite(value) for value in normal):
             failures.append({"kind": "faceset_member_normal", "field": field})
@@ -486,11 +549,11 @@ def validate_multipatch_evidence(
             failures.append({"kind": "patches"})
             patches = []
         patch_areas = []
-        digests = []
+        patch_ids = []
         topology_components = operation.get("topology", {}).get("components", [])
         component_ids = {component.get("component_id") for component in topology_components}
-        component_patch_digests = {
-            component.get("component_id"): set(component.get("patch_geometry_digests", []))
+        component_patch_ids = {
+            component.get("component_id"): set(component.get("patch_ids", []))
             for component in topology_components
         }
         for index, patch in enumerate(patches):
@@ -499,34 +562,34 @@ def validate_multipatch_evidence(
             )
             if patch_area is not None:
                 patch_areas.append(patch_area)
-            digest = patch.get("geometry_digest")
-            if not isinstance(digest, str) or not digest:
-                failures.append({"kind": "patch_digest", "field": index})
+            patch_id = patch.get("patch_id")
+            if patch_id != f"Patch_{index + 1}":
+                failures.append({"kind": "patch_id", "field": index})
             else:
-                digests.append(digest)
+                patch_ids.append(patch_id)
             if patch.get("component_id") not in component_ids:
                 failures.append({"kind": "patch_component_mapping", "field": index})
-            elif digest not in component_patch_digests.get(patch.get("component_id"), set()):
+            elif patch_id not in component_patch_ids.get(patch.get("component_id"), set()):
                 failures.append({"kind": "patch_component_mapping", "field": index})
             if not patch.get("source_face_linkage"):
                 failures.append({"kind": "patch_source_linkage", "field": index})
-        if len(set(digests)) != len(digests):
+        if len(set(patch_ids)) != len(patch_ids):
             failures.append({"kind": "duplicated_common_patch"})
-        listed_component_digests = {
-            digest for values in component_patch_digests.values() for digest in values
+        listed_component_patch_ids = {
+            patch_id for values in component_patch_ids.values() for patch_id in values
         }
-        if listed_component_digests != set(digests):
-            failures.append({"kind": "component_patch_digest_parity"})
+        if listed_component_patch_ids != set(patch_ids):
+            failures.append({"kind": "component_patch_id_parity"})
         if common is None or abs(sum(patch_areas) - common) > area_epsilon:
             failures.append({"kind": "patch_area_sum"})
         provenance_records = operation.get("provenance", {}).get("common_patches", [])
-        provenance_by_digest = {
-            record.get("actual_common_digest"): record for record in provenance_records
+        provenance_by_patch_id = {
+            record.get("actual_common_patch_id"): record for record in provenance_records
         }
-        if set(provenance_by_digest) != set(digests) or len(provenance_records) != len(patches):
+        if set(provenance_by_patch_id) != set(patch_ids) or len(provenance_records) != len(patches):
             failures.append({"kind": "patch_provenance_parity"})
         for patch in patches:
-            provenance_record = provenance_by_digest.get(patch.get("geometry_digest"), {})
+            provenance_record = provenance_by_patch_id.get(patch.get("patch_id"), {})
             if (
                 provenance_record.get("component_id") != patch.get("component_id")
                 or provenance_record.get("source_face_member_pair")
@@ -541,7 +604,15 @@ def validate_multipatch_evidence(
             for linkage in patch.get("source_face_linkage", []):
                 for side in ("Side_1", "Side_2"):
                     selected_labels = selected.get(side, {}).get("member_faces", [])
+                    selected_member_ids = {
+                        descriptor.get("member_id")
+                        for descriptor in selected.get(side, {}).get(
+                            "member_face_descriptors", []
+                        )
+                    }
                     if linkage.get(side) not in selected_labels:
+                        failures.append({"kind": "patch_source_linkage", "field": side})
+                    if linkage.get(side + "_member_id") not in selected_member_ids:
                         failures.append({"kind": "patch_source_linkage", "field": side})
         topology = operation.get("topology", {})
         if topology.get("patch_count") != len(patches):
@@ -598,8 +669,7 @@ def validate_multipatch_evidence(
         expected_members = {
             (
                 side,
-                descriptor.get("human_face_label"),
-                descriptor.get("geometry_digest"),
+                descriptor.get("member_id"),
             )
             for side in ("Side_1", "Side_2")
             for descriptor in selected.get(side, {}).get("member_face_descriptors", [])
@@ -607,8 +677,7 @@ def validate_multipatch_evidence(
         recorded_members = {
             (
                 record.get("role"),
-                record.get("source_member_face"),
-                record.get("source_member_geometry_digest"),
+                record.get("source_member_id"),
             )
             for record in member_records
         }
@@ -624,12 +693,12 @@ def validate_multipatch_evidence(
             status_value = record.get("status")
             if status_value not in {"EMPTY", "NONEMPTY"}:
                 failures.append({"kind": "member_partition_status", "field": index})
-            if status_value == "EMPTY" and (area != 0.0 or record.get("result_digest") is not None):
+            if status_value == "EMPTY" and (area != 0.0 or record.get("result_patch_id") is not None):
                 failures.append({"kind": "member_partition_empty", "field": index})
-            if status_value == "NONEMPTY" and not record.get("result_digest"):
+            if status_value == "NONEMPTY" and not record.get("result_patch_id"):
                 failures.append({"kind": "member_partition_result", "field": index})
-            linked = record.get("linked_common_digests")
-            if not isinstance(linked, list) or not linked or not set(linked) <= set(digests):
+            linked = record.get("linked_patch_ids")
+            if not isinstance(linked, list) or not linked or not set(linked) <= set(patch_ids):
                 failures.append({"kind": "member_partition_linkage", "field": index})
         for side in ("Side_1", "Side_2"):
             recorded_area = sum(
@@ -741,14 +810,16 @@ def validate_multipatch_evidence(
         if len(verified_patches) != len(patches):
             failures.append({"kind": "artifact_patch_parity"})
         else:
-            for patch, verified in zip(patches, verified_patches):
+            verified_patch_ids = verification.get("artifact_patch_ids", [])
+            for index, (patch, verified) in enumerate(zip(patches, verified_patches)):
                 if (
-                    patch.get("geometry_digest") != verified.get("geometry_digest")
-                    or not _close(patch.get("area_mm2"), verified.get("area_mm2"), area_epsilon)
+                    not _close(patch.get("area_mm2"), verified.get("area_mm2"), area_epsilon)
                     or verified.get("face_count") != 1
                     or verified.get("surface_types") != [patch.get("surface_type")]
                     or verified.get("boundary_curve_types")
                     != patch.get("boundary_curve_types")
+                    or index >= len(verified_patch_ids)
+                    or verified_patch_ids[index] != patch.get("patch_id")
                 ):
                     failures.append({"kind": "artifact_patch_parity"})
         for side in ("Side_1", "Side_2"):
@@ -762,11 +833,11 @@ def validate_multipatch_evidence(
                 area_epsilon,
             ):
                 failures.append({"kind": "artifact_remaining_parity", "field": side})
-        if verification.get("corrected_assembly") != reimport:
+        if not _semantic_equal(verification.get("corrected_assembly"), reimport):
             failures.append({"kind": "artifact_corrected_step_parity"})
-        if verification.get("fused") != fused_reimport:
+        if not _semantic_equal(verification.get("fused"), fused_reimport):
             failures.append({"kind": "artifact_fused_step_parity"})
-        if verification.get("artifact_patch_geometry_equivalent") is not True:
+        if verification.get("artifact_patch_geometric_equivalence") != "PASS":
             failures.append({"kind": "artifact_patch_geometry_equivalence"})
         verified_spatial = verification.get("spatial_validation", {})
         for side in ("Side_1", "Side_2"):
@@ -847,7 +918,7 @@ def validate_multipatch_evidence(
                     }
                 )
                 observed = {key: value for key, value in observed.items() if key != "status"}
-                if observed != operation.get("artifact_verification"):
+                if not _semantic_equal(observed, operation.get("artifact_verification")):
                     failures.append({"kind": "artifact_revalidation"})
             except Exception as error:
                 failures.append({"kind": "artifact_revalidation", "error": str(error)})
@@ -1014,13 +1085,13 @@ def run_multipatch_suite(fixture_root: Path, output_root: Path) -> dict[str, Any
             output_root / "repeatability" / "second_process",
             traversal_order="reverse",
         )
-        status = (
-            "PASS"
-            if _repeatable_projection(first["operation"])
-            == _repeatable_projection(second["operation"])
-            else "FAIL"
+        comparison = compare_multipatch_repeatability(
+            first["operation"], second["operation"]
         )
-        repeatability[scenario] = {"processes": 2, "status": status}
+        repeatability[scenario] = {
+            "processes": 2,
+            "status": comparison["status"],
+        }
         write_json(output_root / scenario / "repeatability.json", repeatability[scenario])
     summary = {
         "schema_version": 1,

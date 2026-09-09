@@ -1,6 +1,5 @@
 """FreeCADCmd B-rep backend for 06C planar interface FaceSets."""
 
-import hashlib
 import json
 import math
 import os
@@ -19,13 +18,9 @@ class UnsupportedComponentTopology(RuntimeError):
     pass
 
 
-def _rounded(value):
-    return round(float(value), 8)
-
-
 def _bounds(shape):
     box = shape.BoundBox
-    return [_rounded(value) for value in (
+    return [float(value) for value in (
         box.XMin, box.XMax, box.YMin, box.YMax, box.ZMin, box.ZMax
     )]
 
@@ -33,31 +28,44 @@ def _bounds(shape):
 def _center(shape):
     try:
         center = shape.CenterOfMass
-        return [_rounded(center.x), _rounded(center.y), _rounded(center.z)]
+        return [float(center.x), float(center.y), float(center.z)]
     except Exception:
         return None
 
 
-def _geometry_signature(shape):
-    """Canonical geometry identity that survives BREP write/read serialization."""
+def _shape_sort_key(shape):
+    """Non-authoritative spatial ordering key; never an equivalence predicate."""
+    box = shape.BoundBox
+    return (
+        shape.ShapeType,
+        float(box.XMin), float(box.YMin), float(box.ZMin),
+        float(box.XMax), float(box.YMax), float(box.ZMax),
+        float(shape.Area), float(shape.Length), len(shape.Faces), len(shape.Edges),
+        tuple(sorted(type(face.Surface).__name__ for face in shape.Faces)),
+        tuple(sorted(type(edge.Curve).__name__ for edge in shape.Edges)),
+    )
+
+
+def _geometry_evidence(shape):
+    """Human-readable measured evidence; not a geometry identity or match key."""
     faces = []
     for face in shape.Faces:
         wires = []
         for wire in face.Wires:
             try:
-                enclosed_area = _rounded(Part.Face(wire).Area)
+                enclosed_area = float(Part.Face(wire).Area)
             except Exception:
                 enclosed_area = None
             wires.append({
-                "length_mm": _rounded(wire.Length),
+                "length_mm": float(wire.Length),
                 "bounds_mm": _bounds(wire),
                 "enclosed_area_mm2": enclosed_area,
                 "curve_types": sorted(type(edge.Curve).__name__ for edge in wire.Edges),
             })
-        wires.sort(key=lambda value: json.dumps(value, sort_keys=True))
+        wires.sort(key=lambda value: tuple(value["bounds_mm"]))
         faces.append({
             "surface_type": type(face.Surface).__name__,
-            "area_mm2": _rounded(face.Area),
+            "area_mm2": float(face.Area),
             "center_mm": _center(face),
             "bounds_mm": _bounds(face),
             "wire_count": len(face.Wires),
@@ -66,11 +74,11 @@ def _geometry_signature(shape):
                 type(edge.Curve).__name__ for edge in face.Edges
             ),
         })
-    faces.sort(key=lambda value: json.dumps(value, sort_keys=True))
+    faces.sort(key=lambda value: tuple(value["bounds_mm"]))
     return {
         "shape_type": shape.ShapeType,
-        "area_mm2": _rounded(shape.Area),
-        "length_mm": _rounded(shape.Length),
+        "area_mm2": float(shape.Area),
+        "length_mm": float(shape.Length),
         "bounds_mm": _bounds(shape),
         "face_count": len(shape.Faces),
         "edge_count": len(shape.Edges),
@@ -78,11 +86,34 @@ def _geometry_signature(shape):
     }
 
 
-def _digest(shape):
-    payload = json.dumps(
-        _geometry_signature(shape), sort_keys=True, separators=(",", ":")
-    ).encode("utf-8")
-    return "sha256:" + hashlib.sha256(payload).hexdigest()
+def _face_equivalence(first, second, rules):
+    if not hasattr(first, "Surface") and len(first.Faces) == 1:
+        first = first.Faces[0]
+    if not hasattr(second, "Surface") and len(second.Faces) == 1:
+        second = second.Faces[0]
+    surface_match = type(first.Surface).__name__ == type(second.Surface).__name__
+    distance, _, _ = first.distToShape(second)
+    first_minus_second = float(first.cut(second).Area)
+    second_minus_first = float(second.cut(first).Area)
+    common_area = float(first.common(second).Area)
+    area_delta = abs(float(first.Area) - float(second.Area))
+    equivalent = bool(
+        surface_match
+        and distance <= rules["linear_epsilon_mm"]
+        and first_minus_second <= rules["area_epsilon_mm2"]
+        and second_minus_first <= rules["area_epsilon_mm2"]
+        and area_delta <= rules["area_epsilon_mm2"]
+        and common_area > rules["area_epsilon_mm2"]
+    )
+    return {
+        "geometric_equivalence": "PASS" if equivalent else "FAIL",
+        "support_surface_match": surface_match,
+        "minimum_distance_mm": float(distance),
+        "first_minus_second_area_mm2": first_minus_second,
+        "second_minus_first_area_mm2": second_minus_first,
+        "actual_common_area_mm2": common_area,
+        "area_delta_mm2": area_delta,
+    }
 
 
 def _closed(shape):
@@ -129,7 +160,7 @@ def _normal(face):
 def _face_descriptor(index, face, normal, support):
     return {
         "human_face_label": "Face" + str(index),
-        "geometry_digest": _digest(face),
+        "geometry_evidence": _geometry_evidence(face),
         "surface_type": type(face.Surface).__name__,
         "area_mm2": float(face.Area),
         "support_coordinate_mm": float(support),
@@ -162,9 +193,7 @@ def _face_sets(shape, role, sign, linear_epsilon, reverse=False):
                 "descriptor": _face_descriptor(index, face, normal, support),
             }
         )
-    candidates.sort(
-        key=lambda item: (item["support"], item["descriptor"]["geometry_digest"])
-    )
+    candidates.sort(key=lambda item: (item["support"], _shape_sort_key(item["shape"])))
     groups = []
     for candidate in candidates:
         matching = next(
@@ -186,11 +215,13 @@ def _face_sets(shape, role, sign, linear_epsilon, reverse=False):
         matching["members"].append(candidate)
     groups.sort(key=lambda group: group["support_coordinate_mm"])
     for group_index, group in enumerate(groups, start=1):
-        group["members"].sort(
-            key=lambda member: member["descriptor"]["geometry_digest"]
-        )
+        group["members"].sort(key=lambda member: _shape_sort_key(member["shape"]))
         coordinates = [member["support"] for member in group["members"]]
         group["face_set_id"] = f"{role}_FaceSet_{group_index}"
+        for member_index, member in enumerate(group["members"], start=1):
+            member["descriptor"]["member_id"] = (
+                f"{group['face_set_id']}_Member_{member_index}"
+            )
         group["support_coordinate_mm"] = float(min(coordinates))
         group["spread_mm"] = float(max(coordinates) - min(coordinates))
         group["total_area_mm2"] = float(
@@ -225,7 +256,7 @@ def _public_face_set(group):
     }
 
 
-def _common_patches(first_group, second_group, area_epsilon, reverse=False):
+def _common_patches(first_group, second_group, rules, reverse=False):
     first_members = list(first_group["members"])
     second_members = list(second_group["members"])
     if reverse:
@@ -239,13 +270,12 @@ def _common_patches(first_group, second_group, area_epsilon, reverse=False):
             if reverse:
                 faces.reverse()
             for common_face in faces:
-                if common_face.Area <= area_epsilon:
+                if common_face.Area <= rules["area_epsilon_mm2"]:
                     continue
                 raw.append(
                     {
                         "shape": common_face,
-                        "geometry_digest": _digest(common_face),
-                        "geometry_signature": _geometry_signature(common_face),
+                        "geometry_evidence": _geometry_evidence(common_face),
                         "area_mm2": float(common_face.Area),
                         "surface_type": type(common_face.Surface).__name__,
                         "boundary_curve_types": sorted(
@@ -254,31 +284,36 @@ def _common_patches(first_group, second_group, area_epsilon, reverse=False):
                         "source_face_linkage": [
                             {
                                 "Side_1": first["descriptor"]["human_face_label"],
-                                "Side_1_geometry_digest": first["descriptor"][
-                                    "geometry_digest"
-                                ],
+                                "Side_1_member_id": first["descriptor"]["member_id"],
                                 "Side_2": second["descriptor"]["human_face_label"],
-                                "Side_2_geometry_digest": second["descriptor"][
-                                    "geometry_digest"
-                                ],
+                                "Side_2_member_id": second["descriptor"]["member_id"],
                             }
                         ],
                     }
                 )
-    by_digest = {}
+    patches = []
     for record in raw:
-        existing = by_digest.get(record["geometry_digest"])
+        existing = next(
+            (
+                patch for patch in patches
+                if _face_equivalence(record["shape"], patch["shape"], rules)[
+                    "geometric_equivalence"
+                ] == "PASS"
+            ),
+            None,
+        )
         if existing is None:
-            by_digest[record["geometry_digest"]] = record
+            patches.append(record)
             continue
         for linkage in record["source_face_linkage"]:
             if linkage not in existing["source_face_linkage"]:
                 existing["source_face_linkage"].append(linkage)
-    patches = sorted(by_digest.values(), key=lambda patch: patch["geometry_digest"])
-    for patch in patches:
+    patches.sort(key=lambda patch: _shape_sort_key(patch["shape"]))
+    for patch_index, patch in enumerate(patches, start=1):
+        patch["patch_id"] = f"Patch_{patch_index}"
         patch["source_face_linkage"].sort(
             key=lambda link: (
-                link["Side_1_geometry_digest"], link["Side_2_geometry_digest"]
+                link["Side_1_member_id"], link["Side_2_member_id"]
             )
         )
     return raw, patches
@@ -345,7 +380,7 @@ def _candidate_pairs(first, second, policy, rules, reverse=False):
             raw, patches = _common_patches(
                 first_set,
                 moved_set,
-                rules["area_epsilon_mm2"],
+                rules,
                 reverse,
             )
             area = float(sum(patch["area_mm2"] for patch in patches))
@@ -404,7 +439,7 @@ def _negative_overlap_gaps(first, second, first_sets, second_sets, rules, revers
             if moved_set is None:
                 continue
             _, patches = _common_patches(
-                first_set, moved_set, rules["area_epsilon_mm2"], reverse
+                first_set, moved_set, rules, reverse
             )
             if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
                 overlaps.append(gap)
@@ -443,7 +478,7 @@ def _wire_descriptor(wire):
     except Exception:
         enclosed = 0.0
     return {
-        "geometry_digest": _digest(wire),
+        "geometry_evidence": _geometry_evidence(wire),
         "edge_count": len(wire.Edges),
         "length_mm": float(wire.Length),
         "enclosed_area_mm2": enclosed,
@@ -465,20 +500,19 @@ def _topology(patches, linear_epsilon):
             for patch in component_patches
             for wire in patch["shape"].Wires
         ]
-        loops.sort(
-            key=lambda loop: (-loop["enclosed_area_mm2"], loop["geometry_digest"])
-        )
+        loops.sort(key=lambda loop: (
+            -loop["enclosed_area_mm2"], tuple(loop["geometry_evidence"]["bounds_mm"])
+        ))
         for loop_index, loop in enumerate(loops):
             loop["kind"] = "outer" if loop_index == 0 else "hole"
+            loop["boundary_id"] = "Boundary_" + str(loop_index + 1)
         records.append(
             {
                 "shape": shape,
                 "patch_indices": patch_indices,
-                "geometry_digest": _digest(shape),
+                "geometry_evidence": _geometry_evidence(shape),
                 "area_mm2": float(sum(patch["area_mm2"] for patch in component_patches)),
-                "patch_geometry_digests": sorted(
-                    patch["geometry_digest"] for patch in component_patches
-                ),
+                "patch_ids": sorted(patch["patch_id"] for patch in component_patches),
                 "boundary_loops": loops,
                 "source_face_linkage": sorted(
                     {
@@ -489,7 +523,7 @@ def _topology(patches, linear_epsilon):
                 ),
             }
         )
-    records.sort(key=lambda component: component["geometry_digest"])
+    records.sort(key=lambda component: _shape_sort_key(component["shape"]))
     for component_index, component in enumerate(records, start=1):
         component["component_id"] = "Component_" + str(component_index)
         component["source_face_linkage"] = [
@@ -537,27 +571,32 @@ def _remaining(first_group, second_group, patches, area_epsilon):
     for role, group in (("Side_1", first_group), ("Side_2", second_group)):
         for member in group["members"]:
             linked = []
-            linked_digests = []
+            linked_patch_ids = []
             face_label = member["descriptor"]["human_face_label"]
+            member_id = member["descriptor"]["member_id"]
             for patch in patches:
-                if any(link[role] == face_label for link in patch["source_face_linkage"]):
+                if any(
+                    link[role + "_member_id"] == member_id
+                    for link in patch["source_face_linkage"]
+                ):
                     linked.append(patch["shape"])
-                    linked_digests.append(patch["geometry_digest"])
+                    linked_patch_ids.append(patch["patch_id"])
             tool = Part.makeCompound(linked) if linked else Part.Shape()
             remainder = member["shape"].cut(tool) if linked else member["shape"].copy()
-            faces = [face for face in remainder.Faces if face.Area > area_epsilon]
+            faces = sorted(
+                [face for face in remainder.Faces if face.Area > area_epsilon],
+                key=_shape_sort_key,
+            )
             if not faces:
                 records.append(
                     {
                         "role": role,
                         "source_face_set": group["face_set_id"],
                         "source_member_face": face_label,
-                        "source_member_geometry_digest": member["descriptor"][
-                            "geometry_digest"
-                        ],
-                        "linked_common_digests": sorted(linked_digests),
+                        "source_member_id": member_id,
+                        "linked_patch_ids": sorted(linked_patch_ids),
                         "status": "EMPTY",
-                        "result_digest": None,
+                        "result_patch_id": None,
                         "area_mm2": 0.0,
                         "operation_kind": "FACE_CUT_REMAINDER",
                     }
@@ -569,13 +608,15 @@ def _remaining(first_group, second_group, patches, area_epsilon):
                         "role": role,
                         "source_face_set": group["face_set_id"],
                         "source_member_face": face_label,
-                        "source_member_geometry_digest": member["descriptor"][
-                            "geometry_digest"
-                        ],
-                        "linked_common_digests": sorted(linked_digests),
+                        "source_member_id": member_id,
+                        "linked_patch_ids": sorted(linked_patch_ids),
                         "status": "NONEMPTY",
                         "result_patch_index": result_index,
-                        "result_digest": _digest(face),
+                        "result_patch_id": (
+                            role + "_Remaining_" + member_id.rsplit("_", 1)[-1]
+                            + "_" + str(result_index)
+                        ),
+                        "geometry_evidence": _geometry_evidence(face),
                         "area_mm2": float(face.Area),
                         "operation_kind": "FACE_CUT_REMAINDER",
                     }
@@ -644,7 +685,7 @@ def _reimport_corrected(path, rules, reverse=False):
                 if abs(gap) > rules["linear_epsilon_mm"]:
                     continue
                 _, patches = _common_patches(
-                    first_set, second_set, rules["area_epsilon_mm2"], reverse
+                    first_set, second_set, rules, reverse
                 )
                 if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
                     matches.append((first_set, second_set, gap, patches))
@@ -1132,7 +1173,7 @@ def _analyze(request):
             if label in original_descriptors:
                 member["descriptor"] = original_descriptors[label]
         raw, patches = _common_patches(
-            selected["first"], corrected_second, rules["area_epsilon_mm2"], reverse
+            selected["first"], corrected_second, rules, reverse
         )
         try:
             topology, component_shapes = _topology(patches, rules["linear_epsilon_mm"])
@@ -1236,7 +1277,7 @@ def _analyze(request):
                     "Side_1_FaceSet": selected["first"]["face_set_id"],
                     "Side_2_FaceSet": selected["second"]["face_set_id"],
                     "source_face_member_pair": patch["source_face_linkage"],
-                    "actual_common_digest": patch["geometry_digest"],
+                    "actual_common_patch_id": patch["patch_id"],
                     "component_id": patch["component_id"],
                     "operation_kind": "DIRECT_BREP_FACE_COMMON",
                 }
@@ -1262,7 +1303,7 @@ def _analyze(request):
             "partition": {
                 "raw_common_face_count": len(raw),
                 "common_area_mm2": common_area,
-                "common_geometry_digest": _digest(common_shape),
+                "common_geometry_evidence": _geometry_evidence(common_shape),
                 "common_patches": _public_patches(patches),
                 "carrier_area_mm2": carrier_areas,
                 "coverage": {
@@ -1365,8 +1406,7 @@ def _verify_artifacts(request):
         patches.append(
             {
                 "artifact": name,
-                "geometry_digest": _digest(shape),
-                "geometry_signature": _geometry_signature(shape),
+                "geometry_evidence": _geometry_evidence(shape),
                 "area_mm2": float(shape.Area),
                 "face_count": len(shape.Faces),
                 "surface_types": sorted(type(face.Surface).__name__ for face in shape.Faces),
@@ -1385,7 +1425,7 @@ def _verify_artifacts(request):
             remaining[role] = {
                 "status": "NONEMPTY",
                 "artifact": name,
-                "geometry_digest": _digest(shape),
+                "geometry_evidence": _geometry_evidence(shape),
                 "area_mm2": float(shape.Area),
                 "face_count": len(shape.Faces),
             }
@@ -1394,7 +1434,7 @@ def _verify_artifacts(request):
         "status": "SUCCEEDED",
         "common": {
             "artifact": artifacts["common_brep"],
-            "geometry_digest": _digest(common),
+            "geometry_evidence": _geometry_evidence(common),
             "area_mm2": float(common.Area),
             "face_count": len(common.Faces),
         },
@@ -1408,9 +1448,10 @@ def _verify_artifacts(request):
         "fused_boundary_overlap_area_mm2": spatial[
             "fused_boundary_overlap_area_mm2"
         ],
-        "artifact_patch_geometry_equivalent": spatial[
-            "artifact_patch_geometry_equivalent"
+        "artifact_patch_geometric_equivalence": spatial[
+            "artifact_patch_geometric_equivalence"
         ],
+        "artifact_patch_ids": spatial["artifact_patch_ids"],
     }
 
 
@@ -1431,26 +1472,28 @@ def _verify_spatial_artifacts(output, artifacts, rules, common, artifact_patches
                 if abs(gap) > rules["linear_epsilon_mm"]:
                     continue
                 _, patches = _common_patches(
-                    first_set, second_set, rules["area_epsilon_mm2"]
+                    first_set, second_set, rules
                 )
                 if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
                     matches.append((first_set, second_set, patches))
         if len(matches) != 1:
             raise RuntimeError("cannot independently identify corrected interface FaceSets")
         first_set, second_set, reconstructed_patches = matches[0]
-        unmatched = list(artifact_patches)
+        unmatched = list(enumerate(artifact_patches))
+        artifact_patch_ids = [None] * len(artifact_patches)
         for reconstructed in reconstructed_patches:
             equivalent_index = next(
                 (
-                    index for index, artifact in enumerate(unmatched)
-                    if reconstructed["shape"].cut(artifact).Area
-                    + artifact.cut(reconstructed["shape"]).Area
-                    <= rules["area_epsilon_mm2"]
+                    index for index, (_, artifact) in enumerate(unmatched)
+                    if _face_equivalence(
+                        reconstructed["shape"], artifact, rules
+                    )["geometric_equivalence"] == "PASS"
                 ),
                 None,
             )
             if equivalent_index is not None:
-                unmatched.pop(equivalent_index)
+                artifact_index, _ = unmatched.pop(equivalent_index)
+                artifact_patch_ids[artifact_index] = reconstructed["patch_id"]
         patch_geometry_equivalent = (
             len(reconstructed_patches) == len(artifact_patches) and not unmatched
         )
@@ -1488,7 +1531,10 @@ def _verify_spatial_artifacts(output, artifacts, rules, common, artifact_patches
     return {
         "spatial_validation": spatial_validation,
         "fused_boundary_overlap_area_mm2": float(overlap),
-        "artifact_patch_geometry_equivalent": patch_geometry_equivalent,
+        "artifact_patch_geometric_equivalence": (
+            "PASS" if patch_geometry_equivalent else "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+        ),
+        "artifact_patch_ids": artifact_patch_ids,
     }
 
 
@@ -1505,12 +1551,53 @@ def _probe_geometry_identity_collision():
     first = perforated([(-20.0, 0.0), (20.0, 0.0)])
     second = perforated([(0.0, -20.0), (0.0, 20.0)])
     difference = first.cut(second).Area + second.cut(first).Area
+    records = [
+        {"shape": shape, "source_face_linkage": [], "area_mm2": float(shape.Area)}
+        for shape in (first, second)
+    ]
+    rules = {
+        "linear_epsilon_mm": 1.0e-7,
+        "area_epsilon_mm2": 1.0e-8,
+    }
+    deduplicated = []
+    for record in records:
+        if not any(
+            _face_equivalence(record["shape"], prior["shape"], rules)[
+                "geometric_equivalence"
+            ] == "PASS"
+            for prior in deduplicated
+        ):
+            deduplicated.append(record)
     return {
         "status": "SUCCEEDED",
-        "first_digest": _digest(first),
-        "second_digest": _digest(second),
+        "geometric_equivalence": _face_equivalence(first, second, rules)[
+            "geometric_equivalence"
+        ],
+        "deduplicated_patch_count": len(deduplicated),
         "symmetric_difference_area_mm2": float(difference),
     }
+
+
+def _probe_representation_equivalence(request):
+    first = Part.makePlane(10.0, 10.0, FreeCAD.Vector(0.0, 0.0, 0.0))
+    wire = Part.makePolygon([
+        FreeCAD.Vector(0.0, 0.0, 0.0),
+        FreeCAD.Vector(10.0, 0.0, 0.0),
+        FreeCAD.Vector(10.0, 10.0, 0.0),
+        FreeCAD.Vector(0.0, 10.0, 0.0),
+        FreeCAD.Vector(0.0, 0.0, 0.0),
+    ])
+    second = Part.Face(wire)
+    metrics = _face_equivalence(first, second, request["rules"])
+    metrics.update({
+        "status": "SUCCEEDED",
+        "representation_identity": (
+            "EXACT_REPRESENTATION_MATCH"
+            if first.exportBrepToString() == second.exportBrepToString()
+            else "DIFFERENT"
+        ),
+    })
+    return metrics
 
 
 def _probe_connected_multiface_topology(request):
@@ -1519,13 +1606,18 @@ def _probe_connected_multiface_topology(request):
     patches = [
         {
             "shape": shape,
-            "geometry_digest": _digest(shape),
+            "patch_id": "Patch_" + str(index),
+            "geometry_evidence": _geometry_evidence(shape),
             "area_mm2": float(shape.Area),
             "source_face_linkage": [
-                {"Side_1": "Face1", "Side_2": "Face1"}
+                {
+                    "Side_1": "Face1", "Side_2": "Face1",
+                    "Side_1_member_id": "Side_1_FaceSet_1_Member_1",
+                    "Side_2_member_id": "Side_2_FaceSet_1_Member_1",
+                }
             ],
         }
-        for shape in (first, second)
+        for index, shape in enumerate((first, second), start=1)
     ]
     try:
         _topology(patches, request["rules"]["linear_epsilon_mm"])
@@ -1580,6 +1672,8 @@ def _main():
             response = _generate_unsupported_probe(request)
         elif request["action"] == "probe_geometry_identity_collision":
             response = _probe_geometry_identity_collision()
+        elif request["action"] == "probe_representation_equivalence":
+            response = _probe_representation_equivalence(request)
         else:
             raise ValueError("unknown 06C action " + str(request["action"]))
     except Exception:
