@@ -49,10 +49,28 @@ Without separate authorization, do not push, merge, release, publish a package, 
 7. If a task fails or reaches a STOP condition, do not present unverified results as a completed commit. A WIP branch may be preserved when needed, but it must be labeled explicitly.
 8. Every completion report must include the branch, local HEAD, remote branch SHA, push status, and working tree status.
 
-## Workflow documentation
+## Incremental knowledge capture
 
 Use `docs/workflow/README.md` as the human entry point and
-`docs/workflow/workflow.json` as the machine-readable capability index. When an
-implementation or repair stage is completed, update the affected workflow step
-and any applicable `PIT-*` evidence index; preserve historical reports and link a
-later correction instead of rewriting frozen history.
+`docs/workflow/workflow.json` as the machine-readable capability index.
+
+At the close of every completed and verified stage, assess whether the following
+records require an incremental update:
+
+1. **Stage record:** Update the corresponding stage index when the stage adds,
+   repairs, or verifies a capability.
+2. **Pitfall record:** Add or update a `PIT-*` record only when a new issue has
+   cross-task reuse value and is supported by evidence. Do not duplicate an
+   existing pitfall or create one from speculation.
+3. **Workflow or Skill:** Update the workflow contract or backend-porting Skill
+   only when the general execution process, acceptance contract, or backend
+   migration method changes materially. Ordinary feature implementation must not
+   rewrite the complete playbook.
+
+Preserve historical reports. Record later corrections through explicit commit
+and evidence references instead of silently rewriting frozen history.
+
+If a stage is incomplete, preserve a clearly labeled checkpoint and do not claim
+completion. Chat transcripts are not archival records by default; preserve only
+final design decisions, implementation facts, verification evidence, and
+reusable lessons.
