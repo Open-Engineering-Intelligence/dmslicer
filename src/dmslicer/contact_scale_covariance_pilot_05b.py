@@ -90,33 +90,59 @@ def _finite(value: Any) -> bool:
 
 
 def validate_scale_actual(actual: dict[str, Any], expected: dict[str, Any]) -> dict[str, Any]:
-    """Compare actual evidence in native and fixed scale-normalized units."""
-    failures: list[dict[str, Any]] = []
+    """Keep classification, native-absolute, and normalized evidence distinct."""
+    classification_failures: list[dict[str, Any]] = []
     scale = actual.get("scale")
     if not _finite(scale) or scale not in SCALES:
-        failures.append({"kind": "scale", "actual": scale})
+        classification_failures.append({"kind": "scale", "actual": scale})
         scale = 1.0
     geometry = actual.get("geometry_state") if isinstance(actual.get("geometry_state"), dict) else {}
     for key in ("case_id", "engineering_state"):
-        if actual.get(key) != expected.get(key): failures.append({"kind": key, "expected": expected.get(key), "actual": actual.get(key)})
+        if actual.get(key) != expected.get(key): classification_failures.append({"kind": key, "expected": expected.get(key), "actual": actual.get(key)})
     if geometry.get("exact_intersection_dimension") != expected.get("exact_intersection_dimension"):
-        failures.append({"kind": "exact_intersection_dimension", "expected": expected.get("exact_intersection_dimension"), "actual": geometry.get("exact_intersection_dimension")})
+        classification_failures.append({"kind": "exact_intersection_dimension", "expected": expected.get("exact_intersection_dimension"), "actual": geometry.get("exact_intersection_dimension")})
     measured, set_delta = actual.get("measured_signed_offset_mm"), expected.get("set_signed_offset_mm")
-    if not _finite(measured) or not _finite(set_delta) or abs(measured - set_delta) > LINEAR_EPSILON_MM * scale:
-        failures.append({"kind": "measured_signed_offset_mm", "expected": set_delta, "actual": measured})
+    if not _finite(measured) or not _finite(set_delta) or abs(measured - set_delta) > LINEAR_EPSILON_MM:
+        classification_failures.append({"kind": "measured_signed_offset_mm", "expected": set_delta, "actual": measured})
+    native_failures: list[dict[str, Any]] = []
+    native_metrics = {"area": {"status": "NOT_APPLICABLE"}, "volume": {"status": "NOT_APPLICABLE"}}
+    if "contact_area_mm2" in expected:
+        value = geometry.get("positive_common_area_mm2")
+        if not _finite(value) or abs(value - expected["contact_area_mm2"]) > AREA_EPSILON_MM2:
+            native_failures.append({"kind": "positive_common_area_mm2", "actual": value, "expected": expected["contact_area_mm2"], "tolerance_mm2": AREA_EPSILON_MM2})
+        native_metrics["area"] = {"status": "FAIL" if native_failures else "PASS"}
+    elif "material_common_volume_mm3" in expected:
+        value = geometry.get("material_common_volume_mm3")
+        if not _finite(value) or abs(value - expected["material_common_volume_mm3"]) > VOLUME_EPSILON_MM3:
+            native_failures.append({"kind": "material_common_volume_mm3", "actual": value, "expected": expected["material_common_volume_mm3"], "tolerance_mm3": VOLUME_EPSILON_MM3})
+        native_metrics["volume"] = {"status": "FAIL" if native_failures else "PASS"}
+    elif expected.get("exact_intersection_dimension") == "none":
+        volume = geometry.get("material_common_volume_mm3")
+        if not _finite(volume) or abs(volume) > VOLUME_EPSILON_MM3 or geometry.get("positive_common_area_mm2") is not None:
+            native_failures.append({"kind": "gap_no_intersection", "actual": geometry, "tolerance_mm3": VOLUME_EPSILON_MM3})
+        native_metrics["volume"] = {"status": "FAIL" if native_failures else "PASS", "definition": "zero intersection for positive gap"}
     normalized_failures: list[dict[str, Any]] = []
+    normalized_metrics = {"area": {"status": "NOT_APPLICABLE"}, "volume": {"status": "NOT_APPLICABLE"}}
     normalized_expected = expected.get("normalized_reference", expected)
     if "contact_area_mm2" in normalized_expected:
         value = geometry.get("positive_common_area_mm2")
         if not _finite(value) or abs(value / scale ** 2 - normalized_expected["contact_area_mm2"]) > AREA_EPSILON_MM2:
             normalized_failures.append({"kind": "positive_common_area_mm2", "actual": value, "expected": normalized_expected["contact_area_mm2"]})
+        normalized_metrics["area"] = {"status": "FAIL" if normalized_failures else "PASS"}
     elif "material_common_volume_mm3" in normalized_expected:
         value = geometry.get("material_common_volume_mm3")
         if not _finite(value) or abs(value / scale ** 3 - normalized_expected["material_common_volume_mm3"]) > VOLUME_EPSILON_MM3:
             normalized_failures.append({"kind": "material_common_volume_mm3", "actual": value, "expected": normalized_expected["material_common_volume_mm3"]})
+        normalized_metrics["volume"] = {"status": "FAIL" if normalized_failures else "PASS"}
     elif normalized_expected["exact_intersection_dimension"] == "none" and (not _finite(geometry.get("material_common_volume_mm3")) or abs(geometry["material_common_volume_mm3"]) > VOLUME_EPSILON_MM3 * scale ** 3):
         normalized_failures.append({"kind": "gap_no_intersection", "actual": geometry})
-    return {"schema_version": 1, "native_validation": {"status": "PASS" if not failures else "FAIL", "failures": failures}, "normalized_validation": {"status": "PASS" if not normalized_failures else "FAIL", "failures": normalized_failures}, "status": "PASS" if not failures and not normalized_failures else "METHOD_MISMATCH"}
+    if normalized_expected["exact_intersection_dimension"] == "none":
+        normalized_metrics["volume"] = {"status": "FAIL" if normalized_failures else "PASS", "definition": "zero intersection for positive gap"}
+    classification = {"status": "PASS" if not classification_failures else "FAIL", "failures": classification_failures}
+    native = {"status": "PASS" if not native_failures else "FAIL", "failures": native_failures, "metrics": native_metrics, "definition": "same-scale expected; fixed 05A absolute limits"}
+    normalized = {"status": "PASS" if not normalized_failures else "FAIL", "failures": normalized_failures, "metrics": normalized_metrics, "definition": "length/s, area/s^2, volume/s^3 against independent 1x expected"}
+    primary = "PASS" if classification["status"] == "PASS" and normalized["status"] == "PASS" else "METHOD_MISMATCH"
+    return {"schema_version": 1, "classification_validation": classification, "native_absolute_validation": native, "scale_normalized_validation": normalized, "native_validation": native, "normalized_validation": normalized, "primary_scale_covariance_verdict": primary, "status": primary}
 
 
 def _normalized_reference(row: dict[str, Any]) -> dict[str, Any]:
@@ -137,6 +163,66 @@ def _error_row(row: dict[str, Any], actual: dict[str, Any]) -> dict[str, Any]:
         result["raw_volume_error_mm3"] = geometry["material_common_volume_mm3"] - expected["material_common_volume_mm3"]
         result["normalized_volume_error_mm3"] = geometry["material_common_volume_mm3"] / scale ** 3 - reference["material_common_volume_mm3"]
     return result
+
+
+def _revalidate_construction(row: dict[str, Any], actual: dict[str, Any]) -> dict[str, Any]:
+    if row["case_id"] != "A07":
+        return {"status": "NOT_APPLICABLE", "failures": []}
+    failures = []
+    for key, expected_value in row["parameters"]["construction_invariants"].items():
+        value = actual.get("construction", {}).get(key)
+        if not _finite(value) or abs(value - expected_value) > LINEAR_EPSILON_MM * row["scale"]:
+            failures.append({"kind": key, "expected": expected_value, "actual": value})
+    return {"status": "PASS" if not failures else "FAIL", "failures": failures}
+
+
+def revalidate_contact_scale_covariance_pilot(manifest_path: Path, source_output_root: Path, output_root: Path) -> dict[str, Any]:
+    """Re-evaluate saved paired actual evidence without calling FreeCAD or changing it."""
+    manifest, source_output_root, output_root = read_json(Path(manifest_path)), Path(source_output_root), Path(output_root)
+    output_root.mkdir(parents=True, exist_ok=True)
+    rows, errors, repeatability, missing = [], [], [], []
+    for row in manifest["samples"]:
+        sample_id = row["sample_id"]
+        first_path = source_output_root / "batch_1" / "samples" / sample_id / "actual.json"
+        second_path = source_output_root / "batch_2" / "samples" / sample_id / "actual.json"
+        original_validation_path = source_output_root / "batch_1" / "samples" / sample_id / "validation.json"
+        absent = [str(path) for path in (first_path, second_path, original_validation_path) if not path.is_file()]
+        if absent:
+            missing.append({"sample_id": sample_id, "missing_paths": absent})
+            continue
+        first, second = read_json(first_path), read_json(second_path)
+        evidence_failures = []
+        for label, actual in (("batch_1", first), ("batch_2", second)):
+            if actual.get("input_step_sha256") != row["step_sha256"]:
+                evidence_failures.append({"kind": "input_step_sha256", "batch": label, "expected": row["step_sha256"], "actual": actual.get("input_step_sha256")})
+        expected = {**row["expected"], "normalized_reference": _normalized_reference(row)}
+        validation = validate_scale_actual(first, expected)
+        construction = _revalidate_construction(row, first)
+        validation["construction_validation"] = construction
+        validation["evidence_validation"] = {"status": "PASS" if not evidence_failures else "FAIL", "failures": evidence_failures}
+        if construction["status"] == "FAIL" or evidence_failures:
+            validation["primary_scale_covariance_verdict"] = "METHOD_MISMATCH"
+            validation["status"] = "METHOD_MISMATCH"
+        output_dir = output_root / "samples" / sample_id
+        output_dir.mkdir(parents=True, exist_ok=True)
+        write_json(output_dir / "validation.json", validation)
+        geometry, fuse = first["geometry_state"], first["direct_fuse"]
+        rows.append({"sample_id": sample_id, "case_id": row["case_id"], "scale": row["scale"], "q": row["parameters"]["delta_over_tauE"], "classification_status": validation["classification_validation"]["status"], "native_absolute_status": validation["native_absolute_validation"]["status"], "scale_normalized_status": validation["scale_normalized_validation"]["status"], "construction_status": construction["status"], "evidence_status": validation["evidence_validation"]["status"], "primary_scale_covariance_verdict": validation["primary_scale_covariance_verdict"], "measured_delta_mm": first.get("measured_signed_offset_mm"), "common_area_mm2": geometry.get("positive_common_area_mm2"), "common_volume_mm3": geometry.get("material_common_volume_mm3"), "direct_fuse_solid_count": fuse.get("solid_count")})
+        errors.append(_error_row(row, first))
+        repeatability.append({"sample_id": sample_id, "two_independent_measurements_match": first == second, "input_hash_match": first.get("input_step_sha256") == second.get("input_step_sha256") == row["step_sha256"], "original_validation_reused": True})
+    for name, content in (("revalidation_results.csv", rows), ("revalidation_errors.csv", errors), ("reused_repeatability.csv", repeatability), ("missing_samples.csv", missing)):
+        if content:
+            with (output_root / name).open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(content[0])); writer.writeheader(); writer.writerows(content)
+    native_count = sum(item["native_absolute_status"] != "PASS" for item in rows)
+    normalized_count = sum(item["scale_normalized_status"] != "PASS" for item in rows)
+    classification_count = sum(item["classification_status"] != "PASS" for item in rows)
+    construction_count = sum(item["construction_status"] == "FAIL" for item in rows)
+    evidence_count = sum(item["evidence_status"] != "PASS" for item in rows)
+    primary = "INCOMPLETE" if missing or len(rows) != manifest.get("sample_count", len(manifest["samples"])) else ("PASS" if not normalized_count and not classification_count and not construction_count and not evidence_count else "METHOD_MISMATCH")
+    summary = {"schema_version": 2, "pilot_level": PILOT_LEVEL, "revalidation_mode": "saved_actual_only_no_freecad", "sample_denominator": manifest.get("sample_count", len(manifest["samples"])), "complete_sample_count": len(rows), "missing_actual_count": len(missing), "native_absolute_mismatch_count": native_count, "scale_normalized_mismatch_count": normalized_count, "classification_mismatch_count": classification_count, "construction_mismatch_count": construction_count, "evidence_mismatch_count": evidence_count, "two_independent_measurements": {"definition": "saved batch_1 and batch_2 actual records generated by separate FreeCADCmd invocations per sample", "matching_pairs": sum(item["two_independent_measurements_match"] for item in repeatability), "pair_count": len(repeatability)}, "primary_scale_covariance_verdict": primary, "method_mismatch_count": normalized_count, "method_mismatch_definition": "legacy-compatible count for the primary scale-normalized criterion only", "applicability": {"native_absolute": "same-scale area or volume when applicable; otherwise gap zero-intersection", "scale_normalized": "same metric after prescribed dimensional normalization", "classification": "state, exact dimension, and signed offset", "construction": "A07 only; NOT_APPLICABLE for A01"}, "samples": rows, "missing_samples": missing}
+    write_json(output_root / "summary.json", summary)
+    return summary
 
 
 def _run_one(row: dict[str, Any], output_root: Path, batch: int, *, view: bool) -> dict[str, Any]:
