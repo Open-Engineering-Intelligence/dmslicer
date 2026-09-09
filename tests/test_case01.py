@@ -476,6 +476,6 @@ def test_tracked_case01_fixture_and_expected_bundle_validate_directly(tmp_path: 
 
     result = analyze_case01(step_path, tmp_path / "tracked")
 
-    assert sha256_file(step_path) == "1cd94489b4709e5292acd8df177950b9acc4c0372016eeefbf889f26170f84de"
+    assert sha256_file(step_path) == "089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae"
     assert expected["truth_digest"] == "sha256:9817ea951def9a559d35d6ccce138e7041fc567a52fce79db0ae46e7137a7a7d"
     assert result["validation"]["status"] == "PASS"
