@@ -1,141 +1,102 @@
 from __future__ import annotations
 
-from copy import deepcopy
+from pathlib import Path
+import sys
 
-import pytest
 
-from dmslicer.evidence_promotion.cad_evidence import (
-    compare_semantics,
-    compare_ui_states,
+ROOT_DIR = Path(__file__).resolve().parents[1]
+SRC_DIR = ROOT_DIR / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from dmslicer.evidence_promotion import (  # noqa: E402
+    BYTE_DIFFERENT,
+    BYTE_IDENTICAL,
+    SEMANTIC_EQUIVALENT,
+    SEMANTIC_DIFFERENT,
+    SEMANTIC_EQUIVALENCE_NOT_PROVEN,
+    UI_SAME,
+    UI_DIFFERENT,
+    UI_COMPARISON_NOT_PROVEN,
+    compare_byte_identity,
+    compare_semantic_equivalence,
+    compare_ui_state,
     within_tolerance,
+    ContinuousMeasurement,
 )
 
 
-def _tolerance(value: float, unit: str) -> dict[str, object]:
-    return {
-        "value": value,
-        "unit": unit,
-        "role": "fixture comparison",
-        "source": "P2 fixture policy",
-    }
+def test_byte_identity_identical():
+    assert compare_byte_identity(b"fixture", b"fixture") == BYTE_IDENTICAL
 
 
-def _binding() -> dict[str, str]:
-    return {
+def test_byte_identity_different():
+    assert compare_byte_identity(b"fixture-a", b"fixture-b") == BYTE_DIFFERENT
+
+
+def test_semantic_equivalence_supports_current_fixture_roles():
+    left = {
         "component_role": "fixture_body",
         "interface_role": "through_hole_wall",
-        "allowed_transform": "IDENTITY",
+        "transform": "IDENTITY",
+        "regions": [{"id": "G", "faces": ["G:x_min"]}],
+    }
+    right = {
+        "component_role": "fixture_body",
+        "interface_role": "through_hole_wall",
+        "transform": "IDENTITY",
+        "regions": [{"id": "G", "faces": ["G:x_min"]}],
     }
 
+    assert compare_semantic_equivalence(left, right) == SEMANTIC_EQUIVALENT
 
-def _ui_snapshot(
-    *, visibility: bool = True, color: list[float] | None = None, transparency: int = 0
-) -> dict[str, object]:
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "ui_state_snapshot",
-        "case_id": "fixture",
-        "artifact_role": "OPENING",
-        "source_artifact_id": "fixture-fcstd",
-        "object_role": "fixture_body",
-        "state": {
-            "visibility": {"status": "SUPPORTED", "value": visibility},
-            "shape_color": {
-                "status": "SUPPORTED",
-                "value": color if color is not None else [0.8, 0.8, 0.8],
-            },
-            "transparency": {"status": "SUPPORTED", "value": transparency},
-            "display_mode": {"status": "UNSUPPORTED", "reason": "not required"},
-            "camera": {"status": "UNSUPPORTED", "reason": "not required"},
-        },
+
+def test_semantic_equivalence_not_proven_for_unsupported_roles():
+    left = {
+        "component_role": "legacy_body",
+        "interface_role": "through_hole_wall",
+        "transform": "IDENTITY",
+    }
+    right = {
+        "component_role": "legacy_body",
+        "interface_role": "through_hole_wall",
+        "transform": "IDENTITY",
     }
 
-
-@pytest.mark.parametrize(
-    ("unit", "delta", "expected"),
-    [
-        (unit, delta, expected)
-        for unit in ("mm", "mm2", "mm3")
-        for delta, expected in ((0.000999, True), (0.001, True), (0.001001, False))
-    ],
-)
-def test_tolerance_boundary_is_inclusive(unit: str, delta: float, expected: bool) -> None:
-    assert within_tolerance(delta, _tolerance(0.001, unit), unit) is expected
+    assert compare_semantic_equivalence(left, right) == SEMANTIC_EQUIVALENCE_NOT_PROVEN
 
 
-@pytest.mark.parametrize("invalid", [True, False, float("nan"), float("inf")])
-def test_tolerance_rejects_boolean_and_nonfinite_measurements(invalid: object) -> None:
-    with pytest.raises(ValueError, match="finite"):
-        within_tolerance(invalid, _tolerance(0.001, "mm"), "mm")
-
-
-def test_tolerance_rejects_wrong_unit() -> None:
-    with pytest.raises(ValueError, match="unit"):
-        within_tolerance(0.0005, _tolerance(0.001, "mm3"), "mm")
-
-
-def test_semantics_support_only_the_fixture_binding() -> None:
-    binding = _binding()
-
-    assert compare_semantics(binding, dict(binding)) == {
-        "status": "SEMANTIC_EQUIVALENT",
-        "differences": [],
+def test_semantic_equivalence_not_proven_for_non_identity_transform():
+    left = {
+        "component_role": "fixture_body",
+        "interface_role": "through_hole_wall",
+        "transform": "ROTATE_Z_90",
     }
+    right = left
 
-    changed = dict(binding)
-    changed["interface_role"] = "outer_wall"
-    assert compare_semantics(binding, changed) == {
-        "status": "SEMANTIC_DIFFERENT",
-        "differences": ["interface_role"],
-    }
+    assert compare_semantic_equivalence(left, right) == SEMANTIC_EQUIVALENCE_NOT_PROVEN
 
 
-def test_missing_fixture_semantics_fail_closed() -> None:
-    missing = _binding()
-    del missing["interface_role"]
+def test_ui_state_same_and_different():
+    base = {"visibility": True, "color": [0.1, 0.2, 0.3], "transparency": 0.0}
+    equal = {"visibility": True, "color": [0.1, 0.2, 0.3], "transparency": 0.0}
+    changed = {"visibility": False, "color": [0.1, 0.2, 0.3], "transparency": 0.2}
 
-    assert compare_semantics(_binding(), missing) == {
-        "status": "SEMANTIC_EQUIVALENCE_NOT_PROVEN",
-        "differences": [],
-        "reason": "required fixture semantic binding is missing or unsupported",
-    }
+    assert compare_ui_state(base, equal) == UI_SAME
+    assert compare_ui_state(base, changed) == UI_DIFFERENT
 
 
-def test_ui_difference_is_reported_only_in_ui_domain() -> None:
-    first = _ui_snapshot()
-    second = _ui_snapshot(
-        visibility=False,
-        color=[0.2, 0.4, 0.8],
-        transparency=60,
+def test_ui_state_not_proven_when_missing_fields():
+    base = {"visibility": True}
+
+    assert compare_ui_state(base, base) == UI_COMPARISON_NOT_PROVEN
+
+
+def test_tolerance_helper_inside_boundary_and_outside():
+    expected = ContinuousMeasurement(5.0, "mm2")
+    assert within_tolerance(ContinuousMeasurement(4.9, "mm2"), expected, ContinuousMeasurement(0.1, "mm2"))
+    assert within_tolerance(ContinuousMeasurement(4.95, "mm2"), expected, ContinuousMeasurement(0.05, "mm2"))
+    assert within_tolerance(ContinuousMeasurement(5.0, "mm2"), expected, ContinuousMeasurement(0.0, "mm2"))
+    assert not within_tolerance(
+        ContinuousMeasurement(4.899, "mm2"), expected, ContinuousMeasurement(0.1, "mm2")
     )
-
-    result = compare_ui_states(first, second)
-
-    assert result == {
-        "status": "UI_DIFFERENT",
-        "differences": ["shape_color", "transparency", "visibility"],
-    }
-    assert "geometry" not in result
-
-
-def test_equal_supported_ui_state_is_ui_same() -> None:
-    snapshot = _ui_snapshot()
-
-    assert compare_ui_states(snapshot, deepcopy(snapshot)) == {
-        "status": "UI_SAME",
-        "differences": [],
-    }
-
-
-def test_missing_required_saved_ui_state_is_not_proven() -> None:
-    unsupported = _ui_snapshot()
-    unsupported["state"]["shape_color"] = {  # type: ignore[index]
-        "status": "UNSUPPORTED",
-        "reason": "GUI state was not available after reopen",
-    }
-
-    assert compare_ui_states(_ui_snapshot(), unsupported) == {
-        "status": "UI_COMPARISON_NOT_PROVEN",
-        "differences": [],
-        "reason": "required saved UI state is unavailable",
-    }

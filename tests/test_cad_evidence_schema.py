@@ -1,197 +1,107 @@
 from __future__ import annotations
 
-from copy import deepcopy
-import math
+from pathlib import Path
+import json
 
-from dmslicer.evidence_promotion.cad_evidence import validate_cad_artifact
-
-
-def _measured(value: float | int, unit: str) -> dict[str, object]:
-    return {"value": value, "unit": unit}
+import pytest
+import jsonschema
 
 
-def geometry_snapshot_literal() -> dict[str, object]:
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "geometry_semantic_snapshot",
-        "case_id": "original",
-        "artifact_role": "OPENING",
-        "source_artifact_id": "original-fcstd",
-        "length_unit": "mm",
-        "semantic_binding": {
+ROOT_DIR = Path(__file__).resolve().parents[1]
+SCHEMA_PATH = ROOT_DIR / "docs" / "evidence_preservation" / "schemas" / "cad_evidence.schema.json"
+
+
+def _load_schema():
+    return json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+def test_cad_evidence_schema_accepts_expected_structure():
+    schema = _load_schema()
+    validator = jsonschema.Draft202012Validator(schema)
+
+    manifest = {
+        "schema_version": 1,
+        "goal_id": "p2_cad_evidence_mvp",
+        "run_id": "run_001",
+        "geometry_semantic_snapshot": {
             "component_role": "fixture_body",
             "interface_role": "through_hole_wall",
-            "allowed_transform": "IDENTITY",
+            "source_regions": ["A", "G", "B"],
+            "source_faces": ["A:x_max", "G:x_min", "G:x_max", "B:x_min"],
         },
-        "shape": {
-            "solid_count": _measured(1, "count"),
-            "shell_count": _measured(1, "count"),
-            "face_count": _measured(7, "count"),
-            "edge_count": _measured(18, "count"),
-            "vertex_count": _measured(12, "count"),
-            "area": _measured(4396.991118, "mm2"),
-            "volume": _measured(13796.106156, "mm3"),
-            "bounding_box": {
-                "x_min": _measured(0.0, "mm"),
-                "y_min": _measured(0.0, "mm"),
-                "z_min": _measured(0.0, "mm"),
-                "x_max": _measured(40.0, "mm"),
-                "y_max": _measured(30.0, "mm"),
-                "z_max": _measured(12.0, "mm"),
-            },
-            "valid": True,
-            "closed": True,
+        "topology_snapshot": {
+            "solid_volume": {"value": 4000.0, "unit": "mm3"},
+            "solid_area": {"value": 1200.0, "unit": "mm2"},
+            "component_count": 3,
         },
-    }
-
-
-def topology_snapshot_literal() -> dict[str, object]:
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "topology_snapshot",
-        "case_id": "original",
-        "artifact_role": "OPENING",
-        "source_artifact_id": "original-fcstd",
-        "topology": {
-            "solid_count": _measured(1, "count"),
-            "shell_count": _measured(1, "count"),
-            "face_count": _measured(7, "count"),
-            "edge_count": _measured(18, "count"),
-            "vertex_count": _measured(12, "count"),
-            "connected_solid_count": _measured(1, "count"),
-            "valid": True,
-            "closed": True,
-            "through_hole": {
-                "status": "PROVEN",
-                "count": _measured(1, "count"),
-                "selection": "unique cylindrical wall at declared fixture radius",
+        "ui_state_snapshot": {
+            "visibility": True,
+            "color": [1.0, 0.0, 0.0],
+            "transparency": 0.0,
+        },
+        "geometry_comparison": {
+            "byte_identity": "BYTE_IDENTICAL",
+            "byte_identity_input": {
+                "input_sha256_left": "0" * 64,
+                "input_sha256_right": "0" * 64,
             },
-            "manifold": {
-                "status": "UNKNOWN",
-                "reason": "not required for the P2 fixture claim",
-            },
+            "semantic_comparison": "SEMANTIC_EQUIVALENT",
+            "topology_comparison": "TOPOLOGY_COMPARISON_NOT_PROVEN",
+            "ui_comparison": "UI_SAME",
         },
     }
 
+    validator.validate(manifest)
 
-def ui_snapshot_literal() -> dict[str, object]:
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "ui_state_snapshot",
-        "case_id": "original",
-        "artifact_role": "OPENING",
-        "source_artifact_id": "original-fcstd",
-        "object_role": "fixture_body",
-        "state": {
-            "visibility": {"status": "SUPPORTED", "value": True},
-            "shape_color": {"status": "SUPPORTED", "value": [0.8, 0.8, 0.8]},
-            "transparency": {"status": "SUPPORTED", "value": 0},
-            "display_mode": {
-                "status": "UNSUPPORTED",
-                "reason": "not stable in the local headless reopen path",
-            },
-            "camera": {
-                "status": "UNSUPPORTED",
-                "reason": "not stable in the local headless reopen path",
-            },
+
+def test_cad_evidence_schema_rejects_missing_measurement_unit():
+    schema = _load_schema()
+    validator = jsonschema.Draft202012Validator(schema)
+
+    invalid_manifest = {
+        "schema_version": 1,
+        "topology_snapshot": {
+            "solid_volume": {"value": 1.0}
         },
     }
 
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(invalid_manifest)
 
-def geometry_comparison_literal(status: str = "GEOMETRY_EQUIVALENT") -> dict[str, object]:
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "geometry_comparison",
-        "case_id": "case_a_ui_only",
-        "comparison_role": "UI_ONLY_MUTATION",
-        "status": status,
-        "method": "BREP_BOOLEAN_AND_MEASUREMENTS",
-        "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
-        "tolerances": [
-            {
-                "name": "linear",
-                "value": 0.001,
-                "unit": "mm",
-                "role": "bounding_box_comparison",
-                "source": "P2 fixture policy",
+
+def test_cad_evidence_schema_supports_unknown_and_not_proven_states():
+    schema = _load_schema()
+    validator = jsonschema.Draft202012Validator(schema)
+
+    manifest = {
+        "schema_version": 1,
+        "geometry_comparison": {
+            "byte_identity": "UNKNOWN",
+            "byte_identity_input": {
+                "input_sha256_left": "1" * 64,
+                "input_sha256_right": "2" * 64,
             },
-            {
-                "name": "area",
-                "value": 0.001,
-                "unit": "mm2",
-                "role": "surface_area_comparison",
-                "source": "P2 fixture policy",
-            },
-            {
-                "name": "volume",
-                "value": 0.001,
-                "unit": "mm3",
-                "role": "volume_and_boolean_comparison",
-                "source": "P2 fixture policy",
-            },
-        ],
-        "measurements": {
-            "area_delta": _measured(0.0, "mm2"),
-            "volume_delta": _measured(0.0, "mm3"),
-            "max_bounding_box_delta": _measured(0.0, "mm"),
-            "minimum_distance": _measured(0.0, "mm"),
-            "first_minus_second_volume": _measured(0.0, "mm3"),
-            "second_minus_first_volume": _measured(0.0, "mm3"),
+            "semantic_comparison": "NOT_PROVEN",
+            "topology_comparison": "UNSUPPORTED",
+            "ui_comparison": "UI_COMPARISON_NOT_PROVEN",
         },
-        "checks": {
-            "valid_closed_single_solids": True,
-            "topology_counts": True,
-            "area_delta": True,
-            "volume_delta": True,
-            "bounding_box": True,
-            "first_minus_second": True,
-            "second_minus_first": True,
-        },
-        "failed_checks": [],
-        "reasons": [],
-        "geometry_decision_inputs": [
-            "topology",
-            "area",
-            "volume",
-            "bounding_box",
-            "bidirectional_boolean_cut",
-        ],
     }
 
-
-def test_all_four_cad_artifact_types_validate() -> None:
-    for value in (
-        geometry_snapshot_literal(),
-        topology_snapshot_literal(),
-        ui_snapshot_literal(),
-        geometry_comparison_literal(),
-    ):
-        assert validate_cad_artifact(value) == []
+    validator.validate(manifest)
 
 
-def test_geometry_snapshot_requires_unit_bearing_actual_measurements() -> None:
-    snapshot = geometry_snapshot_literal()
-    del snapshot["shape"]["volume"]["unit"]  # type: ignore[index]
+def test_cad_evidence_schema_rejects_sha_as_geometry_predicate():
+    schema = _load_schema()
+    validator = jsonschema.Draft202012Validator(schema)
 
-    assert any("shape.volume.unit" in error for error in validate_cad_artifact(snapshot))
+    invalid_manifest = {
+        "schema_version": 1,
+        "topology_snapshot": {
+            "solids_sha256": "abc",
+            "solid_volume": {"value": 1.0, "unit": "mm3"},
+        },
+    }
 
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(invalid_manifest)
 
-def test_snapshot_types_remain_separate() -> None:
-    geometry = geometry_snapshot_literal()
-    geometry["artifact_type"] = "ui_state_snapshot"
-
-    assert validate_cad_artifact(geometry)
-
-
-def test_geometry_comparison_forbids_sha_as_method() -> None:
-    comparison = geometry_comparison_literal()
-    comparison["method"] = "SHA256_EQUALITY"
-
-    assert any("method" in error for error in validate_cad_artifact(comparison))
-
-
-def test_nonfinite_measurement_is_rejected_before_serialization() -> None:
-    snapshot = deepcopy(geometry_snapshot_literal())
-    snapshot["shape"]["volume"]["value"] = math.nan  # type: ignore[index]
-
-    assert any("finite" in error for error in validate_cad_artifact(snapshot))

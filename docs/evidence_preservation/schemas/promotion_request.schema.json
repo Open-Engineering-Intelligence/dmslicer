@@ -120,7 +120,22 @@
         "public_path": {"type": "string", "minLength": 1},
         "kind": {
           "type": "string",
-          "enum": ["JUNIT", "VALIDATOR", "JSON", "TEXT", "STEP", "BREP", "FCSTD", "VIEW_INDEX", "HUMAN_REVIEW", "OTHER"]
+          "enum": [
+            "JUNIT",
+            "VALIDATOR",
+            "JSON",
+            "TEXT",
+            "STEP",
+            "BREP",
+            "FCSTD",
+            "GEOMETRY_SNAPSHOT",
+            "TOPOLOGY_SNAPSHOT",
+            "UI_SNAPSHOT",
+            "COMPARISON_JSON",
+            "VIEW_INDEX",
+            "HUMAN_REVIEW",
+            "OTHER"
+          ]
         },
         "validation_role": {"type": "string", "minLength": 1},
         "retention_role": {

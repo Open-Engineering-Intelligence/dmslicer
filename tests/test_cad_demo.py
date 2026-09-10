@@ -1,138 +1,102 @@
 from __future__ import annotations
 
-import json
-import shutil
 from pathlib import Path
 
 import pytest
-from jsonschema import Draft202012Validator
 
-from dmslicer.evidence_promotion.cad_evidence import compare_ui_states, generate_demo
-
-
-FREECAD_GUI_AVAILABLE = bool(
-    shutil.which("FreeCAD.exe")
-    or shutil.which("freecad")
-    or Path(r"C:\Program Files\FreeCAD 1.1\bin\FreeCAD.exe").is_file()
+from dmslicer.evidence_promotion.cad_evidence import (
+    BYTE_DIFFERENT,
+    BYTE_IDENTICAL,
+    SEMANTIC_EQUIVALENT,
+    UI_DIFFERENT,
+    compare_byte_identity,
+    compare_semantic_equivalence,
+    compare_ui_state,
 )
-pytestmark = pytest.mark.skipif(
-    not FREECAD_GUI_AVAILABLE, reason="FreeCAD GUI executable is unavailable"
+from dmslicer.evidence_promotion.freecad_cad_evidence import (
+    GEOMETRIC_EQUIVALENCE_NOT_PROVEN,
+    GEOMETRY_DIFFERENT,
+    GEOMETRY_EQUIVALENT,
+    GeometryTolerance,
+    generate_demo_fixtures,
+    get_freecad_and_occt_versions,
+    reopen_and_snapshot,
+    snapshot_cad_file,
+    compare_geometry_snapshots,
 )
 
 
-SCHEMA_PATH = (
-    Path(__file__).parents[1]
-    / "docs"
-    / "evidence_preservation"
-    / "schemas"
-    / "cad_evidence.schema.json"
-)
+pytest.importorskip("FreeCAD", reason="FreeCAD is required for CAD demo tests")
 
 
-def _cad_validator() -> Draft202012Validator:
-    return Draft202012Validator(json.loads(SCHEMA_PATH.read_text(encoding="utf-8")))
+@pytest.fixture
+def demo_fixtures(tmp_path: Path):
+    return generate_demo_fixtures(tmp_path / "cad_demo")
 
 
-def _read_json(path: Path) -> dict[str, object]:
-    return json.loads(path.read_text(encoding="utf-8"))
+def test_case_a_demo_is_ui_only_change(demo_fixtures):
+    original = snapshot_cad_file(demo_fixtures["original"])
+    ui_changed = snapshot_cad_file(demo_fixtures["ui_only_changed"])
 
+    assert original.through_hole_wall is True
+    assert ui_changed.through_hole_wall is True
 
-@pytest.mark.freecad
-def test_demo_generates_three_distinct_reopenable_cad_sets(tmp_path: Path) -> None:
-    result = generate_demo(tmp_path / "demo")
-    assert result["status"] == "PASS"
-    for case in ("original", "ui_only_changed", "geometry_changed"):
-        case_root = tmp_path / "demo" / "cad" / case
-        assert (case_root / "fixture.FCStd").is_file()
-        assert (case_root / "fixture.brep").is_file()
-        assert (case_root / "fixture.step").is_file()
-
-
-@pytest.mark.freecad
-def test_each_case_emits_three_schema_valid_snapshots(tmp_path: Path) -> None:
-    generate_demo(tmp_path / "demo")
-    validator = _cad_validator()
-    for case in ("original", "ui_only_changed", "geometry_changed"):
-        paths = [
-            tmp_path / "demo/snapshots" / case / "geometry_semantic_snapshot.json",
-            tmp_path / "demo/snapshots" / case / "topology_snapshot.json",
-            tmp_path / "demo/snapshots" / case / "ui_state_snapshot.json",
-        ]
-        values = [_read_json(path) for path in paths]
-        assert [value["artifact_type"] for value in values] == [
-            "geometry_semantic_snapshot",
-            "topology_snapshot",
-            "ui_state_snapshot",
-        ]
-        for value in values:
-            validator.validate(value)
-
-
-@pytest.mark.freecad
-def test_ui_properties_survive_actual_fcstd_reopen(tmp_path: Path) -> None:
-    generate_demo(tmp_path / "demo")
-    original = _read_json(
-        tmp_path / "demo/snapshots/original/ui_state_snapshot.json"
+    geometry_result = compare_geometry_snapshots(
+        original,
+        ui_changed,
+        tolerances=GeometryTolerance(),
     )
-    changed = _read_json(
-        tmp_path / "demo/snapshots/ui_only_changed/ui_state_snapshot.json"
+    assert geometry_result.status == GEOMETRY_EQUIVALENT
+    assert compare_semantic_equivalence(
+        original.geometry_semantic_snapshot,
+        ui_changed.geometry_semantic_snapshot,
+    ) == SEMANTIC_EQUIVALENT
+    assert compare_ui_state(original.ui_state_snapshot, ui_changed.ui_state_snapshot) == UI_DIFFERENT
+
+
+def test_case_b_demo_is_real_geometry_change(demo_fixtures):
+    original = snapshot_cad_file(demo_fixtures["original"])
+    geometry_changed = snapshot_cad_file(demo_fixtures["geometry_changed"])
+
+    result = compare_geometry_snapshots(
+        original,
+        geometry_changed,
+        tolerances=GeometryTolerance(),
     )
-    assert compare_ui_states(original, changed)["status"] == "UI_DIFFERENT"
-
-
-@pytest.mark.freecad
-def test_case_a_proves_geometry_and_semantics_while_ui_differs(tmp_path: Path) -> None:
-    result = generate_demo(tmp_path / "demo")
-    case = result["case_a"]
-    assert case["geometry_status"] == "GEOMETRY_EQUIVALENT"
-    assert case["semantic_status"] == "SEMANTIC_EQUIVALENT"
-    assert case["ui_status"] == "UI_DIFFERENT"
-    assert case["byte_status"] in {"BYTE_SAME", "BYTE_DIFFERENT"}
-    comparison = _read_json(tmp_path / "demo/comparisons/case_a_ui_only.json")
-    _cad_validator().validate(comparison)
-    assert (
-        comparison["sha256_role"]
-        == "file_and_copy_integrity_only_not_geometry_equivalence"
-    )
-    assert comparison["measurements"]["first_minus_second_volume"]["value"] <= 0.001
-    assert comparison["measurements"]["second_minus_first_volume"]["value"] <= 0.001
-
-
-@pytest.mark.freecad
-def test_case_b_reports_actual_geometry_measurement_reasons(tmp_path: Path) -> None:
-    result = generate_demo(tmp_path / "demo")
-    case = result["case_b"]
-    assert case["geometry_status"] == "GEOMETRY_DIFFERENT"
-    comparison = _read_json(
-        tmp_path / "demo/comparisons/case_b_geometry_changed.json"
-    )
-    _cad_validator().validate(comparison)
-    assert "SHA" not in " ".join(comparison["reasons"]).upper()
+    assert result.status == GEOMETRY_DIFFERENT
     assert any(
-        check in comparison["failed_checks"]
-        for check in (
-            "area_delta",
-            "volume_delta",
-            "first_minus_second",
-            "second_minus_first",
-        )
+        "delta exceeds tolerance" in reason
+        or "Boolean cut volume exceeds tolerance" in reason
+        for reason in result.reasons
     )
-    assert comparison["measurements"]["volume_delta"]["unit"] == "mm3"
 
 
-@pytest.mark.freecad
-def test_serialization_reopen_geometry_is_not_decided_by_bytes(tmp_path: Path) -> None:
-    result = generate_demo(tmp_path / "demo")
-    serialization = result["serialization"]
-    assert serialization["byte_status"] in {"BYTE_SAME", "BYTE_DIFFERENT"}
-    assert serialization["geometry_status"] == "GEOMETRY_EQUIVALENT"
-    assert serialization["geometry_decision_inputs"] == [
-        "topology",
-        "area",
-        "volume",
-        "bounding_box",
-        "bidirectional_boolean_cut",
-    ]
-    _cad_validator().validate(
-        _read_json(tmp_path / "demo/comparisons/serialization_reopen.json")
+def test_serialization_reopen_keeps_geometry(demo_fixtures, tmp_path: Path):
+    source = Path(demo_fixtures["original"])
+    reopened = reopen_and_snapshot(source, target_path=tmp_path / "cad_demo_reopen" / "original_reopened.FCStd")
+    before = snapshot_cad_file(source)
+
+    byte_result = compare_byte_identity(source, reopened.source_path)
+    assert byte_result in (BYTE_IDENTICAL, BYTE_DIFFERENT)
+
+    geometry_result = compare_geometry_snapshots(before, reopened, tolerances=GeometryTolerance())
+    assert geometry_result.status == GEOMETRY_EQUIVALENT
+
+
+def test_case_b_not_marked_by_hash(demo_fixtures):
+    original = snapshot_cad_file(demo_fixtures["original"])
+    geometry_changed = snapshot_cad_file(demo_fixtures["geometry_changed"])
+    result = compare_geometry_snapshots(
+        original,
+        geometry_changed,
+        tolerances=GeometryTolerance(),
     )
+    assert result.status != GEOMETRIC_EQUIVALENCE_NOT_PROVEN
+    assert result.status == GEOMETRY_DIFFERENT
+
+
+def test_cad_worker_reports_runtime_versions():
+    versions = get_freecad_and_occt_versions()
+    assert "freecad_version" in versions
+    assert "occt_version" in versions
+

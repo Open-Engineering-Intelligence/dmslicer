@@ -1,427 +1,506 @@
-"""FreeCAD-side worker for the fixture-scoped P2 CAD evidence demo."""
+"""FreeCAD-backed CAD worker for P2-MVP geometry evidence and demos."""
 
 from __future__ import annotations
 
-import json
-import os
-import traceback
+from dataclasses import dataclass, field
 from pathlib import Path
-
-import FreeCAD
-import Part
-
-try:
-    import FreeCADGui
-except ImportError:  # FreeCADCmd intentionally has no GUI module.
-    FreeCADGui = None
+from typing import Any
 
 
-def _write_json(path: Path, value: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+GEOMETRY_EQUIVALENT = "GEOMETRY_EQUIVALENT"
+GEOMETRY_DIFFERENT = "GEOMETRY_DIFFERENT"
+GEOMETRIC_EQUIVALENCE_NOT_PROVEN = "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
 
 
-def _fixture_shape(radius_mm: float):
-    block = Part.makeBox(40.0, 30.0, 12.0)
-    bore = Part.makeCylinder(
-        radius_mm, 12.0, FreeCAD.Vector(20.0, 15.0, 0.0)
-    )
-    return block.cut(bore).removeSplitter()
+_BLOCK_LENGTH_MM = 40.0
+_BLOCK_WIDTH_MM = 30.0
+_BLOCK_HEIGHT_MM = 20.0
+_HOLE_AXIS_MARGIN_MM = 0.01
+_DEFAULT_HOLE_RADIUS_MM = 4.0
+_CHANGED_HOLE_RADIUS_MM = 5.0
+
+_DEFAULT_TOLERANCE_MM = 0.001
+_DEFAULT_TOLERANCE_MM2 = 0.001
+_DEFAULT_TOLERANCE_MM3 = 0.001
 
 
-def _count(value: int) -> dict:
-    return {"value": value, "unit": "count"}
+@dataclass(frozen=True)
+class GeometryTolerance:
+    linear_mm: float = _DEFAULT_TOLERANCE_MM
+    area_mm2: float = _DEFAULT_TOLERANCE_MM2
+    volume_mm3: float = _DEFAULT_TOLERANCE_MM3
 
 
-def _measurement(value: float, unit: str) -> dict:
-    return {"value": float(value), "unit": unit}
+@dataclass
+class CADSnapshot:
+    source_path: Path
+    solid_count: int
+    shell_count: int
+    face_count: int
+    edge_count: int
+    vertex_count: int
+    valid: bool
+    closed: bool
+    area: float
+    volume: float
+    bounding_box: dict[str, float]
+    connected_solid_count: int
+    through_hole_wall: bool
+    geometry_semantic_snapshot: dict[str, Any]
+    ui_state_snapshot: dict[str, Any]
+    _shape: Any = field(default=None, repr=False)
 
-
-def _source_id(case_id: str) -> str:
-    return f"p2-fixture/{case_id}/fixture.FCStd"
-
-
-def _shape_snapshots(case_id: str, shape, radius_mm: float) -> tuple[dict, dict]:
-    box = shape.BoundBox
-    counts = {
-        "solid_count": _count(len(shape.Solids)),
-        "shell_count": _count(len(shape.Shells)),
-        "face_count": _count(len(shape.Faces)),
-        "edge_count": _count(len(shape.Edges)),
-        "vertex_count": _count(len(shape.Vertexes)),
-    }
-    cylinders = []
-    for face in shape.Faces:
-        surface = face.Surface
-        observed_radius = getattr(surface, "Radius", None)
-        if observed_radius is not None and abs(float(observed_radius) - radius_mm) <= 0.001:
-            cylinders.append(float(observed_radius))
-    if len(cylinders) == 1:
-        through_hole = {
-            "status": "PROVEN",
-            "count": _count(1),
-            "selection": (
-                "unique cylindrical face matching declared radius "
-                f"{radius_mm:.6f} mm within 0.001 mm"
-            ),
+    def topology_counts(self) -> dict[str, int]:
+        return {
+            "solid_count": self.solid_count,
+            "shell_count": self.shell_count,
+            "face_count": self.face_count,
+            "edge_count": self.edge_count,
+            "vertex_count": self.vertex_count,
+            "connected_solid_count": self.connected_solid_count,
         }
-    else:
-        through_hole = {
-            "status": "UNKNOWN",
-            "reason": (
-                "fixture-scoped radius selection found "
-                f"{len(cylinders)} matching cylindrical faces"
-            ),
+
+    def to_evidence_payload(self) -> dict[str, Any]:
+        return {
+            "geometry_semantic_snapshot": self.geometry_semantic_snapshot,
+            "topology_snapshot": {
+                "solid_count": self.solid_count,
+                "shell_count": self.shell_count,
+                "face_count": self.face_count,
+                "edge_count": self.edge_count,
+                "vertex_count": self.vertex_count,
+                "valid": self.valid,
+                "closed": self.closed,
+                "solid_area": {"value": self.area, "unit": "mm2"},
+                "solid_volume": {"value": self.volume, "unit": "mm3"},
+                "bounding_box": self.bounding_box,
+                "connected_solid_count": self.connected_solid_count,
+                "through_hole_wall": self.through_hole_wall,
+            },
+            "ui_state_snapshot": self.ui_state_snapshot,
         }
-    common = {
-        "schema_version": "1.0.0",
-        "case_id": case_id,
-        "artifact_role": "CLOSING",
-        "source_artifact_id": _source_id(case_id),
+
+
+@dataclass(frozen=True)
+class GeometryComparison:
+    status: str
+    reasons: tuple[str, ...]
+    deltas: dict[str, Any]
+
+
+def _require_freecad() -> tuple[Any, Any, Any]:
+    import FreeCAD as App
+    import Part
+    from FreeCAD import Vector
+
+    return App, Part, Vector
+
+
+def _clear_and_close(document: Any) -> None:
+    if document is None:
+        return
+    app = document.Application
+    app.closeDocument(document.Name)
+
+
+def _first_shape_object(document: Any) -> Any:
+    for obj in document.Objects:
+        if hasattr(obj, "Shape"):
+            return obj
+    raise ValueError("No shape object found in FreeCAD document")
+
+
+def _normalize_color(color: Any) -> tuple[float, float, float] | tuple[float, float, float, float] | None:
+    if color is None:
+        return None
+    if isinstance(color, tuple):
+        normalized = tuple(float(value) for value in color)
+        if len(normalized) in {3, 4}:
+            return normalized
+        return None
+    if isinstance(color, list):
+        normalized = tuple(float(value) for value in color)
+        if len(normalized) in {3, 4}:
+            return normalized
+        return None
+    return None
+
+
+def _normalize_transparency(value: Any) -> float | None:
+    if value is None:
+        return None
+    numeric = float(value)
+    return numeric / 100.0 if numeric > 1.0 else numeric
+
+
+def _read_view_state(shape_object: Any) -> dict[str, Any]:
+    view = shape_object.ViewObject
+    color = _normalize_color(view.ShapeColor)
+    transparency = _normalize_transparency(view.Transparency)
+    return {
+        "visibility": bool(view.Visibility),
+        "color": list(color) if color is not None else [1.0, 1.0, 1.0],
+        "transparency": transparency if transparency is not None else 0.0,
     }
-    geometry = {
-        **common,
-        "artifact_type": "geometry_semantic_snapshot",
-        "length_unit": "mm",
-        "semantic_binding": {
+
+
+def _fixture_identity() -> dict[str, Any]:
+    return {
+        "object_name": "fixture_body",
+        "semantic": {
             "component_role": "fixture_body",
             "interface_role": "through_hole_wall",
-            "allowed_transform": "IDENTITY",
-        },
-        "shape": {
-            **counts,
-            "area": _measurement(shape.Area, "mm2"),
-            "volume": _measurement(shape.Volume, "mm3"),
-            "bounding_box": {
-                "x_min": _measurement(box.XMin, "mm"),
-                "y_min": _measurement(box.YMin, "mm"),
-                "z_min": _measurement(box.ZMin, "mm"),
-                "x_max": _measurement(box.XMax, "mm"),
-                "y_max": _measurement(box.YMax, "mm"),
-                "z_max": _measurement(box.ZMax, "mm"),
-            },
-            "valid": bool(shape.isValid()),
-            "closed": bool(shape.isClosed()),
-        },
-    }
-    topology = {
-        **common,
-        "artifact_type": "topology_snapshot",
-        "topology": {
-            **counts,
-            "connected_solid_count": _count(len(shape.Solids)),
-            "valid": bool(shape.isValid()),
-            "closed": bool(shape.isClosed()),
-            "through_hole": through_hole,
-            "manifold": {
-                "status": "UNKNOWN",
-                "reason": "manifold inference is deferred for the P2 fixture",
-            },
-        },
-    }
-    return geometry, topology
-
-
-def _supported_ui(view_object, name: str, transform=lambda value: value) -> dict:
-    if view_object is None or not hasattr(view_object, name):
-        return {
-            "status": "UNSUPPORTED",
-            "reason": f"saved {name} property is unavailable in this FreeCAD build",
-        }
-    return {"status": "SUPPORTED", "value": transform(getattr(view_object, name))}
-
-
-def _ui_snapshot(case_id: str, view_object) -> dict:
-    unsupported_camera = {
-        "status": "UNSUPPORTED",
-        "reason": "stable per-object saved camera extraction is outside the P2 fixture contract",
-    }
-    return {
-        "schema_version": "1.0.0",
-        "artifact_type": "ui_state_snapshot",
-        "case_id": case_id,
-        "artifact_role": "CLOSING",
-        "source_artifact_id": _source_id(case_id),
-        "object_role": "fixture_body",
-        "state": {
-            "visibility": _supported_ui(view_object, "Visibility", bool),
-            "shape_color": _supported_ui(
-                view_object,
-                "ShapeColor",
-                lambda value: [float(item) for item in value[:3]],
-            ),
-            "transparency": _supported_ui(view_object, "Transparency", int),
-            "display_mode": _supported_ui(view_object, "DisplayMode", str),
-            "camera": unsupported_camera,
         },
     }
 
 
-def _write_snapshots(output_root: Path, case_id: str, document, radius_mm: float) -> None:
-    matches = [obj for obj in document.Objects if obj.Name == "FixtureBody"]
-    if len(matches) != 1:
-        raise RuntimeError("EXPECTED_ONE_FIXTURE_BODY")
-    fixture = matches[0]
-    geometry, topology = _shape_snapshots(case_id, fixture.Shape, radius_mm)
-    snapshot_root = output_root / "snapshots" / case_id
-    _write_json(snapshot_root / "geometry_semantic_snapshot.json", geometry)
-    _write_json(snapshot_root / "topology_snapshot.json", topology)
-    _write_json(snapshot_root / "ui_state_snapshot.json", _ui_snapshot(case_id, fixture.ViewObject))
+def _build_rectangular_block_with_through_hole(
+    part_module: Any,
+    vector_class: Any,
+    *,
+    radius_mm: float,
+) -> Any:
+    block = part_module.makeBox(_BLOCK_LENGTH_MM, _BLOCK_WIDTH_MM, _BLOCK_HEIGHT_MM, vector_class(0, 0, 0))
+    hole = part_module.makeCylinder(
+        radius_mm,
+        _BLOCK_HEIGHT_MM + 2 * _HOLE_AXIS_MARGIN_MM,
+        vector_class(_BLOCK_LENGTH_MM / 2, _BLOCK_WIDTH_MM / 2, -_HOLE_AXIS_MARGIN_MM),
+        vector_class(0, 0, 1),
+    )
+    return block.cut(hole)
 
 
-def _generate_fixture_set(output_root: Path) -> dict:
-    definitions = {
-        "original": {"radius_mm": 4.0, "color": (0.82, 0.82, 0.82), "transparency": 0, "visible": True},
-        "ui_only_changed": {"radius_mm": 4.0, "color": (0.10, 0.45, 0.90), "transparency": 60, "visible": False},
-        "geometry_changed": {"radius_mm": 5.0, "color": (0.82, 0.82, 0.82), "transparency": 0, "visible": True},
-    }
-    for case_id, definition in definitions.items():
-        case_root = output_root / "cad" / case_id
-        case_root.mkdir(parents=True, exist_ok=False)
-        document = FreeCAD.newDocument(f"P2_{case_id}")
-        try:
-            fixture = document.addObject("Part::Feature", "FixtureBody")
-            fixture.Label = "Fixture Body"
-            fixture.Shape = _fixture_shape(definition["radius_mm"])
-            fixture.addProperty("App::PropertyString", "ComponentRole", "P2Evidence")
-            fixture.addProperty("App::PropertyString", "InterfaceRole", "P2Evidence")
-            fixture.addProperty("App::PropertyString", "AllowedTransform", "P2Evidence")
-            fixture.ComponentRole = "fixture_body"
-            fixture.InterfaceRole = "through_hole_wall"
-            fixture.AllowedTransform = "IDENTITY"
-            if fixture.ViewObject is None:
-                raise RuntimeError("GUI_VIEW_OBJECT_UNAVAILABLE")
-            fixture.ViewObject.ShapeColor = definition["color"]
-            fixture.ViewObject.Transparency = definition["transparency"]
-            fixture.ViewObject.Visibility = definition["visible"]
-            document.recompute()
-            document.saveAs(str(case_root / "fixture.FCStd"))
-            fixture.Shape.exportBrep(str(case_root / "fixture.brep"))
-            Part.export([fixture], str(case_root / "fixture.step"))
-        finally:
-            FreeCAD.closeDocument(document.Name)
+def _is_cylinder_face(face: Any) -> bool:
+    surface = getattr(face, "Surface", None)
+    if surface is None:
+        return False
+    surface_type = getattr(surface, "TypeId", "").lower()
+    if "cylinder" in surface_type:
+        return True
+    return "cylinder" in type(surface).__name__.lower()
 
-        reopened = FreeCAD.openDocument(str(case_root / "fixture.FCStd"))
-        try:
-            _write_snapshots(output_root, case_id, reopened, definition["radius_mm"])
-        finally:
-            FreeCAD.closeDocument(reopened.Name)
 
-    serialization_root = output_root / "cad" / "serialization_reopen"
-    serialization_root.mkdir(parents=True, exist_ok=False)
-    reopened = FreeCAD.openDocument(str(output_root / "cad/original/fixture.FCStd"))
+def _has_through_hole_wall(shape: Any) -> bool:
+    faces = list(getattr(shape, "Faces", []))
+    if not faces:
+        return False
+    cylinder_count = sum(1 for face in faces if _is_cylinder_face(face))
+    return cylinder_count >= 1
+
+
+def _count_shared_vertex(v_left: Any, v_right: Any, *, tolerance: float = 1.0e-6) -> int:
+    left = list(v_left)
+    right = list(v_right)
+    count = 0
+    for left_vertex in left:
+        left_point = left_vertex.Point
+        for right_vertex in right:
+            right_point = right_vertex.Point
+            if (
+                abs(float(left_point.x - right_point.x)) <= tolerance
+                and abs(float(left_point.y - right_point.y)) <= tolerance
+                and abs(float(left_point.z - right_point.z)) <= tolerance
+            ):
+                count += 1
+                break
+    return count
+
+
+def _connected_solid_count(shape: Any) -> int:
+    solids = list(getattr(shape, "Solids", []))
+    if not solids:
+        return 0
+    if len(solids) == 1:
+        return 1
+
+    graph: dict[int, set[int]] = {index: set() for index in range(len(solids))}
+    for i in range(len(solids)):
+        for j in range(i + 1, len(solids)):
+            if _count_shared_vertex(solids[i].Vertices, solids[j].Vertices):
+                graph[i].add(j)
+                graph[j].add(i)
+
+    seen: set[int] = set()
+    components = 0
+    for start in range(len(solids)):
+        if start in seen:
+            continue
+        components += 1
+        stack = [start]
+        seen.add(start)
+        while stack:
+            current = stack.pop()
+            for next_index in graph[current]:
+                if next_index not in seen:
+                    seen.add(next_index)
+                    stack.append(next_index)
+    return components
+
+
+def _snapshot_shape(path: Path) -> CADSnapshot:
+    App, Part, Vector = _require_freecad()
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(f"CAD fixture is missing: {path}")
+
+    document = App.openDocument(str(path))
     try:
-        reopened.saveAs(str(serialization_root / "fixture.FCStd"))
+        shape_object = _first_shape_object(document)
+        shape = shape_object.Shape.copy()
+        bbox = shape.BoundBox
+
+        return CADSnapshot(
+            source_path=path,
+            solid_count=len(shape.Solids),
+            shell_count=len(shape.Shells),
+            face_count=len(shape.Faces),
+            edge_count=len(shape.Edges),
+            vertex_count=len(shape.Vertexes),
+            valid=bool(shape.isValid()),
+            closed=bool(shape.isClosed()),
+            area=float(shape.Area),
+            volume=float(shape.Volume),
+            bounding_box={
+                "xmin": float(bbox.XMin),
+                "ymin": float(bbox.YMin),
+                "zmin": float(bbox.ZMin),
+                "xmax": float(bbox.XMax),
+                "ymax": float(bbox.YMax),
+                "zmax": float(bbox.ZMax),
+            },
+            connected_solid_count=_connected_solid_count(shape),
+            through_hole_wall=_has_through_hole_wall(shape),
+            geometry_semantic_snapshot={
+                **_fixture_identity()["semantic"],
+                "evidence_fixture": "rectangular_block_one_through_hole",
+            },
+            ui_state_snapshot=_read_view_state(shape_object),
+            _shape=shape,
+        )
     finally:
-        FreeCAD.closeDocument(reopened.Name)
-    serialized = FreeCAD.openDocument(str(serialization_root / "fixture.FCStd"))
+        _clear_and_close(document)
+
+
+def _apply_ui_state(view_object: Any, *, color: tuple[float, float, float], transparency: float, visible: bool) -> None:
+    view_object.ShapeColor = tuple(float(component) for component in color)
+    view_object.Transparency = float(transparency) * 100.0
+    view_object.Visibility = bool(visible)
+
+
+def _create_fixture(path: Path, *, hole_radius_mm: float, color: tuple[float, float, float], transparency: float, visible: bool) -> Path:
+    App, Part, Vector = _require_freecad()
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    document = App.newDocument("p2_mvp_demo")
     try:
-        matches = [obj for obj in serialized.Objects if obj.Name == "FixtureBody"]
-        if len(matches) != 1:
-            raise RuntimeError("EXPECTED_ONE_FIXTURE_BODY")
-        matches[0].Shape.exportBrep(str(serialization_root / "fixture.brep"))
-        Part.export([matches[0]], str(serialization_root / "fixture.step"))
-        _write_snapshots(output_root, "serialization_reopen", serialized, 4.0)
+        fixture = _build_rectangular_block_with_through_hole(
+            Part,
+            Vector,
+            radius_mm=hole_radius_mm,
+        )
+        fixture_object = document.addObject("Part::Feature", _fixture_identity()["object_name"])
+        fixture_object.Shape = fixture
+        _apply_ui_state(fixture_object.ViewObject, color=color, transparency=transparency, visible=visible)
+        document.recompute()
+        document.saveAs(str(path))
     finally:
-        FreeCAD.closeDocument(serialized.Name)
+        _clear_and_close(document)
+    return path
+
+
+def _copy_ui_changed_fixture(original: Path, target: Path, *, color: tuple[float, float, float], transparency: float, visible: bool) -> Path:
+    App, _Part, _Vector = _require_freecad()
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists():
+        target.unlink()
+
+    import shutil
+
+    shutil.copy2(original, target)
+    document = App.openDocument(str(target))
+    try:
+        target_object = _first_shape_object(document)
+        _apply_ui_state(target_object.ViewObject, color=color, transparency=transparency, visible=visible)
+        document.recompute()
+        document.saveAs(str(target))
+    finally:
+        _clear_and_close(document)
+    return target
+
+
+def generate_demo_fixtures(
+    staging_root: Path,
+    *,
+    original_name: str = "original.FCStd",
+    ui_only_changed_name: str = "ui_only_changed.FCStd",
+    geometry_changed_name: str = "geometry_changed.FCStd",
+) -> dict[str, Path]:
+    staging_root = Path(staging_root)
+    original_path = staging_root / original_name
+    ui_only_changed_path = staging_root / ui_only_changed_name
+    geometry_changed_path = staging_root / geometry_changed_name
+
+    _create_fixture(
+        original_path,
+        hole_radius_mm=_DEFAULT_HOLE_RADIUS_MM,
+        color=(1.0, 0.5, 0.0),
+        transparency=0.0,
+        visible=True,
+    )
+
+    _copy_ui_changed_fixture(
+        original_path,
+        ui_only_changed_path,
+        color=(0.0, 0.7, 0.2),
+        transparency=0.6,
+        visible=False,
+    )
+
+    _create_fixture(
+        geometry_changed_path,
+        hole_radius_mm=_CHANGED_HOLE_RADIUS_MM,
+        color=(1.0, 0.5, 0.0),
+        transparency=0.0,
+        visible=True,
+    )
+
     return {
-        "status": "PASS",
-        "cases": sorted(definitions),
-        "freecad_version": ".".join(str(item) for item in FreeCAD.Version()[:3]),
-        "occt_version": getattr(Part, "OCC_VERSION", "unknown"),
+        "original": original_path,
+        "ui_only_changed": ui_only_changed_path,
+        "geometry_changed": geometry_changed_path,
     }
 
 
-def _unavailable(reason: str) -> dict:
-    return {"status": "NOT_PROVEN", "reason": reason}
+def snapshot_cad_file(path: Path) -> CADSnapshot:
+    return _snapshot_shape(path)
 
 
-def _topology_counts(shape) -> tuple[int, int, int, int, int]:
-    return (
-        len(shape.Solids),
-        len(shape.Shells),
-        len(shape.Faces),
-        len(shape.Edges),
-        len(shape.Vertexes),
+def _bounding_box_delta(left: CADSnapshot, right: CADSnapshot) -> float:
+    return max(
+        abs(left.bounding_box[axis] - right.bounding_box[axis])
+        for axis in ("xmin", "xmax", "ymin", "ymax", "zmin", "zmax")
     )
 
 
-def _comparison(case_id: str, role: str, first, second) -> dict:
-    tolerances = [
-        {"name": "linear", "value": 0.001, "unit": "mm", "role": "bounding box and minimum distance", "source": "P2-MVP fixture contract"},
-        {"name": "area", "value": 0.001, "unit": "mm2", "role": "surface area delta", "source": "P2-MVP fixture contract"},
-        {"name": "volume", "value": 0.001, "unit": "mm3", "role": "volume delta and Boolean differences", "source": "P2-MVP fixture contract"},
-    ]
-    common = {
-        "schema_version": "1.0.0",
-        "artifact_type": "geometry_comparison",
-        "case_id": case_id,
-        "comparison_role": role,
-        "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
-        "tolerances": tolerances,
-        "geometry_decision_inputs": [
-            "topology",
-            "area",
-            "volume",
-            "bounding_box",
-            "bidirectional_boolean_cut",
-        ],
-    }
-    valid = all(
-        (len(shape.Solids) == 1 and bool(shape.isValid()) and bool(shape.isClosed()))
-        for shape in (first, second)
-    )
-    if not valid:
-        unavailable = _unavailable("input is not a valid closed single solid")
-        return {
-            **common,
-            "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
-            "method": "NOT_EVALUATED",
-            "measurements": {name: unavailable for name in (
-                "area_delta", "volume_delta", "max_bounding_box_delta",
-                "minimum_distance", "first_minus_second_volume", "second_minus_first_volume",
-            )},
-            "checks": {
-                "valid_closed_single_solids": False,
-                **{name: unavailable for name in (
-                    "topology_counts", "area_delta", "volume_delta", "bounding_box",
-                    "first_minus_second", "second_minus_first",
-                )},
-            },
-            "failed_checks": ["valid_closed_single_solids"],
-            "reasons": ["INPUT_NOT_VALID_CLOSED_SINGLE_SOLID"],
-        }
+def _cut_volume(left_shape: Any, right_shape: Any) -> float:
+    cut_shape = left_shape.cut(right_shape)
+    if cut_shape is None:
+        raise ValueError("Boolean cut returned no shape")
+    if hasattr(cut_shape, "isNull") and cut_shape.isNull():
+        return 0.0
     try:
-        area_delta = abs(float(first.Area) - float(second.Area))
-        volume_delta = abs(float(first.Volume) - float(second.Volume))
-        first_box, second_box = first.BoundBox, second.BoundBox
-        bbox_delta = max(
-            abs(float(getattr(first_box, name)) - float(getattr(second_box, name)))
-            for name in ("XMin", "YMin", "ZMin", "XMax", "YMax", "ZMax")
-        )
-        minimum_distance = float(first.distToShape(second)[0])
-        first_minus_second = float(first.cut(second).Volume)
-        second_minus_first = float(second.cut(first).Volume)
-    except Exception:
-        unavailable = _unavailable("required B-rep operation failed")
-        return {
-            **common,
-            "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
-            "method": "BREP_BOOLEAN_AND_MEASUREMENTS",
-            "measurements": {name: unavailable for name in (
-                "area_delta", "volume_delta", "max_bounding_box_delta",
-                "minimum_distance", "first_minus_second_volume", "second_minus_first_volume",
-            )},
-            "checks": {
-                "valid_closed_single_solids": True,
-                **{name: unavailable for name in (
-                    "topology_counts", "area_delta", "volume_delta", "bounding_box",
-                    "first_minus_second", "second_minus_first",
-                )},
-            },
-            "failed_checks": [],
-            "reasons": ["REQUIRED_BREP_OPERATION_FAILED"],
-        }
-    checks = {
-        "valid_closed_single_solids": True,
-        "topology_counts": _topology_counts(first) == _topology_counts(second),
-        "area_delta": area_delta <= 0.001,
-        "volume_delta": volume_delta <= 0.001,
-        "bounding_box": bbox_delta <= 0.001,
-        "first_minus_second": first_minus_second <= 0.001,
-        "second_minus_first": second_minus_first <= 0.001,
-    }
-    reason_codes = {
-        "topology_counts": "TOPOLOGY_COUNTS_DIFFER",
-        "area_delta": "AREA_DELTA_EXCEEDS_TOLERANCE",
-        "volume_delta": "VOLUME_DELTA_EXCEEDS_TOLERANCE",
-        "bounding_box": "BOUNDING_BOX_DELTA_EXCEEDS_TOLERANCE",
-        "first_minus_second": "FIRST_MINUS_SECOND_VOLUME_EXCEEDS_TOLERANCE",
-        "second_minus_first": "SECOND_MINUS_FIRST_VOLUME_EXCEEDS_TOLERANCE",
-    }
-    failed = [name for name, passed in checks.items() if not passed]
-    return {
-        **common,
-        "status": "GEOMETRY_DIFFERENT" if failed else "GEOMETRY_EQUIVALENT",
-        "method": "BREP_BOOLEAN_AND_MEASUREMENTS",
-        "measurements": {
-            "area_delta": _measurement(area_delta, "mm2"),
-            "volume_delta": _measurement(volume_delta, "mm3"),
-            "max_bounding_box_delta": _measurement(bbox_delta, "mm"),
-            "minimum_distance": _measurement(minimum_distance, "mm"),
-            "first_minus_second_volume": _measurement(first_minus_second, "mm3"),
-            "second_minus_first_volume": _measurement(second_minus_first, "mm3"),
-        },
-        "checks": checks,
-        "failed_checks": failed,
-        "reasons": [reason_codes[name] for name in failed if name in reason_codes],
-    }
-
-
-def _fixture_shape_from_fcstd(path: Path):
-    document = FreeCAD.openDocument(str(path))
-    try:
-        matches = [obj for obj in document.Objects if obj.Name == "FixtureBody"]
-        if len(matches) != 1:
-            raise RuntimeError("EXPECTED_ONE_FIXTURE_BODY")
-        return matches[0].Shape.copy()
-    finally:
-        FreeCAD.closeDocument(document.Name)
-
-
-def _snapshot_and_compare(output_root: Path, requested: list[str]) -> dict:
-    completed = []
-    if "case_a" in requested:
-        first = _fixture_shape_from_fcstd(output_root / "cad/original/fixture.FCStd")
-        second = _fixture_shape_from_fcstd(output_root / "cad/ui_only_changed/fixture.FCStd")
-        value = _comparison("case_a", "UI_ONLY_MUTATION", first, second)
-        _write_json(output_root / "comparisons/case_a_ui_only.json", value)
-        completed.append("case_a")
-    if "case_b" in requested:
-        first = _fixture_shape_from_fcstd(output_root / "cad/original/fixture.FCStd")
-        second = _fixture_shape_from_fcstd(output_root / "cad/geometry_changed/fixture.FCStd")
-        value = _comparison("case_b", "GEOMETRY_MUTATION", first, second)
-        _write_json(output_root / "comparisons/case_b_geometry_changed.json", value)
-        completed.append("case_b")
-    if "serialization" in requested:
-        first = _fixture_shape_from_fcstd(output_root / "cad/original/fixture.FCStd")
-        second = _fixture_shape_from_fcstd(
-            output_root / "cad/serialization_reopen/fixture.FCStd"
-        )
-        value = _comparison(
-            "serialization_reopen", "SERIALIZATION_REOPEN", first, second
-        )
-        _write_json(output_root / "comparisons/serialization_reopen.json", value)
-        completed.append("serialization")
-    return {"status": "PASS", "comparisons": completed}
-
-
-def main() -> None:
-    request_path = Path(os.environ["DMSLICER_CAD_REQUEST"])
-    response_path = Path(os.environ["DMSLICER_CAD_RESPONSE"])
-    try:
-        request = json.loads(request_path.read_text(encoding="utf-8"))
-        operation = request.get("operation")
-        if operation == "generate_fixture_set":
-            response = _generate_fixture_set(Path(request["output_root"]))
-        elif operation == "snapshot_and_compare":
-            response = _snapshot_and_compare(
-                Path(request["output_root"]), list(request.get("comparisons", []))
-            )
-        else:
-            raise RuntimeError("UNSUPPORTED_OPERATION")
+        return max(0.0, float(cut_shape.Volume))
     except Exception as error:
-        response = {
-            "status": "FAILED",
-            "error_code": str(error) if str(error).isupper() else error.__class__.__name__,
-            "traceback": traceback.format_exc(),
-        }
-    _write_json(response_path, response)
-    if FreeCADGui is not None and FreeCAD.GuiUp:
-        FreeCADGui.getMainWindow().close()
+        raise ValueError("Boolean cut volume could not be evaluated") from error
 
 
-main()
+def compare_geometry_snapshots(
+    left: CADSnapshot,
+    right: CADSnapshot,
+    *,
+    tolerances: GeometryTolerance | None = None,
+) -> GeometryComparison:
+    tolerances = tolerances or GeometryTolerance()
+    for name, value in (("linear_mm", tolerances.linear_mm), ("area_mm2", tolerances.area_mm2), ("volume_mm3", tolerances.volume_mm3)):
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"Tolerance {name} must be numeric")
+        if value < 0:
+            raise ValueError(f"Tolerance {name} must be non-negative")
+
+    if not (left.valid and right.valid):
+        return GeometryComparison(
+            status=GEOMETRIC_EQUIVALENCE_NOT_PROVEN,
+            reasons=("At least one snapshot is invalid",),
+            deltas={},
+        )
+
+    left_shape = left._shape
+    right_shape = right._shape
+    if left_shape is None:
+        left_shape = snapshot_cad_file(left.source_path)._shape
+    if right_shape is None:
+        right_shape = snapshot_cad_file(right.source_path)._shape
+
+    reasons: list[str] = []
+    deltas: dict[str, Any] = {
+        "area_delta_mm2": abs(left.area - right.area),
+        "volume_delta_mm3": abs(left.volume - right.volume),
+        "bbox_delta_mm": _bounding_box_delta(left, right),
+    }
+
+    if left.solid_count != right.solid_count:
+        reasons.append("solid count differs")
+    if left.shell_count != right.shell_count:
+        reasons.append("shell count differs")
+    if left.face_count != right.face_count:
+        reasons.append("face count differs")
+    if left.edge_count != right.edge_count:
+        reasons.append("edge count differs")
+    if left.vertex_count != right.vertex_count:
+        reasons.append("vertex count differs")
+    if left.connected_solid_count != right.connected_solid_count:
+        reasons.append("connected solid count differs")
+    if left.valid != right.valid:
+        reasons.append("validity differs")
+    if left.closed != right.closed:
+        reasons.append("closedness differs")
+
+    if deltas["area_delta_mm2"] > tolerances.area_mm2:
+        reasons.append("area delta exceeds tolerance")
+    if deltas["volume_delta_mm3"] > tolerances.volume_mm3:
+        reasons.append("volume delta exceeds tolerance")
+    if deltas["bbox_delta_mm"] > tolerances.linear_mm:
+        reasons.append("bounding box delta exceeds tolerance")
+
+    try:
+        cut_left_volume = _cut_volume(left_shape, right_shape)
+        cut_right_volume = _cut_volume(right_shape, left_shape)
+        deltas["boolean_cut_left_right_mm3"] = cut_left_volume
+        deltas["boolean_cut_right_left_mm3"] = cut_right_volume
+        if cut_left_volume > tolerances.volume_mm3 or cut_right_volume > tolerances.volume_mm3:
+            reasons.append("bidirectional Boolean cut volume exceeds tolerance")
+    except Exception as error:
+        return GeometryComparison(
+            status=GEOMETRIC_EQUIVALENCE_NOT_PROVEN,
+            reasons=(f"Boolean residual unavailable: {error}",),
+            deltas=deltas,
+        )
+
+    if reasons:
+        return GeometryComparison(status=GEOMETRY_DIFFERENT, reasons=tuple(reasons), deltas=deltas)
+
+    return GeometryComparison(status=GEOMETRY_EQUIVALENT, reasons=(), deltas=deltas)
+
+
+def reopen_and_snapshot(path: Path, *, target_path: Path) -> CADSnapshot:
+    App, _Part, _Vector = _require_freecad()
+    source = Path(path)
+    target = Path(target_path)
+    if not source.is_file():
+        raise FileNotFoundError(f"Source CAD fixture missing: {source}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    document = App.openDocument(str(source))
+    try:
+        document.recompute()
+        document.saveAs(str(target))
+    finally:
+        _clear_and_close(document)
+    return snapshot_cad_file(target)
+
+
+def get_freecad_and_occt_versions() -> dict[str, str | None]:
+    App, Part, _Vector = _require_freecad()
+
+    freecad_version = ".".join(str(token) for token in App.Version()) if hasattr(App, "Version") else None
+    occt_version = None
+    for candidate in ("OCC_VERSION", "OcctVersion", "OCCT_VERSION"):
+        if hasattr(Part, candidate):
+            occt_version = str(getattr(Part, candidate))
+            break
+
+    return {
+        "freecad_version": freecad_version,
+        "occt_version": occt_version,
+    }
+

@@ -255,6 +255,48 @@ is retained as historical evidence. Run 002 supersedes it for completion
 because it also covers host-independent Windows/POSIX path parsing and
 public-safe JUnit case labels; no file in run 001 was changed or deleted.
 
+## Case A / Case B local evidence package runbook
+
+Recommended workflow for this branch:
+
+```powershell
+# 1) Prepare a request with explicit allowlist and per-domain evidence IDs.
+py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/<run>/request.json
+py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/<run>/request.json
+```
+
+Where `<run>` maps to your selected `staging_root` under `outputs/` or `work/`.
+
+Minimal evidence content for Case A/Case B is expected to include:
+
+- original CAD (FCSTD), UI-only CAD, geometry-changed CAD
+- at least one STEP and one BREP (or the branch-approved alternatives)
+- geometry snapshot, topology snapshot, UI snapshot
+- Case A comparison JSON, Case B comparison JSON
+- `VIEW_INDEX.md`, `HUMAN_REVIEW.md`
+- JUnit and validator results
+- concise summary artifact
+
+For CAD generation/delta checks:
+
+```powershell
+py -3.12 -m pytest tests/test_cad_demo.py
+```
+
+This command may `skip` when FreeCAD is unavailable on the host; the preservation
+flow remains valid for local integrity promotion without claiming CAD-equivalence.
+
+## Separation reminders
+
+These separation rules are enforced by schema and policy:
+
+- `Hash != Geometry`
+- `Geometry != Semantic`
+- `Semantic != UI`
+- `pytest != Scientific`
+- `NOT_FULLY_PRESERVED` + `LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY`
+  means local recoverability without off-host custody.
+
 ## Verification
 
 Run the complete local gate:

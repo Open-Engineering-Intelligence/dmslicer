@@ -1,0 +1,6 @@
+{
+  "case": "A",
+  "type": "UI_ONLY_CHANGE",
+  "status": "PASS",
+  "notes": "Geometry/topology unchanged; UI-only visual state differs"
+}

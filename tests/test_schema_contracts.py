@@ -69,6 +69,48 @@ def test_valid_generated_manifest_keeps_package_preservation_and_publication_sep
     assert manifest["publication_result"]["status"] == "PUBLICATION_NOT_AUTHORIZED"
 
 
+def test_request_schema_accepts_snapshot_and_cad_artifact_kinds(valid_request) -> None:
+    request = valid_request()
+    request["source"]["allowlist"].extend(
+        [
+            {
+                "artifact_id": "case-a-geometry",
+                "source_path": "validator-result.json",
+                "public_path": "cad/case_a_geometry_snapshot.json",
+                "kind": "GEOMETRY_SNAPSHOT",
+                "validation_role": "geometry snapshot evidence",
+                "retention_role": "STANDARD",
+            },
+            {
+                "artifact_id": "case-a-step",
+                "source_path": "validator-result.json",
+                "public_path": "cad/case_a.step",
+                "kind": "STEP",
+                "validation_role": "case a step export",
+                "retention_role": "STANDARD",
+            },
+            {
+                "artifact_id": "case-a-view-index",
+                "source_path": "validator-result.json",
+                "public_path": "cad/VIEW_INDEX.md",
+                "kind": "VIEW_INDEX",
+                "validation_role": "human-view index",
+                "retention_role": "STANDARD",
+            },
+            {
+                "artifact_id": "case-a-human",
+                "source_path": "validator-result.json",
+                "public_path": "cad/HUMAN_REVIEW.md",
+                "kind": "HUMAN_REVIEW",
+                "validation_role": "human review note",
+                "retention_role": "STANDARD",
+            },
+        ]
+    )
+
+    _validator("promotion_request.schema.json").validate(request)
+
+
 def test_manifest_allows_byte_difference_without_geometry_claim(valid_manifest) -> None:
     manifest = valid_manifest()
     manifest["results"]["byte_identity_result"] = {

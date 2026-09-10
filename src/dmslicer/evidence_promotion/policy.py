@@ -19,6 +19,26 @@ from .models import read_json, schema_path
 
 _GENERATED_PACKAGE_PATHS = {"manifest.json", "copy_inventory.json", "policy_report.json"}
 _TEXT_KINDS = {"JUNIT", "VALIDATOR", "JSON", "TEXT", "VIEW_INDEX", "HUMAN_REVIEW"}
+_RESULT_DOMAIN_ARTIFACT_KINDS = {
+    "geometry_equivalence_result": {
+        "FCSTD",
+        "STEP",
+        "BREP",
+        "GEOMETRY_SNAPSHOT",
+        "TOPOLOGY_SNAPSHOT",
+        "COMPARISON_JSON",
+    },
+    "semantic_equivalence_result": {
+        "GEOMETRY_SNAPSHOT",
+        "TOPOLOGY_SNAPSHOT",
+        "COMPARISON_JSON",
+    },
+    "ui_state_result": {"UI_SNAPSHOT", "COMPARISON_JSON"},
+    "pytest_result": {"JUNIT", "JSON", "TEXT"},
+    "validator_result": {"VALIDATOR"},
+    "scientific_experiment_result": {"JSON", "TEXT", "OTHER", "JUNIT"},
+    "human_inspection_result": {"HUMAN_REVIEW"},
+}
 _EXPECTED_HISTORY_ROLES = {
     "failure_artifact_ids": "FAILURE",
     "mismatch_artifact_ids": "MISMATCH",
@@ -302,12 +322,48 @@ def _result_findings(request: Mapping[str, Any]) -> list[PolicyFinding]:
     artifact_by_id = {
         artifact["artifact_id"]: artifact for artifact in request["source"]["allowlist"]
     }
-    for result in request["results"].values():
-        for artifact_id in result["evidence_artifact_ids"]:
+    by_domain: dict[str, set[str]] = {}
+    for domain, result in request["results"].items():
+        artifact_ids = result["evidence_artifact_ids"]
+        by_domain[domain] = set(artifact_ids)
+        for artifact_id in artifact_ids:
             if artifact_id not in artifact_by_id:
                 findings.append(
-                    PolicyFinding("EVIDENCE_REFERENCE_MISSING", "Result references an artifact outside the allowlist", artifact_id)
+                    PolicyFinding(
+                        "EVIDENCE_REFERENCE_MISSING",
+                        "Result references an artifact outside the allowlist",
+                        artifact_id,
+                    )
                 )
+                continue
+            allowed_kinds = _RESULT_DOMAIN_ARTIFACT_KINDS.get(domain)
+            if allowed_kinds is None:
+                continue
+            kind = artifact_by_id[artifact_id]["kind"]
+            if kind not in allowed_kinds:
+                findings.append(
+                    PolicyFinding(
+                        "RESULT_EVIDENCE_MISMATCH",
+                        f"{domain} may only reference {sorted(allowed_kinds)} artifacts",
+                        artifact_id,
+                    )
+                )
+
+    for artifact_id in artifact_by_id:
+        referenced_domains = [
+            domain
+            for domain, evidence_ids in by_domain.items()
+            if artifact_id in evidence_ids and domain in _RESULT_DOMAIN_ARTIFACT_KINDS
+        ]
+        if len(referenced_domains) > 1:
+            findings.append(
+                PolicyFinding(
+                    "RESULT_EVIDENCE_DOMAIN_OVERLAP",
+                    "One evidence artifact is used in multiple result domains",
+                    artifact_id,
+                )
+            )
+
     for value in _all_strings(request):
         lowered = value.lower()
         if value == _SAFE_SHA_ROLE:
