@@ -89,3 +89,16 @@ They were not deleted. `ARCHIVABLE` is a custody state only and does not overrid
 - Self-contained Human Review validation: `PASS` (9/9 links, checksums pass).
 - Branch DAG: complete; numbering is not ancestry, 03A packaging is not inherited.
 - Worktree custody: no deletions; 06A/06C/06D `ARCHIVABLE`, all others retained.
+
+## Follow-up project governance — not implemented in this phase
+
+A separate window/branch should design and implement project-level evidence placement and custody rules:
+
+- `AGENTS.md` should define mandatory evidence placement, custody, and lifecycle policy.
+- Every Goal should have a project-tracked manifest and stable artifact URI connecting Goal → commit → input → output → validation → review.
+- `outputs/` and `work/` should be staging/debug locations only and must never be the sole evidence copy.
+- A script/CI gate should validate manifest completeness, source implementation commit, public-safe paths, stable artifact URIs, integrity metadata, and the required independent-copy count.
+- Chat/task history remains `CHAT` provenance and cannot replace a project artifact or be upgraded to a current geometry PASS.
+- Cross-version CAD equivalence should use a separately designed semantic snapshot plus explicit unit-bearing tolerance comparisons; serialization hashes remain byte-integrity metadata only.
+
+This future capability was intentionally not hand-built into the P0 preservation pass and requires its own scoped design and implementation task.

@@ -22,6 +22,8 @@ A passing pytest result does not imply a passing scientific experiment or comple
 
 Historical execution fields are never inferred from file modification times, chat context, directory names, or adjacent commits. Unknown values remain JSON `null` with confidence `U`.
 
+Chat/task records may be retained as `CHAT` provenance, but they do not replace a project artifact and are never promoted to a current geometry PASS.
+
 ## Public and private records
 
 Public files use repository-relative paths, Release asset names, stable artifact IDs, GitHub URIs, and SHA-256 values. They must not contain usernames, Codex task paths, secrets, environment-variable values, or private absolute paths.

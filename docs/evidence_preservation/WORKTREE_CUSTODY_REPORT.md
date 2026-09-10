@@ -30,7 +30,7 @@ No worktree was deleted, moved, cleaned, or rewritten in this preservation phase
 |---|---|---|
 | repository checkout / `docs/contact-benchmark-design` | `NOT_ARCHIVABLE` | active checkout with pre-existing ignored/untracked work custody; intentionally untouched |
 | DOC01 / `docs/geometry-portability-playbook` | `NOT_ARCHIVABLE` | outside this Release scope and not inherited by 06A–06D |
-| preservation / `chore/p0-research-evidence-preservation` | `ACTIVE` | contains this report/manifests until committed and pushed |
+| preservation / `chore/p0-research-evidence-preservation` | `ACTIVE_RETAIN` | report/manifests committed; worktree remains the custody control checkout |
 | policy / `policy/human-inspection-deliverables` | `BLOCKED_ACTIVE` | cherry-pick conflict intentionally preserved; no PR |
 
 06A, 06C, and 06D meet `ARCHIVABLE` evidence conditions, but remain present because this phase explicitly prohibits worktree deletion.
