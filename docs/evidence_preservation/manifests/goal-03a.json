@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "03A",
+  "identity": {
+    "branch": {
+      "value": "feat/contact-canonical-planar-dimensions",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "a1fc48b7efbd7f21c227b8da36aa5542b9f130b7",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "bd831be5664dda92b9d9d0e3dba71d941fce0090",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A01-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A01/fixture.step",
+      "sha256": "112f3297dcf60dfd20ba528e14b3a70dc24b4af468e15dc06ee24fe48a9f469f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A02-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A02/fixture.step",
+      "sha256": "6459fa9c35d8e2e157d359eaff6fece9a918cfb72b838be5dd68fee94b6883fc",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A03-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A03/fixture.step",
+      "sha256": "d39f5b4ac8402bd490bf22c4cba433a257e143e70a1910ab87cb8b9855c1d969",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A04-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A04/fixture.step",
+      "sha256": "b64af9f97961f688f6b0b1166d6f4935ce42019b717f8024cc14a47d95f714b1",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A05-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A05/fixture.step",
+      "sha256": "84bf546a231ac53224f12105ac155a59a979e955af5f3f98c070199df78b8664",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A06-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A06/fixture.step",
+      "sha256": "5ea3edccbcc3445c6e75b08f961b1b81297b3c2fc1a8685fb50833e0bf73c573",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "unrecovered",
+      "value": null,
+      "unit": null,
+      "role": null,
+      "source": null,
+      "confidence": "U"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-03a-junit-unrecovered",
+      "kind": "JUNIT",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical JUnit not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-03a-validator-unrecovered",
+      "kind": "VALIDATOR",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical validator output not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-03a-geometry-unrecovered",
+      "kind": "GEOMETRY",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical STEP/BREP/FCStd output not present in P0 custody sources",
+      "confidence": "U"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": null,
+        "confidence": "U",
+        "source": ""
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "scientific_experiment": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "No P0 canonical output custody set was selected for 03A.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": null,
+    "target_commit": null,
+    "status": "NOT_IN_P0_RELEASE_SCOPE",
+    "reason": "Manifest only; 03A packaging is a sibling history that was not inherited by 03B-06D.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  }
+}

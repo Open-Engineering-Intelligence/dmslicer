@@ -1,0 +1,1489 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "06D",
+  "identity": {
+    "branch": {
+      "value": "feat/orientation-invariant-planar-correction",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "b42ba9e7b6efc6dd5a9dd9f7b1584b5a89066f8b",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "b7054f303896aa4a0762248a0b54686d8e733ead",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": "b42ba9e7b6efc6dd5a9dd9f7b1584b5a89066f8b",
+      "confidence": "GH",
+      "source": "local Git object; policy only"
+    },
+    "parent_baseline": {
+      "value": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": "b7054f303896aa4a0762248a0b54686d8e733ead",
+      "confidence": "CHAT",
+      "source": "P0 preservation authorization: bind 06D geometry evidence to b7054f3; b42ba9e is policy only"
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D01-base_inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D01/base_inputs.step",
+      "sha256": "ab05a176d6788290398670a491af21eee17a29355eb62c57e45e27dac40e964f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D01-inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D01/inputs.step",
+      "sha256": "69e87c59350a770e08853794bc612673b89a338fe2d5c238c20983d989bef72e",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D02-base_inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D02/base_inputs.step",
+      "sha256": "eec8c032422ef1d3aa12c9c85eacbbb81889cf98674b6c9f2c3bb8277462c434",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D02-inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D02/inputs.step",
+      "sha256": "9bab430d3809b07f8e92f6b290f3f1f0796f54e83f6c1eadf924f951c0a398bf",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D03-base_inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D03/base_inputs.step",
+      "sha256": "829a3ce330d1e979583909fb6fa470b3bf8bf4a0f2dd5f010910b4fc47d14e14",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-orientation_invariant_planar_correction_06d-D03-inputs.step",
+      "path": "benchmarks/orientation_invariant_planar_correction_06d/D03/inputs.step",
+      "sha256": "9007a2bcdf244c8f4306b10865da77f4b6673e6719fddd32de2639c37c27b4fb",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": "2026-09-10T07:39:53.922809+08:00",
+    "confidence": "L"
+  },
+  "tolerances": [
+    {
+      "name": "linear_epsilon",
+      "value": 1E-07,
+      "unit": "mm",
+      "role": "geometry validation",
+      "source": "benchmarks/orientation_invariant_planar_correction_06d/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "area_epsilon",
+      "value": 1E-08,
+      "unit": "mm^2",
+      "role": "geometry validation",
+      "source": "benchmarks/orientation_invariant_planar_correction_06d/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "volume_epsilon",
+      "value": 1E-06,
+      "unit": "mm^3",
+      "role": "geometry validation",
+      "source": "benchmarks/orientation_invariant_planar_correction_06d/manifest.json",
+      "confidence": "L"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-06d-custody-0001",
+      "kind": "HUMAN_REVIEW",
+      "path": "outputs/orientation_invariant_planar_correction_06d/06D_HUMAN_REVIEW.zip",
+      "release_asset_name": null,
+      "sha256": "afda668b0164a9dae219f008bc3726ca2cc702568ffdf62a2ff57ff48c3365d6",
+      "size_bytes": 1677,
+      "validation_role": "historical human-review packaging evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0002",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "f5406d00ae6aae155b22b3ebd51d80d4632bd4a7976a0f213c4894e36c3a4d3f",
+      "size_bytes": 1806,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0003",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "4099d2d0064eccd4a107afcb8bc7d705a46a96eba2e52a2745858cc056adfb3d",
+      "size_bytes": 1815,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0004",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/common.brep",
+      "release_asset_name": null,
+      "sha256": "43a8fb2ebad62d703669109ee373848a970d3a5b8bd4f381517173263a70c395",
+      "size_bytes": 2839,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0005",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/components.json",
+      "release_asset_name": null,
+      "sha256": "2f92921242f2ffbecabd32137b36b97d6155caff29b9d54d1ace1b4b282da011",
+      "size_bytes": 5029,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0006",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "70bdf41f1f114ff9cef9bde04a2b6acb4d8ff2cac6afdafed23374e174524409",
+      "size_bytes": 25126,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0007",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "e307e3cf0cafadfe834fa098cdd98d29376c81921b19dca751890e13ffa85bcc",
+      "size_bytes": 537,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0008",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/facesets.json",
+      "release_asset_name": null,
+      "sha256": "8f167e88f4b652c1112b0666a305f27a867ac53715e68b78c32b39e28a91a840",
+      "size_bytes": 27515,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0009",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/fused.step",
+      "release_asset_name": null,
+      "sha256": "2be7aaf036d19c77be5e43824f574fc372fe8e3f947dd4a6dadd75dd2b0e9a75",
+      "size_bytes": 21284,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/operation.json",
+      "release_asset_name": null,
+      "sha256": "009ac8f53ee3e27ec49bd413f472d0e4a2a2d23d9e40821e87bb2228d9f98170",
+      "size_bytes": 76124,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0011",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/patches.json",
+      "release_asset_name": null,
+      "sha256": "a2808a56e52e64fbc7f95cc7db143c9f87a96d268dc10ab1d95ad57c99cf6e32",
+      "size_bytes": 3747,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0012",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/provenance.json",
+      "release_asset_name": null,
+      "sha256": "9949d98ae9fb9aaa3c78c73a06bb47a6eeacaf4d859ba313d3ff81293566bd54",
+      "size_bytes": 13905,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0013",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "b68a5080f51be1caf2fb7bf892fbd21f026e443e1cbcdd9ce961575082b65d0b",
+      "size_bytes": 3433,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0014",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/side_2_remaining_EMPTY.json",
+      "release_asset_name": null,
+      "sha256": "316369d3ac0aad8df4fccdf850a7579aee8ac77d861ea56329d150985a371926",
+      "size_bytes": 135,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0015",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06c/P10/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d79773296abe0b3f2b26e85899f71c891f33ad25b1a4cb94386abf6bccbdd19",
+      "size_bytes": 129,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0016",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "b1aa804935b866f09c59ae67199512cd296274ad397a0fb31ee819a5337818e9",
+      "size_bytes": 1806,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0017",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "d21e5fc753a88ff2e2adb09ce930b01b98999b183a00d55019bbacd125d7a6d1",
+      "size_bytes": 1815,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0018",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/common.brep",
+      "release_asset_name": null,
+      "sha256": "62217e911ba08a7c01ad91b8e25c7113e4a0d5fc2b16521e9be6498e80109fbe",
+      "size_bytes": 2839,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0019",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "24479ad255caf04b5d2904a19b0a1cd33f7a6762dc652f458f98154ec7926af0",
+      "size_bytes": 25126,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0020",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/fused.step",
+      "release_asset_name": null,
+      "sha256": "536aac851c02b019fc6b4c331e9f00959c67b71f4a98ace6f8c59f977801d564",
+      "size_bytes": 21284,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0021",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/06d/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "ca52811d98ace6275334ceded1e904b984832daa1f96fc13091c55c5775aee33",
+      "size_bytes": 3433,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0022",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/plus_z/plus_z_compatibility.json",
+      "release_asset_name": null,
+      "sha256": "101eca8fa1732bfee857b210858128b609295937787fe595dd0fc9f39d22cda6",
+      "size_bytes": 8536,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0023",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/reference_direction/reference_direction_controls.json",
+      "release_asset_name": null,
+      "sha256": "3a3d9c8606ca6550a30dd5969d8ad96bae5dd0683a13bb6214cd4f7814eace8f",
+      "size_bytes": 908,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0024",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base_inputs.step",
+      "release_asset_name": null,
+      "sha256": "024f328cc18b59d8d910181cc65c10ccb400ff039fdee47e237c6f6c57024375",
+      "size_bytes": 15440,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0025",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "7ce5c2d460c7eb50a71bafab69c8a98192b300ba972ce20449b98a8650abd717",
+      "size_bytes": 1606,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0026",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/common.brep",
+      "release_asset_name": null,
+      "sha256": "b3a523819e67c33221994465e023f053fe71a115f84b1a2ab4fbf40f67920c3d",
+      "size_bytes": 1627,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0027",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "e0032d1a9fdfa3dd83db5753ff7f5178cb7ada44eeeb419564ce514d2495cb8d",
+      "size_bytes": 15437,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0028",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/fused.step",
+      "release_asset_name": null,
+      "sha256": "d9f5adab8df3b1cbf468b9a176f7aa17e625f38ee45ad2792fb8e3795d224270",
+      "size_bytes": 11598,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0029",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a0f97f3d976d7b7b99124621db246ed78884172c73e446c24bf9af1361684a06",
+      "size_bytes": 1621,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0030",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/base/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a78fc5be742b2455792fc710fd019bc53ed8c6d64f96a3615fcd137e99031104",
+      "size_bytes": 1793,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0031",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated_inputs.step",
+      "release_asset_name": null,
+      "sha256": "7d7c7dffc8c2f107d832a478a104eee0f0419485664c807b941dd7b05b9083b5",
+      "size_bytes": 15458,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0032",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "a424434a1aaf780a5132613ee7f4c3532cf29505a6bcd7df0770849482889ebc",
+      "size_bytes": 1628,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0033",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/common.brep",
+      "release_asset_name": null,
+      "sha256": "1ddb9b055654594fbf70f687fd13d780443c824d154c6a55828d3819c71245f8",
+      "size_bytes": 1649,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0034",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "8cdd900331c1d7e972d4518e5df05226aa597c822f1fca566cab06337f822952",
+      "size_bytes": 15452,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0035",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/fused.step",
+      "release_asset_name": null,
+      "sha256": "bfdfb1ecad21a82594c2c7f919e2186b2b3af0734ee3a1e4ff9ea1488a22d93f",
+      "size_bytes": 12057,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0036",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a0902eb8a390260869921de2666c86b5bbce501ddfe088cab6d3ab40cd48a455",
+      "size_bytes": 1632,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0037",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translated/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "1471f31bbd97ca67c4a8debaeb0589d92388217a6f62a20cea0480940471a616",
+      "size_bytes": 1815,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0038",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/controls/translation_only_control/translation_only_covariance.json",
+      "release_asset_name": null,
+      "sha256": "741cf517e56a5315dbc564d282d67c1ec3309a487bdb3a9785f5ab1b6afe93e4",
+      "size_bytes": 380,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0039",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "4b124a0bdd74a96a2e811f2f4b941af8a67fa624e99dded67baf0a25d3cab71e",
+      "size_bytes": 1864,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0040",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/common.brep",
+      "release_asset_name": null,
+      "sha256": "a462f091fbdaa147d88a8f022d07fd1c94f67f3bcb2ca990435240619396e09c",
+      "size_bytes": 1885,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0041",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/components.json",
+      "release_asset_name": null,
+      "sha256": "d4d6e4449f1ffeec2b8781439b9f1db945ac3149bb4b628a6bb97f55fecc427e",
+      "size_bytes": 2995,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0042",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "8ee75974cc33c5b77d515446326c924621f04fa8d1bf89f41f79c03bb883354d",
+      "size_bytes": 15564,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0043",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/covariance.json",
+      "release_asset_name": null,
+      "sha256": "960d1d7cb1ed1b8500dcfcc15206bcc3020718bab68a637ab27d528d7c99017d",
+      "size_bytes": 9659,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0044",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/facesets.json",
+      "release_asset_name": null,
+      "sha256": "6fab4120c85333c32c4127f7268f8f8dc77e3b7417b78e3da2a11c9d3317ef64",
+      "size_bytes": 20420,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0045",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/fused.step",
+      "release_asset_name": null,
+      "sha256": "9e3cf91ae98b6e856ad9a99f9cf77f9043c6a35d79162ba2f4466a44989dc036",
+      "size_bytes": 13441,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0046",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/operation_debug.20260910-073811.FCBak",
+      "release_asset_name": null,
+      "sha256": "fbb82c690871d9f7d3000c00522b8509466e964cd9f9e4891518b1d09493b32b",
+      "size_bytes": 15666,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0047",
+      "kind": "FCStd",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "4b5395f68e9e5656bb46f37f660479dd44aced1861f9503d1aeb41099b38df01",
+      "size_bytes": 22960,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0048",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/operation.json",
+      "release_asset_name": null,
+      "sha256": "2dfd3f67383469c0e5ddb582fb41913d93f0f1bd58fc622b722f03e8fb165b4b",
+      "size_bytes": 62211,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0049",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/patches.json",
+      "release_asset_name": null,
+      "sha256": "bb0973a342f5bf4455ad0cd82875fc7886de048d8a5f5e13ab7634f5b44575a0",
+      "size_bytes": 2008,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0050",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/provenance.json",
+      "release_asset_name": null,
+      "sha256": "c8ba8dac7235a95eca06e66a010f1bf9b2ab3aec5a28bb00bb46d6ffe633cf1f",
+      "size_bytes": 11566,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0051",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "76f72329a331c7afd38ef8955d63f7bffc28ff6655829e31f6c1e67c415c0ab4",
+      "size_bytes": 270,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0052",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "007d8888fb3385b7833554c5368aaca72d916ea6c2d7cb4aaa2bc81466bcd8e1",
+      "size_bytes": 1821,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0053",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "715f547b2fffdf84fe7382790cb7a60da53dcea289577cc1154c17ea47cf25ee",
+      "size_bytes": 2047,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0054",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D01/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0055",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "cba2f1db9205864079a20a1c39644c98bad4c9302db5e8a0ced68fef2d30c3d3",
+      "size_bytes": 2153,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0056",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "bbc121c814e7a9da9a60def86b3dbb7fc379706ee05af750106f840b4198fe82",
+      "size_bytes": 2161,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0057",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/common.brep",
+      "release_asset_name": null,
+      "sha256": "d63a8182c20c78c972fccd937ffd2367d6a88dbe6e6f540522c41886f5d82eb1",
+      "size_bytes": 3482,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0058",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/components.json",
+      "release_asset_name": null,
+      "sha256": "ff26217f219e115d0acb2992bcfbeb513ef5e6a3b6015b7c1f0110af4b54b9e5",
+      "size_bytes": 5880,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0059",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "259111ad1d60aadac9b66f496211bb16e64041585b24d25b9a3b6705e057252a",
+      "size_bytes": 25315,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0060",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/covariance.json",
+      "release_asset_name": null,
+      "sha256": "24e4e82049cace747fb94a26fc98bc33a492f74106e178e8a50c65e85db1046c",
+      "size_bytes": 9732,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0061",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/facesets.json",
+      "release_asset_name": null,
+      "sha256": "46a1c75c8545befcf5a9d5fbca900222bf539b457e88f78bcbdf23f71bb7dd84",
+      "size_bytes": 31788,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0062",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/fused.step",
+      "release_asset_name": null,
+      "sha256": "5108019ab134d31178a6cae240a157f80d3bb82f90b480079d55cdc778baaa7f",
+      "size_bytes": 28186,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0063",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/operation_debug.20260910-073823.FCBak",
+      "release_asset_name": null,
+      "sha256": "f11389f4566d198b8b37103147a07bef31c52f4483c268445bb35715a800243a",
+      "size_bytes": 23780,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0064",
+      "kind": "FCStd",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "097dd117cae731bb4b2d875952d48c304137b2c6a7b6bce0ca50cfe941cf0e88",
+      "size_bytes": 31612,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0065",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/operation.json",
+      "release_asset_name": null,
+      "sha256": "c6f118823ab8da93d0681371231feccd753c775676ceb89644a83e26f27625f1",
+      "size_bytes": 87373,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0066",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/patches.json",
+      "release_asset_name": null,
+      "sha256": "17e2d0a9612fdd2f01455cd20e57acdf9d23ab0795efdb471906e2bec7c74519",
+      "size_bytes": 4148,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0067",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/provenance.json",
+      "release_asset_name": null,
+      "sha256": "21d08e3412228bc8f589966e30f5a78e2be45624235a1c4ce272032b49d3e066",
+      "size_bytes": 14770,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0068",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "76f72329a331c7afd38ef8955d63f7bffc28ff6655829e31f6c1e67c415c0ab4",
+      "size_bytes": 270,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0069",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "9d7562fac405e01cbb33f66589899a9fa486ff313aa9ed4f45a0e98a90f30cfa",
+      "size_bytes": 4076,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0070",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D02/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0071",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "95ec24da69f04c661a2b118923aea5e39e823aee87841c1edec7d474f42618da",
+      "size_bytes": 1702,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0072",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/common.brep",
+      "release_asset_name": null,
+      "sha256": "461defa256a845583546c0fb1c70faf3e4d3384797e14b825e02374f4f879064",
+      "size_bytes": 1721,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0073",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/components.json",
+      "release_asset_name": null,
+      "sha256": "b8245a0578b32827afd274085df25c0efda05c92dd430206378348255e35c21c",
+      "size_bytes": 4215,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0074",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "aa3ee65317b810180ac91be31a890c77a4d8e7abc5b1e46e274c66acccf8a0b8",
+      "size_bytes": 13695,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0075",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/covariance.json",
+      "release_asset_name": null,
+      "sha256": "2094713f211a74c3675e753e5a7d3c975a551fa0590d5e2c2183775475053771",
+      "size_bytes": 9969,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0076",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/facesets.json",
+      "release_asset_name": null,
+      "sha256": "3d1f1ea5cbc301d685d6bd4c21cfd373015e9310db0acea236ec83b620d11ae8",
+      "size_bytes": 22444,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0077",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/fused.step",
+      "release_asset_name": null,
+      "sha256": "8052182e50a2cc1b181b822bc4be9e08b639f33073e15a85accb3ba6c87d0fce",
+      "size_bytes": 13372,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0078",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/operation_debug.20260910-073835.FCBak",
+      "release_asset_name": null,
+      "sha256": "d36051c3bf355300e95f4752ff9a18262aa999c874bf0e5ad0c760845108f850",
+      "size_bytes": 17163,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0079",
+      "kind": "FCStd",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "91b08e706f9ae29a8940e393b5b7a43cde9fff5600e6d69f44083ecfb240aeeb",
+      "size_bytes": 25028,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0080",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/operation.json",
+      "release_asset_name": null,
+      "sha256": "0fa4cfedd3792a5558d8ba21a6fbd218975351520af70de885a3d7bc058a0308",
+      "size_bytes": 69978,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0081",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/patches.json",
+      "release_asset_name": null,
+      "sha256": "e4e4027d0b7b3a7f07acc1da38747cb34bca80a7aea0a1093e447cd22977eb21",
+      "size_bytes": 2447,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0082",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/provenance.json",
+      "release_asset_name": null,
+      "sha256": "8ac43ad43ce97dee078418c9b93034c0ad0c4f467a40a2bba3821f3d71c15a8c",
+      "size_bytes": 13189,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0083",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "76f72329a331c7afd38ef8955d63f7bffc28ff6655829e31f6c1e67c415c0ab4",
+      "size_bytes": 270,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0084",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "33f9df326fb979089d7423b45083350b9ac19aa0e983f9a850e1f818f76d9dbb",
+      "size_bytes": 2402,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0085",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/D03/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0086",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/full_pytest.log",
+      "release_asset_name": null,
+      "sha256": "78a51aee3dd8dcaf6ceca1e1889f9a7ac390c1dfa94b17e70a1504276d384a83",
+      "size_bytes": 482,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0087",
+      "kind": "JUNIT",
+      "path": "outputs/orientation_invariant_planar_correction_06d/full_pytest.xml",
+      "release_asset_name": null,
+      "sha256": "44b68fd05cd2f7394607c1de9b36a6022969d47846d78c18f439921673bbadd4",
+      "size_bytes": 46603,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0088",
+      "kind": "HUMAN_REVIEW",
+      "path": "outputs/orientation_invariant_planar_correction_06d/HUMAN_REVIEW/README.md",
+      "release_asset_name": null,
+      "sha256": "dc1f04302709e903a42ba2f309c82ceb22f7f33823a377ac988bf5f06aa4f615",
+      "size_bytes": 813,
+      "validation_role": "historical human-review packaging evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0089",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/orientation_invariant_planar_correction_06d/HUMAN_REVIEW/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "3eaf6dee59c402f05b536dc222ddc9aed6609c4ca6a5a8bcca48023c800f9e19",
+      "size_bytes": 3942,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0090",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "4b124a0bdd74a96a2e811f2f4b941af8a67fa624e99dded67baf0a25d3cab71e",
+      "size_bytes": 1864,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0091",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/common.brep",
+      "release_asset_name": null,
+      "sha256": "a462f091fbdaa147d88a8f022d07fd1c94f67f3bcb2ca990435240619396e09c",
+      "size_bytes": 1885,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0092",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/components.json",
+      "release_asset_name": null,
+      "sha256": "d4d6e4449f1ffeec2b8781439b9f1db945ac3149bb4b628a6bb97f55fecc427e",
+      "size_bytes": 2995,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0093",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "ee0117f15a5d754eca7ba3d6e37e229f67ff87eedb7ca8ce72b1b879f02479d2",
+      "size_bytes": 15564,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0094",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/covariance.json",
+      "release_asset_name": null,
+      "sha256": "960d1d7cb1ed1b8500dcfcc15206bcc3020718bab68a637ab27d528d7c99017d",
+      "size_bytes": 9659,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0095",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/facesets.json",
+      "release_asset_name": null,
+      "sha256": "6fab4120c85333c32c4127f7268f8f8dc77e3b7417b78e3da2a11c9d3317ef64",
+      "size_bytes": 20420,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0096",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/fused.step",
+      "release_asset_name": null,
+      "sha256": "23bb315e07adc937e99a2788b2133914f8c611278c5faf8ffb04e794b37dd6c0",
+      "size_bytes": 13441,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0097",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/operation.json",
+      "release_asset_name": null,
+      "sha256": "3ae85b3c02d9ac38cac3066680d522c7205f7cafcaa822f7e8f36640bf62de37",
+      "size_bytes": 60930,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0098",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/patches.json",
+      "release_asset_name": null,
+      "sha256": "bb0973a342f5bf4455ad0cd82875fc7886de048d8a5f5e13ab7634f5b44575a0",
+      "size_bytes": 2008,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0099",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/provenance.json",
+      "release_asset_name": null,
+      "sha256": "c8ba8dac7235a95eca06e66a010f1bf9b2ab3aec5a28bb00bb46d6ffe633cf1f",
+      "size_bytes": 11566,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0100",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "007d8888fb3385b7833554c5368aaca72d916ea6c2d7cb4aaa2bc81466bcd8e1",
+      "size_bytes": 1821,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0101",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "715f547b2fffdf84fe7382790cb7a60da53dcea289577cc1154c17ea47cf25ee",
+      "size_bytes": 2047,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0102",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D01/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0103",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "cba2f1db9205864079a20a1c39644c98bad4c9302db5e8a0ced68fef2d30c3d3",
+      "size_bytes": 2153,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0104",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "bbc121c814e7a9da9a60def86b3dbb7fc379706ee05af750106f840b4198fe82",
+      "size_bytes": 2161,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0105",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/common.brep",
+      "release_asset_name": null,
+      "sha256": "d63a8182c20c78c972fccd937ffd2367d6a88dbe6e6f540522c41886f5d82eb1",
+      "size_bytes": 3482,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0106",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/components.json",
+      "release_asset_name": null,
+      "sha256": "ff26217f219e115d0acb2992bcfbeb513ef5e6a3b6015b7c1f0110af4b54b9e5",
+      "size_bytes": 5880,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0107",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "7491f722399738bbee4f499212e355ab859f06b113aef108cb77343c279ea687",
+      "size_bytes": 25315,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0108",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/covariance.json",
+      "release_asset_name": null,
+      "sha256": "24e4e82049cace747fb94a26fc98bc33a492f74106e178e8a50c65e85db1046c",
+      "size_bytes": 9732,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0109",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/facesets.json",
+      "release_asset_name": null,
+      "sha256": "46a1c75c8545befcf5a9d5fbca900222bf539b457e88f78bcbdf23f71bb7dd84",
+      "size_bytes": 31788,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0110",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/fused.step",
+      "release_asset_name": null,
+      "sha256": "2b23cce97fbe728eb09a17090e07edf562ce11eaf2eb2db325d1868de779cfd3",
+      "size_bytes": 28186,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0111",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/operation.json",
+      "release_asset_name": null,
+      "sha256": "59504b0283136aaa9611eeea98f3a0c884280e8b558e40b1aa175897c85d2b24",
+      "size_bytes": 86045,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0112",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/patches.json",
+      "release_asset_name": null,
+      "sha256": "17e2d0a9612fdd2f01455cd20e57acdf9d23ab0795efdb471906e2bec7c74519",
+      "size_bytes": 4148,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0113",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/provenance.json",
+      "release_asset_name": null,
+      "sha256": "21d08e3412228bc8f589966e30f5a78e2be45624235a1c4ce272032b49d3e066",
+      "size_bytes": 14770,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0114",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "9d7562fac405e01cbb33f66589899a9fa486ff313aa9ed4f45a0e98a90f30cfa",
+      "size_bytes": 4076,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0115",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D02/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0116",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "95ec24da69f04c661a2b118923aea5e39e823aee87841c1edec7d474f42618da",
+      "size_bytes": 1702,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0117",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/common.brep",
+      "release_asset_name": null,
+      "sha256": "461defa256a845583546c0fb1c70faf3e4d3384797e14b825e02374f4f879064",
+      "size_bytes": 1721,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0118",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/components.json",
+      "release_asset_name": null,
+      "sha256": "b8245a0578b32827afd274085df25c0efda05c92dd430206378348255e35c21c",
+      "size_bytes": 4215,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0119",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "0c175f16b50044a82567ea24963154c1be847d42dc523138172c0aaa108833d6",
+      "size_bytes": 13695,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0120",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/covariance.json",
+      "release_asset_name": null,
+      "sha256": "2094713f211a74c3675e753e5a7d3c975a551fa0590d5e2c2183775475053771",
+      "size_bytes": 9969,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0121",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/facesets.json",
+      "release_asset_name": null,
+      "sha256": "3d1f1ea5cbc301d685d6bd4c21cfd373015e9310db0acea236ec83b620d11ae8",
+      "size_bytes": 22444,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0122",
+      "kind": "STEP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/fused.step",
+      "release_asset_name": null,
+      "sha256": "acf0d92764786e47389336bbb05ff9132c8bb7396e1d4e88883018edf44d2f5f",
+      "size_bytes": 13372,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0123",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/operation.json",
+      "release_asset_name": null,
+      "sha256": "5e6df1902744c05f5be0f5532ae06b7f018fd80fc5b3a744da22df83cd6d075d",
+      "size_bytes": 68604,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0124",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/patches.json",
+      "release_asset_name": null,
+      "sha256": "e4e4027d0b7b3a7f07acc1da38747cb34bca80a7aea0a1093e447cd22977eb21",
+      "size_bytes": 2447,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0125",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/provenance.json",
+      "release_asset_name": null,
+      "sha256": "8ac43ad43ce97dee078418c9b93034c0ad0c4f467a40a2bba3821f3d71c15a8c",
+      "size_bytes": 13189,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0126",
+      "kind": "BREP",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "33f9df326fb979089d7423b45083350b9ac19aa0e983f9a850e1f818f76d9dbb",
+      "size_bytes": 2402,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0127",
+      "kind": "VALIDATOR",
+      "path": "outputs/orientation_invariant_planar_correction_06d/repeatability/second_process/D03/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0128",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/orientation_invariant_planar_correction_06d/summary.json",
+      "release_asset_name": null,
+      "sha256": "709a606f9f29fdf5db8afb4bc9965e72874dc1b67bdc778d14acab46b40a26d6",
+      "size_bytes": 585,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06d-custody-0129",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/orientation_invariant_planar_correction_06d/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "86af622ef0d790f9f6eac1db3873cd0cb8a1c1f6aa8931befaa730dbf62ed14f",
+      "size_bytes": 3940,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [
+      {
+        "value": "b7054f303896aa4a0762248a0b54686d8e733ead",
+        "confidence": "GH",
+        "source": "Git commit"
+      }
+    ],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": [
+      {
+        "value": "Historical closeout records two important reviewer findings as fixed and zero unresolved findings; exact wording was not recoverable, so it is not reconstructed here.",
+        "confidence": "CHAT",
+        "source": "historical task closeout"
+      }
+    ]
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": "B-rep validity/closure, surface and topology checks, minimum distance, common/area comparison, and bidirectional cut residual checks with explicit tolerances.",
+        "confidence": "L",
+        "source": "Goal validator implementation and artifact evidence"
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": "283 passed, 0 failures, 0 errors, 0 skipped; software result only.",
+      "confidence": "L",
+      "source": "preserved JUnit"
+    },
+    "scientific_experiment": {
+      "value": "Orientation-invariant scenario and controls are preserved; no scientific PASS is inferred from pytest.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": "Historical HUMAN_REVIEW package and VIEW_INDEX are preserved; manual inspection outcome remains separate.",
+      "confidence": "L",
+      "source": "preserved review package/index; not inferred from pytest"
+    },
+    "provenance": {
+      "value": "PUBLISHED_GATE_READY after self-contained v2 package and sensitivity validation; policy commit excluded.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-06d-evidence-b7054f3",
+    "target_commit": "b7054f303896aa4a0762248a0b54686d8e733ead",
+    "status": "PUBLISHED",
+    "reason": "Published after the upload gate: the authorized geometry implementation target is b7054f3; policy commit b42ba9e is excluded.",
+    "url": "https://github.com/Open-Engineering-Intelligence/dmslicer/releases/tag/goal-06d-evidence-b7054f3",
+    "supersedes": null,
+    "superseded_by": null
+  }
+}

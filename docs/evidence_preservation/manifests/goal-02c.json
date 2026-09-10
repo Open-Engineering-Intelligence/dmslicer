@@ -1,0 +1,371 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "02C",
+  "identity": {
+    "branch": {
+      "value": "fix/case01-foundation",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": "79f60fa",
+      "confidence": "L",
+      "source": "outputs/step_interface_case01/manifest.json"
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-interface_case01-case01.step",
+      "path": "benchmarks/interface_case01/case01.step",
+      "sha256": "1cd94489b4709e5292acd8df177950b9acc4c0372016eeefbf889f26170f84de",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": "1.1.1",
+      "confidence": "L",
+      "source": "preserved environment/diagnostic evidence"
+    },
+    "occt_version": {
+      "value": "7.8.1",
+      "confidence": "L",
+      "source": "preserved environment/diagnostic evidence"
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "unrecovered",
+      "value": null,
+      "unit": null,
+      "role": null,
+      "source": null,
+      "confidence": "U"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-02c-custody-0001",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/capability_probe.json",
+      "release_asset_name": null,
+      "sha256": "72552405adc79c0668963532a0c519df6e27b042f4a6fdd53c2d0d3c76969b95",
+      "size_bytes": 5181,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0002",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/interface_patches.json",
+      "release_asset_name": null,
+      "sha256": "4dae357594cff320d118af5004e26817b72ceecda4b9944c786db15d1331637e",
+      "size_bytes": 3168,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0003",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/interface_source_boundaries.json",
+      "release_asset_name": null,
+      "sha256": "5a5308c520774a2af0f98aaaf4a9dc7753d16441abc6666a63940c22cc4a3b04",
+      "size_bytes": 2539,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0004",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/manifest.json",
+      "release_asset_name": null,
+      "sha256": "bb5e3640aa5527916f05b96603bd663aba6f3dd7a344a82c853e1ba3c0071870",
+      "size_bytes": 5535,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0005",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/provenance.json",
+      "release_asset_name": null,
+      "sha256": "2123aba125fbb3f6124043664f5c73e28d0102e1ce243dbb6ba0dd9d65412c74",
+      "size_bytes": 3763,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0006",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/regions.json",
+      "release_asset_name": null,
+      "sha256": "23d23109dd4f4922c4b98a125d2331eee6ae0e6fa50e15030b387eedb8eb2621",
+      "size_bytes": 18156,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0007",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/relations.json",
+      "release_asset_name": null,
+      "sha256": "509161ef46ca71d3a11b4a8760c42e53c3c1e3f216cc00d8e2068edc55f77151",
+      "size_bytes": 8203,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0008",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/interface_patches.json",
+      "release_asset_name": null,
+      "sha256": "4dae357594cff320d118af5004e26817b72ceecda4b9944c786db15d1331637e",
+      "size_bytes": 3168,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0009",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/interface_source_boundaries.json",
+      "release_asset_name": null,
+      "sha256": "5a5308c520774a2af0f98aaaf4a9dc7753d16441abc6666a63940c22cc4a3b04",
+      "size_bytes": 2539,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/manifest.json",
+      "release_asset_name": null,
+      "sha256": "ed5044df6d49df7706d150c10c857005b8f78d9bf58a028b208a6d59755ccd6e",
+      "size_bytes": 5535,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0011",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/provenance.json",
+      "release_asset_name": null,
+      "sha256": "2123aba125fbb3f6124043664f5c73e28d0102e1ce243dbb6ba0dd9d65412c74",
+      "size_bytes": 3763,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0012",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/regions.json",
+      "release_asset_name": null,
+      "sha256": "23d23109dd4f4922c4b98a125d2331eee6ae0e6fa50e15030b387eedb8eb2621",
+      "size_bytes": 18156,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0013",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_1/relations.json",
+      "release_asset_name": null,
+      "sha256": "509161ef46ca71d3a11b4a8760c42e53c3c1e3f216cc00d8e2068edc55f77151",
+      "size_bytes": 8203,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0014",
+      "kind": "VALIDATOR",
+      "path": "outputs/step_interface_case01/repeatability_run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "9dde992f20f6201626a680b123034b4ec66a6062caa7106f70a9335a82aeae6e",
+      "size_bytes": 172,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0015",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/interface_patches.json",
+      "release_asset_name": null,
+      "sha256": "4dae357594cff320d118af5004e26817b72ceecda4b9944c786db15d1331637e",
+      "size_bytes": 3168,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0016",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/interface_source_boundaries.json",
+      "release_asset_name": null,
+      "sha256": "5a5308c520774a2af0f98aaaf4a9dc7753d16441abc6666a63940c22cc4a3b04",
+      "size_bytes": 2539,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0017",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/manifest.json",
+      "release_asset_name": null,
+      "sha256": "0fd7235e01c380138ec435caab785bec32c01780590bba248e282eec1df4a11a",
+      "size_bytes": 5535,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0018",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/provenance.json",
+      "release_asset_name": null,
+      "sha256": "2123aba125fbb3f6124043664f5c73e28d0102e1ce243dbb6ba0dd9d65412c74",
+      "size_bytes": 3763,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0019",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/regions.json",
+      "release_asset_name": null,
+      "sha256": "23d23109dd4f4922c4b98a125d2331eee6ae0e6fa50e15030b387eedb8eb2621",
+      "size_bytes": 18156,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0020",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability_run_2/relations.json",
+      "release_asset_name": null,
+      "sha256": "509161ef46ca71d3a11b4a8760c42e53c3c1e3f216cc00d8e2068edc55f77151",
+      "size_bytes": 8203,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0021",
+      "kind": "VALIDATOR",
+      "path": "outputs/step_interface_case01/repeatability_run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "9dde992f20f6201626a680b123034b4ec66a6062caa7106f70a9335a82aeae6e",
+      "size_bytes": 172,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0022",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/step_interface_case01/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "090f86d164b971005bff93f40fc7ded8fb239600489f5459bc8cf35da1fe8e5a",
+      "size_bytes": 15308,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-02c-custody-0023",
+      "kind": "VALIDATOR",
+      "path": "outputs/step_interface_case01/validation.json",
+      "release_asset_name": null,
+      "sha256": "9dde992f20f6201626a680b123034b4ec66a6062caa7106f70a9335a82aeae6e",
+      "size_bytes": 172,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": null,
+        "confidence": "U",
+        "source": ""
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "scientific_experiment": {
+      "value": "Historical evidence bundle preserved; final-HEAD scientific result is not established by this bundle.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "GAP: final branch tip and preserved evidence bundle are not bound.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-02c-evidence-b646027",
+    "target_commit": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+    "status": "RELEASE_BLOCKED_PROVENANCE",
+    "reason": "The preserved bundle embeds Git HEAD 79f60fa, so it cannot be rebound to final branch tip b646027.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  }
+}

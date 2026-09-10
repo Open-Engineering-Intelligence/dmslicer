@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Open-Engineering-Intelligence/dmslicer/blob/main/docs/evidence_preservation/evidence_manifest.schema.json",
+  "title": "DM-Slicer Goal Evidence Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "goal_id",
+    "identity",
+    "inputs",
+    "environment",
+    "execution",
+    "tolerances",
+    "artifacts",
+    "history",
+    "geometry_validation",
+    "results",
+    "release"
+  ],
+  "$defs": {
+    "confidence": {
+      "type": "string",
+      "enum": ["GH", "L", "CHAT", "U"]
+    },
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "nullableInteger": {
+      "type": ["integer", "null"]
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "confidence", "source"],
+      "properties": {
+        "value": {},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "source": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "kind",
+        "path",
+        "release_asset_name",
+        "sha256",
+        "size_bytes",
+        "validation_role",
+        "confidence"
+      ],
+      "properties": {
+        "artifact_id": {"type": "string"},
+        "kind": {"type": "string"},
+        "path": {"$ref": "#/$defs/nullableString"},
+        "release_asset_name": {"$ref": "#/$defs/nullableString"},
+        "sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {"$ref": "#/$defs/nullableInteger"},
+        "validation_role": {"type": "string"},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "goal_id": {"type": "string", "pattern": "^(02C|03A|03B|03C|04A|04B|05A|05B|05C|06A|06B|06C|06D)$"},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "branch",
+        "branch_tip",
+        "implementation_commit",
+        "policy_commit",
+        "parent_baseline",
+        "merge_base_main",
+        "merge_base_previous_goal",
+        "evidence_binding"
+      ],
+      "properties": {
+        "branch": {"$ref": "#/$defs/fact"},
+        "branch_tip": {"$ref": "#/$defs/fact"},
+        "implementation_commit": {"$ref": "#/$defs/fact"},
+        "policy_commit": {"$ref": "#/$defs/fact"},
+        "parent_baseline": {"$ref": "#/$defs/fact"},
+        "merge_base_main": {"$ref": "#/$defs/fact"},
+        "merge_base_previous_goal": {"$ref": "#/$defs/fact"},
+        "evidence_binding": {"$ref": "#/$defs/fact"}
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fixture_id", "path", "sha256", "confidence"],
+        "properties": {
+          "fixture_id": {"type": "string"},
+          "path": {"$ref": "#/$defs/nullableString"},
+          "sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "confidence": {"$ref": "#/$defs/confidence"}
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["freecad_version", "occt_version", "python_version", "pytest_version"],
+      "properties": {
+        "freecad_version": {"$ref": "#/$defs/fact"},
+        "occt_version": {"$ref": "#/$defs/fact"},
+        "python_version": {"$ref": "#/$defs/fact"},
+        "pytest_version": {"$ref": "#/$defs/fact"}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "exit_code", "timestamp", "confidence"],
+      "properties": {
+        "command": {"$ref": "#/$defs/nullableString"},
+        "exit_code": {"$ref": "#/$defs/nullableInteger"},
+        "timestamp": {"$ref": "#/$defs/nullableString"},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "tolerances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "value", "unit", "role", "source", "confidence"],
+        "properties": {
+          "name": {"type": "string"},
+          "value": {"type": ["number", "string", "null"]},
+          "unit": {"$ref": "#/$defs/nullableString"},
+          "role": {"$ref": "#/$defs/nullableString"},
+          "source": {"$ref": "#/$defs/nullableString"},
+          "confidence": {"$ref": "#/$defs/confidence"}
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failure_commits", "fix_commits", "known_failures_or_mismatches", "reviewer_findings"],
+      "properties": {
+        "failure_commits": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+        "fix_commits": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+        "known_failures_or_mismatches": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+        "reviewer_findings": {"type": "array", "items": {"$ref": "#/$defs/fact"}}
+      }
+    },
+    "geometry_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "sha256_role"],
+      "properties": {
+        "criteria": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+        "sha256_role": {"const": "file_and_download_integrity_only_not_geometry_equivalence"}
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["software_pytest", "scientific_experiment", "human_inspection", "provenance"],
+      "properties": {
+        "software_pytest": {"$ref": "#/$defs/fact"},
+        "scientific_experiment": {"$ref": "#/$defs/fact"},
+        "human_inspection": {"$ref": "#/$defs/fact"},
+        "provenance": {"$ref": "#/$defs/fact"}
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "target_commit", "status", "reason", "url", "supersedes", "superseded_by"],
+      "properties": {
+        "name": {"$ref": "#/$defs/nullableString"},
+        "target_commit": {"$ref": "#/$defs/nullableString"},
+        "status": {
+          "type": "string",
+          "enum": ["PLANNED", "PUBLISHED", "RELEASE_BLOCKED_PROVENANCE", "RELEASE_BLOCKED_GATE", "NOT_IN_P0_RELEASE_SCOPE"]
+        },
+        "reason": {"$ref": "#/$defs/nullableString"},
+        "url": {"$ref": "#/$defs/nullableString"},
+        "supersedes": {"$ref": "#/$defs/nullableString"},
+        "superseded_by": {"$ref": "#/$defs/nullableString"}
+      }
+    }
+  }
+}

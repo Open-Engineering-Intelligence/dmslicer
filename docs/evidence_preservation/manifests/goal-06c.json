@@ -1,0 +1,1026 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "06C",
+  "identity": {
+    "branch": {
+      "value": "feat/planar-multipatch-interface-correction",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+      "confidence": "L",
+      "source": "outputs/planar_multipatch_interface_correction_06c/*/operation.json"
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-planar_multipatch_interface_correction_06c-P10-inputs.step",
+      "path": "benchmarks/planar_multipatch_interface_correction_06c/P10/inputs.step",
+      "sha256": "7d09b46f01acea67655b6cff38ea135dc78849adc56b4fa4701b018d62ba3794",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-planar_multipatch_interface_correction_06c-P11-inputs.step",
+      "path": "benchmarks/planar_multipatch_interface_correction_06c/P11/inputs.step",
+      "sha256": "e1ef8e37727ba9d3edfbdad15db26b93c28c4257023770e2f2ff12423a249a1b",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-planar_multipatch_interface_correction_06c-P12-inputs.step",
+      "path": "benchmarks/planar_multipatch_interface_correction_06c/P12/inputs.step",
+      "sha256": "fbba5c074127d61ced1d5e2f460b7a17b9d3664c49cc120be21059a5a91b1c0a",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": "3.12.0",
+      "confidence": "L",
+      "source": "preserved pytest log"
+    },
+    "pytest_version": {
+      "value": "8.1.1",
+      "confidence": "L",
+      "source": "preserved pytest log"
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": "2026-09-10T00:47:18.975733",
+    "confidence": "L"
+  },
+  "tolerances": [
+    {
+      "name": "linear_epsilon",
+      "value": 1E-07,
+      "unit": "mm",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_multipatch_interface_correction_06c/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "area_epsilon",
+      "value": 1E-08,
+      "unit": "mm^2",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_multipatch_interface_correction_06c/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "volume_epsilon",
+      "value": 1E-06,
+      "unit": "mm^3",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_multipatch_interface_correction_06c/manifest.json",
+      "confidence": "L"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-06c-custody-0001",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/full-pytest.log",
+      "release_asset_name": null,
+      "sha256": "4558458978e7c0e47403817b447c6d6dcc7b90251a37ba051c2b1163666de490",
+      "size_bytes": 1780,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0002",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "f5406d00ae6aae155b22b3ebd51d80d4632bd4a7976a0f213c4894e36c3a4d3f",
+      "size_bytes": 1806,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0003",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "4099d2d0064eccd4a107afcb8bc7d705a46a96eba2e52a2745858cc056adfb3d",
+      "size_bytes": 1815,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0004",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/common.brep",
+      "release_asset_name": null,
+      "sha256": "43a8fb2ebad62d703669109ee373848a970d3a5b8bd4f381517173263a70c395",
+      "size_bytes": 2839,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0005",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/components.json",
+      "release_asset_name": null,
+      "sha256": "2f92921242f2ffbecabd32137b36b97d6155caff29b9d54d1ace1b4b282da011",
+      "size_bytes": 5029,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0006",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "bbbde41c714f1a32a11c108387a928289623eb6f486f71c4ef966d50800d0105",
+      "size_bytes": 25126,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0007",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "e307e3cf0cafadfe834fa098cdd98d29376c81921b19dca751890e13ffa85bcc",
+      "size_bytes": 537,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0008",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/facesets.json",
+      "release_asset_name": null,
+      "sha256": "8f167e88f4b652c1112b0666a305f27a867ac53715e68b78c32b39e28a91a840",
+      "size_bytes": 27515,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0009",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/fused.step",
+      "release_asset_name": null,
+      "sha256": "cab06044bcf0eb7821e7f8e29305b4988bb30c3a347363fb2bcd96484c258e2b",
+      "size_bytes": 21284,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/operation_debug.20260910-004543.FCBak",
+      "release_asset_name": null,
+      "sha256": "66507d0db1002d78bc129353c76f9cdf824943d297c7fd0b8c84417c6484e900",
+      "size_bytes": 18624,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0011",
+      "kind": "FCStd",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "6aff9ac655cc79cab17073f085dca8338c3b86a2edc58cd77f465193917d60a7",
+      "size_bytes": 25995,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0012",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/operation.json",
+      "release_asset_name": null,
+      "sha256": "93c7ec8b5c5b781e1c268c4cc07a3fdb7970cd2c7137dfe7cef43899ae1991d5",
+      "size_bytes": 77251,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0013",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/patches.json",
+      "release_asset_name": null,
+      "sha256": "a2808a56e52e64fbc7f95cc7db143c9f87a96d268dc10ab1d95ad57c99cf6e32",
+      "size_bytes": 3747,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0014",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/provenance.json",
+      "release_asset_name": null,
+      "sha256": "9949d98ae9fb9aaa3c78c73a06bb47a6eeacaf4d859ba313d3ff81293566bd54",
+      "size_bytes": 13905,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0015",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "bf9418de3f08ede02045b1114e95f271ed81738cf6fd01ccc4a0fe621e57ab46",
+      "size_bytes": 45,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0016",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "b68a5080f51be1caf2fb7bf892fbd21f026e443e1cbcdd9ce961575082b65d0b",
+      "size_bytes": 3433,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0017",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/side_2_remaining_EMPTY.json",
+      "release_asset_name": null,
+      "sha256": "316369d3ac0aad8df4fccdf850a7579aee8ac77d861ea56329d150985a371926",
+      "size_bytes": 135,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0018",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P10/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d79773296abe0b3f2b26e85899f71c891f33ad25b1a4cb94386abf6bccbdd19",
+      "size_bytes": 129,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0019",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "df07f199bf86e68374fadfe69d8080b6688ed3400f8d6d44c119199678910ef8",
+      "size_bytes": 1545,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0020",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/common.brep",
+      "release_asset_name": null,
+      "sha256": "5e3400a5914d5c67c372480c7e5a8a7175e8c5461f3193c711cb3b01e2fff6fa",
+      "size_bytes": 1564,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0021",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/components.json",
+      "release_asset_name": null,
+      "sha256": "bb5faf5b17bd251fba1b5d5d0f3b068b086d25cba71275b2e7a47f00e450018c",
+      "size_bytes": 3716,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0022",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "96d7e4396a03b9b5b3c40c0c06d6ddac80d41e1774107f347a296a88e3199579",
+      "size_bytes": 13522,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0023",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "57462b89eda964f8fbd22d5c37e844bc25e7165f73a14c4d7a1a20ae196ff0ce",
+      "size_bytes": 574,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0024",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/facesets.json",
+      "release_asset_name": null,
+      "sha256": "8886646085bb8f07d71591665a0b5efb05a730f059be3ee5172b9a3d393965fa",
+      "size_bytes": 19884,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0025",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/fused.step",
+      "release_asset_name": null,
+      "sha256": "6da47576cd8b59e868248d91cbad891a4574f440fa6b5e654bca113b9c549c25",
+      "size_bytes": 10267,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0026",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/operation_debug.20260910-004554.FCBak",
+      "release_asset_name": null,
+      "sha256": "3b6b381350ae08e2a50ad2f3912614f5cd51b45dc9333f787a0b003b5f7bab81",
+      "size_bytes": 14110,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0027",
+      "kind": "FCStd",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "882639ae5b81ebe8da75a4d2895505aa485e5c87bc8da4604987ecd8ab83fbfe",
+      "size_bytes": 21450,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0028",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/operation.json",
+      "release_asset_name": null,
+      "sha256": "b908ac2658a1c7ace807838c07a52902553b29a09be31e7cd43e9b7c28de2b8b",
+      "size_bytes": 62966,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0029",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/patches.json",
+      "release_asset_name": null,
+      "sha256": "28e014ad122d3e4e3f19168734ea04a124d0254e28051a1eded3043c9d3a13be",
+      "size_bytes": 2251,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0030",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/provenance.json",
+      "release_asset_name": null,
+      "sha256": "060f15023ad00d93f5ad555965878a11e94bdfb4b8ee6948b8d1856de2888e1e",
+      "size_bytes": 12395,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0031",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "bf9418de3f08ede02045b1114e95f271ed81738cf6fd01ccc4a0fe621e57ab46",
+      "size_bytes": 45,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0032",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "83b2d60642976a7f9b4473dff24a97f0347c72b4c458f848c284df114becb365",
+      "size_bytes": 2245,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0033",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/side_2_remaining_EMPTY.json",
+      "release_asset_name": null,
+      "sha256": "316369d3ac0aad8df4fccdf850a7579aee8ac77d861ea56329d150985a371926",
+      "size_bytes": 135,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0034",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P11/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d79773296abe0b3f2b26e85899f71c891f33ad25b1a4cb94386abf6bccbdd19",
+      "size_bytes": 129,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0035",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/components.json",
+      "release_asset_name": null,
+      "sha256": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f",
+      "size_bytes": 4,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0036",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "3b102d983e9d44eae2d879c44a3b90747353f914e85bd6a0d430be56e18b71ad",
+      "size_bytes": 388,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0037",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/facesets.json",
+      "release_asset_name": null,
+      "sha256": "ee926bd15468f90110d68fcddbb3432a2ae16a8278826db0aa9002d41bd6e145",
+      "size_bytes": 24397,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0038",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/operation_debug.20260910-004605.FCBak",
+      "release_asset_name": null,
+      "sha256": "30bec522adda16ccdd5efed516d1da09109f82996f20e5ca366eeb8e6117b8ea",
+      "size_bytes": 6860,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0039",
+      "kind": "FCStd",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "17b93ae523ec90ef26843ffcc3b989f22518fc51dd7bf84932fb40f16a657f44",
+      "size_bytes": 10308,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0040",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/operation.json",
+      "release_asset_name": null,
+      "sha256": "be7c4bc3e1aad2d329f2a8c24b0291c127624d07403f57757d7fa75547e657f1",
+      "size_bytes": 41791,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0041",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/patches.json",
+      "release_asset_name": null,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+      "size_bytes": 4,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0042",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/provenance.json",
+      "release_asset_name": null,
+      "sha256": "03cdadb21f6a0a4c00934b100ad56104f00bee5f0b7fe3e48faa134f88f7a03a",
+      "size_bytes": 12921,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0043",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "bf9418de3f08ede02045b1114e95f271ed81738cf6fd01ccc4a0fe621e57ab46",
+      "size_bytes": 45,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0044",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/P12/validation.json",
+      "release_asset_name": null,
+      "sha256": "948a859dabe0d5de06b514d4610878c24ae600d6bdd8c1847b6fde40888ad47a",
+      "size_bytes": 130,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0045",
+      "kind": "JUNIT",
+      "path": "outputs/planar_multipatch_interface_correction_06c/pytest-junit.xml",
+      "release_asset_name": null,
+      "sha256": "6cf1f717648b03bdd17ac84ebff1ac26c1bb370accbdd312c948c9027894812d",
+      "size_bytes": 42752,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0046",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "f5406d00ae6aae155b22b3ebd51d80d4632bd4a7976a0f213c4894e36c3a4d3f",
+      "size_bytes": 1806,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0047",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/common_patch_2.brep",
+      "release_asset_name": null,
+      "sha256": "4099d2d0064eccd4a107afcb8bc7d705a46a96eba2e52a2745858cc056adfb3d",
+      "size_bytes": 1815,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0048",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/common.brep",
+      "release_asset_name": null,
+      "sha256": "43a8fb2ebad62d703669109ee373848a970d3a5b8bd4f381517173263a70c395",
+      "size_bytes": 2839,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0049",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/components.json",
+      "release_asset_name": null,
+      "sha256": "2f92921242f2ffbecabd32137b36b97d6155caff29b9d54d1ace1b4b282da011",
+      "size_bytes": 5029,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0050",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "7c4d992a6c823f847cc80368b97e365884a2b2635bed3eae430488de6232a72f",
+      "size_bytes": 25126,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0051",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "e307e3cf0cafadfe834fa098cdd98d29376c81921b19dca751890e13ffa85bcc",
+      "size_bytes": 537,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0052",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/facesets.json",
+      "release_asset_name": null,
+      "sha256": "8f167e88f4b652c1112b0666a305f27a867ac53715e68b78c32b39e28a91a840",
+      "size_bytes": 27515,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0053",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/fused.step",
+      "release_asset_name": null,
+      "sha256": "996ff06db0169c4dbd8119ed4f31e31321bbc4b72c8ff720b403f0af96e63f2d",
+      "size_bytes": 21284,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0054",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/operation.json",
+      "release_asset_name": null,
+      "sha256": "5b5934ad398674947f80d3d38b0aaffa17747353cb9a743ea442f10fbf66ca22",
+      "size_bytes": 76124,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0055",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/patches.json",
+      "release_asset_name": null,
+      "sha256": "a2808a56e52e64fbc7f95cc7db143c9f87a96d268dc10ab1d95ad57c99cf6e32",
+      "size_bytes": 3747,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0056",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/provenance.json",
+      "release_asset_name": null,
+      "sha256": "9949d98ae9fb9aaa3c78c73a06bb47a6eeacaf4d859ba313d3ff81293566bd54",
+      "size_bytes": 13905,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0057",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "b68a5080f51be1caf2fb7bf892fbd21f026e443e1cbcdd9ce961575082b65d0b",
+      "size_bytes": 3433,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0058",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/side_2_remaining_EMPTY.json",
+      "release_asset_name": null,
+      "sha256": "316369d3ac0aad8df4fccdf850a7579aee8ac77d861ea56329d150985a371926",
+      "size_bytes": 135,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0059",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P10/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d79773296abe0b3f2b26e85899f71c891f33ad25b1a4cb94386abf6bccbdd19",
+      "size_bytes": 129,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0060",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/common_patch_1.brep",
+      "release_asset_name": null,
+      "sha256": "df07f199bf86e68374fadfe69d8080b6688ed3400f8d6d44c119199678910ef8",
+      "size_bytes": 1545,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0061",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/common.brep",
+      "release_asset_name": null,
+      "sha256": "5e3400a5914d5c67c372480c7e5a8a7175e8c5461f3193c711cb3b01e2fff6fa",
+      "size_bytes": 1564,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0062",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/components.json",
+      "release_asset_name": null,
+      "sha256": "bb5faf5b17bd251fba1b5d5d0f3b068b086d25cba71275b2e7a47f00e450018c",
+      "size_bytes": 3716,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0063",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "65500bf9fa28425bc7181d417209faaec9f8cd54c28d906a2616d283adf28c84",
+      "size_bytes": 13522,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0064",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "57462b89eda964f8fbd22d5c37e844bc25e7165f73a14c4d7a1a20ae196ff0ce",
+      "size_bytes": 574,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0065",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/facesets.json",
+      "release_asset_name": null,
+      "sha256": "8886646085bb8f07d71591665a0b5efb05a730f059be3ee5172b9a3d393965fa",
+      "size_bytes": 19884,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0066",
+      "kind": "STEP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/fused.step",
+      "release_asset_name": null,
+      "sha256": "385c3a2b9722673221992f46a1f3e3c01d7fb0bc23f565ae0bcbaf3105cb229f",
+      "size_bytes": 10267,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0067",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/operation.json",
+      "release_asset_name": null,
+      "sha256": "a7d447185777643915fb811c5761d0e90a1af5e2d35bcd2c7d7f51db4a0a98ec",
+      "size_bytes": 61793,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0068",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/patches.json",
+      "release_asset_name": null,
+      "sha256": "28e014ad122d3e4e3f19168734ea04a124d0254e28051a1eded3043c9d3a13be",
+      "size_bytes": 2251,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0069",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/provenance.json",
+      "release_asset_name": null,
+      "sha256": "060f15023ad00d93f5ad555965878a11e94bdfb4b8ee6948b8d1856de2888e1e",
+      "size_bytes": 12395,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0070",
+      "kind": "BREP",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "83b2d60642976a7f9b4473dff24a97f0347c72b4c458f848c284df114becb365",
+      "size_bytes": 2245,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0071",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/side_2_remaining_EMPTY.json",
+      "release_asset_name": null,
+      "sha256": "316369d3ac0aad8df4fccdf850a7579aee8ac77d861ea56329d150985a371926",
+      "size_bytes": 135,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0072",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P11/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d79773296abe0b3f2b26e85899f71c891f33ad25b1a4cb94386abf6bccbdd19",
+      "size_bytes": 129,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0073",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/components.json",
+      "release_asset_name": null,
+      "sha256": "e3566b3a06430868d71e9287dfd6c6c520a3da027aabea01951d407ee131dc2f",
+      "size_bytes": 4,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0074",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "3b102d983e9d44eae2d879c44a3b90747353f914e85bd6a0d430be56e18b71ad",
+      "size_bytes": 388,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0075",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/facesets.json",
+      "release_asset_name": null,
+      "sha256": "ee926bd15468f90110d68fcddbb3432a2ae16a8278826db0aa9002d41bd6e145",
+      "size_bytes": 24397,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0076",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/operation.json",
+      "release_asset_name": null,
+      "sha256": "701dacce1b9579d9dc5b12bd6092b974faf2570a4aafe37a4df582e7f9d42aa9",
+      "size_bytes": 40869,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0077",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/patches.json",
+      "release_asset_name": null,
+      "sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+      "size_bytes": 4,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0078",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/provenance.json",
+      "release_asset_name": null,
+      "sha256": "03cdadb21f6a0a4c00934b100ad56104f00bee5f0b7fe3e48faa134f88f7a03a",
+      "size_bytes": 12921,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0079",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_multipatch_interface_correction_06c/repeatability/second_process/P12/validation.json",
+      "release_asset_name": null,
+      "sha256": "948a859dabe0d5de06b514d4610878c24ae600d6bdd8c1847b6fde40888ad47a",
+      "size_bytes": 130,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0080",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_multipatch_interface_correction_06c/summary.json",
+      "release_asset_name": null,
+      "sha256": "67bd39d08ab125ce5965439e8f3d68547afc8ca090613817d638c4da4e252d90",
+      "size_bytes": 458,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06c-custody-0081",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/planar_multipatch_interface_correction_06c/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "930b74dbdbccb1b8392bd9943323eeef25fd0fbb6343f268caa2554a43bf5258",
+      "size_bytes": 405,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [
+      {
+        "value": "121ad2e",
+        "confidence": "GH",
+        "source": "Git commit"
+      },
+      {
+        "value": "6da8aec",
+        "confidence": "GH",
+        "source": "Git commit"
+      },
+      {
+        "value": "25c9793",
+        "confidence": "GH",
+        "source": "Git commit"
+      },
+      {
+        "value": "be96f46",
+        "confidence": "GH",
+        "source": "Git commit"
+      },
+      {
+        "value": "58ec93a",
+        "confidence": "GH",
+        "source": "Git commit"
+      }
+    ],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": [
+      {
+        "value": "Initial critical finding: validator self-consistency did not bind validation to persisted geometry artifacts; corrupted supports, digests, or STEP reimport could still pass.",
+        "confidence": "CHAT",
+        "source": "historical review thread 01a086a4-4e8c-78a0-ab7c-6a648d8a400c"
+      },
+      {
+        "value": "Initial important findings: incomplete STEP round-trip fields; incorrect boundary-topology heuristic; missing EMPTY member provenance; unsupported inputs collapsed; P11 FCStd naming/test gaps.",
+        "confidence": "CHAT",
+        "source": "historical review thread 01a086a4-4e8c-78a0-ab7c-6a648d8a400c"
+      },
+      {
+        "value": "Intermediate finding: quantized digest was incorrectly used for deduplication, correspondence, and repeatability; final policy confines SHA-256 to byte integrity and uses B-rep checks for geometry equivalence.",
+        "confidence": "CHAT",
+        "source": "historical review thread 01a086a4-4e8c-78a0-ab7c-6a648d8a400c"
+      },
+      {
+        "value": "Final review: Critical 0, Important 0.",
+        "confidence": "CHAT",
+        "source": "historical review thread 01a086a4-4e8c-78a0-ab7c-6a648d8a400c"
+      }
+    ]
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": "B-rep validity/closure, surface and topology checks, minimum distance, common/area comparison, and bidirectional cut residual checks with explicit tolerances.",
+        "confidence": "L",
+        "source": "Goal validator implementation and artifact evidence"
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": "260 passed, 0 failures, 0 errors, 0 skipped; software result only.",
+      "confidence": "L",
+      "source": "preserved JUnit"
+    },
+    "scientific_experiment": {
+      "value": "Artifact-backed B-rep validation and unsupported ambiguous-interface result are retained; pytest is not used as scientific PASS.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "PUBLISHED_GATE_READY: explicit validator commit and verified custody copy.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-06c-evidence-58ec93a",
+    "target_commit": "58ec93a67d8214c69bc92d5710c60d91aa1fe30c",
+    "status": "PUBLISHED",
+    "reason": "Published after the upload gate: operation evidence explicitly records validator_source_commit 58ec93a and custody hashes verify.",
+    "url": "https://github.com/Open-Engineering-Intelligence/dmslicer/releases/tag/goal-06c-evidence-58ec93a",
+    "supersedes": null,
+    "superseded_by": null
+  }
+}

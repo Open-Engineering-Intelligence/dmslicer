@@ -1,0 +1,653 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "06A",
+  "identity": {
+    "branch": {
+      "value": "feat/planar-gap-assembly-correction",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "fa4436a2784574ffa336e87a9df898c35780a587",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "fa4436a2784574ffa336e87a9df898c35780a587",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "L",
+      "source": "outputs/planar_gap_assembly_correction_06a/revalidation_authorization_and_finite_evidence.json"
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m0_5tauE/inputs.step",
+      "sha256": "7f7a837239e2c44a09e99e5fcd17e2237e188486d3b1d44941f7fc35a3c43a09",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_5tauE/inputs.step",
+      "sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0tauE/inputs.step",
+      "sha256": "02a9bb35d7cbd21cf911a22a426ef05b5c2aefb61d79523a35c2bf42d1c1f627",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p1_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p1_1tauE/inputs.step",
+      "sha256": "4829512bf3abddce5af645107d67bcfb3219c13495b1acf097780cb4ae1a803f",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": "3.12.0",
+      "confidence": "L",
+      "source": "preserved pytest log"
+    },
+    "pytest_version": {
+      "value": "8.1.1",
+      "confidence": "L",
+      "source": "preserved pytest log"
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": 0,
+    "timestamp": "2026-09-09T20:54:58.222441",
+    "confidence": "L"
+  },
+  "tolerances": [
+    {
+      "name": "tau_E",
+      "value": 0.1,
+      "unit": "mm",
+      "role": "experiment/correction distance threshold",
+      "source": "Goal benchmark or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "name": "linear_epsilon",
+      "value": 1E-07,
+      "unit": "mm",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_gap_assembly_correction_06a/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "area_epsilon",
+      "value": 1E-08,
+      "unit": "mm^2",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_gap_assembly_correction_06a/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "volume_epsilon",
+      "value": 1E-06,
+      "unit": "mm^3",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_gap_assembly_correction_06a/manifest.json",
+      "confidence": "L"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-06a-custody-0001",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/checkpoint.json",
+      "release_asset_name": null,
+      "sha256": "1a88e1904070949274a19f3647e4cf905f602af51bfbc32cd7cba4ef0ed34f46",
+      "size_bytes": 646,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0002",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01_repeatability.json",
+      "release_asset_name": null,
+      "sha256": "ce14c5a276e3de262c49113f4b3f0cedede33ffe679fbb65cdce10540e94eb57",
+      "size_bytes": 455,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0003",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "228a9932b56d7914ce683c411b3e176e41fcfa82fafeb417e8571cb16317c869",
+      "size_bytes": 16236,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0004",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "93f40825f7ce22b8325ce18166e649ea71e6a70dd198057325365df7652e00ae",
+      "size_bytes": 191,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0005",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/fused.step",
+      "release_asset_name": null,
+      "sha256": "f05b534d7239e568616c4d15024dff33ee41d44a083733760ac104c208e3f60d",
+      "size_bytes": 7285,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0006",
+      "kind": "FCStd",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "414adfd12df9be6f4b3ac055c76f59090bc63510d872e87669dbf608efae5ed6",
+      "size_bytes": 9226,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0007",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/operation.json",
+      "release_asset_name": null,
+      "sha256": "c02d1b0688d7ebd1fbf53e7e7b990d9856a39e89685b4548f15a6e134f9d1489",
+      "size_bytes": 4934,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0008",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P01/validation.json",
+      "release_asset_name": null,
+      "sha256": "2b25ca1a4adcf91b01b8a9b1866fa15671e349cd3e54850049c9e09da4881f83",
+      "size_bytes": 114,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0009",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P02/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "5b55ed36f2665d93e00b8fdea8d75dd8d293bb3e710fd4a0d42f85bd6a8cfc31",
+      "size_bytes": 193,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P02/operation.json",
+      "release_asset_name": null,
+      "sha256": "98d784833438d1d5edd27a93630302eef45fc86cab87e885e8bad1572e6aa63c",
+      "size_bytes": 2848,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0011",
+      "kind": "FCStd",
+      "path": "outputs/planar_gap_assembly_correction_06a/P02/rejected_operation.FCStd",
+      "release_asset_name": null,
+      "sha256": "c21ee504cd7cafbd859c86ef1d4e4c6b731b86c6cdf6c0c605b42d08a5380fa5",
+      "size_bytes": 4190,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0012",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P02/validation.json",
+      "release_asset_name": null,
+      "sha256": "7d76d74184f51aa9832f24acc9f1afb5f82c05fbb83e5734798b47135415cc21",
+      "size_bytes": 116,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0013",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P03/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "6da3554df16795baf3b47ebd4e3cefc46b4b1b43326a26af216161da178b8c6b",
+      "size_bytes": 199,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0014",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P03/operation.json",
+      "release_asset_name": null,
+      "sha256": "7a0d5cb4623e9cd39e99aa0825cf50cb7d8d22d1a27fc969b560b75091038580",
+      "size_bytes": 2626,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0015",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P03/validation.json",
+      "release_asset_name": null,
+      "sha256": "8203470036873cfca43f15eca43aade86a1ffd2206c71dd82d7fd501d7756738",
+      "size_bytes": 122,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0016",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P04/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "6b537b96f230791879b92d126920687e788d34b3575fe2e98d0b5190f220f7b7",
+      "size_bytes": 202,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0017",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P04/operation.json",
+      "release_asset_name": null,
+      "sha256": "a74f5cfcc8cdff93c211b0aee621571d8ed51c28a016d168e789cfb3579ea7ac",
+      "size_bytes": 2612,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0018",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P04/validation.json",
+      "release_asset_name": null,
+      "sha256": "dab1a4d0cf6a7b587f06e825edc49ee481927355706d4aeba23062d137805177",
+      "size_bytes": 125,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0019",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/P05/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "dddefddfe4ec1f295cf1939c25f307806c1c14b79a1d188bbdb771db0a3b494c",
+      "size_bytes": 16231,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0020",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P05/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "bfd48facb4b2e3efc2bccab136c09f06ae581889a3413b18970f0072b3fc8816",
+      "size_bytes": 187,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0021",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/P05/fused.step",
+      "release_asset_name": null,
+      "sha256": "1e2649ddc412117588c98042d7001582e9aaacd0984581b633d56d169d79df26",
+      "size_bytes": 7285,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0022",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P05/operation.json",
+      "release_asset_name": null,
+      "sha256": "c8a3d8a5e5b35ec04c267d50a22d394a58bf37f6ed30d199a8baaa27a9ba350e",
+      "size_bytes": 4670,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0023",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P05/validation.json",
+      "release_asset_name": null,
+      "sha256": "f05b2679030d8cefbdba5ab4d371ac56707c73058318befc72baa4db41ff0144",
+      "size_bytes": 110,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0024",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P06/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "eb7c2423790bb95bc423166c645368d544c36dfe2c276ce88ccb8808550ea4ad",
+      "size_bytes": 196,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0025",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/P06/operation.json",
+      "release_asset_name": null,
+      "sha256": "3c762dd659347c78287320d0947b60eb4ee03224c3764d30ce02fa6ac6fa9635",
+      "size_bytes": 2617,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0026",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/P06/validation.json",
+      "release_asset_name": null,
+      "sha256": "968fbf73df297278900181df4d7c3d8d9dd765e2fb63d1e8cf08cd965b8bc443",
+      "size_bytes": 119,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0027",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-authorization-fix-exit-code.txt",
+      "release_asset_name": null,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "size_bytes": 3,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0028",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-authorization-fix-full.log",
+      "release_asset_name": null,
+      "sha256": "1d3e3e88810d4aac739ed8456017082099359363a4a9130bd6e871692beb7e2e",
+      "size_bytes": 1466,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0029",
+      "kind": "JUNIT",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-authorization-fix-junit.xml",
+      "release_asset_name": null,
+      "sha256": "6547062dac4683adee77201c7e437ad459051378358fe0284cfe10c7bd789cb0",
+      "size_bytes": 30696,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0030",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-exit-code.txt",
+      "release_asset_name": null,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "size_bytes": 3,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0031",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-full.log",
+      "release_asset_name": null,
+      "sha256": "219c5d31d2f34e5fd3aebb53dbbcae4d8de047155a0e96f70bd1d63156d61fe7",
+      "size_bytes": 1448,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0032",
+      "kind": "JUNIT",
+      "path": "outputs/planar_gap_assembly_correction_06a/pytest-junit.xml",
+      "release_asset_name": null,
+      "sha256": "93609dd04fae94e3174f842eafa0639e8232a04b6afaaa23f62c018b645731e1",
+      "size_bytes": 22819,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0033",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/checkpoint.json",
+      "release_asset_name": null,
+      "sha256": "f4af79887e030dfd7999ace664952fa519b6656135a16fec9be88aed1f017bd0",
+      "size_bytes": 641,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0034",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/P01/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "2a0a7434f7b03c37f52f04bb0b7cd3475c30ddbbe6f187784fc10dc590d2ada2",
+      "size_bytes": 16236,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0035",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/P01/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "93f40825f7ce22b8325ce18166e649ea71e6a70dd198057325365df7652e00ae",
+      "size_bytes": 191,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0036",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/P01/fused.step",
+      "release_asset_name": null,
+      "sha256": "0e60cd6b3d23fd9ab8fe62c2167a60960417b01131c76423ca4dca0fb97554ec",
+      "size_bytes": 7285,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0037",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/P01/operation.json",
+      "release_asset_name": null,
+      "sha256": "db330be83540da70d6b8d14a2cba10fd4a9ca6972e21f0812aad0dd45204a9b8",
+      "size_bytes": 4784,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0038",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_1/P01/validation.json",
+      "release_asset_name": null,
+      "sha256": "2b25ca1a4adcf91b01b8a9b1866fa15671e349cd3e54850049c9e09da4881f83",
+      "size_bytes": 114,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0039",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/checkpoint.json",
+      "release_asset_name": null,
+      "sha256": "f4af79887e030dfd7999ace664952fa519b6656135a16fec9be88aed1f017bd0",
+      "size_bytes": 641,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0040",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/P01/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "31bcf9a9eaf2ad54e291b5de7f4429ec17a1d2e3ae8c98b7c72626e3acfab45e",
+      "size_bytes": 16236,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0041",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/P01/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "93f40825f7ce22b8325ce18166e649ea71e6a70dd198057325365df7652e00ae",
+      "size_bytes": 191,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0042",
+      "kind": "STEP",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/P01/fused.step",
+      "release_asset_name": null,
+      "sha256": "9bb7d3a3d905becb42e81ea742a1b06c67d9676707631339b036a0f9aa664f67",
+      "size_bytes": 7285,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0043",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/P01/operation.json",
+      "release_asset_name": null,
+      "sha256": "3d5157a6cfcbbcf4a3df5ff32fe42e4b0fb7d228a1e803856d5316cafb6b731b",
+      "size_bytes": 4784,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0044",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/repeatability_process_2/P01/validation.json",
+      "release_asset_name": null,
+      "sha256": "2b25ca1a4adcf91b01b8a9b1866fa15671e349cd3e54850049c9e09da4881f83",
+      "size_bytes": 114,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0045",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_gap_assembly_correction_06a/revalidation_authorization_and_finite_evidence.json",
+      "release_asset_name": null,
+      "sha256": "d2447b4d5ddd45ce656be79488c8bba95bbbcaf89a6c1752ba22b15feb28be32",
+      "size_bytes": 2471,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0046",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_gap_assembly_correction_06a/summary.json",
+      "release_asset_name": null,
+      "sha256": "88a429a5cbeb96ff5c52b43b43207431c7ed503adb176157992f56e4b7d95bd1",
+      "size_bytes": 737,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06a-custody-0047",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/planar_gap_assembly_correction_06a/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "d7d99449d959d658c449a2d3b61480590609f0e1530a20f47358cb22c2a2de5b",
+      "size_bytes": 396,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": "Artifact-backed STEP/BREP validity, topology, area/volume, and scenario-specific acceptance or rejection criteria where present.",
+        "confidence": "L",
+        "source": "Preserved validation and operation evidence"
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": "195 passed, 0 failures, 0 errors, 0 skipped; software result only.",
+      "confidence": "L",
+      "source": "preserved JUnit"
+    },
+    "scientific_experiment": {
+      "value": "Accepted and rejected scenarios, including finite-evidence and authorization rejection behavior, are preserved separately from pytest.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "PUBLISHED_GATE_READY: explicit source commit and verified custody copy.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-06a-evidence-aadf996",
+    "target_commit": "aadf996a05bf87efee862964141b6aeb7f872baf",
+    "status": "PUBLISHED",
+    "reason": "Published after the upload gate: local output explicitly records source_commit aadf996 and custody hashes verify.",
+    "url": "https://github.com/Open-Engineering-Intelligence/dmslicer/releases/tag/goal-06a-evidence-aadf996",
+    "supersedes": null,
+    "superseded_by": null
+  }
+}

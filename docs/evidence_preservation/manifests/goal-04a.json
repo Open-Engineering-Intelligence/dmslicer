@@ -1,0 +1,727 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "04A",
+  "identity": {
+    "branch": {
+      "value": "feat/contact-partition-and-union",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "19354277520c40bf61193525cbf213946dbbb511",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "19354277520c40bf61193525cbf213946dbbb511",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-contact_canonical_03a-A02-fixture.step",
+      "path": "benchmarks/contact_canonical_03a/A02/fixture.step",
+      "sha256": "495b72e700affcb76740399cb8e83cce4df0ca84f00a21cdf142f092dac27c4f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03b-A08-fixture.step",
+      "path": "benchmarks/contact_canonical_03b/A08/fixture.step",
+      "sha256": "535a626a496367e038af895f30df3b1152659d149b3fc3a0c3d3e0533db19efe",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "unrecovered",
+      "value": null,
+      "unit": null,
+      "role": null,
+      "source": null,
+      "confidence": "U"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-04a-custody-0001",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/fused.step",
+      "release_asset_name": null,
+      "sha256": "55d3b5f5fffc7c43e6646586d67596fb02b98d231198e1e382151bfc726596b3",
+      "size_bytes": 19327,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0002",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A02/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "14e04756456fac07780ffe149d8ba248e10eaa79a3090c6678bb54522fd7f1b5",
+      "size_bytes": 11168,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0003",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A02/operation.json",
+      "release_asset_name": null,
+      "sha256": "4f23403f8ef469bd645515a5e08640cbffbcba39bd264778dfe6c29fc9c26b2d",
+      "size_bytes": 2749,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0004",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "e426202c935a7b390c8a2f91725235149ba8207f67f5ec8668ec4d7efbdb6556",
+      "size_bytes": 4174,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0005",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "d270d88af8fd043a11aa046bb8ef6bb3cc5d8c3bfc6c366b3cdd1bb7a7ead0f6",
+      "size_bytes": 3916,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0006",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "23821af3d2aa8a61b6943975290247b3ef3b860a70f4e7cdbd021c723e5c0e4d",
+      "size_bytes": 3588,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0007",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "51fb5b27aeb3f6f5bd55a28213a002d1a0c8bf7823d8666eda744e0c4f90bfa0",
+      "size_bytes": 3877,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0008",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/side_2_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "33582c9688642d6422269474d52a4818620e2537a4f06142b31f43b8fcbe81e4",
+      "size_bytes": 3898,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0009",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/patches/side_2_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "630aa7a5e52f1fe0d10836d8c23a2ba8e24e25eab97883f8a917870686bd0c51",
+      "size_bytes": 4001,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "a49450d2b03da0769c5ed6e7378b16ea80b45c742206b99e4c44266c8561c591",
+      "size_bytes": 192,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0011",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/fused.step",
+      "release_asset_name": null,
+      "sha256": "1b7170e499f0ed381796c2a82c7f9658ab1ef75d2a521788aed3fdcd1b8bc56f",
+      "size_bytes": 19327,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0012",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "07ecd6abcf6c0c13b328805ed04a5514a02feebdf5d60fded02b06a28f62f02b",
+      "size_bytes": 11164,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0013",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/operation.json",
+      "release_asset_name": null,
+      "sha256": "4f23403f8ef469bd645515a5e08640cbffbcba39bd264778dfe6c29fc9c26b2d",
+      "size_bytes": 2749,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0014",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "e426202c935a7b390c8a2f91725235149ba8207f67f5ec8668ec4d7efbdb6556",
+      "size_bytes": 4174,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0015",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "e5e1cd949eaf7b1d58f47bec8eca226feb982092deb2d696de52d5baf68a9627",
+      "size_bytes": 3916,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0016",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "23821af3d2aa8a61b6943975290247b3ef3b860a70f4e7cdbd021c723e5c0e4d",
+      "size_bytes": 3588,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0017",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "495ed83d8134df1a19c037c9fd590e21f335188206d8c8e4babeaee73d8dc953",
+      "size_bytes": 3877,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0018",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/side_2_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "33582c9688642d6422269474d52a4818620e2537a4f06142b31f43b8fcbe81e4",
+      "size_bytes": 3898,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0019",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/patches/side_2_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "cc33726e91c4328dc073a5b7c3208c34fea8a16d9252f34b4cf21c40f0d1b630",
+      "size_bytes": 4001,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0020",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "0e5cc713588a4fc6f7f9b73584a67d6569e2cb7579b62c63f28024a23a9beda4",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0021",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/fused.step",
+      "release_asset_name": null,
+      "sha256": "17338bd66dc0f9bec7a1f60c29817ee1f687b639e3409147b544dc4a59f56932",
+      "size_bytes": 19327,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0022",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "14784d8de96a9156857f4d6213514892bf66d9a532ef428bfdc0e659b15cf893",
+      "size_bytes": 11166,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0023",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/operation.json",
+      "release_asset_name": null,
+      "sha256": "4f23403f8ef469bd645515a5e08640cbffbcba39bd264778dfe6c29fc9c26b2d",
+      "size_bytes": 2749,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0024",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "e426202c935a7b390c8a2f91725235149ba8207f67f5ec8668ec4d7efbdb6556",
+      "size_bytes": 4174,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0025",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "c627b5b7b78ed6ce8cfa424de631fa8269047ad4e4e63d2833b5a2db065e5b8a",
+      "size_bytes": 3916,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0026",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "23821af3d2aa8a61b6943975290247b3ef3b860a70f4e7cdbd021c723e5c0e4d",
+      "size_bytes": 3588,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0027",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "e7e7f18976085dbd5f6828e7ab3da6da4f05bfaf9119e6b56ab55051655658dd",
+      "size_bytes": 3877,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0028",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/side_2_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "33582c9688642d6422269474d52a4818620e2537a4f06142b31f43b8fcbe81e4",
+      "size_bytes": 3898,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0029",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/patches/side_2_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "071ee781c2a44fb9fabd8d95f76affd9a2eb9592f8390c213ea24b8258444bc4",
+      "size_bytes": 4001,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0030",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A02/repeatability/run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "0e5cc713588a4fc6f7f9b73584a67d6569e2cb7579b62c63f28024a23a9beda4",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0031",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A02/validation.json",
+      "release_asset_name": null,
+      "sha256": "0e5cc713588a4fc6f7f9b73584a67d6569e2cb7579b62c63f28024a23a9beda4",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0032",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/fused.step",
+      "release_asset_name": null,
+      "sha256": "822a432831331802f913b3b650a278f093557287a5df1d74ebbe5f9880fb7df0",
+      "size_bytes": 4275,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0033",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A08/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "f6754af2bf2caa8008b083bf14f0a18d260d5d8c2b06cd329f724cb23b6657ec",
+      "size_bytes": 9198,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0034",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A08/operation.json",
+      "release_asset_name": null,
+      "sha256": "6cc7c0b5e3b42e1c68e15d8650539d6067aedc88611ade223c0c3cb17f2f628f",
+      "size_bytes": 2406,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0035",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "74f09c1cc41aad9a88a53310aff5d98f9e963294ce99796363a26593a8cfb0b1",
+      "size_bytes": 2814,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0036",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "7a51a55a6d7cb89a6f311ae917615104def48e20f239f3085d989e7cf815e685",
+      "size_bytes": 2766,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0037",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "6fedca9dc31100e40e26bec8358e5da9b9b42b01bdac2fbad3f53215c74d0f7a",
+      "size_bytes": 2573,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0038",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "fd044089ca171a3e841aa126a3da2294f3d52c5bbfba9de42888935d5c8dab14",
+      "size_bytes": 2767,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0039",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "a49450d2b03da0769c5ed6e7378b16ea80b45c742206b99e4c44266c8561c591",
+      "size_bytes": 192,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0040",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/fused.step",
+      "release_asset_name": null,
+      "sha256": "82c2048278545dff882ea2927c2e95af64e79ff393d489a7d82c2e1de5390fee",
+      "size_bytes": 4275,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0041",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "c39154611660ce80ce15cb0b82649269c4712fd32c007676ea72c1c5b8e1aa14",
+      "size_bytes": 9191,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0042",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/operation.json",
+      "release_asset_name": null,
+      "sha256": "6cc7c0b5e3b42e1c68e15d8650539d6067aedc88611ade223c0c3cb17f2f628f",
+      "size_bytes": 2406,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0043",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "74f09c1cc41aad9a88a53310aff5d98f9e963294ce99796363a26593a8cfb0b1",
+      "size_bytes": 2814,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0044",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "ad7eb228c96d7869235d58d659460709dd585e90a09d9638d6403384f3805c94",
+      "size_bytes": 2766,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0045",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "6fedca9dc31100e40e26bec8358e5da9b9b42b01bdac2fbad3f53215c74d0f7a",
+      "size_bytes": 2573,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0046",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "4179a6b91049df277e2df44ecc49c30b754a31bfcb4f75eb3625418f9648907f",
+      "size_bytes": 2767,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0047",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "8b96e307c004cab43526afef64cd942794867608c917b61769ff2b1f67742829",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0048",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/fused.step",
+      "release_asset_name": null,
+      "sha256": "b9d880ef5c7bb307ebbe9c6e7187439f0ddfc61f5b8237fd2fc49d8ccca7ea19",
+      "size_bytes": 4275,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0049",
+      "kind": "FCStd",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "7ffa6bdcd4a31fe79492b98e63344ee8592a809f00966ef01dc436b871abb571",
+      "size_bytes": 9198,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0050",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/operation.json",
+      "release_asset_name": null,
+      "sha256": "6cc7c0b5e3b42e1c68e15d8650539d6067aedc88611ade223c0c3cb17f2f628f",
+      "size_bytes": 2406,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0051",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/patches/common_1.brep",
+      "release_asset_name": null,
+      "sha256": "74f09c1cc41aad9a88a53310aff5d98f9e963294ce99796363a26593a8cfb0b1",
+      "size_bytes": 2814,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0052",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/patches/common_1.step",
+      "release_asset_name": null,
+      "sha256": "b279ba648d2d3f593bac3c54558b466b330998cc202ac2353bc6da985da1c4e9",
+      "size_bytes": 2766,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0053",
+      "kind": "BREP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/patches/side_1_remaining_1.brep",
+      "release_asset_name": null,
+      "sha256": "6fedca9dc31100e40e26bec8358e5da9b9b42b01bdac2fbad3f53215c74d0f7a",
+      "size_bytes": 2573,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0054",
+      "kind": "STEP",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/patches/side_1_remaining_1.step",
+      "release_asset_name": null,
+      "sha256": "70065a37c52b71b028144bbccb2e04f056aa626fcc8ef31fa16c5a62d0f65963",
+      "size_bytes": 2767,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0055",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A08/repeatability/run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "8b96e307c004cab43526afef64cd942794867608c917b61769ff2b1f67742829",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0056",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_partition_union_04a/A08/validation.json",
+      "release_asset_name": null,
+      "sha256": "8b96e307c004cab43526afef64cd942794867608c917b61769ff2b1f67742829",
+      "size_bytes": 342,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0057",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_partition_union_04a/summary.json",
+      "release_asset_name": null,
+      "sha256": "0e28089bb08695fb5916838e45aa861b9e23540a1ae2b2c5fa7ccb89b222d23b",
+      "size_bytes": 834,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-04a-custody-0058",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/contact_partition_union_04a/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "7a2da6b70b7bcfa5c97430988b60ce3974aef245ed86014f8c320866ad1ba164",
+      "size_bytes": 429,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": "Artifact-backed STEP/BREP validity, topology, area/volume, and scenario-specific acceptance or rejection criteria where present.",
+        "confidence": "L",
+        "source": "Preserved validation and operation evidence"
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "scientific_experiment": {
+      "value": "A02/A08 BREP, FCStd, STEP, validation, and VIEW_INDEX preserved without changing results.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "PARTIAL: custody is verified; implementation-run binding is unresolved.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-04a-evidence-1935427",
+    "target_commit": "19354277520c40bf61193525cbf213946dbbb511",
+    "status": "RELEASE_BLOCKED_PROVENANCE",
+    "reason": "A02/A08 fragile artifacts are preserved, but their historical task outputs do not explicitly bind execution to 1935427.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  }
+}
