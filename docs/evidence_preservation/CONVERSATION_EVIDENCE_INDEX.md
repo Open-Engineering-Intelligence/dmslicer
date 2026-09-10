@@ -1,0 +1,67 @@
+# Conversation Evidence Index
+
+This is the public, sanitized index for read-only DM-Slicer Codex task custody. Raw JSONL exports, exact local source paths, and full task text remain in the private P1 custody root. A conversation is CHAT provenance: it can recover a claim or review chain, but it does not replace artifact-backed validation or establish a current geometry PASS.
+
+## Discovery result
+
+- Session-index entries searched: 511.
+- Root tasks selected: 36.
+- Root plus reviewer/subagent tasks: 53.
+- Fully readable: 51.
+- Metadata-only or otherwise inaccessible: 2.
+- Selection: title search, explicit reverse-search identity, and descendant reviewer/subagent relationships.
+
+## Root task inventory
+
+| Goal(s) | Task ID | Title | Access | Implementation / gap |
+|---|---|---|---|---|
+| LEGACY | `019fbb3f-58b7-72e3-8290-5515a32c6ece` | 整理LLM-Wiki DMSlicer | `fully_read` | not asserted |
+| LEGACY | `01a07e83-96aa-7963-9f58-b806cd56f1fd` | Locate DMSlicer-Mod项目 | `fully_read` | not asserted |
+| LEGACY | `01a07e88-e964-7ff3-8a12-f3ea6cd7b0ac` | 审计 DMSlicer 旧项目逻辑 | `fully_read` | not asserted |
+| LEGACY | `01a07ec5-8f10-7302-89cf-d4ce461fa7f4` | 审计 DMSlicer 旧项目逻辑 (2) | `metadata_only` | gap retained |
+| LEGACY | `01a07ed2-8d2f-7120-805d-8aff10c744bb` | 审计 DMSlicer 旧项目逻辑 (3) | `fully_read` | not asserted |
+| LEGACY | `01a07edb-9224-77c0-89bb-3055fc2039e0` | 审计 DMSlicer 旧项目逻辑 (4) | `fully_read` | not asserted |
+| 02A | `01a07f0e-d9c4-7b92-a18b-51a170af5d13` | DM-Slicer｜02A 新仓库初始化与Legacy边界冻结 | `fully_read` | not asserted |
+| 02B | `01a07f20-aa7f-7583-8fa1-44244ef4e513` | DM-Slicer｜02B STEP Interface Engine CASE01 | `fully_read` | not asserted |
+| 02R | `01a07f3f-e76f-7502-9f14-096b544a0a4d` | DM-Slicer｜02R CASE01 Technical Review | `fully_read` | not asserted |
+| 02V | `01a07f50-9286-7a03-a96e-726f541d1dcc` | DM-Slicer｜02V CASE01 FreeCAD Visual Check | `fully_read` | not asserted |
+| 03P | `01a07f74-33ce-76f2-96cc-7d2b6f16d31e` | DM-Slicer｜03P Contact Benchmark & Dataset Design | `fully_read` | not asserted |
+| 03P | `01a07f9f-3bba-7c30-93a5-d3ef2760bf39` | DM-Slicer｜03P-Fix Benchmark Design 入库确认 | `fully_read` | not asserted |
+| 02C | `01a07faa-fba4-7223-bfca-b1341cbbfe45` | DM-Slicer｜02C CASE01 Foundation Fix | `fully_read` | 07655b8ed6b0 |
+| LEGACY | `01a07fc6-057c-7550-9034-af5db17c9370` | llm-dfam-cad-cae-loop｜Issue #6 SimulationResult 归一化 | `fully_read` | not asserted |
+| 02R2 | `01a0808f-c43a-7103-a4a2-85a18975fb68` | DM-Slicer｜02R2 CASE01 Foundation Final Review | `fully_read` | not asserted |
+| 02C | `01a07fc7-ebb6-7963-8df1-b0c62e7be72a` | DM-Slicer｜CASE01 复现校验补齐 | `fully_read` | b6460270f293 |
+| 03A | `01a080e6-2995-73e2-a581-9a386e703e58` | DM-Slicer｜03A 接触几何：错开、包含与维度分类 | `fully_read` | a1fc48b7efbd |
+| 03B | `01a08127-8407-7052-bc88-c0c14db7d176` | DM-Slicer｜03B 规则曲面接触 | `fully_read` | 5e96906f4103 |
+| 03C | `01a08196-9bd0-7963-a11c-ddff9a1e9682` | Add DM-Slicer 03C contact topology | `fully_read` | 4a2aad8d926e |
+| 03C | `01a08331-eab2-7693-975a-acc0fa432065` | DM-Slicer｜A12 面积误差来源定位 | `fully_read` | 4a2aad8d926e |
+| 03C | `01a08199-4da0-79e2-acd5-e0597bb60264` | DM-Slicer｜03C-Fix A12解析几何构造修复 | `fully_read` | 4a2aad8d926e |
+| 03C | `01a08363-8d56-75e1-9a9d-51047fb9a9f5` | DM-Slicer｜03C-Fix A12解析几何构造修复 (2) | `metadata_only` | 4a2aad8d926e |
+| 04A | `01a08362-2428-7d61-9be2-322a4ae44a5e` | DM-Slicer｜04A 接触面分割与实体融合 | `fully_read` | 19354277520c |
+| LEGACY | `01a083cc-70b6-78b0-bba0-34b60141dde7` | DM-Slicer｜GitHub 全量同步与分支审计 | `fully_read` | not asserted |
+| 04B | `01a08457-0fb1-7a12-ad86-6740aef0d701` | DM-Slicer｜04B 圆柱套筒部分贴合与融合 | `fully_read` | e50e1b8e7735 |
+| 05A | `01a08490-3770-7430-b860-aba97b3f35d3` | DM-Slicer｜05A 工程容差小样本实验 | `fully_read` | 20b26450dffe |
+| 05B | `01a084dc-87bf-7ac0-9cfd-697cf6a7d3ca` | DM-Slicer｜05B 原始与归一化验收补齐 | `fully_read` | 1de21fd41aac |
+| 05C | `01a08529-6057-7e92-b0a7-e478333fac7d` | DM-Slicer｜05C-Fix 对应界面偏移测量 | `fully_read` | 0d681a9de1bc |
+| 05C | `01a08583-c4ea-73c0-8d55-475d04a69b10` | DM-Slicer｜05C 原始输入定位与验收恢复 | `fully_read` | fa4436a27845 |
+| DOC01 | `01a08622-8944-7970-9cac-9f41daefb109` | DM-Slicer｜DOC01 流程地图与后端迁移手册 | `fully_read` | not asserted |
+| 06A, 06B | `01a085f9-f7d8-7db2-a268-12822b3de6e6` | DM-Slicer｜06A 已验收｜aadf996 | `fully_read` | aadf996a05bf |
+| 06C | `01a08674-c6e0-7b63-9725-d200742cb855` | DM-Slicer｜06C 多块与带孔平面接口校正 | `fully_read` | 58ec93a67d82 |
+| 06D | `01a08848-1ebb-75d0-89c9-75e90c2bee1e` | DM-Slicer｜06D 任意朝向平面接口协变性 | `fully_read` | b7054f303896 |
+| POLICY | `01a088a6-8794-7322-8d7d-aa06af2d8bf4` | DM-Slicer｜Policy｜Human Inspection Deliverables | `fully_read` | not asserted |
+| AUDIT | `01a088c9-8766-7a40-8fcf-e28b8bd7fb14` | 审计 DM-Slicer 历史证据完整性 | `fully_read` | not asserted |
+| POLICY | `01a08980-5bae-7921-9526-da11bd01d7bf` | 更新项目级 Agent 治理规则 | `fully_read` | not asserted |
+
+## Recovered high-value chains
+
+- **02C:** the first closeout reported 23 passing tests but lacked repeatability and final provenance linkage. A later task reported 32 passing tests and two-process repeatability at `b646027`; the older evidence bundle remains bound to `79f60fa`, so the Release stays blocked.
+- **03C/A12:** the diagnostic task localized the 0.0427656319 mm^2 error to `transformGeometry` before STEP export; the STEP roundtrip added only about 1.16e-8 mm^2. Direct normalized construction retained Plane/Circle and reduced the error to about 4.46e-11 mm^2. This does not repair the missing post-fix run-to-commit binding.
+- **04A:** the task reported 83 tests with no failures/errors/skips at `1935427`, and historical A02/A08 CAD evidence was recovered. Because the historical outputs do not bind their execution explicitly to that commit, the Release stays blocked.
+- **06A/06B:** one root task contains both phases. 06B was completed in later turns at `c23cc83`; there is no missing synthetic 06B root task.
+- **06D review:** reviewer task `01a0887c-0ff5-7303-83ac-7de7484077e5` reported Critical 0 and Important 2. One finding showed covariance checks did not consume measured base normal/direction/translation and could pass corrupted base references. The other showed incomplete solid/face topology and boundary/surface-family checks in inverse-transform B-rep validation. Review preceded the single geometry commit; both fixes were incorporated into `b7054f3`, with no separately identifiable pre-fix commit.
+
+## Access limitations
+
+Two root tasks contain only session metadata: `01a07ec5-8f10-7302-89cf-d4ce461fa7f4` and `01a08363-8d56-75e1-9a9d-51047fb9a9f5`. Their contents are not reconstructed. No missing field is inferred from timestamps, adjacent commits, or task naming.
+
+The machine-readable companion is conversation_evidence.json. Each record includes its private archive ID and byte-integrity hash without exposing the local custody path.

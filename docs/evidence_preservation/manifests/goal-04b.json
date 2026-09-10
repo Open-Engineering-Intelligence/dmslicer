@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.1.0",
+  "goal_id": "04B",
+  "identity": {
+    "branch": {
+      "value": "feat/cylinder-partition-and-union",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "e50e1b8e7735f29a15175929000e799a54a83451",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "e50e1b8e7735f29a15175929000e799a54a83451",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "19354277520c40bf61193525cbf213946dbbb511",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "19354277520c40bf61193525cbf213946dbbb511",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-cylinder_fit_04b-U04_cylinder_full_fill-inputs.step",
+      "path": "benchmarks/cylinder_fit_04b/U04_cylinder_full_fill/inputs.step",
+      "sha256": "e4a98b86d0ea7406db4ddec0928fd0be4a4c40bebf9e787a0c2907a8dd6d716a",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-cylinder_fit_04b-U05_cylinder_short_core-inputs.step",
+      "path": "benchmarks/cylinder_fit_04b/U05_cylinder_short_core/inputs.step",
+      "sha256": "997617210b687c4616b7c03560c72460d6308ff58a4a6b372671705996b6906a",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-cylinder_fit_04b-U06_cylinder_unequal_overlap-inputs.step",
+      "path": "benchmarks/cylinder_fit_04b/U06_cylinder_unequal_overlap/inputs.step",
+      "sha256": "78abcca154c087bb8693799b33393092e6d45b56ffd6aff7dbce5594e529a7d8",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "unrecovered",
+      "value": null,
+      "unit": null,
+      "role": null,
+      "source": null,
+      "confidence": "U"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-04b-junit-unrecovered",
+      "kind": "JUNIT",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical JUnit not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-04b-validator-unrecovered",
+      "kind": "VALIDATOR",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical validator output not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-04b-geometry-unrecovered",
+      "kind": "GEOMETRY",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical STEP/BREP/FCStd output not present in P0 custody sources",
+      "confidence": "U"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": null,
+        "confidence": "U",
+        "source": ""
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "scientific_experiment": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "No P0 canonical output custody set was selected for 04B.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": null,
+    "target_commit": null,
+    "status": "NOT_IN_P0_RELEASE_SCOPE",
+    "reason": "Manifest only; no P0 canonical output custody set was selected for 04B.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  },
+  "run_id": "p0-preservation-04b-e50e1b8",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a08457-0fb1-7a12-ad86-6740aef0d701",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08457-0fb1-7a12-ad86-6740aef0d701",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
+}
