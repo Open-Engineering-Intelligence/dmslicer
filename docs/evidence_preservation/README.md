@@ -55,4 +55,5 @@ Evidence Releases are append-only by policy, not inherently immutable. Each Rele
 - `ARTIFACT_RECONCILIATION.md` and `artifact_reconciliation.json`: per-source file reconciliation and byte-integrity classification.
 - `EVIDENCE_PROMOTION_CI_REQUIREMENTS.md`: fail-closed requirements for a future automated promotion gate.
 - `P1_HISTORICAL_EVIDENCE_REPORT.md`: P1 final reconciliation, custody, Release, and policy outcome.
+- `p1_run_manifest.json`: sanitized P1 run identity, counts, artifact digests, and unresolved gaps.
 - `manifests/goal-*.json`: machine-readable per-Goal evidence manifests.
