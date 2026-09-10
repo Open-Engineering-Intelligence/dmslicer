@@ -124,6 +124,10 @@ foreach ($id in @($selectedIds)) {
 
 $conversationDirectory = Join-Path $CustodyRoot "private_conversations"
 New-Item -ItemType Directory -Path $conversationDirectory -Force | Out-Null
+$privatePath = Join-Path $CustodyRoot "PRIVATE_CONVERSATION_INVENTORY.json"
+if (Test-Path -LiteralPath $privatePath) {
+    throw "Refusing to overwrite private conversation inventory: $privatePath"
+}
 $privateRecords = @()
 $publicRecords = @()
 
@@ -217,7 +221,6 @@ $privateInventory = [ordered]@{
     inaccessible_count = @($privateRecords | Where-Object access_status -ne "fully_read").Count
     records = $privateRecords
 }
-$privatePath = Join-Path $CustodyRoot "PRIVATE_CONVERSATION_INVENTORY.json"
 $privateInventory | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $privatePath -Encoding utf8NoBOM
 
 $public = [ordered]@{
