@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dmslicer-evidence-promotion"
+version = "0.1.0"
+description = "DM-Slicer evidence promotion control plane"
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.23"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

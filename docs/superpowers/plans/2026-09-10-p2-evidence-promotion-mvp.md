@@ -46,7 +46,7 @@
 - Produces: `schema_path(name: str) -> Path` and result/status constants.
 - Produces: pytest factory `valid_request(repository_root: Path, staging_root: Path) -> dict[str, Any]`.
 
-- [ ] **Step 1: Write historical-compatibility and valid-request tests**
+- [x] **Step 1: Write historical-compatibility and valid-request tests**
 
 ```python
 def test_historical_manifests_remain_valid() -> None:
@@ -64,17 +64,17 @@ def test_valid_mvp_request_requires_unproven_geometry(valid_request) -> None:
     }
 ```
 
-- [ ] **Step 2: Write schema rejection tests**
+- [x] **Step 2: Write schema rejection tests**
 
 Remove `identity.implementation_commit`, set `run_id` to `../escape`, add a tolerance without `unit`, add an unknown property, and supply geometry PASS/evidence. Each case must raise `jsonschema.ValidationError` at the changed field.
 
-- [ ] **Step 3: Run tests and verify RED**
+- [x] **Step 3: Run tests and verify RED**
 
 Run: `py -3.12 -m pytest tests/test_schema_contracts.py -q`
 
 Expected: import/fixture failure because P2 helpers and schemas do not exist.
 
-- [ ] **Step 4: Implement package metadata, deterministic JSON helpers, constants, and schemas**
+- [x] **Step 4: Implement package metadata, deterministic JSON helpers, constants, and schemas**
 
 Use schema version `2.0.0`. The request requires `goal_id`, `run_id`, identity (`branch`, full `implementation_commit`, `parent_baseline`, `merge_base`), source staging root and allowlist, environment versions, execution records, tolerances, eight separate results, four history-reference arrays, custody, and geometry validation.
 
@@ -91,13 +91,13 @@ The MVP geometry contract is exactly:
 }
 ```
 
-- [ ] **Step 5: Run schema tests and verify GREEN**
+- [x] **Step 5: Run schema tests and verify GREEN**
 
 Run: `py -3.12 -m pytest tests/test_schema_contracts.py -q`
 
 Expected: all pass; 13/13 historical manifests remain valid.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add pyproject.toml src/dmslicer docs/evidence_preservation/schemas tests/conftest.py tests/test_schema_contracts.py
