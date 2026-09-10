@@ -169,9 +169,9 @@
   },
   "results": {
     "software_pytest": {
-      "value": null,
-      "confidence": "U",
-      "source": ""
+      "value": "55 passed; six FCStd artifacts reopened successfully; historical task statement only.",
+      "confidence": "CHAT",
+      "source": "Codex task 01a080e6-2995-73e2-a581-9a386e703e58"
     },
     "scientific_experiment": {
       "value": null,
@@ -197,5 +197,14 @@
     "url": null,
     "supersedes": null,
     "superseded_by": null
-  }
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a080e6-2995-73e2-a581-9a386e703e58",
+      "relationship": "root",
+      "archive_id": "codex-task-01a080e6-2995-73e2-a581-9a386e703e58",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
 }

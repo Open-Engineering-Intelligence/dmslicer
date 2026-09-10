@@ -24,6 +24,8 @@ Historical execution fields are never inferred from file modification times, cha
 
 Chat/task records may be retained as `CHAT` provenance, but they do not replace a project artifact and are never promoted to a current geometry PASS.
 
+P1 stores sanitized task metadata in Git and raw read-only JSONL exports in private custody. The public task index carries stable task/archive IDs but no private absolute custody paths.
+
 ## Public and private records
 
 Public files use repository-relative paths, Release asset names, stable artifact IDs, GitHub URIs, and SHA-256 values. They must not contain usernames, Codex task paths, secrets, environment-variable values, or private absolute paths.
@@ -49,4 +51,8 @@ Evidence Releases are append-only by policy, not inherently immutable. Each Rele
 - `WORKTREE_CUSTODY_REPORT.md`: worktree lifecycle classification without deletion.
 - `HUMAN_INSPECTION_POLICY_PR.md`: isolated policy integration evidence.
 - `P0_PRESERVATION_REPORT.md`: final A–J preservation report.
+- `CONVERSATION_EVIDENCE_INDEX.md` and `conversation_evidence.json`: sanitized task discovery, access state, and recovered provenance chains.
+- `ARTIFACT_RECONCILIATION.md` and `artifact_reconciliation.json`: per-source file reconciliation and byte-integrity classification.
+- `EVIDENCE_PROMOTION_CI_REQUIREMENTS.md`: fail-closed requirements for a future automated promotion gate.
+- `P1_HISTORICAL_EVIDENCE_REPORT.md`: P1 final reconciliation, custody, Release, and policy outcome.
 - `manifests/goal-*.json`: machine-readable per-Goal evidence manifests.

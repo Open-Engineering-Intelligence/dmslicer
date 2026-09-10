@@ -1436,12 +1436,23 @@
         "source": "Git commit"
       }
     ],
-    "known_failures_or_mismatches": [],
+    "known_failures_or_mismatches": [
+      {
+        "value": "No separate pre-fix commit exists because review preceded the single geometry commit; failure_commit remains unknown/not applicable rather than inferred.",
+        "confidence": "CHAT",
+        "source": "Reviewer task 01a0887c-0ff5-7303-83ac-7de7484077e5"
+      }
+    ],
     "reviewer_findings": [
       {
-        "value": "Historical closeout records two important reviewer findings as fixed and zero unresolved findings; exact wording was not recoverable, so it is not reconstructed here.",
+        "value": "Important: covariance validation hardcoded/reconstructed direction data instead of validating measured base operation n'=R*n and t'=R*t; corrupted base references could pass.",
         "confidence": "CHAT",
-        "source": "historical task closeout"
+        "source": "Reviewer task 01a0887c-0ff5-7303-83ac-7de7484077e5"
+      },
+      {
+        "value": "Important: inverse-transform B-rep validation omitted solid face/edge/vertex and surface/boundary-family checks, and analogous face boundary checks; split or resegmented boundaries could pass.",
+        "confidence": "CHAT",
+        "source": "Reviewer task 01a0887c-0ff5-7303-83ac-7de7484077e5"
       }
     ]
   },
@@ -1485,5 +1496,21 @@
     "url": "https://github.com/Open-Engineering-Intelligence/dmslicer/releases/tag/goal-06d-evidence-b7054f3",
     "supersedes": null,
     "superseded_by": null
-  }
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a08848-1ebb-75d0-89c9-75e90c2bee1e",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08848-1ebb-75d0-89c9-75e90c2bee1e",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    },
+    {
+      "task_id": "01a0887c-0ff5-7303-83ac-7de7484077e5",
+      "relationship": "review_or_subagent",
+      "archive_id": "codex-task-01a0887c-0ff5-7303-83ac-7de7484077e5",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
 }

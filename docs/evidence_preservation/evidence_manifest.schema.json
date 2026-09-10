@@ -65,6 +65,18 @@
         "validation_role": {"type": "string"},
         "confidence": {"$ref": "#/$defs/confidence"}
       }
+    },
+    "conversationReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "relationship", "archive_id", "confidence", "source"],
+      "properties": {
+        "task_id": {"type": "string"},
+        "relationship": {"type": "string", "enum": ["root", "review_or_subagent"]},
+        "archive_id": {"type": "string"},
+        "confidence": {"type": "string", "const": "CHAT"},
+        "source": {"type": "string"}
+      }
     }
   },
   "properties": {
@@ -149,6 +161,10 @@
     "artifacts": {
       "type": "array",
       "items": {"$ref": "#/$defs/artifact"}
+    },
+    "conversation_provenance": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/conversationReference"}
     },
     "history": {
       "type": "object",

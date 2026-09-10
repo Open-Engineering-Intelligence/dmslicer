@@ -1,5 +1,7 @@
 # DM-Slicer P0 Research Evidence Preservation Report
 
+> Historical record: this report is preserved as the P0 closeout. P1 later recovered the exact 06D reviewer findings, located 06B inside the shared 06A/06B task, and copied the previously omitted 03A/03B/04B/05A risk sets. See `P1_HISTORICAL_EVIDENCE_REPORT.md`; the original P0 findings below are not deleted or silently rewritten.
+
 Date: 2026-09-10
 
 No 07A work was started. No historical output, failure evidence, worktree, or source artifact was deleted, moved, overwritten, rebased, or force-pushed.

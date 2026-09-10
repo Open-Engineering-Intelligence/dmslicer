@@ -2,6 +2,8 @@
 
 No worktree was deleted, moved, cleaned, or rewritten in this preservation phase.
 
+P1 addendum: 03A, 03B, 04B, and 05A now have verified second local custody copies (808 files total), and exact 06D reviewer text has been recovered into the manifests. These remain local copies on the same host, not independent off-host protection, so the existing `NOT_ARCHIVABLE` decisions remain unchanged. The separate CAD evidence governance PR was merged to `main` at `cea98d726e9e3a2f69d648db7b2920a48df41b6d`; the older conflict-preserving human-inspection policy worktree was not modified or deleted.
+
 ## Classification rule
 
 `ARCHIVABLE` requires a remote implementation commit, a complete Goal manifest, canonical evidence in a remote Release or approved persistent store, verified SHA-256, an independent local preservation copy, retained failures/mismatches and applicable review evidence, and no unresolved provenance blocker. Classification does not authorize deletion.

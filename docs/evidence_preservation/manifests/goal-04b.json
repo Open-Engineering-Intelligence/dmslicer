@@ -179,5 +179,14 @@
     "url": null,
     "supersedes": null,
     "superseded_by": null
-  }
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a08457-0fb1-7a12-ad86-6740aef0d701",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08457-0fb1-7a12-ad86-6740aef0d701",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
 }
