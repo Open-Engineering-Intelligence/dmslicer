@@ -2,8 +2,10 @@
 
 Date: 2026-09-10
 
-P1 implementation commit: `cdeca1cd8ea2ca98a44d3e3c7db0a368617d9397`  
-P0 parent baseline: `4f77c8ab8700a5cef9ef02667b6b7e4005472147`  
+P1 implementation commit: `cdeca1cd8ea2ca98a44d3e3c7db0a368617d9397`
+
+P0 parent baseline: `4f77c8ab8700a5cef9ef02667b6b7e4005472147`
+
 Policy source / merge: `1c0718edf16e637048c8df6a2df8aefd6afcb72d` / `cea98d726e9e3a2f69d648db7b2920a48df41b6d`
 
 No 07A work was started. No historical output, failure evidence, task record, worktree, Release, or source artifact was deleted, overwritten, rebased, force-pushed, or rewritten. `docs/research_v2/` was not modified.
