@@ -169,14 +169,25 @@ def test_allowlist_and_path_defects_fail_closed(
 
 def test_symlink_escape_is_rejected_when_host_supports_symlinks(policy_case, tmp_path: Path) -> None:
     repository, request, staging = policy_case
-    outside = tmp_path / "outside.json"
+    outside_directory = tmp_path / "outside"
+    outside_directory.mkdir()
+    outside = outside_directory / "outside.json"
     outside.write_text('{"status":"FAIL"}\n', encoding="utf-8")
     link = staging / "linked.json"
     try:
         os.symlink(outside, link)
-    except OSError as error:
-        pytest.skip(f"host does not permit test symlink creation: {error}")
-    request["source"]["allowlist"][0]["source_path"] = "linked.json"
+        source_path = "linked.json"
+    except OSError:
+        junction = staging / "linked-directory"
+        completed = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(junction), str(outside_directory)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        assert completed.returncode == 0
+        source_path = "linked-directory/outside.json"
+    request["source"]["allowlist"][0]["source_path"] = source_path
 
     assert "PATH_ESCAPE" in _codes(validate_request(request, repository))
 
@@ -190,6 +201,14 @@ def test_symlink_escape_is_rejected_when_host_supports_symlinks(policy_case, tmp
         "-----BEGIN PRIVATE KEY-----",
         "ghp_abcdefghijklmnopqrstuvwxyz012345",
         "password = do-not-publish",
+    ],
+    ids=[
+        "windows-home-path",
+        "linux-home-path",
+        "codex-private-path",
+        "private-key-header",
+        "github-token",
+        "password-assignment",
     ],
 )
 def test_sensitive_public_content_is_rejected(policy_case, sensitive_text: str) -> None:
