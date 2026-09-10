@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import subprocess
 from typing import Any, Mapping
@@ -72,6 +73,26 @@ def _schema_findings(request: Mapping[str, Any]) -> list[PolicyFinding]:
         findings.append(
             PolicyFinding("SCHEMA_INVALID", f"Request schema validation failed at {field}")
         )
+    execution = request.get("execution")
+    if isinstance(execution, list):
+        for index, record in enumerate(execution):
+            if not isinstance(record, Mapping):
+                continue
+            timestamp = record.get("timestamp")
+            if not isinstance(timestamp, str):
+                continue
+            try:
+                parsed = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+                valid_timestamp = "T" in timestamp and parsed.tzinfo is not None
+            except ValueError:
+                valid_timestamp = False
+            if not valid_timestamp:
+                findings.append(
+                    PolicyFinding(
+                        "SCHEMA_INVALID",
+                        f"Request schema validation failed at execution.{index}.timestamp",
+                    )
+                )
     return findings
 
 
@@ -126,8 +147,21 @@ def _git_findings(request: Mapping[str, Any], repository_root: Path) -> list[Pol
     return findings
 
 
-def _is_relative_input(path: Path) -> bool:
-    return not path.is_absolute() and not path.drive and ".." not in path.parts
+def portable_relative_path(value: str) -> Path | None:
+    """Parse a repository-relative path consistently on Windows and POSIX hosts."""
+    normalized = value.replace("\\", "/")
+    if normalized == ".":
+        return Path(".")
+    if not normalized:
+        return None
+    if re.match(r"^[A-Za-z]:", normalized):
+        return None
+    pure = PurePosixPath(normalized)
+    if pure.is_absolute() or not pure.parts:
+        return None
+    if ".." in pure.parts:
+        return None
+    return Path(*pure.parts)
 
 
 def _contains_symlink(path: Path, stop: Path) -> bool:
@@ -149,10 +183,10 @@ def _resolve_artifacts(
     findings: list[PolicyFinding] = []
     resolved: list[ResolvedArtifact] = []
     repository_root = repository_root.resolve(strict=True)
-    staging_input = Path(request["source"]["staging_root"])
+    staging_input = portable_relative_path(request["source"]["staging_root"])
     if (
-        not _is_relative_input(staging_input)
-        or not staging_input.parts
+        staging_input is None
+        or staging_input == Path(".")
         or staging_input.parts[0].lower() not in {"outputs", "work"}
     ):
         return [], [
@@ -171,24 +205,26 @@ def _resolve_artifacts(
     seen_public: set[str] = set()
     for artifact in request["source"]["allowlist"]:
         artifact_id = artifact["artifact_id"]
-        source_input = Path(artifact["source_path"])
-        public_input = Path(artifact["public_path"])
+        source_input = portable_relative_path(artifact["source_path"])
+        public_input = portable_relative_path(artifact["public_path"])
         if artifact_id in seen_ids:
             findings.append(PolicyFinding("PUBLIC_PATH_INVALID", "Artifact IDs must be unique", artifact_id))
         seen_ids.add(artifact_id)
 
-        if not _is_relative_input(public_input) or public_input == Path("."):
+        if public_input is None or public_input == Path("."):
             findings.append(
                 PolicyFinding("PUBLIC_PATH_INVALID", "Public path must be a safe relative file path", artifact_id)
             )
-        public_key = public_input.as_posix().lower()
+            public_key = ""
+        else:
+            public_key = public_input.as_posix().lower()
         if public_key in _GENERATED_PACKAGE_PATHS or public_key in seen_public:
             findings.append(
                 PolicyFinding("PUBLIC_PATH_INVALID", "Public path is reserved or duplicated", artifact_id)
             )
         seen_public.add(public_key)
 
-        if not _is_relative_input(source_input):
+        if source_input is None:
             findings.append(
                 PolicyFinding("PATH_ESCAPE", "Allowlisted source must be relative to the staging root", artifact_id)
             )

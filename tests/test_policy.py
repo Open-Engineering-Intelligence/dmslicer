@@ -8,7 +8,7 @@ import subprocess
 
 import pytest
 
-from dmslicer.evidence_promotion.policy import validate_request
+from dmslicer.evidence_promotion.policy import portable_relative_path, validate_request
 
 
 def _git(repository: Path, *arguments: str) -> str:
@@ -56,6 +56,18 @@ def policy_case(tmp_path: Path, valid_request):
 
 def _codes(report: dict) -> set[str]:
     return {finding["code"] for finding in report["findings"]}
+
+
+@pytest.mark.parametrize(
+    "unsafe",
+    ["C:/Users/person/result.json", r"C:\Users\person\result.json", "/tmp/result.json", "../result.json", r"..\result.json"],
+)
+def test_portable_path_parser_rejects_windows_and_posix_escape_forms(unsafe: str) -> None:
+    assert portable_relative_path(unsafe) is None
+
+
+def test_portable_path_parser_normalizes_safe_separators() -> None:
+    assert portable_relative_path(r"artifacts\result.json").as_posix() == "artifacts/result.json"
 
 
 def test_valid_request_passes_every_all_local_policy_checks(policy_case) -> None:
@@ -125,6 +137,13 @@ def test_schema_failure_marks_dependent_checks_not_run(policy_case) -> None:
 
     assert report["checks"]["schema"] == "FAIL"
     assert set(report["checks"].values()) == {"FAIL", "NOT_RUN"}
+
+
+def test_invalid_execution_timestamp_fails_schema_policy(policy_case) -> None:
+    repository, request, _ = policy_case
+    request["execution"][0]["timestamp"] = "not-a-date"
+
+    assert "SCHEMA_INVALID" in _codes(validate_request(request, repository))
 
 
 @pytest.mark.parametrize(
