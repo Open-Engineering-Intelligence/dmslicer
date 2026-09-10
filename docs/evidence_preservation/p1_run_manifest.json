@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "goal_id": "P1",
+  "run_id": "run-p1-historical-ingestion-20260910-02",
+  "branch": "chore/p1-historical-evidence-ingestion",
+  "implementation_commit": "cdeca1cd8ea2ca98a44d3e3c7db0a368617d9397",
+  "policy_source_commit": "1c0718edf16e637048c8df6a2df8aefd6afcb72d",
+  "policy_merge_commit": "cea98d726e9e3a2f69d648db7b2920a48df41b6d",
+  "parent_baseline": "4f77c8ab8700a5cef9ef02667b6b7e4005472147",
+  "inputs": [
+    "local Codex session index and read-only task JSONL",
+    "formal 02C-06D and DOC01 worktrees",
+    "P0 local custody inventory and canonical copies",
+    "P0 Release staging and verified existing GitHub Releases",
+    "located historical Codex artifact directories"
+  ],
+  "input_sha256_role": "byte_integrity_only_not_geometry_equivalence",
+  "execution": {
+    "commands": [
+      "collect_p1_conversations.ps1",
+      "collect_p1_artifacts.ps1",
+      "enrich_p1_provenance.ps1",
+      "generate_conversation_index.ps1",
+      "Test-Json against evidence_manifest.schema.json"
+    ],
+    "exit_code": 0,
+    "timestamp": "2026-09-10",
+    "confidence": "L"
+  },
+  "environment": {
+    "freecad_version": null,
+    "occt_version": null,
+    "python_version": null,
+    "pytest_version": null,
+    "reason": "Historical experiments were not rerun; unavailable values remain unknown rather than inferred."
+  },
+  "tolerance": {
+    "value": null,
+    "unit": null,
+    "reason": "No geometric-equivalence experiment was performed in P1."
+  },
+  "counts": {
+    "root_tasks": 36,
+    "related_tasks": 53,
+    "fully_read_tasks": 51,
+    "metadata_only_tasks": 2,
+    "raw_conversation_copies": 53,
+    "risk_goal_copies": 808,
+    "risk_goal_copy_bytes": 1750345,
+    "artifact_source_instances": 5150,
+    "artifact_source_instance_bytes": 22160450,
+    "manifest_schema_validation": "13/13 PASS"
+  },
+  "public_artifacts": [
+    {
+      "path": "docs/evidence_preservation/conversation_evidence.json",
+      "sha256": "059a48e5d44e2abb5832a9663204604c7a781de282fbd3843a46d5b2d39a6f61"
+    },
+    {
+      "path": "docs/evidence_preservation/artifact_reconciliation.json",
+      "sha256": "1a8782641d722f6fc3701d8b224544a589bf3b309253ccc4d2513ccb1054057d"
+    },
+    {
+      "path": "docs/evidence_preservation/CONVERSATION_EVIDENCE_INDEX.md",
+      "sha256": "43afc5e58984c9b886f4464a8f5f565b9f93acc8c6e2f729b4e797c1a7da1b7f"
+    },
+    {
+      "path": "docs/evidence_preservation/ARTIFACT_RECONCILIATION.md",
+      "sha256": "a02bd09599baf579bec76dae168805a3b2d08e867aeb3758e3f2e1897aeb7b78"
+    }
+  ],
+  "private_artifact_ids": [
+    "PRIVATE_CONVERSATION_INVENTORY.json",
+    "PRIVATE_TASK_SUMMARIES.json",
+    "PRIVATE_ARTIFACT_INVENTORY.v4.json",
+    "RISK_GOAL_COPY_INVENTORY.json",
+    "P1_RUN_MANIFEST.json"
+  ],
+  "reviewer_findings": [
+    "06D covariance validation did not consume measured base operation normal/direction/translation and could pass corrupted references.",
+    "06D inverse-transform B-rep validation omitted complete solid/face topology and boundary/surface-family checks."
+  ],
+  "failure_commit": null,
+  "fix_commit": "b7054f303896aa4a0762248a0b54686d8e733ead",
+  "known_gaps": [
+    "The new raw conversation and risk-goal copies are not independently off-host.",
+    "02C, 03C, 04A, 05B, 05C, and 06B remain provenance-blocked.",
+    "CHAT evidence is not promoted to current geometry or scientific validation."
+  ],
+  "release_result": {
+    "supplemental_releases_created": 0,
+    "reason": "No blocked Goal met the complete provenance and independent-copy gates."
+  },
+  "evidence_confidence": ["GH", "L", "CHAT", "U"]
+}

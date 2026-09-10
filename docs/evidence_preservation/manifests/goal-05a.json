@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.1.0",
+  "goal_id": "05A",
+  "identity": {
+    "branch": {
+      "value": "feat/contact-tolerance-pilot",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "20b26450dffee96427a4375c310b8b303c1c9812",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "20b26450dffee96427a4375c310b8b303c1c9812",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "e50e1b8e7735f29a15175929000e799a54a83451",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "e50e1b8e7735f29a15175929000e799a54a83451",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m0_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m0_1tauE/inputs.step",
+      "sha256": "aa824b3411b1e88eab1f7885bfd69aae5f8ae9a5d880ba7e1726b5a112163f03",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m0_5tauE/inputs.step",
+      "sha256": "7f7a837239e2c44a09e99e5fcd17e2237e188486d3b1d44941f7fc35a3c43a09",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m0_9tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m0_9tauE/inputs.step",
+      "sha256": "96d0258720a3fe0e4c363a7575ee070ad661a7287da8099fa04994fe068f1a9f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m1_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m1_1tauE/inputs.step",
+      "sha256": "203bba9140bd42f757c37b1dc29d5895802dc91580714ab59b874a0ff8b62014",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m1tauE/inputs.step",
+      "sha256": "906bb839d312ef4867a41f49dcccf88c60c4c40a55e3092cb7e3630742300200",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m2tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m2tauE/inputs.step",
+      "sha256": "ce1836cccc357f4078f4025fae5461aae08e29d838c84db3dff81eb2ada058d8",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_m4tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m4tauE/inputs.step",
+      "sha256": "091e8f80ddc0b9c56c6efb06402f824794a4146ae2d05d6e0775b9ac1778f585",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_1tauE/inputs.step",
+      "sha256": "f2247e116e56c5de676042117cbdf4414538f285f3b45870d9f2c220e033dd70",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_5tauE/inputs.step",
+      "sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0_9tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_9tauE/inputs.step",
+      "sha256": "88165f44752ab005de983529b864f94cc304f7fffc55a5a2378eb6396071bb38",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p0tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0tauE/inputs.step",
+      "sha256": "02a9bb35d7cbd21cf911a22a426ef05b5c2aefb61d79523a35c2bf42d1c1f627",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p1_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p1_1tauE/inputs.step",
+      "sha256": "4829512bf3abddce5af645107d67bcfb3219c13495b1acf097780cb4ae1a803f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p1tauE/inputs.step",
+      "sha256": "d3b24986ed4b1409fefc6f55c06b7ba3677f17b4a608eb08e3cd4907f9f80ea2",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p2tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p2tauE/inputs.step",
+      "sha256": "7cbe97ce63a444ccb3906d9652d931484948eb7b5043792c53231271b65c958f",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A01_delta_p4tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p4tauE/inputs.step",
+      "sha256": "c0d46b2c7883d93e0fc7ab765c38a0cb106daab659218245599d38880c80d39c",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m0_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m0_1tauE/inputs.step",
+      "sha256": "ddd17842cca009b0c3abc8a1d2df13b3ed736f7029e3abd25d2f2837b031aead",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m0_5tauE/inputs.step",
+      "sha256": "5517efdea82d8221cedba951c9d78f21e61bbc2be6ca127a431f2f4152cb30a2",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m0_9tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m0_9tauE/inputs.step",
+      "sha256": "ed4469f9e8996d7543775af082ca6d9724ae23247a592ee68d0f8c4756ae3375",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m1_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m1_1tauE/inputs.step",
+      "sha256": "ceafa944236f9b92630f66672626952c7e0658499ef1a0560f3b0a4cb964dad4",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m1tauE/inputs.step",
+      "sha256": "ef4e603f9fc752ea633a536456fe3530ee5494b42cb4f1dd81434b3d7d83c2f8",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m2tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m2tauE/inputs.step",
+      "sha256": "872aa80e7793e33d2488eb7cfb591067dcaab5caca5c7b26b78eab78b9921233",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_m4tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_m4tauE/inputs.step",
+      "sha256": "25b62ecd3bd4e601e66d24d157a36de400d0c9ad5f9babf37933bcabcb465f66",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p0_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p0_1tauE/inputs.step",
+      "sha256": "4f334d34280d428238c43e39b49d3f2032fe6e285ece38a4391b52bf8718daa7",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p0_5tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p0_5tauE/inputs.step",
+      "sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p0_9tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p0_9tauE/inputs.step",
+      "sha256": "68b8ed6faf13cf139fa2ddc40b0406026fe3a8ee875ad87ae407aef2f32737f2",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p0tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p0tauE/inputs.step",
+      "sha256": "19bd3fa30cd9ee185449f4cb788cc2c1530d138e4e2a543dd1e82a879214d9ce",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p1_1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p1_1tauE/inputs.step",
+      "sha256": "0ae9bfa7a69ee7bf307f0edc9631474971dfdf8224df426a5d6ca361b1a8138a",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p1tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p1tauE/inputs.step",
+      "sha256": "a80472cb14f377a6f3cc596c994c33079decc3b66134d132702628bd0379de05",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p2tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p2tauE/inputs.step",
+      "sha256": "e3a56433678e72fb65b62039bcf4709b2f14661d004709a71a54a7870b0ef8c7",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_tolerance_pilot_05a-A07_delta_p4tauE-inputs.step",
+      "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p4tauE/inputs.step",
+      "sha256": "36b2fc792a2a94dc5e12468652553fce850d05ea8a60a642793092daabe83947",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "unrecovered",
+      "value": null,
+      "unit": null,
+      "role": null,
+      "source": null,
+      "confidence": "U"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-05a-junit-unrecovered",
+      "kind": "JUNIT",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical JUnit not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-05a-validator-unrecovered",
+      "kind": "VALIDATOR",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical validator output not present in P0 custody sources",
+      "confidence": "U"
+    },
+    {
+      "artifact_id": "goal-05a-geometry-unrecovered",
+      "kind": "GEOMETRY",
+      "path": null,
+      "release_asset_name": null,
+      "sha256": null,
+      "size_bytes": null,
+      "validation_role": "historical STEP/BREP/FCStd output not present in P0 custody sources",
+      "confidence": "U"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": null,
+        "confidence": "U",
+        "source": ""
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": "104 passed across 30 samples; historical task statement only.",
+      "confidence": "CHAT",
+      "source": "Codex task 01a08490-3770-7430-b860-aba97b3f35d3"
+    },
+    "scientific_experiment": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "No P0 canonical output custody set was selected for 05A.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": null,
+    "target_commit": null,
+    "status": "NOT_IN_P0_RELEASE_SCOPE",
+    "reason": "Manifest only; no P0 canonical output custody set was selected for 05A.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  },
+  "run_id": "p0-preservation-05a-20b2645",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a08490-3770-7430-b860-aba97b3f35d3",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08490-3770-7430-b860-aba97b3f35d3",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
+}

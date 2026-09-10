@@ -1,0 +1,724 @@
+{
+  "schema_version": "1.1.0",
+  "goal_id": "03C",
+  "identity": {
+    "branch": {
+      "value": "feat/contact-canonical-interface-topology",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "5e96906f4103f103b9522a4c6e8462ad238c74af",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "5e96906f4103f103b9522a4c6e8462ad238c74af",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-contact_canonical_03c-A11-fixture.step",
+      "path": "benchmarks/contact_canonical_03c/A11/fixture.step",
+      "sha256": "1fecf2dd0c471abb5519f206c11be2c52db7819082fed2c5e2032d28c6e173b8",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-contact_canonical_03c-A12-fixture.step",
+      "path": "benchmarks/contact_canonical_03c/A12/fixture.step",
+      "sha256": "2f5103a555ceae4faad2666e82c8a7c67d59f8b92d0d78e2ec1e3f2c42d5574a",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": "1.1.1",
+      "confidence": "L",
+      "source": "preserved environment/diagnostic evidence"
+    },
+    "occt_version": {
+      "value": "7.8.1",
+      "confidence": "L",
+      "source": "preserved environment/diagnostic evidence"
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": null,
+    "confidence": "U"
+  },
+  "tolerances": [
+    {
+      "name": "area_epsilon",
+      "value": 1E-08,
+      "unit": "mm^2",
+      "role": "post-fix area validation",
+      "source": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/FIX_REPORT.md",
+      "confidence": "L"
+    },
+    {
+      "name": "coverage_epsilon",
+      "value": 1E-07,
+      "unit": "dimensionless",
+      "role": "post-fix coverage validation",
+      "source": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/FIX_REPORT.md",
+      "confidence": "L"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-03c-custody-0001",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/actual.json",
+      "release_asset_name": null,
+      "sha256": "dfa02f24c2321b7de88265355f623ceb688f45b03a50ac931ad53b20b39b129a",
+      "size_bytes": 3924,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0002",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/debug.20260908-233059.FCBak",
+      "release_asset_name": null,
+      "sha256": "8efd764b4ef9caa2291c3d2aa510f7d5a88315307154ec1b6b8efb4deef0af85",
+      "size_bytes": 18073,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0003",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A11/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "2abda56c719be37705db87a89b47d580b6ce9c46fb05b271ab380d3cd560575a",
+      "size_bytes": 18086,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0004",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "78d7c9e3873e9bda92520060864b84efeeda9ba557b24c221e807ba8ed617b0d",
+      "size_bytes": 310,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0005",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_1/actual.json",
+      "release_asset_name": null,
+      "sha256": "dfa02f24c2321b7de88265355f623ceb688f45b03a50ac931ad53b20b39b129a",
+      "size_bytes": 3924,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0006",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_1/debug.20260908-233100.FCBak",
+      "release_asset_name": null,
+      "sha256": "867cd6f3c9be03062443ce9f95820cf6efc0e9cb278cb551e4d2c05a9c90d92a",
+      "size_bytes": 18074,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0007",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_1/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "f55b79e3811d8e71b08b37bb2aaf2586ddb12aa51aff20146eca657520ed6a69",
+      "size_bytes": 18084,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0008",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0009",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_2/actual.json",
+      "release_asset_name": null,
+      "sha256": "dfa02f24c2321b7de88265355f623ceb688f45b03a50ac931ad53b20b39b129a",
+      "size_bytes": 3924,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0010",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_2/debug.20260908-233101.FCBak",
+      "release_asset_name": null,
+      "sha256": "e173d9e85d656799bfff6531e703c07a961d9bc142c5c6664bb840df19e22b74",
+      "size_bytes": 18080,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0011",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_2/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "7698de572c7ec87b5a4ee2ff9259e05272cc58d16196dbdac6582cb868a1f2ff",
+      "size_bytes": 18088,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0012",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A11/repeatability/run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0013",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A11/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0014",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/actual.json",
+      "release_asset_name": null,
+      "sha256": "6e2d6505d624e21503aa999f59d172628b89378ed2a025a191576f42571a7b99",
+      "size_bytes": 3235,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0015",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/debug.20260909-071632.FCBak",
+      "release_asset_name": null,
+      "sha256": "15cba084261b78b04999b4a33e1daf71876d589b2b6e5cdb118efd857d6168a0",
+      "size_bytes": 7204,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0016",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "0c2a673f1dfb1edc8e7e009b6a3a90cd8e22591230e3896614f2c3af357953e5",
+      "size_bytes": 7209,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0017",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "78d7c9e3873e9bda92520060864b84efeeda9ba557b24c221e807ba8ed617b0d",
+      "size_bytes": 310,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0018",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_1/actual.json",
+      "release_asset_name": null,
+      "sha256": "6e2d6505d624e21503aa999f59d172628b89378ed2a025a191576f42571a7b99",
+      "size_bytes": 3235,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0019",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_1/debug.20260909-071633.FCBak",
+      "release_asset_name": null,
+      "sha256": "469f00b26c80905050f0be032c6b8781404216421161f33a7766066d4731e863",
+      "size_bytes": 7209,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0020",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_1/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "a9260a7543eec232af051fa4648e9db8b1db218531090af483568843af180c81",
+      "size_bytes": 7207,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0021",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0022",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_2/actual.json",
+      "release_asset_name": null,
+      "sha256": "6e2d6505d624e21503aa999f59d172628b89378ed2a025a191576f42571a7b99",
+      "size_bytes": 3235,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0023",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_2/debug.20260909-071634.FCBak",
+      "release_asset_name": null,
+      "sha256": "a6d4fc802687f6877d3224ef448872a106eb9517715fc5b47503aac3941276fb",
+      "size_bytes": 7213,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0024",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_2/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "ee2a5b20af588f8603d1f2e236cd969dcbf76159b9fab7a0d857170d6e339c89",
+      "size_bytes": 7212,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0025",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/repeatability/run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0026",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/A12/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0027",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_analytic_geometry_fix_20260909/FIX_REPORT.md",
+      "release_asset_name": null,
+      "sha256": "cd6d5e1d2fe18da99dd78e7bd2ddfd45f42ead8a458fce338ee774f1046b4c3f",
+      "size_bytes": 1319,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0028",
+      "kind": "STEP",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/control_direct_scaled.step",
+      "release_asset_name": null,
+      "sha256": "73c78062875f28280ebf1c1ec76b5c56522b1782c070f2668d171291fcc64042",
+      "size_bytes": 14534,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0029",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/control2_curve_measurements.json",
+      "release_asset_name": null,
+      "sha256": "6290330781ca3481d1f6b7878124103a2399e5b4dd6afcc657cc8619ffb21fb0",
+      "size_bytes": 4143,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0030",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/control2_curve_probe.py",
+      "release_asset_name": null,
+      "sha256": "80e04885f95cd83ad2058d1fefb4cd94c1dbf22db7b30045f6bbd66c92920570",
+      "size_bytes": 4921,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0031",
+      "kind": "STEP",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/diagnostic_rebuild.step",
+      "release_asset_name": null,
+      "sha256": "6d398635a55851e12f507f624c5ed86a74b96915b9d418a533f6ad5b6bea047d",
+      "size_bytes": 23300,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0032",
+      "kind": "FAILURE_OR_REVIEW_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/diagnostic_report.md",
+      "release_asset_name": null,
+      "sha256": "c2c116477548abb1ab09057b4fb51bac4ef90f954c799ea14ea0bc0f05df5c66",
+      "size_bytes": 9476,
+      "validation_role": "retained failure, mismatch, diagnostic, or review evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0033",
+      "kind": "FAILURE_OR_REVIEW_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/diagnostic_summary.json",
+      "release_asset_name": null,
+      "sha256": "4c0e2ba1afe371f5b44aa449418c557201c19e3664ee2b62a5997f52685da7d1",
+      "size_bytes": 2663,
+      "validation_role": "retained failure, mismatch, diagnostic, or review evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0034",
+      "kind": "FAILURE_OR_REVIEW_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/probe_failure.txt",
+      "release_asset_name": null,
+      "sha256": "16912a5fbe4a56421985ff12037709cf1fba3dc6366bfb1b3569dc41333282e9",
+      "size_bytes": 891,
+      "validation_role": "retained failure, mismatch, diagnostic, or review evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0035",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/probe.py",
+      "release_asset_name": null,
+      "sha256": "8ed6474a1cc9833b7b348cfdc6f205d6dd91592006af47b965757fd02d7bf203",
+      "size_bytes": 13679,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0036",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/stage_measurements.json",
+      "release_asset_name": null,
+      "sha256": "2f70283e9b4989447fcc9ad0ee941b266db18e12ae32538b39a93fd3e54bf838",
+      "size_bytes": 72698,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0037",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/actual.json",
+      "release_asset_name": null,
+      "sha256": "1544c2ed20aadb858ca4915c7c54e8fc36ccb7790363c7354562b172095ce69c",
+      "size_bytes": 2878,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0038",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/debug.20260908-233102.FCBak",
+      "release_asset_name": null,
+      "sha256": "b759f3671f7e8c054bfe49a33f1aeefa5e4897f915da434bc033f886a6a8d5ae",
+      "size_bytes": 27232,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0039",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A12/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "e505f30dcfd508221bebe3461c80653a8f9ba8a35d7e464c7c710e344a1b5804",
+      "size_bytes": 27228,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0040",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/repeatability.json",
+      "release_asset_name": null,
+      "sha256": "78d7c9e3873e9bda92520060864b84efeeda9ba557b24c221e807ba8ed617b0d",
+      "size_bytes": 310,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0041",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_1/actual.json",
+      "release_asset_name": null,
+      "sha256": "1544c2ed20aadb858ca4915c7c54e8fc36ccb7790363c7354562b172095ce69c",
+      "size_bytes": 2878,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0042",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_1/debug.20260908-233103.FCBak",
+      "release_asset_name": null,
+      "sha256": "be8fe368f369a7f079fda033e4f6b7ca12dec11a912e8aeb575ee49509c18b66",
+      "size_bytes": 27229,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0043",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_1/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "0b46b9da6480e97d5a52e2f99b5e3251fdf242a59d9f8c1f84cc4d95918e0536",
+      "size_bytes": 27230,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0044",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_1/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0045",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_2/actual.json",
+      "release_asset_name": null,
+      "sha256": "1544c2ed20aadb858ca4915c7c54e8fc36ccb7790363c7354562b172095ce69c",
+      "size_bytes": 2878,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0046",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_2/debug.20260908-233104.FCBak",
+      "release_asset_name": null,
+      "sha256": "cc6e1940ce217dbf19ac4aa585e729195516b1fec6d70ea564627d3b3bd592b2",
+      "size_bytes": 27230,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0047",
+      "kind": "FCStd",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_2/debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "1ca7a3fb95756aa4f423ab08cecaa1de64a893a959c1f364bc979935771ef332",
+      "size_bytes": 27227,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0048",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A12/repeatability/run_2/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0049",
+      "kind": "VALIDATOR",
+      "path": "outputs/contact_canonical_03c/A12/validation.json",
+      "release_asset_name": null,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0050",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/contact_canonical_03c/summary.json",
+      "release_asset_name": null,
+      "sha256": "839e2b4107c62a087c0e8aa015328018b1dd5e4b0841b53da408456ea3bf06df",
+      "size_bytes": 1195,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-03c-custody-0051",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/contact_canonical_03c/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "4349ac5ba544dc1eb1d6451b286b64f442fcc7534fd6c85371ff634aad5fc391",
+      "size_bytes": 815,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [
+      {
+        "value": "1c227cf75caadbb5508e261f3277b736dfc97cfd",
+        "confidence": "GH",
+        "source": "Git commit"
+      }
+    ],
+    "fix_commits": [
+      {
+        "value": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+        "confidence": "GH",
+        "source": "Git commit"
+      }
+    ],
+    "known_failures_or_mismatches": [
+      {
+        "value": "Pre-fix A12 actual area 1803.7424900293827 mm^2 versus expected 1803.7852556496864 mm^2; error 0.042765620303711 mm^2. transformGeometry converted Plane/Circle geometry to BSpline before STEP export.",
+        "confidence": "L",
+        "source": "outputs/contact_canonical_03c/a12_error_probe/probe_20260909_0001/diagnostic_summary.json"
+      },
+      {
+        "value": "Conversation diagnostic localized A12 error creation to S1->S2 transformGeometry: 0.0427656319 mm^2 before export; STEP roundtrip added about 1.16e-8 mm^2. Direct normalized construction retained Plane/Circle with about 4.46e-11 mm^2 error.",
+        "confidence": "CHAT",
+        "source": "Codex task 01a08331-eab2-7693-975a-acc0fa432065"
+      }
+    ],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": null,
+        "confidence": "U",
+        "source": ""
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "scientific_experiment": {
+      "value": "Pre-fix A12 area mismatch retained; repaired fixture evidence retained, but execution-to-fix-commit binding is incomplete.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "PARTIAL: pre-fix baseline is explicit; post-fix execution commit is not explicit.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-03c-evidence-4a2aad8",
+    "target_commit": "4a2aad8d926ea14d9526e2b7a1428a9d652b87f9",
+    "status": "RELEASE_BLOCKED_PROVENANCE",
+    "reason": "The pre-fix evidence binds 1c227cf, but the preserved post-fix directory does not explicitly bind its execution to 4a2aad8.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  },
+  "run_id": "p0-preservation-03c-4a2aad8",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a08196-9bd0-7963-a11c-ddff9a1e9682",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08196-9bd0-7963-a11c-ddff9a1e9682",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    },
+    {
+      "task_id": "01a08199-4da0-79e2-acd5-e0597bb60264",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08199-4da0-79e2-acd5-e0597bb60264",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    },
+    {
+      "task_id": "01a08331-eab2-7693-975a-acc0fa432065",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08331-eab2-7693-975a-acc0fa432065",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    },
+    {
+      "task_id": "01a08363-8d56-75e1-9a9d-51047fb9a9f5",
+      "relationship": "root",
+      "archive_id": "codex-task-01a08363-8d56-75e1-9a9d-51047fb9a9f5",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
+}

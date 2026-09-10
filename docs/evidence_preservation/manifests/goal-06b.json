@@ -1,0 +1,680 @@
+{
+  "schema_version": "1.1.0",
+  "goal_id": "06B",
+  "identity": {
+    "branch": {
+      "value": "feat/planar-partial-overlap-correction",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "branch_tip": {
+      "value": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+      "confidence": "GH",
+      "source": "local Git refs"
+    },
+    "implementation_commit": {
+      "value": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+      "confidence": "GH",
+      "source": "local Git object"
+    },
+    "policy_commit": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "parent_baseline": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "GH",
+      "source": "Git ancestry"
+    },
+    "merge_base_main": {
+      "value": "5c09db91a5a2cf363beb4750384f532a3308f995",
+      "confidence": "GH",
+      "source": "git merge-base main <branch>"
+    },
+    "merge_base_previous_goal": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "GH",
+      "source": "git merge-base <previous> <branch>"
+    },
+    "evidence_binding": {
+      "value": "aadf996a05bf87efee862964141b6aeb7f872baf",
+      "confidence": "L",
+      "source": "outputs/planar_partial_overlap_correction_06b/*/operation.json"
+    }
+  },
+  "inputs": [
+    {
+      "fixture_id": "benchmarks-planar_partial_overlap_correction_06b-P07-inputs.step",
+      "path": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step",
+      "sha256": "b9cee858852934a3faaa92b95fdc67ac951a6665a64efce2d9a78d58383d6d8e",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-planar_partial_overlap_correction_06b-P08-inputs.step",
+      "path": "benchmarks/planar_partial_overlap_correction_06b/P08/inputs.step",
+      "sha256": "89e1262d163ccfc89b9fc9a00c2fa97c12b5f783fc08d6bf8142e3eb3af83632",
+      "confidence": "L"
+    },
+    {
+      "fixture_id": "benchmarks-planar_partial_overlap_correction_06b-P09-inputs.step",
+      "path": "benchmarks/planar_partial_overlap_correction_06b/P09/inputs.step",
+      "sha256": "d914c5c0c07b71483c9d3dfd2b0320fdd715ff431f47d8a25ed15dddca11f290",
+      "confidence": "L"
+    }
+  ],
+  "environment": {
+    "freecad_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "occt_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "python_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "pytest_version": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    }
+  },
+  "execution": {
+    "command": null,
+    "exit_code": null,
+    "timestamp": "2026-09-09T21:33:54.406014",
+    "confidence": "L"
+  },
+  "tolerances": [
+    {
+      "name": "linear_epsilon",
+      "value": 1E-07,
+      "unit": "mm",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_partial_overlap_correction_06b/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "area_epsilon",
+      "value": 1E-08,
+      "unit": "mm^2",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_partial_overlap_correction_06b/manifest.json",
+      "confidence": "L"
+    },
+    {
+      "name": "volume_epsilon",
+      "value": 1E-06,
+      "unit": "mm^3",
+      "role": "geometry validation",
+      "source": "benchmarks/planar_partial_overlap_correction_06b/manifest.json",
+      "confidence": "L"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "goal-06b-custody-0001",
+      "kind": "JUNIT",
+      "path": "outputs/planar_partial_overlap_correction_06b/full_pytest.xml",
+      "release_asset_name": null,
+      "sha256": "7341cdec6374c759e8c2b3fd25f72dd1cc2d4d5788958f49006623d26f89d89a",
+      "size_bytes": 35071,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0002",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "3ad3589d577a9974b74bb62889efb88ae7842b055108d45f2a3c4fedc9bf78aa",
+      "size_bytes": 15427,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0003",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "0f3dc0b58ff6300754e82d85ef5cc66985cb3d0e990df2521bed85069801f4f6",
+      "size_bytes": 397,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0004",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/fused.step",
+      "release_asset_name": null,
+      "sha256": "5b14a2528ebfaa5cfc89300aedab6d5a4ed462702124ee29af591e5a7504c3e3",
+      "size_bytes": 11598,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0005",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "0ecf7ef318b2bd9ec5fd46696b4ee80663ced05ab71c272728e29d45cabdb689",
+      "size_bytes": 11265,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0006",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/operation.json",
+      "release_asset_name": null,
+      "sha256": "e0c636f75d915bffc02669c5ceb1206c26243a2e18f40ed7f2a9f6afa3fb0588",
+      "size_bytes": 4456,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0007",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/patches/common.brep",
+      "release_asset_name": null,
+      "sha256": "6b3ca0de6b0b43b3152c529c797bcd0eff865bf26e6c2284df5ebef04322792b",
+      "size_bytes": 1627,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0008",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/patches/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a0f97f3d976d7b7b99124621db246ed78884172c73e446c24bf9af1361684a06",
+      "size_bytes": 1621,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0009",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/patches/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a78fc5be742b2455792fc710fd019bc53ed8c6d64f96a3615fcd137e99031104",
+      "size_bytes": 1793,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0010",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/P07/validation.json",
+      "release_asset_name": null,
+      "sha256": "678c5cf513b352a6154b71745fad8cac3e184da7f4c8607f54712e4070e21079",
+      "size_bytes": 128,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0011",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "5e72fb18be6d303e34f908d7bfc8e400d898737f179e3626aaaa6a55e78196ca",
+      "size_bytes": 15427,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0012",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "0ebdd32a7e21d19f4918068d4a8dfa41df4ad19348a2a33eb39bcabb90d089be",
+      "size_bytes": 395,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0013",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/fused.step",
+      "release_asset_name": null,
+      "sha256": "1c04964d354b456abb410f5446c00e133ac0cb9b4a38c60e9974fc10eb03d588",
+      "size_bytes": 11617,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0014",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "d217c050926c59df1e3ffb79a859927fe0ede97669c0aac7cad8aa5329cd96f2",
+      "size_bytes": 10720,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0015",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/operation.json",
+      "release_asset_name": null,
+      "sha256": "0de136bfb63459f85d365be39ec599c6dd326a47b627ffc0fc8b364836d9a9b0",
+      "size_bytes": 4443,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0016",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/patches/common.brep",
+      "release_asset_name": null,
+      "sha256": "5f61b256b0699579bc939d0eab93e5152704b51066a02a9e8b32122a27c17654",
+      "size_bytes": 1699,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0017",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/patches/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "ae2711e090ba06d9b9d61d551a339e83713bec5dac7547515fdbd91320de6986",
+      "size_bytes": 2262,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0018",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/P08/validation.json",
+      "release_asset_name": null,
+      "sha256": "678c5cf513b352a6154b71745fad8cac3e184da7f4c8607f54712e4070e21079",
+      "size_bytes": 128,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0019",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P09/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "61d426e1fbac9d3e33a5bd7b5771acac958d1ce4e1a6a8383e7ff0c2648ed678",
+      "size_bytes": 250,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0020",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/P09/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "9c9f39a4eb373f209db08c78fd2a97065154889e36254b3687ba2dc7850ac6c2",
+      "size_bytes": 5355,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0021",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/P09/operation.json",
+      "release_asset_name": null,
+      "sha256": "3b48756e108671eb124a7426694892ee01a3ddf3477dff392d33f6fcb2d0e80a",
+      "size_bytes": 2459,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0022",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/P09/validation.json",
+      "release_asset_name": null,
+      "sha256": "ffddb686497e617554113b13860603641abdb67cdfc2cd844c42e0b6aca3fff9",
+      "size_bytes": 121,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0023",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "f66c066f9546d0d99ed2f9a213203c707f29aed0597ea312971d7b988f886b9b",
+      "size_bytes": 15427,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0024",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "0f3dc0b58ff6300754e82d85ef5cc66985cb3d0e990df2521bed85069801f4f6",
+      "size_bytes": 397,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0025",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/fused.step",
+      "release_asset_name": null,
+      "sha256": "9675a72e46443454734f7757a682a86fa456dd63fc9373b665594b88c46bfb39",
+      "size_bytes": 11598,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0026",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "60872c41f6fda83043db2d24094f6db970948c6d06a09d48145821e3d087a0bc",
+      "size_bytes": 11259,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0027",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/operation.json",
+      "release_asset_name": null,
+      "sha256": "124620e7d9675c5640b4eaf9ef6e15c12918d957d00f7fb22306dbf575439a75",
+      "size_bytes": 4486,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0028",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/patches/common.brep",
+      "release_asset_name": null,
+      "sha256": "6b3ca0de6b0b43b3152c529c797bcd0eff865bf26e6c2284df5ebef04322792b",
+      "size_bytes": 1627,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0029",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/patches/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a0f97f3d976d7b7b99124621db246ed78884172c73e446c24bf9af1361684a06",
+      "size_bytes": 1621,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0030",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/patches/side_2_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "a78fc5be742b2455792fc710fd019bc53ed8c6d64f96a3615fcd137e99031104",
+      "size_bytes": 1793,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0031",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P07/validation.json",
+      "release_asset_name": null,
+      "sha256": "678c5cf513b352a6154b71745fad8cac3e184da7f4c8607f54712e4070e21079",
+      "size_bytes": 128,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0032",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/corrected_assembly.step",
+      "release_asset_name": null,
+      "sha256": "5bd905699a7c1517144e61afac8e15821373ce89b356ffe2f1c75e9b491e7cd2",
+      "size_bytes": 15427,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0033",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "0ebdd32a7e21d19f4918068d4a8dfa41df4ad19348a2a33eb39bcabb90d089be",
+      "size_bytes": 395,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0034",
+      "kind": "STEP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/fused.step",
+      "release_asset_name": null,
+      "sha256": "ac91406779a586c61eb39412c346a4d7107357e97c6ca27bf41d84c77ef9e95e",
+      "size_bytes": 11617,
+      "validation_role": "exchange geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0035",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "d5aaee1390f6ec843c1e3e08e37df02abd48bb54c254e6584a4daba4bcb900d4",
+      "size_bytes": 10726,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0036",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/operation.json",
+      "release_asset_name": null,
+      "sha256": "a0ca39ca673fc73d8ae945c48c171890aae9e4f508457b492f6e7fd06a5ab959",
+      "size_bytes": 4473,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0037",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/patches/common.brep",
+      "release_asset_name": null,
+      "sha256": "5f61b256b0699579bc939d0eab93e5152704b51066a02a9e8b32122a27c17654",
+      "size_bytes": 1699,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0038",
+      "kind": "BREP",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/patches/side_1_remaining.brep",
+      "release_asset_name": null,
+      "sha256": "ae2711e090ba06d9b9d61d551a339e83713bec5dac7547515fdbd91320de6986",
+      "size_bytes": 2262,
+      "validation_role": "authoritative B-rep geometry artifact; SHA-256 is integrity only",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0039",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P08/validation.json",
+      "release_asset_name": null,
+      "sha256": "678c5cf513b352a6154b71745fad8cac3e184da7f4c8607f54712e4070e21079",
+      "size_bytes": 128,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0040",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P09/expected_snapshot.json",
+      "release_asset_name": null,
+      "sha256": "61d426e1fbac9d3e33a5bd7b5771acac958d1ce4e1a6a8383e7ff0c2648ed678",
+      "size_bytes": 250,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0041",
+      "kind": "FCStd",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P09/operation_debug.FCStd",
+      "release_asset_name": null,
+      "sha256": "68bd98d84d8b453389ba2a6f840a6a716ff121185e2776dab020b29d2541bd94",
+      "size_bytes": 5358,
+      "validation_role": "manual inspection/debug document",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0042",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P09/operation.json",
+      "release_asset_name": null,
+      "sha256": "3b48756e108671eb124a7426694892ee01a3ddf3477dff392d33f6fcb2d0e80a",
+      "size_bytes": 2459,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0043",
+      "kind": "VALIDATOR",
+      "path": "outputs/planar_partial_overlap_correction_06b/repeatability/P09/validation.json",
+      "release_asset_name": null,
+      "sha256": "ffddb686497e617554113b13860603641abdb67cdfc2cd844c42e0b6aca3fff9",
+      "size_bytes": 121,
+      "validation_role": "artifact-backed validation evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0044",
+      "kind": "SUPPORTING_EVIDENCE",
+      "path": "outputs/planar_partial_overlap_correction_06b/summary.json",
+      "release_asset_name": null,
+      "sha256": "a97f022730bb11c8af81da3ae10df4641354e3f2823a7db791508bf567393551",
+      "size_bytes": 447,
+      "validation_role": "supporting provenance or experiment evidence",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0045",
+      "kind": "VIEW_INDEX",
+      "path": "outputs/planar_partial_overlap_correction_06b/VIEW_INDEX.md",
+      "release_asset_name": null,
+      "sha256": "af288f6bc0c27886b9c3a0657d1baf09ff17085346baf53501e225349a7d9b92",
+      "size_bytes": 236,
+      "validation_role": "manual inspection index",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0046",
+      "kind": "JUNIT",
+      "path": "work/06b_initial.xml",
+      "release_asset_name": null,
+      "sha256": "e4f0a5cc74d9b42ddcb116ec8be27fd88a5bea1dcb9cf86ec7599e9506d66701",
+      "size_bytes": 8151,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0047",
+      "kind": "JUNIT",
+      "path": "work/06b_second.xml",
+      "release_asset_name": null,
+      "sha256": "d8321e1ae3f7ad79137b09ebd51fff86b97f84afca75f4dcc6d877dd96325d9c",
+      "size_bytes": 1401,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0048",
+      "kind": "JUNIT",
+      "path": "work/06b_targeted.xml",
+      "release_asset_name": null,
+      "sha256": "3d765759375a925f9a6b31e42092675e43d19ce47433e9dbfb93b416f1aafaa7",
+      "size_bytes": 4602,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    },
+    {
+      "artifact_id": "goal-06b-custody-0049",
+      "kind": "JUNIT",
+      "path": "work/06b_third.xml",
+      "release_asset_name": null,
+      "sha256": "6b2783b4ecb5f08fcb0502585efa7e2d17ec4e3e42fd1670ebaab3508485a554",
+      "size_bytes": 1401,
+      "validation_role": "software test evidence; not a scientific PASS assertion",
+      "confidence": "L"
+    }
+  ],
+  "history": {
+    "failure_commits": [],
+    "fix_commits": [],
+    "known_failures_or_mismatches": [
+      {
+        "value": "Early JUnit: 6 tests, 2 failures, including P09 NO_POSITIVE_AREA_INTERFACE and tampered/NaN validator evidence.",
+        "confidence": "L",
+        "source": "work/06b_initial.xml"
+      }
+    ],
+    "reviewer_findings": []
+  },
+  "geometry_validation": {
+    "criteria": [
+      {
+        "value": "Artifact-backed STEP/BREP validity, topology, area/volume, and scenario-specific acceptance or rejection criteria where present.",
+        "confidence": "L",
+        "source": "Preserved validation and operation evidence"
+      }
+    ],
+    "sha256_role": "file_and_download_integrity_only_not_geometry_equivalence"
+  },
+  "results": {
+    "software_pytest": {
+      "value": "217 passed, 0 failures, 0 errors, 0 skipped; final software result only. Early JUnit has 6 tests and 2 failures.",
+      "confidence": "L",
+      "source": "preserved JUnit"
+    },
+    "scientific_experiment": {
+      "value": "Early P09 rejection and tampered-validator failures are retained; final scenario evidence is not promoted to scientific PASS by pytest.",
+      "confidence": "L",
+      "source": "preserved experiment evidence; independent of pytest"
+    },
+    "human_inspection": {
+      "value": null,
+      "confidence": "U",
+      "source": ""
+    },
+    "provenance": {
+      "value": "GAP: operation validator binding points to 06A, not 06B implementation.",
+      "confidence": "L",
+      "source": "P0 preservation audit"
+    }
+  },
+  "release": {
+    "name": "goal-06b-evidence-c23cc83",
+    "target_commit": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+    "status": "RELEASE_BLOCKED_PROVENANCE",
+    "reason": "Preserved operations record validator_source_commit aadf996 (06A), not 06B implementation commit c23cc83.",
+    "url": null,
+    "supersedes": null,
+    "superseded_by": null
+  },
+  "run_id": "p0-preservation-06b-c23cc83",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
+  },
+  "conversation_provenance": [
+    {
+      "task_id": "01a085f9-f7d8-7db2-a268-12822b3de6e6",
+      "relationship": "root",
+      "archive_id": "codex-task-01a085f9-f7d8-7db2-a268-12822b3de6e6",
+      "confidence": "CHAT",
+      "source": "P1 private read-only conversation custody; public metadata in conversation_evidence.json"
+    }
+  ]
+}
