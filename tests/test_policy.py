@@ -61,6 +61,13 @@ def _codes(report: dict) -> set[str]:
 @pytest.mark.parametrize(
     "unsafe",
     ["C:/Users/person/result.json", r"C:\Users\person\result.json", "/tmp/result.json", "../result.json", r"..\result.json"],
+    ids=[
+        "windows-drive-forward-slash",
+        "windows-drive-backslash",
+        "posix-absolute",
+        "posix-traversal",
+        "backslash-traversal",
+    ],
 )
 def test_portable_path_parser_rejects_windows_and_posix_escape_forms(unsafe: str) -> None:
     assert portable_relative_path(unsafe) is None
