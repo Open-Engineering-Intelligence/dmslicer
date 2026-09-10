@@ -132,7 +132,10 @@
       "required": ["byte_identity_result", "geometry_equivalence_result", "semantic_equivalence_result", "ui_state_result", "pytest_result", "validator_result", "scientific_experiment_result", "human_inspection_result"],
       "properties": {
         "byte_identity_result": {
-          "allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "BYTE_SAME"}}}]
+          "allOf": [
+            {"$ref": "#/$defs/result"},
+            {"properties": {"status": {"enum": ["BYTE_SAME", "BYTE_DIFFERENT", "BYTE_NOT_EVALUATED"]}}}
+          ]
         },
         "geometry_equivalence_result": {
           "allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]

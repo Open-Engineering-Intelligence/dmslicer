@@ -56,6 +56,18 @@ def test_valid_generated_manifest_keeps_package_preservation_and_publication_sep
     assert manifest["publication_result"]["status"] == "PUBLICATION_NOT_AUTHORIZED"
 
 
+def test_manifest_allows_byte_difference_without_geometry_claim(valid_manifest) -> None:
+    manifest = valid_manifest()
+    manifest["results"]["byte_identity_result"] = {
+        "status": "BYTE_DIFFERENT",
+        "evidence_artifact_ids": ["validator-result"],
+    }
+
+    _validator("evidence_manifest.v2.schema.json").validate(manifest)
+
+    assert manifest["geometry_validation"]["status"] == "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+
+
 @pytest.mark.parametrize(
     "mutation",
     [

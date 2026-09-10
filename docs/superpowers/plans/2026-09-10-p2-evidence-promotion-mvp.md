@@ -223,7 +223,7 @@ git commit -m "feat: enforce fail-closed evidence policy"
 - Produces: `promote(request_path: Path, repository_root: Path, copy_function=copy_and_verify) -> dict[str, Any]`.
 - Produces package: `manifest.json`, `copy_inventory.json`, `policy_report.json`, and allowlisted public files.
 
-- [ ] **Step 1: Write a failing successful-local-package test**
+- [x] **Step 1: Write a failing successful-local-package test**
 
 ```python
 def test_local_package_can_succeed_without_full_preservation(repo, request_file) -> None:
@@ -237,33 +237,33 @@ def test_local_package_can_succeed_without_full_preservation(repo, request_file)
 
 Verify the exact stable path and that public files contain no absolute local paths.
 
-- [ ] **Step 2: Write failing no-overwrite and missing-file tests**
+- [x] **Step 2: Write failing no-overwrite and missing-file tests**
 
 The second identical request returns `LOCAL_PACKAGE_BLOCKED` with `DESTINATION_EXISTS` and changes no existing byte. A missing source installs no final destination.
 
-- [ ] **Step 3: Write a failing copy-corruption transaction test**
+- [x] **Step 3: Write a failing copy-corruption transaction test**
 
 Inject a copy function that writes altered bytes. Assert `COPY_VERIFY_FAILED`, no final destination, unchanged source failure artifacts, and a non-overwriting report under `work/evidence-promotion-failures/<goal>/<commit>/<run>/`.
 
-- [ ] **Step 4: Write a failing generated-manifest test**
+- [x] **Step 4: Write a failing generated-manifest test**
 
 Validate the output against manifest v2. Assert eight domain results are independent, byte results derive from copy records, geometry remains unproven, and package/preservation/publication results are separate objects.
 
-- [ ] **Step 5: Run and verify RED**
+- [x] **Step 5: Run and verify RED**
 
 Run: `py -3.12 -m pytest tests/test_promotion.py -q`
 
 Expected: import failure because `promotion.py` does not exist.
 
-- [ ] **Step 6: Implement staging, recount, manifest generation, and atomic install**
+- [x] **Step 6: Implement staging, recount, manifest generation, and atomic install**
 
 Stage under `work/evidence-promotion-staging/`, copy every resolved file, verify digests/sizes, write deterministic generated records, validate manifest v2, and rename on the same volume into the new stable destination. Refuse overwrite. On failure, retain a structured report without deleting or changing source evidence.
 
-- [ ] **Step 7: Run focused and cumulative tests and verify GREEN**
+- [x] **Step 7: Run focused and cumulative tests and verify GREEN**
 
 Run: `py -3.12 -m pytest tests/test_promotion.py tests/test_policy.py tests/test_integrity.py tests/test_schema_contracts.py -q`
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```powershell
 git add src/dmslicer/evidence_promotion/promotion.py tests/test_promotion.py
