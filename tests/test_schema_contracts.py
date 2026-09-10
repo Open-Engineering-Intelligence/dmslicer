@@ -65,6 +65,7 @@ def test_valid_generated_manifest_keeps_package_preservation_and_publication_sep
         "unknown_property",
         "geometry_pass",
         "geometry_evidence",
+        "collapsed_result_status",
     ],
 )
 def test_request_schema_rejects_incomplete_or_claiming_input(valid_request, mutation: str) -> None:
@@ -81,6 +82,8 @@ def test_request_schema_rejects_incomplete_or_claiming_input(valid_request, muta
         request["geometry_hash_is_truth"] = True
     elif mutation == "geometry_pass":
         request["results"]["geometry_equivalence_result"]["status"] = "GEOMETRY_EQUIVALENT"
+    elif mutation == "collapsed_result_status":
+        request["results"]["pytest_result"]["status"] = "GEOMETRY_EQUIVALENT"
     else:
         request["geometry_validation"]["evidence_artifact_ids"] = ["validator-result"]
 

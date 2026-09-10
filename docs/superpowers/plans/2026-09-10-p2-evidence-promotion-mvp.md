@@ -170,41 +170,41 @@ git commit -m "feat: add byte integrity evidence"
 - Produces: `validate_request(request: Mapping[str, Any], repository_root: Path) -> dict[str, Any]`.
 - Produces: `resolve_allowlisted_files(request, repository_root) -> list[ResolvedArtifact]`.
 
-- [ ] **Step 1: Write failing provenance and Git tests**
+- [x] **Step 1: Write failing provenance and Git tests**
 
 Cover valid request, missing/nonexistent implementation commit, invalid ancestry, invalid run ID, missing tolerance unit, and a result evidence ID absent from the allowlist. Assert stable codes `SCHEMA_INVALID`, `GIT_COMMIT_NOT_FOUND`, `GIT_ANCESTRY_INVALID`, and `EVIDENCE_REFERENCE_MISSING`.
 
-- [ ] **Step 2: Write failing path/allowlist tests**
+- [x] **Step 2: Write failing path/allowlist tests**
 
 Cover missing file, `../` traversal, absolute source/public paths, staging outside `outputs/` or `work/`, directory selection, duplicate public destination, reserved generated name, and symlink escape when supported. Assert `ALLOWLIST_SOURCE_MISSING`, `PATH_ESCAPE`, `BROAD_SELECTION`, or `PUBLIC_PATH_INVALID`.
 
-- [ ] **Step 3: Write failing sensitive-content tests**
+- [x] **Step 3: Write failing sensitive-content tests**
 
 Detect Windows/Linux home paths, Codex attachment/session paths, private-key headers, GitHub token syntax, and password/secret assignments in allowlisted public text/JSON. Ordinary SHA-256 values must remain allowed.
 
-- [ ] **Step 4: Write failing SHA-misuse regressions**
+- [x] **Step 4: Write failing SHA-misuse regressions**
 
 Set an evidence method or validation role to say a hash proves geometry equivalence and assert `SHA_GEOMETRY_MISUSE`. Separately set byte result to `BYTE_DIFFERENT` and confirm geometry stays `GEOMETRIC_EQUIVALENCE_NOT_PROVEN` without a geometry finding.
 
-- [ ] **Step 5: Write failing failure-retention tests**
+- [x] **Step 5: Write failing failure-retention tests**
 
 Reference failure, mismatch, rejection, and reviewer artifact IDs in `history`. Each must be allowlisted with the matching `retention_role`; omission or wrong role yields `FAILURE_EVIDENCE_NOT_RETAINED`.
 
-- [ ] **Step 6: Run and verify RED**
+- [x] **Step 6: Run and verify RED**
 
 Run: `py -3.12 -m pytest tests/test_policy.py -q`
 
 Expected: import failure because `policy.py` does not exist.
 
-- [ ] **Step 7: Implement schema, Git, path, content, SHA, and retention checks**
+- [x] **Step 7: Implement schema, Git, path, content, SHA, and retention checks**
 
 Return deterministic `schema_version`, `status`, per-check status, and sorted findings. Resolve paths strictly, prove containment, reject symlink/reparse components and non-files, and scan only selected public text/JSON. Use argument-list subprocess calls for `git cat-file -e <sha>^{commit}` and `git merge-base --is-ancestor`; never invoke a shell.
 
-- [ ] **Step 8: Run focused and cumulative tests and verify GREEN**
+- [x] **Step 8: Run focused and cumulative tests and verify GREEN**
 
 Run: `py -3.12 -m pytest tests/test_policy.py tests/test_schema_contracts.py tests/test_integrity.py -q`
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```powershell
 git add src/dmslicer/evidence_promotion/policy.py tests/test_policy.py

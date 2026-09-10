@@ -41,6 +41,24 @@
         "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds"}
       }
     },
+    "softwareResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "NOT_EVALUATED"]}}}
+      ]
+    },
+    "scientificResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED"]}}}
+      ]
+    },
+    "humanResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED"]}}}
+      ]
+    },
     "unprovenGeometryResult": {
       "allOf": [
         {"$ref": "#/$defs/result"},
@@ -192,10 +210,10 @@
         "geometry_equivalence_result": {"$ref": "#/$defs/unprovenGeometryResult"},
         "semantic_equivalence_result": {"$ref": "#/$defs/unprovenSemanticResult"},
         "ui_state_result": {"$ref": "#/$defs/unprovenUiResult"},
-        "pytest_result": {"$ref": "#/$defs/result"},
-        "validator_result": {"$ref": "#/$defs/result"},
-        "scientific_experiment_result": {"$ref": "#/$defs/result"},
-        "human_inspection_result": {"$ref": "#/$defs/result"}
+        "pytest_result": {"$ref": "#/$defs/softwareResult"},
+        "validator_result": {"$ref": "#/$defs/softwareResult"},
+        "scientific_experiment_result": {"$ref": "#/$defs/scientificResult"},
+        "human_inspection_result": {"$ref": "#/$defs/humanResult"}
       }
     },
     "history": {
