@@ -18,7 +18,25 @@ integrity, B-rep geometry evidence, engineering semantics, and UI/display
 state, and that promotes only explicitly allowlisted staging artifacts into a
 stable evidence package through a fail-closed policy gate.
 
-## Scope
+## Delivery model
+
+This document is the long-term P2 architecture, not a promise to implement all
+layers in one change. Delivery is split into two explicit phases:
+
+1. **P2-MVP (immediate scope):** schema-compatible byte-integrity evidence,
+   allowlisted local package creation, path/content safety gates, failure
+   retention, result-domain separation, stable identity, copy recounting, and
+   independent local-package/preservation/publication statuses.
+2. **P2 phase 2 (deferred):** FreeCAD/OCCT snapshot extraction, tolerance-aware
+   geometry comparison, rigid-transform support, generated CAD regression
+   fixtures, and human-openable CAD demonstration packages.
+
+P2-MVP is useful without pretending phase 2 exists. Every CAD result in an MVP
+manifest is explicitly `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`, carries an empty
+geometry-evidence list, and cannot be upgraded by SHA-256, a snapshot digest,
+or a software-test result.
+
+## Long-term scope
 
 P2 includes:
 
@@ -36,9 +54,43 @@ P2 includes:
 - pure-Python GitHub Actions checks and clearly marked local FreeCAD tests; and
 - `docs/evidence_preservation/EVIDENCE_PROMOTION_PIPELINE.md`.
 
-P2 does not migrate the historical 02C-06D implementation tree, modify
+Long-term P2 does not migrate the historical 02C-06D implementation tree, modify
 historical outputs or manifests, create external object storage, publish a
 Release, merge its pull request, or begin 07A geometry research.
+
+## P2-MVP immediate scope
+
+P2-MVP implements only:
+
+- a small installable Python package and CLI;
+- SHA-256 and exact source/copy byte verification, labeled byte integrity only;
+- versioned promotion-request and P2 manifest schemas while preserving schema
+  v1.1.0 and all historical manifests unchanged;
+- stable package identity `goal_id + implementation_commit + run_id`;
+- an explicit individual-file allowlist rooted below `outputs/` or `work/`;
+- source existence, containment, traversal, reparse/symlink escape, duplicate
+  destination, broad-selection, overwrite, and absolute-public-path checks;
+- obvious secret and sensitive-local-path detection in public text/JSON;
+- required implementation commit, valid run ID, explicit result domains, and
+  unit-bearing tolerance validation when a tolerance is declared;
+- policy rejection of SHA-256, file hashes, or snapshot hashes used as a
+  geometry predicate;
+- required retention of declared failures, mismatches, rejection cases, and
+  reviewer findings;
+- copied-file inventory, byte recount, machine-readable policy report, and a
+  relocatable local evidence package; and
+- pure-Python unit tests, documentation, and a minimal local/CI validation
+  command.
+
+P2-MVP explicitly defers `cad.py`, `freecad_worker.py`, CAD snapshot extraction,
+actual geometry or semantic equivalence, rigid transforms, FreeCAD-dependent
+tests, FCStd/STEP/BREP demo fixtures, and CAD `VIEW_INDEX` generation. The MVP
+schemas reserve structured, non-claiming locations for those future artifacts;
+they do not contain fabricated metrics or placeholder PASS values.
+
+Push, pull-request creation, Releases, external-storage writes, and off-host
+copy registration require separate explicit authorization. They are not part
+of P2-MVP execution even if local tooling and credentials are available.
 
 ## Existing repository constraints
 
@@ -51,7 +103,7 @@ reuse those demonstrated techniques, but it will not copy or cherry-pick the
 historical research stack. This keeps the implementation a dedicated new
 control-plane component and respects the migration boundary.
 
-## Architecture
+## Long-term architecture
 
 The implementation is a focused Python package under
 `src/dmslicer/evidence_promotion/`. Host-side modules handle deterministic JSON,
@@ -81,6 +133,23 @@ The package has five responsibility boundaries:
 plugin framework, event bus, repository abstraction, or storage adapter is
 introduced.
 
+## P2-MVP architecture
+
+The MVP creates only the host-side control plane:
+
+1. `integrity.py` computes file sizes and SHA-256 for byte integrity and copy
+   verification.
+2. `models.py` defines result/status constants and deterministic JSON helpers.
+3. `policy.py` validates schemas, stable identity, result separation,
+   unit-bearing tolerances, SHA misuse, failure retention, source/public paths,
+   allowlists, secrets, and custody declarations.
+4. `promotion.py` stages allowlisted copies, recounts bytes, writes inventories
+   and validation reports, and refuses overwrite.
+5. `cli.py` exposes `validate` and `promote` subcommands.
+
+The phase-2 `cad.py` and `freecad_worker.py` boundaries described above remain
+architectural guidance only and are not scaffolded in the MVP.
+
 ## Schemas and compatibility
 
 The existing `docs/evidence_preservation/evidence_manifest.schema.json`
@@ -88,10 +157,15 @@ remains version 1.1.0 and continues to validate P0/P1 manifests unchanged.
 P2 adds independent versioned schemas under
 `docs/evidence_preservation/schemas/`:
 
-- `cad_snapshot.schema.json` for each separately typed snapshot;
-- `cad_comparison.schema.json` for the four CAD result domains and metrics;
 - `promotion_request.schema.json` for explicit promotion inputs; and
 - `evidence_manifest.v2.schema.json` for new Goal evidence packages.
+
+Phase 2 will add `cad_snapshot.schema.json` and
+`cad_comparison.schema.json` when the concrete FreeCAD evidence shapes are
+implemented and tested. The MVP manifest schema already keeps byte, geometry,
+semantic, and UI result objects separate; the geometry object requires
+`GEOMETRIC_EQUIVALENCE_NOT_PROVEN` and no claimed comparison evidence in MVP
+packages.
 
 Every schema is JSON Schema draft 2020-12, rejects unknown properties where
 practical, records its own version, and requires units beside every tolerance
@@ -233,19 +307,25 @@ retains the candidate validation report and source failure evidence; it does
 not delete or overwrite prior evidence merely to obtain a green result.
 
 The pipeline may materialize a valid local evidence package when source and
-promoted copies are the only recoverable paths. In that state it reports:
+promoted copies are the only recoverable paths. Local creation success is
+independent of preservation and publication readiness. In that state it
+reports:
 
 ```text
 recoverable_copy_count: 2
 recoverable_copy_policy: LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY
+local_package_status: LOCAL_PACKAGE_CREATED
 preservation_status: NOT_FULLY_PRESERVED
-promotion_status: PROMOTION_BLOCKED
+publication_status: PUBLICATION_NOT_AUTHORIZED
 ```
 
-The CLI returns nonzero for publication readiness. This preserves inspectable
-local evidence without falsely claiming the independent off-host copy required
-by policy. An explicit off-host custody record is required for promotion status
-to become `PROMOTED`; P2 does not create that external copy.
+The MVP CLI returns zero when local package creation and every local gate pass.
+It returns nonzero for an unsafe or incomplete local request. It does not use
+the absence of an off-host copy to turn a valid local package into a failed
+creation. Instead, preservation remains `NOT_FULLY_PRESERVED` and publication
+remains `PUBLICATION_NOT_AUTHORIZED` or `PUBLICATION_BLOCKED_OFF_HOST_COPY`.
+An explicit, separately authorized off-host custody record is required before
+either status can advance; P2-MVP neither creates nor registers that copy.
 
 CAD package manifests support explicit FCStd, STEP/BREP, `VIEW_INDEX`, and
 `HUMAN_REVIEW` artifact kinds. Human inspection can record findings but cannot
@@ -264,22 +344,33 @@ The manifest keeps these results independent:
 - `scientific_experiment_result`; and
 - `human_inspection_result`.
 
-Provenance and promotion status are also explicit. Status enums include
+Provenance, local package, preservation, and publication statuses are also
+explicit. Status enums include
 `BYTE_SAME`, `BYTE_DIFFERENT`, `GEOMETRY_EQUIVALENT`, `GEOMETRY_DIFFERENT`,
 `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`, `SEMANTIC_EQUIVALENT`,
 `SEMANTIC_DIFFERENT`, `SEMANTIC_EQUIVALENCE_NOT_PROVEN`, `UI_SAME`,
 `UI_DIFFERENT`, `UI_STATE_NOT_PROVEN`, `PROVENANCE_INCOMPLETE`,
-`PROMOTED`, and `PROMOTION_BLOCKED`. Domain-specific unknown states remain
+`LOCAL_PACKAGE_CREATED`, `LOCAL_PACKAGE_BLOCKED`, `NOT_FULLY_PRESERVED`,
+`FULLY_PRESERVED`, `PUBLICATION_NOT_AUTHORIZED`, and
+`PUBLICATION_BLOCKED_OFF_HOST_COPY`. Domain-specific unknown states remain
 unproven states and are never collapsed into another domain's PASS or FAIL.
 
-## Test strategy
+## P2-MVP test strategy
 
 Pure-Python tests cover byte equality/difference, deterministic serialization,
 schema compatibility, every required manifest rejection, allowlist and path
 safety, secret detection, result separation, prohibited SHA predicates,
 failure retention, copy recount, no-overwrite behavior, and local-two-path
-copy-policy reporting. Tests first fail for the missing behavior and then drive
-the minimum implementation.
+copy-policy reporting. They also prove that a hash mismatch leaves the geometry
+result `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`, and that local package success is not
+collapsed into full preservation or publication. Tests first fail for the
+missing behavior and then drive the minimum implementation.
+
+Standard CI installs the package, pytest, and JSON Schema support, then runs
+the pure suite, schema checks, policy lint, prohibited-path scan, and SHA-misuse
+regression. No FreeCAD installation or CAD claim is required in MVP CI.
+
+## Phase-2 test strategy
 
 FreeCAD-marked integration tests generate the actual fixtures and verify:
 
@@ -291,30 +382,41 @@ FreeCAD-marked integration tests generate the actual fixtures and verify:
 - snapshot schema validation and deterministic repeat generation; and
 - readable FCStd/STEP/BREP human-inspection deliverables.
 
-GitHub Actions installs the package, pytest, and JSON Schema support, then runs
-the pure suite, schema checks, policy lint, prohibited-path scan, and SHA-misuse
-regression. FreeCAD tests remain explicitly marked and documented with the exact
-local `FreeCADCmd` invocation and resulting evidence paths.
+FreeCAD tests will remain explicitly marked and documented with the exact local
+`FreeCADCmd` invocation and resulting evidence paths unless a reliable CAD CI
+environment is separately approved.
 
-## Acceptance criteria
+## P2-MVP acceptance criteria
 
-P2 is complete when:
+P2-MVP is complete when:
 
-1. every named schema and implementation layer exists and is tested;
+1. the promotion-request and manifest-v2 schemas plus every MVP implementation
+   layer exist and are tested;
 2. historical schemas/manifests still validate without modification;
-3. all tolerances are explicit, unit-bearing, and present in comparison output;
-4. UI-only mutation produces geometry/semantic equivalence and UI difference;
-5. geometry mutation produces geometry difference from B-rep metrics;
-6. byte mismatch is proven unable to drive geometry status;
-7. promotion rejects every required incomplete or unsafe request and retains
+3. every declared tolerance is explicit and unit-bearing, while no undeclared
+   geometry tolerance or metric is invented;
+4. every MVP CAD result is explicitly unproven and contains no geometry claim;
+5. byte mismatch is proven unable to drive geometry status;
+6. local package creation success remains separate from preservation and
+   publication status;
+7. promotion rejects every required incomplete or unsafe local request and retains
    failure evidence;
 8. local-only custody is reported as blocked/not fully preserved;
-9. pure CI and local FreeCAD test suites pass;
-10. documentation and human-inspection artifacts are complete and relocatable;
-11. the feature branch is committed, pushed, and represented by an unmerged PR;
-    and
-12. final reporting records branch, HEAD, remote SHA, tests, CI, worktree status,
-    methods, tolerances, regression outcomes, and inspection paths.
+9. the pure test and local CI-equivalent suites pass;
+10. the pipeline documentation clearly distinguishes MVP from phase 2;
+11. the feature branch is committed locally with a clean worktree; and
+12. final reporting records branch, HEAD, tests, local CI-equivalent status,
+    worktree status, methods, policy outcomes, and the fact that remote SHA/PR,
+    CAD regression results, and human-inspection paths are deferred or not
+    authorized rather than falsely reported complete.
+
+## Phase-2 acceptance criteria
+
+Phase 2 completes the remaining long-term criteria: concrete snapshot schemas,
+explicit comparison tolerances, UI-only and geometry-mutation CAD regressions,
+serialization/reopen evidence, FreeCAD-dependent tests, and human inspection
+artifacts. Remote publication activities remain separately authorized even
+after phase 2 implementation.
 
 ## Stop conditions
 
@@ -324,4 +426,3 @@ with independently provable layers. If semantic identity is absent or
 ambiguous, semantic equivalence remains unproven. If FreeCAD-dependent behavior
 is unstable, P2 preserves the artifacts and exact environment evidence and does
 not replace the missing proof with SHA-256, a display mesh, or a JSON digest.
-
