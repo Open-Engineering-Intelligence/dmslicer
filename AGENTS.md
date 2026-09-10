@@ -34,6 +34,102 @@ This is a research-first repository. Every change must preserve the distinction 
 6. File hashes remain required for input integrity, exact-byte evidence, caching, and
    debugging, but those uses must stay separate from geometric acceptance.
 
+## Human Inspection Deliverables
+
+1. Every completed CAD / geometry Goal must provide human-inspectable artifacts
+   in addition to machine-readable evidence.
+
+2. `pytest PASS`, validator PASS, or JSON evidence PASS alone is not a complete
+   human-review deliverable.
+
+3. STEP/B-rep operations and machine validation remain authoritative geometry
+   truth. FCStd, screenshots, review packages, and visualization are for human
+   inspection only and must never replace geometry truth.
+
+4. Every principal success scenario must provide an `operation_debug.FCStd` or an
+   explicitly justified equivalent human-viewable artifact.
+
+5. Principal rejection scenarios should also provide a human-viewable artifact
+   when the geometric rejection is meaningful to inspect. Do not create an FCStd
+   for every trivial NaN/missing-input unit test.
+
+6. FreeCAD debug documents should use numbered, semantically meaningful tree
+   groups where applicable, such as:
+
+   00_Input
+   01_Originals
+   02_Selected_Interface
+   03_Precommit_Preview
+   04_Corrected_Assembly
+   05_Common_Patches
+   06_Remaining
+   07_Components
+   08_Boundaries
+   09_Fused_Result
+   10_Rejection_Evidence
+
+   Only create groups relevant to the current Goal.
+
+7. Opaque names such as `Shape001` or `Compound003` must not be the primary
+   human inspection interface. Labels/groups must communicate engineering
+   meaning.
+
+8. Every formal geometry Goal output root must provide a human-oriented
+   `VIEW_INDEX.md`.
+
+9. `VIEW_INDEX.md` must number the principal scenarios and state for each:
+
+   - scenario name;
+   - FCStd path;
+   - associated STEP/BREP paths;
+   - which FreeCAD tree groups to toggle;
+   - what geometric behavior should be visible;
+   - what visible condition would indicate a likely failure.
+
+10. When practical, provide a `HUMAN_REVIEW/` directory containing or clearly
+    indexing only the artifacts needed for manual inspection.
+
+11. A convenience `*_HUMAN_REVIEW.zip` may be produced when useful. It is not
+    geometry truth and must not become validator input.
+
+12. Before completion, reopen every principal FCStd and verify:
+
+    - the file opens;
+    - required groups exist;
+    - required objects exist;
+    - default visibility is useful;
+    - success, rejection, and DISPLAY_ONLY preview states cannot be confused.
+
+13. Preview geometry must be explicitly marked:
+    `DISPLAY_ONLY`
+    and
+    `NOT_EXECUTED`.
+
+14. Final Codex completion reports for CAD/geometry Goals must include a
+    numbered `Human Inspection` section.
+
+    For every principal scenario it must give:
+
+    - exact absolute path;
+    - repo-relative/output-relative path where applicable;
+    - what file to open;
+    - which groups to inspect in order;
+    - what the human reviewer should observe.
+
+15. If the Codex interface supports a reliable clickable local/workspace
+    artifact link, include it. Otherwise do not invent a link; provide the exact
+    absolute path.
+
+16. File SHA-256 remains valid for byte integrity only. Human review artifacts
+    remain subject to the existing Geometry Equivalence and Hash Policy.
+
+17. Generated artifacts remain governed by `.gitignore` and artifact policy. Do
+    not `git add -f` an entire output directory merely to satisfy human
+    inspection.
+
+18. Human inspection requirements must not trigger unrelated refactoring, a GUI
+    framework, plugin architecture, or changes to geometry truth.
+
 ## Provenance and reproducibility
 
 8. Stable provenance is mandatory for imported and derived entities.
