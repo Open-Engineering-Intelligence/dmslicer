@@ -15,7 +15,7 @@ This phase does not start 07A, merge any 02C–06D feature branch, merge DOC01, 
 The preservation system has three deliberately separate layers:
 
 1. Public Git documentation contains sanitized, machine-readable evidence manifests and human-readable reports. Public files use repository-relative paths, stable artifact identifiers, Release asset names, GitHub URIs, and SHA-256 digests. They do not contain usernames, Codex task directories, secrets, environment-variable values, or private absolute paths.
-2. A private local custody root at `D:\Agent\evidence-preservation\dmslicer\p0-20260910` records exact source locations, copies canonical evidence without modifying its source, and stores source-to-copy SHA-256 verification. This directory is not added to Git.
+2. A private local custody root at `<private-custody-root>/dmslicer/p0-20260910` records exact source locations, copies canonical evidence without modifying its source, and stores source-to-copy SHA-256 verification. This directory is not added to Git.
 3. GitHub Releases contain curated, versioned evidence assets bound to the implementation commit actually supported by the evidence. Published assets are append-only: corrections create a new version with `supersedes` and `superseded_by` metadata instead of replacing an existing asset.
 
 SHA-256 is used only for byte/download integrity. Geometry validation remains expressed through the recorded B-rep operations, topology, distance, area, volume, validity, closure, and tolerance criteria present in the historical evidence.

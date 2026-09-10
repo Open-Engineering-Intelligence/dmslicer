@@ -6,7 +6,13 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$WorktreeRoot,
     [Parameter(Mandatory = $true)]
-    [string]$CodexDocumentsRoot,
+    [string]$LegacyAuditRoot,
+    [Parameter(Mandatory = $true)]
+    [string]$LegacyWorkRoot,
+    [Parameter(Mandatory = $true)]
+    [string]$SyncPlanRoot,
+    [Parameter(Mandatory = $true)]
+    [string]$Historical06DRoot,
     [string]$PublicOutput = "docs\evidence_preservation\artifact_reconciliation.json",
     [string]$PrivateInventoryName = "PRIVATE_ARTIFACT_INVENTORY.json",
     [string]$CopyInventoryName = "RISK_GOAL_COPY_INVENTORY.json",
@@ -64,15 +70,11 @@ $worktrees = [ordered]@{
     "06D" = Join-Path $WorktreeRoot "dmslicer-06d"
     "DOC01" = Join-Path $WorktreeRoot "dmslicer-doc01"
 }
-$legacyAuditParent = Join-Path $CodexDocumentsRoot "2026-09-08"
-$legacyAuditDirectory = if (Test-Path -LiteralPath $legacyAuditParent) {
-    Get-ChildItem -LiteralPath $legacyAuditParent -Directory | Where-Object Name -like "codex-c-users-*-documents-codex" | Select-Object -First 1
-} else { $null }
 $historicalRoots = @(
-    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_LEGACY_AUDIT"; root = if ($legacyAuditDirectory) { Join-Path $legacyAuditDirectory.FullName "outputs" } else { Join-Path $legacyAuditParent "unlocated\outputs" } },
-    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_LEGACY_WORK"; root = Join-Path $CodexDocumentsRoot "2026-09-08\repository-d-agent-projects-open-engineering\work" },
-    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_SYNC_PLAN"; root = Join-Path $CodexDocumentsRoot "2026-09-09\goal-referenced-pasted-text-files-pasted\work" },
-    [pscustomobject]@{ goal_id = "06D"; source_id = "CODEX_TASK_06D"; root = Join-Path $CodexDocumentsRoot "2026-09-10\new-chat-2\outputs" }
+    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_LEGACY_AUDIT"; root = $LegacyAuditRoot },
+    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_LEGACY_WORK"; root = $LegacyWorkRoot },
+    [pscustomobject]@{ goal_id = "LEGACY"; source_id = "CODEX_SYNC_PLAN"; root = $SyncPlanRoot },
+    [pscustomobject]@{ goal_id = "06D"; source_id = "CODEX_TASK_06D"; root = $Historical06DRoot }
 )
 $riskGoals = @("03A", "03B", "04B", "05A")
 $records = [System.Collections.Generic.List[object]]::new()

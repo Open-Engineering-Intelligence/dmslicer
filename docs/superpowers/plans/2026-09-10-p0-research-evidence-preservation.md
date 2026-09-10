@@ -12,8 +12,8 @@
 
 ## Global Constraints
 
-- Work only in `D:\Agent\worktrees\dmslicer-p0-preservation` for preservation-branch files.
-- Use `D:\Agent\evidence-preservation\dmslicer\p0-20260910` for private custody; never add it to Git.
+- Work only in the isolated `<p0-worktree>` for preservation-branch files.
+- Use `<private-custody-root>/dmslicer/p0-20260910` for private custody; never add it to Git.
 - Do not start 07A, delete worktrees, clean `outputs/` or `work/`, overwrite artifacts, force push, rebase, or merge 02C–06D/DOC01.
 - Do not modify `docs/research_v2/`.
 - Unknown historical fields remain JSON `null` with confidence `U`.
@@ -79,7 +79,7 @@ Expected: every table value matches fresh Git exit codes and SHAs.
 
 **Files:**
 - Create: `docs/evidence_preservation/P0_PRESERVATION_INVENTORY.md`
-- Create outside Git: `D:\Agent\evidence-preservation\dmslicer\p0-20260910\LOCAL_CUSTODY_INVENTORY.json`
+- Create outside Git: `<private-custody-root>/dmslicer/p0-20260910/LOCAL_CUSTODY_INVENTORY.json`
 
 **Interfaces:**
 - Consumes: historical worktree outputs, historical Codex task artifacts, tracked fixtures, and audit findings
@@ -99,13 +99,13 @@ Use only `PRESERVED`, `SINGLE_COPY`, `MISSING`, `UNRECOVERABLE`, or `RELEASE_BLO
 
 - [ ] **Step 4: Validate the private inventory is outside Git and valid JSON**
 
-Run `git -C D:\Agent\worktrees\dmslicer-p0-preservation status --short` and confirm the private custody file is not listed; parse it with `ConvertFrom-Json`.
+Run `git -C <p0-worktree> status --short` and confirm the private custody file is not listed; parse it with `ConvertFrom-Json`.
 
 ### Task 4: Copy and verify canonical P0 evidence
 
 **Files:**
-- Create outside Git: goal-specific trees under `D:\Agent\evidence-preservation\dmslicer\p0-20260910\canonical\` named `goal-03c`, `goal-04a`, `goal-05b`, `goal-05c`, `goal-06a`, `goal-06b`, `goal-06c`, and `goal-06d`
-- Update outside Git: `D:\Agent\evidence-preservation\dmslicer\p0-20260910\LOCAL_CUSTODY_INVENTORY.json`
+- Create outside Git: goal-specific trees under `<private-custody-root>/dmslicer/p0-20260910/canonical/` named `goal-03c`, `goal-04a`, `goal-05b`, `goal-05c`, `goal-06a`, `goal-06b`, `goal-06c`, and `goal-06d`
+- Update outside Git: `<private-custody-root>/dmslicer/p0-20260910/LOCAL_CUSTODY_INVENTORY.json`
 
 **Interfaces:**
 - Consumes: Task 3 source list
@@ -171,7 +171,7 @@ Parse every file, assert all schema-required top-level fields, verify allowed co
 ### Task 6: Build and isolate-test the 06D V2 human-review package
 
 **Files:**
-- Create outside Git: `D:\Agent\evidence-preservation\dmslicer\p0-20260910\release_staging\goal-06d-evidence-b7054f3\goal-06d-human-review-v2-b7054f3.zip`
+- Create outside Git: `<private-custody-root>/dmslicer/p0-20260910/release_staging/goal-06d-evidence-b7054f3/goal-06d-human-review-v2-b7054f3.zip`
 
 **Interfaces:**
 - Consumes: preserved 06D D01/D02/D03 FCStd, corrected/fused STEP, VIEW_INDEX facts, and reviewer/failure history
