@@ -1,0 +1,43 @@
+{
+  "numeric_rules": {
+    "angular_epsilon_rad": 1e-07,
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "material_probe_offset_mm": 1e-05,
+    "periodic_epsilon_rad": 1e-06,
+    "radius_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "operation": "CYLINDRICAL_INTERFACE_REPAIR_07A",
+  "scenarios": [
+    {
+      "scenario_id": "C01",
+      "step_sha256": "19bd3fa30cd9ee185449f4cb788cc2c1530d138e4e2a543dd1e82a879214d9ce"
+    },
+    {
+      "scenario_id": "C02",
+      "step_sha256": "cc3b0ce6189a0bd7cd9e7ed5b591deafdd97c22499fd0a8dc19d438fd5e4d15d"
+    },
+    {
+      "scenario_id": "C03",
+      "step_sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10"
+    },
+    {
+      "scenario_id": "C04",
+      "step_sha256": "5517efdea82d8221cedba951c9d78f21e61bbc2be6ca127a431f2f4152cb30a2"
+    },
+    {
+      "scenario_id": "C05",
+      "step_sha256": "7e26c64a8d6016db7aaf033c93c4b49760853557f0bccd0a4eeb2b743fc795d1"
+    },
+    {
+      "scenario_id": "AMBIGUOUS",
+      "step_sha256": "8a89714a7e33c63bcfc5f5cb204995cac2397b0351c67064ffc64bbbb66ca2a3"
+    },
+    {
+      "scenario_id": "ROTATED_C02",
+      "step_sha256": "f56ac5e6abdbae8e8971e0b5d8d1b162ec882585ffb5c43dea4171f9bdf875f8"
+    }
+  ],
+  "schema_version": 1
+}

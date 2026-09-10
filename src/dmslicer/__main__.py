@@ -14,6 +14,11 @@ from .contact_partition_union_04a import run_contact_partition_union, run_contac
 from .shell_fill_04a2 import generate_shell_fill_cases, run_shell_fill_case, run_shell_fill_suite
 from .cylinder_partition_union_04b import generate_cylinder_fit_cases, run_cylinder_fit_case, run_cylinder_fit_suite
 from .contact_tolerance_pilot_05a import generate_contact_tolerance_pilot, run_contact_tolerance_pilot_suite
+from .cylindrical_interface_repair_07a import (
+    generate_cylindrical_interface_repair_fixtures,
+    run_cylindrical_repair_case,
+    run_cylindrical_repair_suite,
+)
 
 
 def main() -> None:
@@ -119,6 +124,15 @@ def main() -> None:
     tolerance_suite.add_argument("fixture_root", type=Path)
     tolerance_suite.add_argument("output_root", type=Path)
 
+    cylindrical_repair_generate = commands.add_parser("generate-cylindrical-interface-repair-07a", help="generate C01-C05 and ambiguity-control STEP bundles")
+    cylindrical_repair_generate.add_argument("fixture_root", type=Path)
+    cylindrical_repair_case = commands.add_parser("run-cylindrical-interface-repair-case-07a", help="classify and conditionally correct one 07A cylindrical interface")
+    cylindrical_repair_case.add_argument("case_dir", type=Path)
+    cylindrical_repair_case.add_argument("output_dir", type=Path)
+    cylindrical_repair_suite = commands.add_parser("run-cylindrical-interface-repair-suite-07a", help="run 07A scenarios with B-rep evidence and repeatability")
+    cylindrical_repair_suite.add_argument("fixture_root", type=Path)
+    cylindrical_repair_suite.add_argument("output_root", type=Path)
+
     arguments = parser.parse_args()
     if arguments.command == "generate-case01":
         result = generate_case01_fixture(arguments.step_path, arguments.expected_path)
@@ -172,6 +186,12 @@ def main() -> None:
         result = generate_contact_tolerance_pilot(arguments.fixture_root)
     elif arguments.command == "run-contact-tolerance-pilot-suite":
         result = run_contact_tolerance_pilot_suite(arguments.fixture_root, arguments.output_root)
+    elif arguments.command == "generate-cylindrical-interface-repair-07a":
+        result = generate_cylindrical_interface_repair_fixtures(arguments.fixture_root)
+    elif arguments.command == "run-cylindrical-interface-repair-case-07a":
+        result = run_cylindrical_repair_case(arguments.case_dir, arguments.output_dir)
+    elif arguments.command == "run-cylindrical-interface-repair-suite-07a":
+        result = run_cylindrical_repair_suite(arguments.fixture_root, arguments.output_root)
     else:
         result = run_capability_probe(arguments.output_path)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
