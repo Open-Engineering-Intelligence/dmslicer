@@ -3,6 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 import json
 from pathlib import Path
+import subprocess
 
 from jsonschema import Draft202012Validator, ValidationError
 import pytest
@@ -13,6 +14,18 @@ from dmslicer.evidence_promotion.models import read_json, schema_path
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 HISTORICAL_SCHEMA = REPOSITORY_ROOT / "docs/evidence_preservation/evidence_manifest.schema.json"
 HISTORICAL_MANIFESTS = REPOSITORY_ROOT / "docs/evidence_preservation/manifests"
+
+
+def test_stable_evidence_disables_git_line_ending_conversion() -> None:
+    completed = subprocess.run(
+        ["git", "check-attr", "text", "--", "evidence/P2-MVP/probe.txt"],
+        cwd=REPOSITORY_ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.stdout.strip().endswith(": unset")
 
 
 def _validator(name: str) -> Draft202012Validator:
