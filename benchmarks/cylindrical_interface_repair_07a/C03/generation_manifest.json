@@ -1,0 +1,11 @@
+{
+  "hash_semantics": "byte_integrity_only",
+  "input_sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10",
+  "scenario_id": "C03",
+  "schema_version": 1,
+  "source": {
+    "mode": "reused_05a_tracked_step",
+    "path": "benchmarks/contact_tolerance_pilot_05a/A07_delta_p0_5tauE/inputs.step",
+    "sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10"
+  }
+}

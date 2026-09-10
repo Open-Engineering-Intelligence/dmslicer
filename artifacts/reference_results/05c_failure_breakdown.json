@@ -1,0 +1,4396 @@
+{
+  "marker": "NON_AUTHORITATIVE_ANALYSIS_OF_RECORDED_EVIDENCE",
+  "source": {
+    "commit": "bb2eb899999841aac16f386f3be233bf5dab09e3",
+    "files": {
+      "manifest.json": "sha256:b0899bbaffe6d6bd947d07d1fa70b014e52e4002d9ed3ece1a8522f6c8444188",
+      "summary.json": "sha256:8afed7a9c67cacee614fe178a6d39975b87996152a171fff92293abb17ce2207",
+      "results.csv": "sha256:a3a74b9aca8404b4de9d9446994014bff9a39c455f4f44fdf867bbf6dd231dab",
+      "repeatability.csv": "sha256:97ba737561fe6a78a81daf354fdb1fc5937f32af033ceaff2b52431c597638c2",
+      "pytest-full.log": "sha256:49c2cf9bb7f7914830727df85eb98e58c7d0e6525f79826c699f89885f414424"
+    }
+  },
+  "rules_version": "05c-breakdown-v1",
+  "counts": {
+    "METHOD_MISMATCH": 11,
+    "MEASURED_PASS": 75,
+    "OUT_OF_CONSTRUCTION_DOMAIN": 4
+  },
+  "failure_sample_count": 11,
+  "failure_event_counts": {
+    "SIGNED_OFFSET_MISMATCH": 2,
+    "ENGINEERING_STATE_MISMATCH": 1,
+    "MEASURE_ONLY_OVER_LIMIT": 9
+  },
+  "status_index": [
+    {
+      "sample_id": "A01_delta_m4tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "26cebd0de91127a84242e0cb9ac1184a8814bff7aa21f3a25369e3fd826b12c1",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.111324865405,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10998533626595748,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "measured_signed_offset_mm"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.059116756396743304,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m4tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m4tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:ca92bcbb9ac95e5254fbbcb74713f49e2022a502d4ba4c0a1a350287ac42e473",
+        "validation_sha256": "sha256:a1d6dc6859ee2a1909682e5ecc82d32641140b671aa780ea54c1c23d52de9f47",
+        "second_actual_sha256": "sha256:ca92bcbb9ac95e5254fbbcb74713f49e2022a502d4ba4c0a1a350287ac42e473",
+        "second_validation_sha256": "sha256:a1d6dc6859ee2a1909682e5ecc82d32641140b671aa780ea54c1c23d52de9f47"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m2tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": "5bff956f81e60806e0d52c6605f882e01cd26d71b3423bd5a034ba2c137c7159",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": 0.08867513459481,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.11117564655710467,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "engineering_state",
+        "measured_signed_offset_mm"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.06666666666681642,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m2tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m2tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:bd85a3e35249f6694461edb63f9e7db54b30ea66f77e7118302cf01e78ae3749",
+        "validation_sha256": "sha256:3bd9df5ff0e8b1ecafa09e313567850c57d75d7d1f4990ef6f01891e9a20e7da",
+        "second_actual_sha256": "sha256:bd85a3e35249f6694461edb63f9e7db54b30ea66f77e7118302cf01e78ae3749",
+        "second_validation_sha256": "sha256:3bd9df5ff0e8b1ecafa09e313567850c57d75d7d1f4990ef6f01891e9a20e7da"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1_1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "5eba90b8b99f4c54fdd3737876afa4759fdf7c1b68a2dfd0bf25c4de080ce32f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.10999999999999999,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10629381996414246,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.03666666666671419,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:43a1acb2c9e494ce0c60fc5b50f6eb5fe5ef60891ac10b6c5c14e874313bd653",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:43a1acb2c9e494ce0c60fc5b50f6eb5fe5ef60891ac10b6c5c14e874313bd653",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -1,
+      "input_source": "generated_05C",
+      "step_sha256": "26855e2582a571ce566c916f932c74319652ec3de7df6bc41b905203cc530220",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.1,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10573105312774007,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.03333333333337654,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:c3f06b045dbf12268e63bb01277832b74d315be83fec95848a4cff6b924298ad",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:c3f06b045dbf12268e63bb01277832b74d315be83fec95848a4cff6b924298ad",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_9tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "209f2d8008506473355dbaad003dee7e58d2af602a7deb0e0cd18d75059e506a",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.09,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10516549828374902,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.030000000000038884,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_9tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_9tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:ef8147c48fd3a39c0aa2c55a4cfa688a0c3ce673810c5023d634ba9b580a0fbf",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:ef8147c48fd3a39c0aa2c55a4cfa688a0c3ce673810c5023d634ba9b580a0fbf",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_5tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "6b9110f748c81151c64798e66aa33c44d832279ddf278e6bcb3d8dc1f3ab0fb2",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.04999999999999999,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.1028816944038999,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.01666666666668827,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_5tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_5tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:de6cc516038b7ea6dfa1732811e7c5def7461be51de32cabfe30eb538702f9e5",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:de6cc516038b7ea6dfa1732811e7c5def7461be51de32cabfe30eb538702f9e5",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "7b7ded1bbfc4636ad5a0664e76c2bb47f25607fc246a439459736a896d262c24",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.010000000000000009,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10057731138927753,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.003333333333337657,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:0326267f18236672b936e0acedb795a3825dce8a27d1018382dcdf12ca097ae1",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:0326267f18236672b936e0acedb795a3825dce8a27d1018382dcdf12ca097ae1",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "fe38e687abc019c0a8c0eeff5178ca3996bc2277d93ba034de701db8d3c5c390",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0999999999999352,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:ba20805cd237507ba9048f6cb61e3586b36c16e1fd3fbedf833f5e557acf69bf",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:ba20805cd237507ba9048f6cb61e3586b36c16e1fd3fbedf833f5e557acf69bf",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "29aef327e75dacaa8796499731fc0bcc2cb1024564190fa9e6f4dd063790df88",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.010000000000000009,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09942268783285953,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:018a5b53a0a64114cbfcb7ccf2e69429dda1b96b13121823d079a2306e81bf7c",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:018a5b53a0a64114cbfcb7ccf2e69429dda1b96b13121823d079a2306e81bf7c",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_5tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "3be7ab601e9e691e4b339e7bee534f198cbf88e50503d36ffff146ebccbaec6f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.04999999999999999,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09711782018049216,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_5tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_5tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:3c5e415748be2db29dd4d2ad361818c1d7a0ad55494b1205574314e0f2d74d87",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:3c5e415748be2db29dd4d2ad361818c1d7a0ad55494b1205574314e0f2d74d87",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_9tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "f459e14fe353dad3c48c14fa6944774157fa7fe2e01ecd9ed05fc9775836b8b2",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.09000000000000002,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09482942246538992,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_9tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_9tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:a20e3bf99c8e955301af3b2d9970918b60304fa03264b439601afdc72ee6602a",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:a20e3bf99c8e955301af3b2d9970918b60304fa03264b439601afdc72ee6602a",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 1,
+      "input_source": "generated_05C",
+      "step_sha256": "c527159f3e470e34f864ea770c93b67d779aee7cbe8a0d6a6c2c3d9de7361bce",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.10000000000000003,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0942612138390108,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:b3938db989a6b92b5c2a17a3f11fdb5beed504c4178ca0392652c5f1339dd28f",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:b3938db989a6b92b5c2a17a3f11fdb5beed504c4178ca0392652c5f1339dd28f",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1_1tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "6b1f7585b01bcccc07937e29950272b1189f3da903bce5444d72e1dda71931bb",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.10999999999999999,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09369487196846292,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:936ca7020a70534f78bb728caf07f95c7494808b97c9e7e345a915a8521cce64",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:936ca7020a70534f78bb728caf07f95c7494808b97c9e7e345a915a8521cce64",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p2tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 2,
+      "input_source": "generated_05C",
+      "step_sha256": "6158aa83fd84605d0c94f7c80467f601e680f102310f7114014c52d3a3efaf2d",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.2,
+      "measured_delta_mm": 0.2,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.08870282622452413,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p2tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p2tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:3f1343ab4eeadb72af6c3355de4954c2888f4eaed088def19e3da030b6b21c51",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:3f1343ab4eeadb72af6c3355de4954c2888f4eaed088def19e3da030b6b21c51",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p4tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": 4,
+      "input_source": "generated_05C",
+      "step_sha256": "a5467e0c396ba61e245eb43bb5a2693a8f8580ff1cc73f32852ca8be54cdd2df",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.4,
+      "measured_delta_mm": 0.39999999999999997,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.07852186605627956,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p4tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_p4tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:e46fb525d1cbcce391434e5e6fccd7c54286b2f4b14c51c796cd452984f9f39e",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:e46fb525d1cbcce391434e5e6fccd7c54286b2f4b14c51c796cd452984f9f39e",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m4tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "final_status": "OUT_OF_CONSTRUCTION_DOMAIN"
+    },
+    {
+      "sample_id": "A07_delta_m2tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "final_status": "OUT_OF_CONSTRUCTION_DOMAIN"
+    },
+    {
+      "sample_id": "A07_delta_m1_1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "5103808ffffe5336f8f43da30d2c0445735b83ae5f22b086c0066ebbfdc9202e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.10999999999959001,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.026736669756260652,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:be34aa0d6e01fce80d1d501903820b70d27a71f308f5c3fe11224f8f0c28c2a0",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:be34aa0d6e01fce80d1d501903820b70d27a71f308f5c3fe11224f8f0c28c2a0",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -1,
+      "input_source": "generated_05C",
+      "step_sha256": "a63c2d4768327a069b4b56e4651482f004f17de4fdef42ef6805bfdce8a0f47e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.09999999999959,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.025666412937942744,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:b93a783bf07a8966eaffd2eaba4edafe36f42b6d81ec7520bbcb5322a324b039",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:b93a783bf07a8966eaffd2eaba4edafe36f42b6d81ec7520bbcb5322a324b039",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_9tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "8f1b3fbd01c3634d0c068e1a4a23e87f13a12b98d396d723c8bf0ab80335c47f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.08999999999959,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.024324086214989844,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_9tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_9tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:b27563842e519e793155c971cbc08199b47bb8f0424b2565af31042194ad90fc",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:b27563842e519e793155c971cbc08199b47bb8f0424b2565af31042194ad90fc",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_5tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "c23b91c1bede73f2daaf4c67183d634440d9bd9d7a2326f870243c95d5eb3564",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.04999999999959001,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.016234080276828308,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_5tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_5tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:a56e8ad4be42f36929ac36b42779911e5aa2fc4b993b06fb111dcb1b611283de",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:a56e8ad4be42f36929ac36b42779911e5aa2fc4b993b06fb111dcb1b611283de",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "929aa1371d0f3155e711359721a1f489801a91b5238783f16f63affea7b3e534",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.010000000000000009,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.003790955864656699,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:2587458714d994afacf7730ace611cf68f2e29c00773a5d2688279b1c64e25f3",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:2587458714d994afacf7730ace611cf68f2e29c00773a5d2688279b1c64e25f3",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "e42f24376b0f35cd5f4d3fb5f294107394fb9eb06805415fbd85ec04d0cc0f8e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:918299bb307bb0bb5b993431704843cc72dea4869d13fc5c4d5892f27d053f10",
+        "validation_sha256": "sha256:7f844811ec6c6f3e3e94f75eb3fe5ad05132a355bbf7933ca9c6e0292820b29c",
+        "second_actual_sha256": "sha256:918299bb307bb0bb5b993431704843cc72dea4869d13fc5c4d5892f27d053f10",
+        "second_validation_sha256": "sha256:7f844811ec6c6f3e3e94f75eb3fe5ad05132a355bbf7933ca9c6e0292820b29c"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "7328fe62713a388b22f7ae234ed6c20dc730077f25b1fb41b7ab3035ee9032e0",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.009999999999999981,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.551115123125783e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:4b7ea414873824e1e842b8b0d82d54ef53fa93fa593265f0a89225914a17ee72",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:4b7ea414873824e1e842b8b0d82d54ef53fa93fa593265f0a89225914a17ee72",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_5tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "93bfcee2f503073cd6513771bfbd17170dfbfabf0ac41689dbc6610bb4c27774",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.04999999999999999,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_5tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_5tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:015b0041dc42e7da93b2c2baee0af3654715897f2632925044515528d13a3394",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:015b0041dc42e7da93b2c2baee0af3654715897f2632925044515528d13a3394",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_9tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "0754742d51c4cbbd423a3038fd9eaa38f82a615182100b78b4a84cec2d3f918b",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.09,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_9tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_9tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:409b32969fd44604a0d7fd89bc54508b281888dc4a9d373473a6014173caaacf",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:409b32969fd44604a0d7fd89bc54508b281888dc4a9d373473a6014173caaacf",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 1,
+      "input_source": "generated_05C",
+      "step_sha256": "14366b0f9f58656c5da0433f043464114f32eef2fa3831e24181279b908bfb14",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.1,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 4.163336342344337e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:c22cad6568813dd8936eaa68c40b8b8536b48de16c90f0f4e2d2e44b0a639351",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:c22cad6568813dd8936eaa68c40b8b8536b48de16c90f0f4e2d2e44b0a639351",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1_1tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "ff131a326773b893365a1be40cd6805693ea7545fd99efb071109d4d7326718b",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.11000000000000001,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.09999999999995252,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 1.3877787807814457e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1_1tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1_1tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:a91caa31818b510afbf7eb14124d2050656c353d5d595d1daa1e13aa5cc30d67",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:a91caa31818b510afbf7eb14124d2050656c353d5d595d1daa1e13aa5cc30d67",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p2tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 2,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "final_status": "OUT_OF_CONSTRUCTION_DOMAIN"
+    },
+    {
+      "sample_id": "A07_delta_p4tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 4,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "final_status": "OUT_OF_CONSTRUCTION_DOMAIN"
+    },
+    {
+      "sample_id": "A01_delta_m4tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -4,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "091e8f80ddc0b9c56c6efb06402f824794a4146ae2d05d6e0775b9ac1778f585",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.3999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010023093763434866,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 1333.333333333348,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.820766091346741e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m4tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m4tauE_s1/validation.json",
+        "actual_sha256": "sha256:a6ea3fcc1e89d07b0dd710d6b8f3efd8def06d7900d98090712019e836adfd2c",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:a6ea3fcc1e89d07b0dd710d6b8f3efd8def06d7900d98090712019e836adfd2c",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m2tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -2,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "ce1836cccc357f4078f4025fae5461aae08e29d838c84db3dff81eb2ada058d8",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": -0.1999999999999993,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010011546974529452,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 666.666666666674,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.820766091346741e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m2tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m2tauE_s1/validation.json",
+        "actual_sha256": "sha256:daec5fc030004e4a7ba704e769fe0063f4596a52de81d5def0131fcad22b5c0f",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:daec5fc030004e4a7ba704e769fe0063f4596a52de81d5def0131fcad22b5c0f",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1_1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -1.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "203bba9140bd42f757c37b1dc29d5895802dc91580714ab59b874a0ff8b62014",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.10999999999999943,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010006350847832296,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 366.66666666667015,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:9d0def5010c9752b75a9f2b241daad0d41865eb39937cfb91e357fc4b6636eb2",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:9d0def5010c9752b75a9f2b241daad0d41865eb39937cfb91e357fc4b6636eb2",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "906bb839d312ef4867a41f49dcccf88c60c4c40a55e3092cb7e3630742300200",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.10000000000000142,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.001000577349883893,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 333.3333333333429,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 5.820766091346741e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1tauE_s1/validation.json",
+        "actual_sha256": "sha256:d444ba75bd9e52570ff3283aa4f36f1bf4ffa47775418ac2f99d69c7fd268336",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:d444ba75bd9e52570ff3283aa4f36f1bf4ffa47775418ac2f99d69c7fd268336",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_9tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -0.9,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "96d0258720a3fe0e4c363a7575ee070ad661a7287da8099fa04994fe068f1a9f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.08999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010005196149614158,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 300.0000000000039,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_9tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_9tauE_s1/validation.json",
+        "actual_sha256": "sha256:62cfe1d5f9df301ad7d5b57313c4fc5201344567fae92cd06fed4323d2537983",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:62cfe1d5f9df301ad7d5b57313c4fc5201344567fae92cd06fed4323d2537983",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_5tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -0.5,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "7f7a837239e2c44a09e99e5fcd17e2237e188486d3b1d44941f7fc35a3c43a09",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.05000000000000071,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010002886750864507,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 166.66666666667146,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_5tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_5tauE_s1/validation.json",
+        "actual_sha256": "sha256:272d0611bc644889bf011eb686ce0bda57c633b3be50816778fd2d49abd143cc",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:272d0611bc644889bf011eb686ce0bda57c633b3be50816778fd2d49abd143cc",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": -0.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "aa824b3411b1e88eab1f7885bfd69aae5f8ae9a5d880ba7e1726b5a112163f03",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.00999999999999801,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0010000577350265268,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 33.33333333332719,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:efae72d491746dd023e34a63ac76250414adae07dbf239676c7f1b1bba10589b",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:efae72d491746dd023e34a63ac76250414adae07dbf239676c7f1b1bba10589b",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 0,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "02a9bb35d7cbd21cf911a22a426ef05b5c2aefb61d79523a35c2bf42d1c1f627",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009999999999999926,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0tauE_s1/validation.json",
+        "actual_sha256": "sha256:2bcc9cc5290654509e1dd6f46e5c25e2a9293fef0f1aec0ab2f688328686ff99",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:2bcc9cc5290654509e1dd6f46e5c25e2a9293fef0f1aec0ab2f688328686ff99",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 0.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "f2247e116e56c5de676042117cbdf4414538f285f3b45870d9f2c220e033dd70",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.010000000000001563,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009999422649734585,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:4e131453b7e0de7b465779c2a6bfc472ddd23cb7a06d0e0cf5948cf8702fc5bb",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:4e131453b7e0de7b465779c2a6bfc472ddd23cb7a06d0e0cf5948cf8702fc5bb",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_5tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 0.5,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.05000000000000071,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.000999711324913486,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_5tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_5tauE_s1/validation.json",
+        "actual_sha256": "sha256:ffce7b8ba1337d3c942aad3e8a4bb826111d354108bea47f9a9bd173c9da8f3b",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:ffce7b8ba1337d3c942aad3e8a4bb826111d354108bea47f9a9bd173c9da8f3b",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_9tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 0.9,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "88165f44752ab005de983529b864f94cc304f7fffc55a5a2378eb6396071bb38",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.08999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009994803850380592,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_9tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_9tauE_s1/validation.json",
+        "actual_sha256": "sha256:b72e408ab400f546ad0b78de08cb22487a9783369a15154aad2e18675dcc36e4",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:b72e408ab400f546ad0b78de08cb22487a9783369a15154aad2e18675dcc36e4",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "d3b24986ed4b1409fefc6f55c06b7ba3677f17b4a608eb08e3cd4907f9f80ea2",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.10000000000000142,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009994226501153145,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1tauE_s1/validation.json",
+        "actual_sha256": "sha256:f91374546612b943916691b251a4ff3c0ffe832a0adb80e743bc9ee605500ec4",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:f91374546612b943916691b251a4ff3c0ffe832a0adb80e743bc9ee605500ec4",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1_1tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 1.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "4829512bf3abddce5af645107d67bcfb3219c13495b1acf097780cb4ae1a803f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.10999999999999943,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.000999364915215617,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:02a190d16581b41acd3989048a56f5d064b20e47f4144fcd6a92599a403b6bd0",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:02a190d16581b41acd3989048a56f5d064b20e47f4144fcd6a92599a403b6bd0",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p2tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 2,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "7cbe97ce63a444ccb3906d9652d931484948eb7b5043792c53231271b65c958f",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.2,
+      "measured_delta_mm": 0.1999999999999993,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009988453025345958,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p2tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p2tauE_s1/validation.json",
+        "actual_sha256": "sha256:2a22defe560d3b42fd5aaa2b9293a39deb2bde3debfaf4ac50153effda69243b",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:2a22defe560d3b42fd5aaa2b9293a39deb2bde3debfaf4ac50153effda69243b",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p4tauE_s1",
+      "case_id": "A01",
+      "scale": 1.0,
+      "q": 4,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "c0d46b2c7883d93e0fc7ab765c38a0cb106daab659218245599d38880c80d39c",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.4,
+      "measured_delta_mm": 0.3999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.0009976906234573895,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p4tauE_s1/actual.json",
+        "validation": "batch_1/samples/A01_delta_p4tauE_s1/validation.json",
+        "actual_sha256": "sha256:db25ca8962ad35f67231231f2c0b05bba3e6d0ad79239c8f1e350f1bea20ed26",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:db25ca8962ad35f67231231f2c0b05bba3e6d0ad79239c8f1e350f1bea20ed26",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m4tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -4,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "25b62ecd3bd4e601e66d24d157a36de400d0c9ad5f9babf37933bcabcb465f66",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.40000000000000036,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 1549.03073442413,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m4tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m4tauE_s1/validation.json",
+        "actual_sha256": "sha256:8027ad0ab0251b46e390bb8ce03268b8ef61c1eb713d4888b7d4471dc27369b1",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:8027ad0ab0251b46e390bb8ce03268b8ef61c1eb713d4888b7d4471dc27369b1",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m2tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -2,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "872aa80e7793e33d2488eb7cfb591067dcaab5caca5c7b26b78eab78b9921233",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": -0.20000000000000107,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 779.9567653047743,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m2tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m2tauE_s1/validation.json",
+        "actual_sha256": "sha256:4e8cc0f10a8e2e764049d0e85f73ed81925d8abdf574126e0e1c725f2a794139",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:4e8cc0f10a8e2e764049d0e85f73ed81925d8abdf574126e0e1c725f2a794139",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m1_1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -1.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "ceafa944236f9b92630f66672626952c7e0658499ef1a0560f3b0a4cb964dad4",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.11000000000000121,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 430.32296694557226,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:7977e31230cb0165bc27538fcc3c6080641edfabe523699420c2e1d27a3604f0",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:7977e31230cb0165bc27538fcc3c6080641edfabe523699420c2e1d27a3604f0",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "ef4e603f9fc752ea633a536456fe3530ee5494b42cb4f1dd81434b3d7d83c2f8",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.10000000000000142,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 391.3387321755654,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1tauE_s1/validation.json",
+        "actual_sha256": "sha256:f5f1d092b1e35b91242a33506c49f124f70077de8730bb1b484183f1eb2333e4",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:f5f1d092b1e35b91242a33506c49f124f70077de8730bb1b484183f1eb2333e4",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_9tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -0.9,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "ed4469f9e8996d7543775af082ca6d9724ae23247a592ee68d0f8c4756ae3375",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.09000000000000163,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 352.32729041509447,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_9tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_9tauE_s1/validation.json",
+        "actual_sha256": "sha256:2349f50b136210985465e7255ec82bda20cb221e656db45d0ffdc5508f42aa1f",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:2349f50b136210985465e7255ec82bda20cb221e656db45d0ffdc5508f42aa1f",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_5tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -0.5,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "5517efdea82d8221cedba951c9d78f21e61bbc2be6ca127a431f2f4152cb30a2",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.05000000000000071,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 196.00945346857407,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_5tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_5tauE_s1/validation.json",
+        "actual_sha256": "sha256:d0c00529153d3217c584581c44aa776d0f63991a1bb270668f9252e39f4653a5",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:d0c00529153d3217c584581c44aa776d0f63991a1bb270668f9252e39f4653a5",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": -0.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "ddd17842cca009b0c3abc8a1d2df13b3ed736f7029e3abd25d2f2837b031aead",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.010000000000001563,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 39.256304674647254,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:a08d978d41a096eb2e5dda94054b482416dbfeb5b4e94dd480485f49f967868f",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:a08d978d41a096eb2e5dda94054b482416dbfeb5b4e94dd480485f49f967868f",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 0,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "19bd3fa30cd9ee185449f4cb788cc2c1530d138e4e2a543dd1e82a879214d9ce",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0tauE_s1/validation.json",
+        "actual_sha256": "sha256:07a03fc6a175982898174353de0c76617cedca0b8511f7ae4331cfa63309fdd3",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:07a03fc6a175982898174353de0c76617cedca0b8511f7ae4331cfa63309fdd3",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 0.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "4f334d34280d428238c43e39b49d3f2032fe6e285ece38a4391b52bf8718daa7",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.009999999999999787,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:95a4d7f25a685983ccc88fd1eb926d15e4020a8eb7d3577e281e9f8b3bc3fc90",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:95a4d7f25a685983ccc88fd1eb926d15e4020a8eb7d3577e281e9f8b3bc3fc90",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_5tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 0.5,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.049999999999998934,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_5tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_5tauE_s1/validation.json",
+        "actual_sha256": "sha256:19006e6627acf8efa6724ed8ef774bd57390cf1c9feacc789cb22ec8b8cff4d9",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:19006e6627acf8efa6724ed8ef774bd57390cf1c9feacc789cb22ec8b8cff4d9",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_9tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 0.9,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "68b8ed6faf13cf139fa2ddc40b0406026fe3a8ee875ad87ae407aef2f32737f2",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.08999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_9tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_9tauE_s1/validation.json",
+        "actual_sha256": "sha256:000576256f0b9754515002692e82d014fa1bd6c98ea3de2812ecfcd1bd44b9df",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:000576256f0b9754515002692e82d014fa1bd6c98ea3de2812ecfcd1bd44b9df",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "a80472cb14f377a6f3cc596c994c33079decc3b66134d132702628bd0379de05",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.09999999999999964,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1tauE_s1/validation.json",
+        "actual_sha256": "sha256:d29857be417a32d214b91c11eb1993b1596add50840f37b0751705bc0a1e97e1",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:d29857be417a32d214b91c11eb1993b1596add50840f37b0751705bc0a1e97e1",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1_1tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 1.1,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "0ae9bfa7a69ee7bf307f0edc9631474971dfdf8224df426a5d6ca361b1a8138a",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.10999999999999943,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1_1tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1_1tauE_s1/validation.json",
+        "actual_sha256": "sha256:3ee849df81eedd17429eaa98bff3c73a24abac8bd29dd5339e824675621a7685",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:3ee849df81eedd17429eaa98bff3c73a24abac8bd29dd5339e824675621a7685",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p2tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 2,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "e3a56433678e72fb65b62039bcf4709b2f14661d004709a71a54a7870b0ef8c7",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.2,
+      "measured_delta_mm": 0.1999999999999993,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p2tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p2tauE_s1/validation.json",
+        "actual_sha256": "sha256:12f2dbc86b8d4f083cbafa458c4794f66f51a74fe8162ced2f2f12f2daf1c795",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:12f2dbc86b8d4f083cbafa458c4794f66f51a74fe8162ced2f2f12f2daf1c795",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p4tauE_s1",
+      "case_id": "A07",
+      "scale": 1.0,
+      "q": 4,
+      "input_source": "tracked_05A_reference",
+      "step_sha256": "36b2fc792a2a94dc5e12468652553fce850d05ea8a60a642793092daabe83947",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.4,
+      "measured_delta_mm": 0.3999999999999986,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.00100000000000001,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.9103830456733704e-11
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p4tauE_s1/actual.json",
+        "validation": "batch_1/samples/A07_delta_p4tauE_s1/validation.json",
+        "actual_sha256": "sha256:ec59f845dccd329e441a61b422065ac832a72b4700ff09aeda8358b1fbdd4623",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:ec59f845dccd329e441a61b422065ac832a72b4700ff09aeda8358b1fbdd4623",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m4tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "f4305a9fc9eea80e7345a6153728c723e273872f29d6e1532d96c638741791ff",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.40000000000009095,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000230940107875e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 13333333.333335176,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m4tauE_s100/validation.json",
+        "actual_sha256": "sha256:36053c386499d718bf354561a48c53cf54a62d31f7eaa17f2967492ffc1c4ad8",
+        "validation_sha256": "sha256:fbe8ba47f14504975d17958104c12d19438b774c97eb2887f5777ca95a561c74",
+        "second_actual_sha256": "sha256:36053c386499d718bf354561a48c53cf54a62d31f7eaa17f2967492ffc1c4ad8",
+        "second_validation_sha256": "sha256:fbe8ba47f14504975d17958104c12d19438b774c97eb2887f5777ca95a561c74"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m2tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": "ea2d68909ba084ed7488815a83f300d60c7a1df1e8c0b0f4e52fe8ce1cd5f331",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": -0.20000000000027285,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000115470054253e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 6666666.666675167,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m2tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m2tauE_s100/validation.json",
+        "actual_sha256": "sha256:c01b8459d3e6d7c287e66a725f59abfe1e1c78b182213f04988adbb200b370b2",
+        "validation_sha256": "sha256:b32b5f6416a308d7fb85fe7fae86d1d753d0cde68d4104a408d90a409c2c9b62",
+        "second_actual_sha256": "sha256:c01b8459d3e6d7c287e66a725f59abfe1e1c78b182213f04988adbb200b370b2",
+        "second_validation_sha256": "sha256:b32b5f6416a308d7fb85fe7fae86d1d753d0cde68d4104a408d90a409c2c9b62"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1_1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "de086df983587a655c7e9ef811e4f02dec4534fd87a413534b43765040eb8595",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.11000000000012733,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000063508530052e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3666666.666670584,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:d540016169ee6f74ef3031c9bfddde3c4c77882101db454a4ac1b6008e87ddcb",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:d540016169ee6f74ef3031c9bfddde3c4c77882101db454a4ac1b6008e87ddcb",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -1,
+      "input_source": "generated_05C",
+      "step_sha256": "1e82e5419ebb3a6d5b0a703db45f0a235ffb92b003ae61ac851ac0e4bf584043",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.09999999999990905,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000057735027362e-05,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3333333.3333300045,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m1tauE_s100/validation.json",
+        "actual_sha256": "sha256:8afed332025e63d1e9ffc24da90316f960e59eb10b8ecb615376ada3657e51e4",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:8afed332025e63d1e9ffc24da90316f960e59eb10b8ecb615376ada3657e51e4",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_9tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "a201f1a27cc94e2463d149506f3d00ef260ebf5bffe4555494c2b5ee8e7bb194",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.09000000000014552,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000051961524672e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3000000.000004583,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 6.103515625e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_9tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_9tauE_s100/validation.json",
+        "actual_sha256": "sha256:8755a7343a7bf51820b5e09736d7dcedc4d81833dffbe6c4b7120a963b45d6d1",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:8755a7343a7bf51820b5e09736d7dcedc4d81833dffbe6c4b7120a963b45d6d1",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_5tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "c213d098cde33726ee8b7a9d5eac443a8da9aafbaeff1b502353d50ce2af8b4d",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.0500000000001819,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000028867513907e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 1666666.6666725813,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_5tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_5tauE_s100/validation.json",
+        "actual_sha256": "sha256:24b57c091c0d913b41b1f0f396825148aeccef39806acfa7c949d2e2cbd348e5",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:24b57c091c0d913b41b1f0f396825148aeccef39806acfa7c949d2e2cbd348e5",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_m0_1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "71a4f10f556d3539e3c8bfc00a13b2fabd6047a51b687303882b11efbafc1623",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.010000000000218279,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000005773503138e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 333333.3333405796,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m0_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m0_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:87dbab2894b4f1ec95befd213df9693a7d5be32cb5ab404362549322b0e97a71",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:87dbab2894b4f1ec95befd213df9693a7d5be32cb5ab404362549322b0e97a71",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "d5a3c7da57bdb456067fe430ad2e31dbe3f7d7cb01405e85b10b35058c3341b0",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [
+        "positive_common_area_mm2"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0tauE_s100/validation.json",
+        "actual_sha256": "sha256:0b152caca8c995c316fb27b8f0542019424ecab8456117c50eaf120cc756a2c2",
+        "validation_sha256": "sha256:fd93e0fe443688a114bace392e845525c78754734bb4c4a356a4770674a1f449",
+        "second_actual_sha256": "sha256:0b152caca8c995c316fb27b8f0542019424ecab8456117c50eaf120cc756a2c2",
+        "second_validation_sha256": "sha256:fd93e0fe443688a114bace392e845525c78754734bb4c4a356a4770674a1f449"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "00862797d90faa58c9e3c99b7d63802eef981c6ddcd5e65149ae289457bc104e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.009999999999763531,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999994226497755e-06,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:b99184ef444f568b9e34dbed6dc89d828fe9c3118858ac5cea54e5d73400ae40",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:b99184ef444f568b9e34dbed6dc89d828fe9c3118858ac5cea54e5d73400ae40",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_5tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "594c77005df5f31c7fc4f76427be94bcfc5dfa8108ae35b48cd17f0cf7057b83",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.04999999999972715,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999971132486986e-06,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_5tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_5tauE_s100/validation.json",
+        "actual_sha256": "sha256:606ff0be8bb5e27f6ba59318395a7efc7adb0b6c365f31e6c82e96c8f8b641ef",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:606ff0be8bb5e27f6ba59318395a7efc7adb0b6c365f31e6c82e96c8f8b641ef",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p0_9tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "cddd23ab6c1d73b3e68c710401a2eb17341546c4b6f899309afb7bac73e93998",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.08999999999969077,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999948038476223e-06,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0_9tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0_9tauE_s100/validation.json",
+        "actual_sha256": "sha256:7d977383dea13c36ec9b761ab654506154aff3d8cfe8720042c0273a40bd7f1e",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:7d977383dea13c36ec9b761ab654506154aff3d8cfe8720042c0273a40bd7f1e",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 1,
+      "input_source": "generated_05C",
+      "step_sha256": "d98db40097283f5f72209d41d94c1009daa6c2352b735dc2815f12ead537497d",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.09999999999990905,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999942264973533e-06,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1tauE_s100/validation.json",
+        "actual_sha256": "sha256:8a2db89a2e17c2a8d4c7f5beecaec51fd40fc27fc2fd1d44be09109ed1460342",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:8a2db89a2e17c2a8d4c7f5beecaec51fd40fc27fc2fd1d44be09109ed1460342",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p1_1tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "6c5de01516b060b971f3dd2458948580325277b3006ce7eec37f0233bc7c4c12",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.10999999999967258,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999936491470841e-06,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p1_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p1_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:9a75f805922366d2c4b6800ecbd56d34609efe5fb5cc4cbdbdd1e37b903a0cdd",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:9a75f805922366d2c4b6800ecbd56d34609efe5fb5cc4cbdbdd1e37b903a0cdd",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p2tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 2,
+      "input_source": "generated_05C",
+      "step_sha256": "18a23930be06dded3faad6ab5c66a9e1b6a3361faf8e3caa44d79907c8f5e0bb",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.2,
+      "measured_delta_mm": 0.1999999999998181,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.999884529946638e-06,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p2tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p2tauE_s100/validation.json",
+        "actual_sha256": "sha256:b23558b1ffa9fa3f3c78e52defbe01f3a5dbf3e1157db47923ea4c96f4c42dee",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:b23558b1ffa9fa3f3c78e52defbe01f3a5dbf3e1157db47923ea4c96f4c42dee",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A01_delta_p4tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 4,
+      "input_source": "generated_05C",
+      "step_sha256": "7391c56a38f472f31829f03489d41e5a3930203c416b31f7ee34997170313262",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.4,
+      "measured_delta_mm": 0.40000000000009095,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 9.99976905989302e-06,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p4tauE_s100/validation.json",
+        "actual_sha256": "sha256:e3ede2ee8c90b0a925da5df658bd35f7ff014785527d37e3df923d2a88c36d4b",
+        "validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5",
+        "second_actual_sha256": "sha256:e3ede2ee8c90b0a925da5df658bd35f7ff014785527d37e3df923d2a88c36d4b",
+        "second_validation_sha256": "sha256:c6eb031dabbb6c481c51a097e672703f6a9ff41003a7e78efaacf62bc6d7f6e5"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m4tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "34cc0bb09879c5fcc9d593b3cc50eabb8e662b64c900d763d1667bf6c40f5c92",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.40000000000009095,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 15705786.708713531,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m4tauE_s100/validation.json",
+        "actual_sha256": "sha256:6395ccb829742d525496456a2374e1aa607ce4514526a2a11fbd94b031540cc2",
+        "validation_sha256": "sha256:3991e5653f5a683c9134c43e5c875974294250fcb542c756fa155361d214b8da",
+        "second_actual_sha256": "sha256:6395ccb829742d525496456a2374e1aa607ce4514526a2a11fbd94b031540cc2",
+        "second_validation_sha256": "sha256:3991e5653f5a683c9134c43e5c875974294250fcb542c756fa155361d214b8da"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m2tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": "d821be82e4149793e67d5e9d5754b53af8d750eb67e8ad1e94529d4517f9d71e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": -0.20000000000004547,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 7853437.494167328,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 6.103515625e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m2tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m2tauE_s100/validation.json",
+        "actual_sha256": "sha256:b2ece6c59ada2577a93cca64d8f792872248255860660aa1f2ca88aa2eb71943",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:b2ece6c59ada2577a93cca64d8f792872248255860660aa1f2ca88aa2eb71943",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m1_1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "c673b6d9edf2e6da9fac32d8a2baff31b45bcaaf898a4a9305217024a1514778",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.11000000000012733,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 4319525.296394348,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:58dd6209928587acaef8729f2de3f64c2d18547a009b6dce45709e60a45bcfda",
+        "validation_sha256": "sha256:8ffb6349c51690fe6209ae385fe1fd9a97e47370083fa0383393385168bb871d",
+        "second_actual_sha256": "sha256:58dd6209928587acaef8729f2de3f64c2d18547a009b6dce45709e60a45bcfda",
+        "second_validation_sha256": "sha256:8ffb6349c51690fe6209ae385fe1fd9a97e47370083fa0383393385168bb871d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -1,
+      "input_source": "generated_05C",
+      "step_sha256": "f6556e9c6bdc0b7db41b1858e136dd858138242d3f0b09394178da38b06c0bda",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.10000000000013642,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3926854.782043457,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 6.103515625e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1tauE_s100/validation.json",
+        "actual_sha256": "sha256:28c090f549bca3afc854c1ae74186139e4af38adb0d3d9d9d1637d5ac8dff94d",
+        "validation_sha256": "sha256:b5997db86c48be86b68b7b0ce83b52c48cd46d77568d7376fa4c0ba2473fda8f",
+        "second_actual_sha256": "sha256:28c090f549bca3afc854c1ae74186139e4af38adb0d3d9d9d1637d5ac8dff94d",
+        "second_validation_sha256": "sha256:b5997db86c48be86b68b7b0ce83b52c48cd46d77568d7376fa4c0ba2473fda8f"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_9tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "434005bbb09a170da4616d7409f79a8f999240f159c41d99975fb5dd67d605d1",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.09000000000014552,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3534181.546989441,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_9tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_9tauE_s100/validation.json",
+        "actual_sha256": "sha256:3334247c393cba6ed2998b945d39834f2160b278e1d93856aa1f7b53c8001e2b",
+        "validation_sha256": "sha256:3b5ddd62db00d15d1205fdb91df767a9c6f8ee70a2e08623a96a511527daf47a",
+        "second_actual_sha256": "sha256:3334247c393cba6ed2998b945d39834f2160b278e1d93856aa1f7b53c8001e2b",
+        "second_validation_sha256": "sha256:3b5ddd62db00d15d1205fdb91df767a9c6f8ee70a2e08623a96a511527daf47a"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_5tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "995f497a3f4cfd03277d9a6b92fb663191e3f009247073edfe78411893f60bd6",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.049999999999954525,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 1963461.3997497559,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_5tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_5tauE_s100/validation.json",
+        "actual_sha256": "sha256:9bd2a465460af4fca005522a8be15ff82cfc5a51958ae6921e7c5259e139f7db",
+        "validation_sha256": "sha256:7f2e8b90d27dd1cf64acb053aa7071faa0005765405f4a90bbfd89a4bd663822",
+        "second_actual_sha256": "sha256:9bd2a465460af4fca005522a8be15ff82cfc5a51958ae6921e7c5259e139f7db",
+        "second_validation_sha256": "sha256:7f2e8b90d27dd1cf64acb053aa7071faa0005765405f4a90bbfd89a4bd663822"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m0_1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "d0e92e9bed1bb38114f8651aa05ec9d31735a9957c7f07d43f93781525e3ebc6",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": -0.010000000000000002,
+      "measured_delta_mm": -0.009999999999990905,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 392697.72134780884,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:b7b7727ef39e34188336c47a2df624e870ce17094b01c72c3f77b6afa8624b9c",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:b7b7727ef39e34188336c47a2df624e870ce17094b01c72c3f77b6afa8624b9c",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "beefaaec5dcd817425263889c687df77ca0730b3cfd100a62ca7205f815197c3",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [
+        "positive_common_area_mm2"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0tauE_s100/validation.json",
+        "actual_sha256": "sha256:63eb2a8fc24615853e29c287c3467a64a00c6e617947284f43df5b2ec3d64213",
+        "validation_sha256": "sha256:dea28bf65d5b492ab3781fba58044dbb72b3b9e1633d9f538ebeb1ecedb596ba",
+        "second_actual_sha256": "sha256:63eb2a8fc24615853e29c287c3467a64a00c6e617947284f43df5b2ec3d64213",
+        "second_validation_sha256": "sha256:dea28bf65d5b492ab3781fba58044dbb72b3b9e1633d9f538ebeb1ecedb596ba"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 0.1,
+      "input_source": "generated_05C",
+      "step_sha256": "89c98aebf58e93b83d39a3dde5ff01c1b9d8bdfebd64a3d9e58c04247b7516eb",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.010000000000000002,
+      "measured_delta_mm": 0.009999999999990905,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:7ed38f3ccd41c65b78a011b4f1601b21bf275f5ed70c7ab313c338273100e159",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:7ed38f3ccd41c65b78a011b4f1601b21bf275f5ed70c7ab313c338273100e159",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_5tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "fb0016f2b9f6d250b4d07fa4801a18b4f480c1a86f4d4b7a2b391ceba1bbbe70",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.05,
+      "measured_delta_mm": 0.049999999999954525,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_5tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_5tauE_s100/validation.json",
+        "actual_sha256": "sha256:9726598407553f084469eda23ee6c9678f5b77546fd4a876e70f6f2f82f7a0d0",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:9726598407553f084469eda23ee6c9678f5b77546fd4a876e70f6f2f82f7a0d0",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p0_9tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "2b718bdb030adcac10b116022df5ddb85247d380b16fdc6c76a28860fe91a09d",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.09000000000000001,
+      "measured_delta_mm": 0.08999999999991815,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0_9tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0_9tauE_s100/validation.json",
+        "actual_sha256": "sha256:f4c345b9311e315a4c55107768beb93699ce5acfef6dca06b11d9c55acc31b6e",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:f4c345b9311e315a4c55107768beb93699ce5acfef6dca06b11d9c55acc31b6e",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 1,
+      "input_source": "generated_05C",
+      "step_sha256": "e343affb0596de973ff0ec27f712733cc0fd7c63af4cee1275acda0d9a30947e",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.1,
+      "measured_delta_mm": 0.09999999999990905,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "positive_gap_within_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1tauE_s100/validation.json",
+        "actual_sha256": "sha256:12f747795692df14bbec228096a6d2b9a24e6c43043b9df47c30e45d3f88c18a",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:12f747795692df14bbec228096a6d2b9a24e6c43043b9df47c30e45d3f88c18a",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p1_1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "5dfbcd31530c41808de70633312f388e1fea7230a5994ce60e1f2cb795a526a8",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.11000000000000001,
+      "measured_delta_mm": 0.10999999999989996,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p1_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p1_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:652bda4f263d63c6c1c2ec5e416d368cc38bb4b27982328b9d9a8479e6b632f5",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:652bda4f263d63c6c1c2ec5e416d368cc38bb4b27982328b9d9a8479e6b632f5",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p2tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 2,
+      "input_source": "generated_05C",
+      "step_sha256": "d5643d488ab6a1e15007feb6eb3e558715e26fd4ac059b4e96c15c3a27a67436",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.2,
+      "measured_delta_mm": 0.20000000000004547,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p2tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p2tauE_s100/validation.json",
+        "actual_sha256": "sha256:358b9431684c7e5bdcd6864b53f12fadf1f7234e60c0d6a00613891bf4d8fc65",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:358b9431684c7e5bdcd6864b53f12fadf1f7234e60c0d6a00613891bf4d8fc65",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p4tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 4,
+      "input_source": "generated_05C",
+      "step_sha256": "daff5563cf5e2e6078ce67fe50ff2343de5b9c7db93ddb6d835e0e9afadb8bec",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "MEASURED_PASS",
+      "set_delta_mm": 0.4,
+      "measured_delta_mm": 0.3999999999998636,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "positive_gap_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_beyond_tolerance",
+      "expected_dimension": "none",
+      "actual_dimension": "none",
+      "failure_kinds": [],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": false,
+        "solid_count": 2,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p4tauE_s100/validation.json",
+        "actual_sha256": "sha256:ac42454b826564da2cab97db381611afb575e6cbab9a94a55bc281ddaae6ccb1",
+        "validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d",
+        "second_actual_sha256": "sha256:ac42454b826564da2cab97db381611afb575e6cbab9a94a55bc281ddaae6ccb1",
+        "second_validation_sha256": "sha256:b6b8b921b9f89c19a635ca3f255f533a6558b6197d4196a8a092edcf1ea2a10d"
+      }
+    }
+  ],
+  "failure_records": [
+    {
+      "sample_id": "A01_delta_m4tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "26cebd0de91127a84242e0cb9ac1184a8814bff7aa21f3a25369e3fd826b12c1",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.111324865405,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.10998533626595748,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "measured_signed_offset_mm"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.059116756396743304,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m4tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m4tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:ca92bcbb9ac95e5254fbbcb74713f49e2022a502d4ba4c0a1a350287ac42e473",
+        "validation_sha256": "sha256:a1d6dc6859ee2a1909682e5ecc82d32641140b671aa780ea54c1c23d52de9f47",
+        "second_actual_sha256": "sha256:ca92bcbb9ac95e5254fbbcb74713f49e2022a502d4ba4c0a1a350287ac42e473",
+        "second_validation_sha256": "sha256:a1d6dc6859ee2a1909682e5ecc82d32641140b671aa780ea54c1c23d52de9f47"
+      },
+      "failure_types": [
+        "SIGNED_OFFSET_MISMATCH"
+      ],
+      "measurement_errors": [],
+      "root_cause_status": "NOT_DETERMINED"
+    },
+    {
+      "sample_id": "A01_delta_m2tauE_s0_01",
+      "case_id": "A01",
+      "scale": 0.01,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": "5bff956f81e60806e0d52c6605f882e01cd26d71b3423bd5a034ba2c137c7159",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": 0.08867513459481,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 0.11117564655710467,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "positive_gap_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "engineering_state",
+        "measured_signed_offset_mm"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.06666666666681642,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 2.7755575615628914e-17
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m2tauE_s0_01/actual.json",
+        "validation": "batch_1/samples/A01_delta_m2tauE_s0_01/validation.json",
+        "actual_sha256": "sha256:bd85a3e35249f6694461edb63f9e7db54b30ea66f77e7118302cf01e78ae3749",
+        "validation_sha256": "sha256:3bd9df5ff0e8b1ecafa09e313567850c57d75d7d1f4990ef6f01891e9a20e7da",
+        "second_actual_sha256": "sha256:bd85a3e35249f6694461edb63f9e7db54b30ea66f77e7118302cf01e78ae3749",
+        "second_validation_sha256": "sha256:3bd9df5ff0e8b1ecafa09e313567850c57d75d7d1f4990ef6f01891e9a20e7da"
+      },
+      "failure_types": [
+        "SIGNED_OFFSET_MISMATCH",
+        "ENGINEERING_STATE_MISMATCH"
+      ],
+      "measurement_errors": [],
+      "root_cause_status": "NOT_DETERMINED"
+    },
+    {
+      "sample_id": "A01_delta_m4tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "f4305a9fc9eea80e7345a6153728c723e273872f29d6e1532d96c638741791ff",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.40000000000009095,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000230940107875e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 13333333.333335176,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m4tauE_s100/validation.json",
+        "actual_sha256": "sha256:36053c386499d718bf354561a48c53cf54a62d31f7eaa17f2967492ffc1c4ad8",
+        "validation_sha256": "sha256:fbe8ba47f14504975d17958104c12d19438b774c97eb2887f5777ca95a561c74",
+        "second_actual_sha256": "sha256:36053c386499d718bf354561a48c53cf54a62d31f7eaa17f2967492ffc1c4ad8",
+        "second_validation_sha256": "sha256:fbe8ba47f14504975d17958104c12d19438b774c97eb2887f5777ca95a561c74"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 13333333.333336364,
+          "actual": 13333333.333335176,
+          "raw_error": -1.1883676052093506e-06,
+          "relative_error": -8.912757039068103e-14,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A01_delta_m2tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": "ea2d68909ba084ed7488815a83f300d60c7a1df1e8c0b0f4e52fe8ce1cd5f331",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.2,
+      "measured_delta_mm": -0.20000000000027285,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000115470054253e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 6666666.666675167,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_m2tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_m2tauE_s100/validation.json",
+        "actual_sha256": "sha256:c01b8459d3e6d7c287e66a725f59abfe1e1c78b182213f04988adbb200b370b2",
+        "validation_sha256": "sha256:b32b5f6416a308d7fb85fe7fae86d1d753d0cde68d4104a408d90a409c2c9b62",
+        "second_actual_sha256": "sha256:c01b8459d3e6d7c287e66a725f59abfe1e1c78b182213f04988adbb200b370b2",
+        "second_validation_sha256": "sha256:b32b5f6416a308d7fb85fe7fae86d1d753d0cde68d4104a408d90a409c2c9b62"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 6666666.666660603,
+          "actual": 6666666.666675167,
+          "raw_error": 1.4564022421836853e-05,
+          "relative_error": 2.1846033632775148e-12,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A01_delta_p0tauE_s100",
+      "case_id": "A01",
+      "scale": 100.0,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "d5a3c7da57bdb456067fe430ad2e31dbe3f7d7cb01405e85b10b35058c3341b0",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [
+        "positive_common_area_mm2"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 3.0517578125e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "NOT_APPLICABLE"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A01_delta_p0tauE_s100/actual.json",
+        "validation": "batch_1/samples/A01_delta_p0tauE_s100/validation.json",
+        "actual_sha256": "sha256:0b152caca8c995c316fb27b8f0542019424ecab8456117c50eaf120cc756a2c2",
+        "validation_sha256": "sha256:fd93e0fe443688a114bace392e845525c78754734bb4c4a356a4770674a1f449",
+        "second_actual_sha256": "sha256:0b152caca8c995c316fb27b8f0542019424ecab8456117c50eaf120cc756a2c2",
+        "second_validation_sha256": "sha256:fd93e0fe443688a114bace392e845525c78754734bb4c4a356a4770674a1f449"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "positive_common_area_mm2",
+          "expected": 33333333.333333332,
+          "actual": 33333333.333330356,
+          "raw_error": -2.9765069484710693e-06,
+          "relative_error": -8.929520845413208e-14,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_m4tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": "34cc0bb09879c5fcc9d593b3cc50eabb8e662b64c900d763d1667bf6c40f5c92",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.4,
+      "measured_delta_mm": -0.40000000000009095,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 15705786.708713531,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m4tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m4tauE_s100/validation.json",
+        "actual_sha256": "sha256:6395ccb829742d525496456a2374e1aa607ce4514526a2a11fbd94b031540cc2",
+        "validation_sha256": "sha256:3991e5653f5a683c9134c43e5c875974294250fcb542c756fa155361d214b8da",
+        "second_actual_sha256": "sha256:6395ccb829742d525496456a2374e1aa607ce4514526a2a11fbd94b031540cc2",
+        "second_validation_sha256": "sha256:3991e5653f5a683c9134c43e5c875974294250fcb542c756fa155361d214b8da"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 15705786.708714677,
+          "actual": 15705786.708713531,
+          "raw_error": -1.1455267667770386e-06,
+          "relative_error": -7.293660534313888e-14,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_m1_1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -1.1,
+      "input_source": "generated_05C",
+      "step_sha256": "c673b6d9edf2e6da9fac32d8a2baff31b45bcaaf898a4a9305217024a1514778",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.11000000000000001,
+      "measured_delta_mm": -0.11000000000012733,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "OUTSIDE",
+      "expected_engineering_state": "penetration_beyond_tolerance",
+      "actual_engineering_state": "penetration_beyond_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 4319525.296394348,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1_1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1_1tauE_s100/validation.json",
+        "actual_sha256": "sha256:58dd6209928587acaef8729f2de3f64c2d18547a009b6dce45709e60a45bcfda",
+        "validation_sha256": "sha256:8ffb6349c51690fe6209ae385fe1fd9a97e47370083fa0383393385168bb871d",
+        "second_actual_sha256": "sha256:58dd6209928587acaef8729f2de3f64c2d18547a009b6dce45709e60a45bcfda",
+        "second_validation_sha256": "sha256:8ffb6349c51690fe6209ae385fe1fd9a97e47370083fa0383393385168bb871d"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 4319525.296390019,
+          "actual": 4319525.296394348,
+          "raw_error": 4.328787326812744e-06,
+          "relative_error": 1.0021442241420522e-12,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_m1tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -1,
+      "input_source": "generated_05C",
+      "step_sha256": "f6556e9c6bdc0b7db41b1858e136dd858138242d3f0b09394178da38b06c0bda",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.1,
+      "measured_delta_mm": -0.10000000000013642,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "BOUNDARY",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3926854.782043457,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 6.103515625e-05
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m1tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m1tauE_s100/validation.json",
+        "actual_sha256": "sha256:28c090f549bca3afc854c1ae74186139e4af38adb0d3d9d9d1637d5ac8dff94d",
+        "validation_sha256": "sha256:b5997db86c48be86b68b7b0ce83b52c48cd46d77568d7376fa4c0ba2473fda8f",
+        "second_actual_sha256": "sha256:28c090f549bca3afc854c1ae74186139e4af38adb0d3d9d9d1637d5ac8dff94d",
+        "second_validation_sha256": "sha256:b5997db86c48be86b68b7b0ce83b52c48cd46d77568d7376fa4c0ba2473fda8f"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 3926854.782031251,
+          "actual": 3926854.782043457,
+          "raw_error": 1.2205913662910461e-05,
+          "relative_error": 3.108318066347411e-12,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_m0_9tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -0.9,
+      "input_source": "generated_05C",
+      "step_sha256": "434005bbb09a170da4616d7409f79a8f999240f159c41d99975fb5dd67d605d1",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.09000000000000001,
+      "measured_delta_mm": -0.09000000000014552,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 3534181.546989441,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_9tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_9tauE_s100/validation.json",
+        "actual_sha256": "sha256:3334247c393cba6ed2998b945d39834f2160b278e1d93856aa1f7b53c8001e2b",
+        "validation_sha256": "sha256:3b5ddd62db00d15d1205fdb91df767a9c6f8ee70a2e08623a96a511527daf47a",
+        "second_actual_sha256": "sha256:3334247c393cba6ed2998b945d39834f2160b278e1d93856aa1f7b53c8001e2b",
+        "second_validation_sha256": "sha256:3b5ddd62db00d15d1205fdb91df767a9c6f8ee70a2e08623a96a511527daf47a"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 3534181.5469717244,
+          "actual": 3534181.546989441,
+          "raw_error": 1.7716549336910248e-05,
+          "relative_error": 5.0129143343218275e-12,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_m0_5tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": -0.5,
+      "input_source": "generated_05C",
+      "step_sha256": "995f497a3f4cfd03277d9a6b92fb663191e3f009247073edfe78411893f60bd6",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": -0.05,
+      "measured_delta_mm": -0.049999999999954525,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "penetration_within_tolerance",
+      "actual_engineering_state": "penetration_within_tolerance",
+      "expected_dimension": "3D",
+      "actual_dimension": "3D",
+      "failure_kinds": [
+        "material_common_volume_mm3"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 1963461.3997497559,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_m0_5tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_m0_5tauE_s100/validation.json",
+        "actual_sha256": "sha256:9bd2a465460af4fca005522a8be15ff82cfc5a51958ae6921e7c5259e139f7db",
+        "validation_sha256": "sha256:7f2e8b90d27dd1cf64acb053aa7071faa0005765405f4a90bbfd89a4bd663822",
+        "second_actual_sha256": "sha256:9bd2a465460af4fca005522a8be15ff82cfc5a51958ae6921e7c5259e139f7db",
+        "second_validation_sha256": "sha256:7f2e8b90d27dd1cf64acb053aa7071faa0005765405f4a90bbfd89a4bd663822"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "material_common_volume_mm3",
+          "expected": 1963461.3997545287,
+          "actual": 1963461.3997497559,
+          "raw_error": -4.7727953642606735e-06,
+          "relative_error": -2.4308068214925777e-12,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    },
+    {
+      "sample_id": "A07_delta_p0tauE_s100",
+      "case_id": "A07",
+      "scale": 100.0,
+      "q": 0,
+      "input_source": "generated_05C",
+      "step_sha256": "beefaaec5dcd817425263889c687df77ca0730b3cfd100a62ca7205f815197c3",
+      "planned_status": "CONSTRUCTIBLE",
+      "final_status": "METHOD_MISMATCH",
+      "set_delta_mm": 0.0,
+      "measured_delta_mm": 0.0,
+      "tauE_mm": 0.1,
+      "tauE_over_L": 1.0000000000000446e-05,
+      "tolerance_band": "WITHIN",
+      "expected_engineering_state": "exact",
+      "actual_engineering_state": "exact",
+      "expected_dimension": "2D",
+      "actual_dimension": "2D",
+      "failure_kinds": [
+        "positive_common_area_mm2"
+      ],
+      "direct_fuse": {
+        "closed": true,
+        "executed": true,
+        "material_volume_mm3": 0.0,
+        "one_valid_connected_solid": true,
+        "solid_count": 1,
+        "valid": true,
+        "volume_conservation_error_mm3": 0.0
+      },
+      "construction_validation": {
+        "failures": [],
+        "status": "PASS"
+      },
+      "two_round_match": true,
+      "evidence": {
+        "actual": "batch_1/samples/A07_delta_p0tauE_s100/actual.json",
+        "validation": "batch_1/samples/A07_delta_p0tauE_s100/validation.json",
+        "actual_sha256": "sha256:63eb2a8fc24615853e29c287c3467a64a00c6e617947284f43df5b2ec3d64213",
+        "validation_sha256": "sha256:dea28bf65d5b492ab3781fba58044dbb72b3b9e1633d9f538ebeb1ecedb596ba",
+        "second_actual_sha256": "sha256:63eb2a8fc24615853e29c287c3467a64a00c6e617947284f43df5b2ec3d64213",
+        "second_validation_sha256": "sha256:dea28bf65d5b492ab3781fba58044dbb72b3b9e1633d9f538ebeb1ecedb596ba"
+      },
+      "failure_types": [
+        "MEASURE_ONLY_OVER_LIMIT"
+      ],
+      "measurement_errors": [
+        {
+          "kind": "positive_common_area_mm2",
+          "expected": 39269908.16987242,
+          "actual": 39269908.16986891,
+          "raw_error": -3.509223461151123e-06,
+          "relative_error": -8.936164164100015e-14,
+          "threshold": null
+        }
+      ],
+      "root_cause_status": "CONFIRMED_BY_EVIDENCE"
+    }
+  ],
+  "domain_exclusions": [
+    {
+      "sample_id": "A07_delta_m4tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -4,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "construction_domain": {
+        "bore_radius_mm": -0.2556624327025936,
+        "inequality": "0 < -0.2556624327025936 < 0.28867513459481287",
+        "outer_radius_mm": 0.28867513459481287,
+        "reason": "A07 requires 0 < bore_radius_mm < sleeve_outer_radius_mm",
+        "status": "OUT_OF_CONSTRUCTION_DOMAIN"
+      }
+    },
+    {
+      "sample_id": "A07_delta_m2tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": -2,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "construction_domain": {
+        "bore_radius_mm": -0.05566243270259358,
+        "inequality": "0 < -0.05566243270259358 < 0.28867513459481287",
+        "outer_radius_mm": 0.28867513459481287,
+        "reason": "A07 requires 0 < bore_radius_mm < sleeve_outer_radius_mm",
+        "status": "OUT_OF_CONSTRUCTION_DOMAIN"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p2tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 2,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "construction_domain": {
+        "bore_radius_mm": 0.34433756729740644,
+        "inequality": "0 < 0.34433756729740644 < 0.28867513459481287",
+        "outer_radius_mm": 0.28867513459481287,
+        "reason": "A07 requires 0 < bore_radius_mm < sleeve_outer_radius_mm",
+        "status": "OUT_OF_CONSTRUCTION_DOMAIN"
+      }
+    },
+    {
+      "sample_id": "A07_delta_p4tauE_s0_01",
+      "case_id": "A07",
+      "scale": 0.01,
+      "q": 4,
+      "input_source": "generated_05C",
+      "step_sha256": null,
+      "planned_status": "OUT_OF_CONSTRUCTION_DOMAIN",
+      "construction_domain": {
+        "bore_radius_mm": 0.5443375672974065,
+        "inequality": "0 < 0.5443375672974065 < 0.28867513459481287",
+        "outer_radius_mm": 0.28867513459481287,
+        "reason": "A07 requires 0 < bore_radius_mm < sleeve_outer_radius_mm",
+        "status": "OUT_OF_CONSTRUCTION_DOMAIN"
+      }
+    }
+  ],
+  "analysis_notes": {
+    "new_freecad_measurements": false,
+    "full_pytest_rerun": false
+  }
+}

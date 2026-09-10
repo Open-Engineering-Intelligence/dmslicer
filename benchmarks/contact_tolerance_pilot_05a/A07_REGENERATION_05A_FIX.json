@@ -1,0 +1,83 @@
+{
+  "a01_steps_modified": false,
+  "old_version_commit": "312bc7de1a73424aa6dc6d1c8bc2a2ce4d696443",
+  "reason": "fix: preserve frozen A07 outer sleeve controls while varying only bore radius",
+  "replaced_a07_samples": [
+    {
+      "new_step_sha256": "25b62ecd3bd4e601e66d24d157a36de400d0c9ad5f9babf37933bcabcb465f66",
+      "old_step_sha256": "1bc4c0fff8b3d8abf0c3910a150d4ca63d568b4c333c710c9190c8c8625cb41d",
+      "sample_id": "A07_delta_m4tauE"
+    },
+    {
+      "new_step_sha256": "872aa80e7793e33d2488eb7cfb591067dcaab5caca5c7b26b78eab78b9921233",
+      "old_step_sha256": "6c4a83eda44bbd08f63622e3a98262cfc23f291966dd97cd1d8edda10a3b6fd5",
+      "sample_id": "A07_delta_m2tauE"
+    },
+    {
+      "new_step_sha256": "ceafa944236f9b92630f66672626952c7e0658499ef1a0560f3b0a4cb964dad4",
+      "old_step_sha256": "c907ad92319bc456f80007e08d0a5289de8073328a389e87ffe70aba38c91d32",
+      "sample_id": "A07_delta_m1_1tauE"
+    },
+    {
+      "new_step_sha256": "ef4e603f9fc752ea633a536456fe3530ee5494b42cb4f1dd81434b3d7d83c2f8",
+      "old_step_sha256": "013652656bfd8c7fa0361e9a66fd1ca71d4514cebbf7c46f6653d5cf3a9b0e6b",
+      "sample_id": "A07_delta_m1tauE"
+    },
+    {
+      "new_step_sha256": "ed4469f9e8996d7543775af082ca6d9724ae23247a592ee68d0f8c4756ae3375",
+      "old_step_sha256": "dbedb1f0fc522adc69e24631007d2320c98c0da911bda3354671b88875e130f9",
+      "sample_id": "A07_delta_m0_9tauE"
+    },
+    {
+      "new_step_sha256": "5517efdea82d8221cedba951c9d78f21e61bbc2be6ca127a431f2f4152cb30a2",
+      "old_step_sha256": "e0d83f661494d91cbdeaa60a666a55dfeea2910c4bb41e6246d7f10732543dc4",
+      "sample_id": "A07_delta_m0_5tauE"
+    },
+    {
+      "new_step_sha256": "ddd17842cca009b0c3abc8a1d2df13b3ed736f7029e3abd25d2f2837b031aead",
+      "old_step_sha256": "a3910d57946955f8bf8ee767912512a76a7b8891da47cc7f38805eba8bc71c4b",
+      "sample_id": "A07_delta_m0_1tauE"
+    },
+    {
+      "new_step_sha256": "19bd3fa30cd9ee185449f4cb788cc2c1530d138e4e2a543dd1e82a879214d9ce",
+      "old_step_sha256": "76e0342c7c716ab7c94cceb6c00e3d7a945e86a13585741338ab8cf58fa65ab2",
+      "sample_id": "A07_delta_p0tauE"
+    },
+    {
+      "new_step_sha256": "4f334d34280d428238c43e39b49d3f2032fe6e285ece38a4391b52bf8718daa7",
+      "old_step_sha256": "136062157be9862459b3be44111fb7f2da836f22a3546b82e166f838caba3426",
+      "sample_id": "A07_delta_p0_1tauE"
+    },
+    {
+      "new_step_sha256": "9e597f8e5cab685806765a7e4b939857a0d6a145685733e0c2ea80fd9966ae10",
+      "old_step_sha256": "440a143bea394846850fb236b638c75231402e6bf7f6d562745b15ee25b5ce15",
+      "sample_id": "A07_delta_p0_5tauE"
+    },
+    {
+      "new_step_sha256": "68b8ed6faf13cf139fa2ddc40b0406026fe3a8ee875ad87ae407aef2f32737f2",
+      "old_step_sha256": "b9a26486e227e60db071343c730718571d5e97d516c9d0cb5f8cf84cc81480a1",
+      "sample_id": "A07_delta_p0_9tauE"
+    },
+    {
+      "new_step_sha256": "a80472cb14f377a6f3cc596c994c33079decc3b66134d132702628bd0379de05",
+      "old_step_sha256": "5a3fe580217d71e7743288ba705af25bc8356a34db0c49f2e7b0d61970b61ecb",
+      "sample_id": "A07_delta_p1tauE"
+    },
+    {
+      "new_step_sha256": "0ae9bfa7a69ee7bf307f0edc9631474971dfdf8224df426a5d6ca361b1a8138a",
+      "old_step_sha256": "d8910d7a34ba4944c6dec3606ab7ef131ddd91e759d6e48bd7d7d1ae38637826",
+      "sample_id": "A07_delta_p1_1tauE"
+    },
+    {
+      "new_step_sha256": "e3a56433678e72fb65b62039bcf4709b2f14661d004709a71a54a7870b0ef8c7",
+      "old_step_sha256": "bce95d57753fde5f98020f87bfd47c48a3618f4f1e87661270e0556e2612bb86",
+      "sample_id": "A07_delta_p2tauE"
+    },
+    {
+      "new_step_sha256": "36b2fc792a2a94dc5e12468652553fce850d05ea8a60a642793092daabe83947",
+      "old_step_sha256": "abf8680b7cb94fb1cee99705a9bb7de5f845cc854ea242af379edec08ba8dd15",
+      "sample_id": "A07_delta_p4tauE"
+    }
+  ],
+  "schema_version": 1
+}

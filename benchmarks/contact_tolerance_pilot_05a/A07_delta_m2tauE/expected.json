@@ -1,0 +1,10 @@
+{
+  "case_id": "A07",
+  "engineering_state": "penetration_beyond_tolerance",
+  "exact_intersection_dimension": "3D",
+  "ground_truth_mode": "construction_derived",
+  "intended_relation_dimension": "2D",
+  "material_common_volume_mm3": 779.9567653047424,
+  "schema_version": 1,
+  "set_signed_offset_mm": -0.2
+}

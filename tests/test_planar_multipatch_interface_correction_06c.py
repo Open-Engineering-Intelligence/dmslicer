@@ -1,0 +1,602 @@
+import copy
+import importlib
+import importlib.util
+import json
+import math
+from pathlib import Path
+
+import pytest
+
+
+MODULE_NAME = "dmslicer.planar_multipatch_interface_correction_06c"
+
+
+def _module():
+    return importlib.import_module(MODULE_NAME)
+
+
+def _run(tmp_path: Path, scenario: str, **kwargs):
+    module = _module()
+    return module.run_multipatch_case(
+        module.FIXTURE_ROOT, scenario, tmp_path / "runs", **kwargs
+    )
+
+
+def test_06c_module_exists_for_planar_multipatch_interface_correction() -> None:
+    """Break caught: the new 06C public workflow is absent from the package."""
+    assert importlib.util.find_spec(MODULE_NAME) is not None
+
+
+def test_06c_public_api_exposes_fixture_runner_suite_and_validator() -> None:
+    """Break caught: callers cannot generate, execute, or validate 06C evidence."""
+    module = _module()
+    for name in (
+        "FIXTURE_ROOT",
+        "generate_multipatch_fixtures",
+        "run_multipatch_case",
+        "run_multipatch_suite",
+        "validate_multipatch_evidence",
+    ):
+        assert hasattr(module, name), name
+
+
+def test_generator_creates_three_independent_step_truth_bundles(tmp_path: Path) -> None:
+    """Break caught: P10/P11/P12 lack tracked-style STEP and independent truth."""
+    module = _module()
+    manifest = module.generate_multipatch_fixtures(tmp_path)
+    assert [row["scenario_id"] for row in manifest["scenarios"]] == ["P10", "P11", "P12"]
+    assert manifest["numeric_rules"] == {
+        "linear_epsilon_mm": 1e-7,
+        "area_epsilon_mm2": 1e-8,
+        "volume_epsilon_mm3": 1e-6,
+    }
+    for scenario in ("P10", "P11", "P12"):
+        case = tmp_path / scenario
+        assert {p.name for p in case.iterdir()} >= {
+            "inputs.step", "parameters.json", "policy.json", "expected.json"
+        }
+        expected = json.loads((case / "expected.json").read_text(encoding="utf-8"))
+        assert expected["scenario_id"] == scenario
+        row = manifest["scenarios"][("P10", "P11", "P12").index(scenario)]
+        assert row["step_sha256"].startswith("sha256:")
+
+
+def test_p10_selects_two_coplanar_feet_and_preserves_two_equal_distinct_patches(tmp_path: Path) -> None:
+    """Break caught: equal-area feet are dropped, merged, or confused with the bridge."""
+    result = _run(tmp_path, "P10", create_view=True)
+    operation = result["operation"]
+    assert result["validation"]["status"] == "PASS"
+    assert operation["status"] == "SUPPORTED_UNIQUE_INTERFACE_FACESET"
+    assert operation["face_sets"]["eligible_face_set_pair_count"] == 1
+    assert operation["face_sets"]["raw_face_set_count"]["Side_2"] >= 2
+    selected = operation["face_sets"]["selected_pair"]
+    assert selected["Side_1"]["member_face_count"] == 1
+    assert selected["Side_2"]["member_face_count"] == 2
+    assert selected["Side_2"]["total_area_mm2"] == pytest.approx(384.0, abs=1e-8)
+    assert selected["gap_mm"] == pytest.approx(0.05, abs=1e-7)
+    assert selected["gap_spread_mm"] <= 1e-7
+    assert operation["motion"]["executed_translation_mm"] == pytest.approx([0.0, 0.0, -0.05], abs=1e-7)
+    assert operation["motion"]["tangential_translation_norm_mm"] == pytest.approx(0.0, abs=1e-8)
+    partition = operation["partition"]
+    assert partition["common_area_mm2"] == pytest.approx(384.0, abs=1e-8)
+    assert [patch["area_mm2"] for patch in partition["common_patches"]] == pytest.approx([192.0, 192.0], abs=1e-8)
+    assert [patch["patch_id"] for patch in partition["common_patches"]] == ["Patch_1", "Patch_2"]
+    assert partition["coverage"] == pytest.approx({"Side_1": 0.16, "Side_2": 1.0})
+    assert partition["remaining_area_mm2"] == pytest.approx({"Side_1": 2016.0, "Side_2": 0.0}, abs=1e-8)
+    assert partition["remaining_empty"]["Side_2"] is True
+    topology = operation["topology"]
+    assert (topology["patch_count"], topology["component_count"]) == (2, 2)
+    assert topology["connectedness"] == "disconnected"
+    assert (topology["boundary_component_count"], topology["hole_count"], topology["first_betti_number"]) == (2, 0, 0)
+    assert operation["fuse"]["executed"] is True
+    assert operation["fuse"]["solid_count"] == 1
+    assert operation["fuse"]["valid"] is True and operation["fuse"]["closed"] is True
+    assert "Fused_Solid" in operation["view_reopen"]["visible_objects"]
+    assert "Original_Side_1" not in operation["view_reopen"]["visible_objects"]
+    assert {path.name for path in Path(result["output_dir"]).iterdir()} >= {
+        "corrected_assembly.step", "fused.step", "common.brep",
+        "side_1_remaining.brep", "side_2_remaining_EMPTY.json",
+    }
+
+
+def test_p11_retains_one_analytic_annulus_with_outer_and_hole_loops(tmp_path: Path) -> None:
+    """Break caught: an annular face is split into patches or its inner wire is not a hole."""
+    result = _run(tmp_path, "P11", create_view=True)
+    operation = result["operation"]
+    assert result["validation"]["status"] == "PASS"
+    assert operation["status"] == "SUPPORTED_UNIQUE_INTERFACE_FACESET"
+    assert operation["motion"]["executed_translation_mm"] == pytest.approx([0.0, 0.0, -0.05], abs=1e-7)
+    area = 300.0 * math.pi
+    partition = operation["partition"]
+    assert partition["common_area_mm2"] == pytest.approx(area, abs=1e-8)
+    assert partition["common_patches"][0]["surface_type"] == "Plane"
+    assert set(partition["common_patches"][0]["boundary_curve_types"]) == {"Circle"}
+    assert partition["coverage"] == pytest.approx({"Side_1": math.pi / 12.0, "Side_2": 1.0}, abs=1e-7)
+    assert partition["remaining_area_mm2"] == pytest.approx({"Side_1": 3600.0 - area, "Side_2": 0.0}, abs=1e-8)
+    assert partition["remaining_empty"]["Side_2"] is True
+    topology = operation["topology"]
+    assert (topology["patch_count"], topology["component_count"]) == (1, 1)
+    assert topology["connectedness"] == "connected"
+    assert (topology["boundary_component_count"], topology["hole_count"], topology["first_betti_number"]) == (2, 1, 1)
+    assert topology["annular_or_multiply_connected"] is True
+    assert [loop["kind"] for loop in topology["components"][0]["boundary_loops"]] == ["outer", "hole"]
+    assert operation["step_reimport"]["corrected_assembly"]["hole_count"] == 1
+    assert operation["step_reimport"]["corrected_assembly"]["boundary_component_count"] == 2
+    assert operation["fuse"]["executed"] is True
+    assert "Fused_Solid" in operation["view_reopen"]["visible_objects"]
+    assert "Original_Side_1" not in operation["view_reopen"]["visible_objects"]
+    assert "Annular_Common" in operation["view_reopen"]["objects"]
+    assert {path.name for path in Path(result["output_dir"]).iterdir()} >= {
+        "corrected_assembly.step", "fused.step", "common.brep",
+        "side_1_remaining.brep", "side_2_remaining_EMPTY.json",
+    }
+
+
+def test_p12_reports_both_valid_candidates_and_refuses_to_choose_nearest(tmp_path: Path) -> None:
+    """Break caught: ambiguity is silently resolved by gap, area, face order, or ordinal."""
+    result = _run(tmp_path, "P12", create_view=True)
+    operation = result["operation"]
+    assert result["validation"]["status"] == "PASS"
+    assert operation["status"] == "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET"
+    assert operation["face_sets"]["eligible_face_set_pair_count"] == 2
+    assert operation["face_sets"]["candidate_face_set_pair_count"] == 2
+    candidates = operation["face_sets"]["candidate_pairs"]
+    assert sorted(candidate["gap_mm"] for candidate in candidates) == pytest.approx([0.05, 0.08], abs=1e-7)
+    assert all(candidate["prospective_common_area_mm2"] == pytest.approx(192.0, abs=1e-8) for candidate in candidates)
+    assert operation["motion"]["motion_authorized"] is False
+    assert operation["motion"]["executed_translation_mm"] == [0.0, 0.0, 0.0]
+    assert operation["motion"]["executed_translation_norm_mm"] == 0.0
+    assert operation["fuse"]["executed"] is False
+    assert {"Original_Side_1", "Original_Side_2", "Ambiguity_Rejection"} <= set(
+        operation["view_reopen"]["visible_objects"]
+    )
+    assert not any(name.startswith("Candidate_Set_") for name in operation["view_reopen"]["visible_objects"])
+    artifacts = operation.get("artifacts", {})
+    assert "corrected_assembly_step" not in artifacts
+    assert "fused_step" not in artifacts
+    case_output = Path(result["output_dir"])
+    assert not (case_output / "corrected_assembly.step").exists()
+    assert not (case_output / "fused.step").exists()
+
+
+@pytest.mark.parametrize("scenario", ["P10", "P11", "P12"])
+def test_face_and_patch_traversal_reversal_does_not_change_semantics(tmp_path: Path, scenario: str) -> None:
+    """Break caught: list order or face ordinal controls FaceSet choice or topology."""
+    first = _run(tmp_path / "one", scenario, traversal_order="normal")["operation"]
+    second = _run(tmp_path / "two", scenario, traversal_order="reverse")["operation"]
+    for key in ("status", "face_sets", "motion", "partition", "topology", "fuse", "provenance"):
+        assert second.get(key) == first.get(key)
+
+
+@pytest.mark.parametrize(
+    ("scenario", "mutations"),
+    [
+        ("P10", {"common_area_mm2": 1.0, "patch_count": 99, "component_count": 99}),
+        ("P11", {"common_area_mm2": 1.0, "hole_count": 0, "boundary_component_count": 1}),
+        ("P12", {"candidate_face_set_pair_count": 1}),
+    ],
+)
+def test_expected_mutation_changes_validation_not_actual_geometry(tmp_path: Path, scenario: str, mutations: dict) -> None:
+    """Break caught: expected truth selects FaceSets or constructs actual geometry."""
+    module = _module()
+    first = _run(tmp_path / "first", scenario)["operation"]
+    source = module.FIXTURE_ROOT / scenario
+    case = tmp_path / "fixture" / scenario
+    case.mkdir(parents=True)
+    for name in ("inputs.step", "policy.json", "parameters.json", "expected.json"):
+        (case / name).write_bytes((source / name).read_bytes())
+    expected = json.loads((case / "expected.json").read_text(encoding="utf-8"))
+    expected.update(mutations)
+    (case / "expected.json").write_text(json.dumps(expected), encoding="utf-8")
+    second = module.run_multipatch_case(case.parent, scenario, tmp_path / "mutated")["operation"]
+    for key in ("status", "face_sets", "motion", "partition", "topology", "fuse", "provenance"):
+        assert second.get(key) == first.get(key)
+    assert module.validate_multipatch_evidence(second, expected)["status"] == "FAIL"
+
+
+def _set_path(value, path, replacement):
+    target = value
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = replacement
+
+
+@pytest.mark.parametrize(
+    ("path", "replacement", "kind"),
+    [
+        (("face_sets", "selected_pair", "gap_mm"), math.nan, "invalid_numeric"),
+        (("face_sets", "selected_pair", "Side_1", "support_coordinate_mm"), math.inf, "invalid_numeric"),
+        (("partition", "common_area_mm2"), math.nan, "invalid_numeric"),
+        (("partition", "coverage", "Side_1"), 1.1, "coverage"),
+        (("partition", "coverage", "Side_1"), True, "invalid_numeric"),
+        (("partition", "remaining_area_mm2", "Side_1"), math.inf, "invalid_numeric"),
+        (("topology", "components", 0, "boundary_loops", 0, "length_mm"), math.nan, "invalid_numeric"),
+        (("motion", "executed_translation_mm", 0), 0.01, "tangential_translation"),
+        (("fuse", "boundary_overlap_area_mm2"), math.inf, "invalid_numeric"),
+    ],
+)
+def test_validator_rejects_nonfinite_bool_out_of_range_and_tangential_evidence(tmp_path: Path, path, replacement, kind) -> None:
+    """Break caught: invalid numeric evidence is accepted or coverage is clamped."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    evidence = copy.deepcopy(result["operation"])
+    _set_path(evidence, path, replacement)
+    validation = module.validate_multipatch_evidence(evidence, result["expected"])
+    assert validation["status"] == "FAIL"
+    assert any(failure["kind"] == kind for failure in validation["failures"])
+
+
+def test_validator_rejects_deleted_duplicated_or_misassigned_common_patches(tmp_path: Path) -> None:
+    """Break caught: patch loss/duplication and component-link tampering evade checks."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    source = result["operation"]
+    deleted = copy.deepcopy(source)
+    deleted["partition"]["common_patches"].pop()
+    assert module.validate_multipatch_evidence(deleted, result["expected"])["status"] == "FAIL"
+    duplicated = copy.deepcopy(source)
+    duplicated["partition"]["common_patches"].append(copy.deepcopy(duplicated["partition"]["common_patches"][0]))
+    assert module.validate_multipatch_evidence(duplicated, result["expected"])["status"] == "FAIL"
+    remapped = copy.deepcopy(source)
+    first_id = remapped["partition"]["common_patches"][0]["component_id"]
+    second_id = remapped["partition"]["common_patches"][1]["component_id"]
+    remapped["partition"]["common_patches"][0]["component_id"] = second_id
+    remapped["partition"]["common_patches"][1]["component_id"] = first_id
+    assert module.validate_multipatch_evidence(remapped, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_rejects_lost_p11_hole_and_boundary_loop(tmp_path: Path) -> None:
+    """Break caught: annulus topology can be relabeled as simply connected."""
+    module = _module()
+    result = _run(tmp_path, "P11")
+    for mutation in ("hole_count", "boundary_loop"):
+        evidence = copy.deepcopy(result["operation"])
+        if mutation == "hole_count":
+            evidence["topology"]["hole_count"] = 0
+        else:
+            evidence["topology"]["components"][0]["boundary_loops"].pop()
+        assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_binds_facesets_patches_provenance_and_step_reimports(tmp_path: Path) -> None:
+    """Break caught: self-consistent-looking JSON can contradict the B-rep evidence chain."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    source = result["operation"]
+    mutations = []
+
+    impossible_support = copy.deepcopy(source)
+    impossible_support["face_sets"]["selected_pair"]["Side_1"]["support_coordinate_mm"] += 1.0
+    mutations.append(impossible_support)
+
+    fabricated_patch_id = copy.deepcopy(source)
+    fabricated_patch_id["partition"]["common_patches"][0]["patch_id"] = "Patch_999"
+    fabricated_patch_id["provenance"]["common_patches"][0]["actual_common_patch_id"] = "Patch_999"
+    mutations.append(fabricated_patch_id)
+
+    fabricated_linkage = copy.deepcopy(source)
+    link = fabricated_linkage["partition"]["common_patches"][0]["source_face_linkage"][0]
+    link["Side_2"] = "Face999"
+    fabricated_linkage["provenance"]["common_patches"][0]["source_face_member_pair"][0]["Side_2"] = "Face999"
+    mutations.append(fabricated_linkage)
+
+    for field, value in (
+        ("roles", ["Wrong_1", "Wrong_2"]),
+        ("common_area_mm2", 1.0),
+        ("coverage", {"Side_1": 1.0, "Side_2": 1.0}),
+        ("remaining_area_mm2", {"Side_1": 0.0, "Side_2": 0.0}),
+        ("boundary_component_count", 99),
+        ("valid", False),
+        ("closed", False),
+        ("solid_counts", [0, 0]),
+        ("volumes_mm3", [0.0, 0.0]),
+    ):
+        evidence = copy.deepcopy(source)
+        evidence["step_reimport"]["corrected_assembly"][field] = value
+        mutations.append(evidence)
+    for field, value in (
+        ("solid_count", 0), ("valid", False), ("closed", False), ("volume_mm3", 0.0)
+    ):
+        evidence = copy.deepcopy(source)
+        evidence["step_reimport"]["fused"][field] = value
+        mutations.append(evidence)
+
+    for evidence in mutations:
+        assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_rejects_artifact_bytes_that_do_not_match_recorded_hash(tmp_path: Path) -> None:
+    """Break caught: JSON evidence remains PASS after a published BREP is replaced."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    artifact_root = Path(result["output_dir"])
+    (artifact_root / "common.brep").write_bytes(b"not a B-rep")
+    validation = module.validate_multipatch_evidence(
+        result["operation"], result["expected"], artifact_root=artifact_root
+    )
+    assert validation["status"] == "FAIL"
+    assert any(failure["kind"] == "artifact_hash" for failure in validation["failures"])
+
+
+def test_validator_rejects_coordinated_patch_id_fabrication(tmp_path: Path) -> None:
+    """Break caught: changing every relational ID can evade artifact-backed patch binding."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    evidence = copy.deepcopy(result["operation"])
+    patch = evidence["partition"]["common_patches"][0]
+    old = patch["patch_id"]
+    fake = "Patch_999"
+    patch["patch_id"] = fake
+    component = next(
+        item for item in evidence["topology"]["components"]
+        if old in item["patch_ids"]
+    )
+    component["patch_ids"] = [
+        fake if patch_id == old else patch_id for patch_id in component["patch_ids"]
+    ]
+    for record in evidence["provenance"]["common_patches"]:
+        if record["actual_common_patch_id"] == old:
+            record["actual_common_patch_id"] = fake
+    for record in evidence["partition"]["member_level_partition"]:
+        record["linked_patch_ids"] = [
+            fake if patch_id == old else patch_id for patch_id in record["linked_patch_ids"]
+        ]
+    evidence["provenance"]["remaining_patches"] = copy.deepcopy(
+        evidence["partition"]["member_level_partition"]
+    )
+    assert module.validate_multipatch_evidence(evidence, result["expected"])["status"] == "FAIL"
+
+
+def test_validator_requires_complete_hash_manifest_for_every_material_artifact(tmp_path: Path) -> None:
+    """Break caught: removing a hash entry silently exempts that artifact from verification."""
+    module = _module()
+    result = _run(tmp_path, "P10")
+    for name in (
+        "corrected_assembly.step", "fused.step", "common.brep",
+        "common_patch_1.brep", "common_patch_2.brep", "side_1_remaining.brep",
+    ):
+        evidence = copy.deepcopy(result["operation"])
+        evidence["artifact_sha256"].pop(name)
+        validation = module.validate_multipatch_evidence(
+            evidence, result["expected"], artifact_root=Path(result["output_dir"])
+        )
+        assert validation["status"] == "FAIL", name
+        assert any(failure["kind"] == "artifact_hash_manifest" for failure in validation["failures"])
+
+
+def test_artifact_reverification_recomputes_spatial_partition_and_fused_boundary(tmp_path: Path) -> None:
+    """Break caught: acceptance-critical spatial and fused-boundary checks are only self-reported."""
+    result = _run(tmp_path, "P10")
+    operation = result["operation"]
+    verification = operation["artifact_verification"]
+    assert verification["spatial_validation"] == operation["partition"]["spatial_validation"]
+    assert verification["fused_boundary_overlap_area_mm2"] == pytest.approx(0.0, abs=1e-8)
+
+
+def test_full_coverage_emits_one_explicit_partition_outcome_per_source_member(tmp_path: Path) -> None:
+    """Break caught: fully consumed Side_2 members vanish instead of producing EMPTY provenance."""
+    result = _run(tmp_path, "P10")
+    operation = result["operation"]
+    records = operation["partition"]["member_level_partition"]
+    assert len(records) == 3
+    side_2 = [record for record in records if record["role"] == "Side_2"]
+    assert len(side_2) == 2
+    assert all(record["status"] == "EMPTY" and record["area_mm2"] == 0.0 for record in side_2)
+    assert all(record["linked_patch_ids"] for record in side_2)
+    assert operation["provenance"]["remaining_patches"] == records
+
+
+def test_connected_multiface_component_boundary_is_rejected_instead_of_guessing_holes() -> None:
+    """Break caught: shared/internal wires are counted as outer or hole boundaries."""
+    module = _module()
+    try:
+        response = module._run_freecad(
+            {"action": "probe_connected_multiface_topology", "rules": module.RULES}
+        )
+    except RuntimeError:
+        response = {}
+    assert response.get("topology_status") == "UNSUPPORTED_COMPLEX_MULTIFACE_COMPONENT_BOUNDARY"
+
+
+def test_curved_interface_is_structured_unsupported_not_no_positive_area_or_backend_failure(tmp_path: Path) -> None:
+    """Break caught: an out-of-scope curved carrier is misreported as a planar no-overlap case."""
+    module = _module()
+    step = tmp_path / "unsupported_sphere.step"
+    output = tmp_path / "output"
+    try:
+        module._run_freecad(
+            {"action": "generate_unsupported_probe", "kind": "sphere", "step_path": str(step)}
+        )
+        response = module._run_freecad(
+            {
+                "action": "analyze",
+                "scenario_id": "UNSUPPORTED_SPHERE_PROBE",
+                "step_path": str(step),
+                "policy": module.POLICY,
+                "rules": module.RULES,
+                "output_dir": str(output),
+                "create_view": False,
+                "traversal_order": "normal",
+            }
+        )
+    except RuntimeError:
+        response = {"operation": {}}
+    operation = response["operation"]
+    assert operation.get("status") == "UNSUPPORTED"
+    assert operation.get("preflight", {}).get("reason") == "NO_ROLE_MATCHED_PLANAR_FACESETS"
+    assert operation.get("motion", {}).get("executed_translation_norm_mm") == 0.0
+    assert operation.get("fuse", {}).get("executed") is False
+
+
+def test_negative_planar_gap_is_structured_penetration_out_of_scope(tmp_path: Path) -> None:
+    """Break caught: penetration is mislabeled as no positive-area interface."""
+    module = _module()
+    step = tmp_path / "penetration.step"
+    module._run_freecad(
+        {"action": "generate_unsupported_probe", "kind": "penetration", "step_path": str(step)}
+    )
+    response = module._run_freecad(
+        {
+            "action": "analyze",
+            "scenario_id": "UNSUPPORTED_PENETRATION_PROBE",
+            "step_path": str(step),
+            "policy": module.POLICY,
+            "rules": module.RULES,
+            "output_dir": str(tmp_path / "output"),
+            "create_view": False,
+            "traversal_order": "normal",
+        }
+    )
+    operation = response["operation"]
+    assert operation["status"] == "UNSUPPORTED"
+    assert operation["preflight"]["reason"] == "PENETRATION_SEPARATION_OUT_OF_SCOPE"
+    assert operation["motion"]["executed_translation_norm_mm"] == 0.0
+    assert operation["fuse"]["executed"] is False
+
+
+def test_negative_support_gap_without_lateral_overlap_is_not_penetration(tmp_path: Path) -> None:
+    """Break caught: unrelated laterally separated planes are mislabeled as penetration."""
+    module = _module()
+    step = tmp_path / "separated.step"
+    module._run_freecad(
+        {"action": "generate_unsupported_probe", "kind": "penetration_lateral", "step_path": str(step)}
+    )
+    operation = module._run_freecad(
+        {
+            "action": "analyze",
+            "scenario_id": "NEGATIVE_GAP_WITHOUT_OVERLAP",
+            "step_path": str(step),
+            "policy": module.POLICY,
+            "rules": module.RULES,
+            "output_dir": str(tmp_path / "output"),
+            "create_view": False,
+            "traversal_order": "normal",
+        }
+    )["operation"]
+    assert operation["status"] == "NO_POSITIVE_AREA_INTERFACE"
+
+
+def test_actual_brep_equivalence_keeps_distinct_equal_statistics_hole_layouts() -> None:
+    """Break caught: equal statistics replace B-rep evidence and collapse distinct patches."""
+    module = _module()
+    probe = module._run_freecad({"action": "probe_geometry_identity_collision"})
+    assert probe["symmetric_difference_area_mm2"] > module.RULES["area_epsilon_mm2"]
+    assert probe["geometric_equivalence"] == "FAIL"
+    assert probe["deduplicated_patch_count"] == 2
+
+
+def test_different_brep_representation_can_still_be_geometrically_equivalent() -> None:
+    """Break caught: representation difference is treated as geometry difference."""
+    module = _module()
+    probe = module._run_freecad({"action": "probe_representation_equivalence", "rules": module.RULES})
+    assert probe["representation_identity"] == "DIFFERENT"
+    assert probe["geometric_equivalence"] == "PASS"
+    assert probe["first_minus_second_area_mm2"] <= module.RULES["area_epsilon_mm2"]
+    assert probe["second_minus_first_area_mm2"] <= module.RULES["area_epsilon_mm2"]
+    assert probe["minimum_distance_mm"] <= module.RULES["linear_epsilon_mm"]
+
+
+def test_operation_relations_use_explicit_ids_without_shape_derived_hashes(tmp_path: Path) -> None:
+    """Break caught: shape-derived hashes remain authoritative relationship keys."""
+    operation = _run(tmp_path, "P10")["operation"]
+    patches = operation["partition"]["common_patches"]
+    assert [patch["patch_id"] for patch in patches] == ["Patch_1", "Patch_2"]
+    assert all("geometry_digest" not in patch for patch in patches)
+    assert all("geometry_digest" not in member for side in ("Side_1", "Side_2")
+               for member in operation["face_sets"]["selected_pair"][side]["member_face_descriptors"])
+    assert {patch_id for component in operation["topology"]["components"]
+            for patch_id in component["patch_ids"]} == {"Patch_1", "Patch_2"}
+    assert {record["actual_common_patch_id"] for record in operation["provenance"]["common_patches"]} == {
+        "Patch_1", "Patch_2"
+    }
+
+
+def test_repeatability_uses_unit_tolerances_and_ignores_representation_identity(tmp_path: Path) -> None:
+    """Break caught: exact dict/hash equality turns harmless representation drift into failure."""
+    module = _module()
+    first = _run(tmp_path, "P10")["operation"]
+    equivalent = copy.deepcopy(first)
+    equivalent["partition"]["common_patches"][0]["area_mm2"] += module.RULES["area_epsilon_mm2"] / 2
+    equivalent["partition"]["common_patches"][0]["representation_identity"] = "DIFFERENT"
+    assert module.compare_multipatch_repeatability(first, equivalent)["status"] == "PASS"
+    different = copy.deepcopy(first)
+    different["partition"]["common_patches"][0]["area_mm2"] += module.RULES["area_epsilon_mm2"] * 2
+    assert module.compare_multipatch_repeatability(first, different)["status"] == "FAIL"
+
+
+def test_failed_validation_cannot_replace_prior_success_or_emit_p12_success_step(tmp_path: Path, monkeypatch) -> None:
+    """Break caught: failed reruns destroy valid artifacts or publish rejected STEP."""
+    module = _module()
+    root = tmp_path / "published"
+    module.run_multipatch_case(module.FIXTURE_ROOT, "P10", root)
+    prior = (root / "P10" / "operation.json").read_bytes()
+    original = module._run_freecad
+
+    def invalid(request):
+        response = original(request)
+        if request["action"] == "analyze":
+            response["operation"]["partition"]["coverage"]["Side_1"] = 2.0
+        return response
+
+    monkeypatch.setattr(module, "_run_freecad", invalid)
+    rerun = module.run_multipatch_case(module.FIXTURE_ROOT, "P10", root)
+    assert rerun["validation"]["status"] == "FAIL"
+    assert (root / "P10" / "operation.json").read_bytes() == prior
+    monkeypatch.setattr(module, "_run_freecad", original)
+    rejected = module.run_multipatch_case(module.FIXTURE_ROOT, "P12", root)
+    assert rejected["validation"]["status"] == "PASS"
+    assert not (Path(rejected["output_dir"]) / "corrected_assembly.step").exists()
+    assert not (Path(rejected["output_dir"]) / "fused.step").exists()
+
+
+@pytest.mark.parametrize(
+    ("policy_change", "expected_status"),
+    [
+        ({"allow_motion": False}, "MOTION_NOT_AUTHORIZED"),
+        ({"policy_valid": False}, "MOTION_NOT_AUTHORIZED"),
+        ({"tauE_mm": 0.01}, "ENGINEERING_TOLERANCE_EXCEEDED"),
+        ({"max_translation_mm": 0.01}, "TRANSLATION_BUDGET_EXCEEDED"),
+    ],
+)
+def test_p10_inherits_06b_authorization_taue_and_budget_rejections(
+    tmp_path: Path, policy_change: dict, expected_status: str
+) -> None:
+    """Break caught: FaceSet support bypasses the established 06A/06B motion gates."""
+    module = _module()
+    source = module.FIXTURE_ROOT / "P10"
+    case = tmp_path / "fixture" / "P10"
+    case.mkdir(parents=True)
+    for name in ("inputs.step", "policy.json", "parameters.json", "expected.json"):
+        (case / name).write_bytes((source / name).read_bytes())
+    policy = json.loads((case / "policy.json").read_text(encoding="utf-8"))
+    policy.update(policy_change)
+    (case / "policy.json").write_text(json.dumps(policy), encoding="utf-8")
+    expected = json.loads((case / "expected.json").read_text(encoding="utf-8"))
+    expected["status"] = expected_status
+    expected["candidate_face_set_pair_count"] = 0
+    (case / "expected.json").write_text(json.dumps(expected), encoding="utf-8")
+    result = module.run_multipatch_case(case.parent, "P10", tmp_path / "rejected")
+    assert result["validation"]["status"] == "PASS"
+    assert result["operation"]["status"] == expected_status
+    assert result["operation"]["motion"]["executed_translation_norm_mm"] == 0.0
+    assert result["operation"]["fuse"]["executed"] is False
+    assert "corrected_assembly_step" not in result["operation"].get("artifacts", {})
+
+
+def test_suite_publishes_machine_evidence_repeatability_and_view_index(tmp_path: Path) -> None:
+    """Break caught: integrated output omits evidence or two-process comparison."""
+    module = _module()
+    summary = module.run_multipatch_suite(module.FIXTURE_ROOT, tmp_path / "suite")
+    assert summary["status"] == "PASS"
+    assert summary["repeatability"] == {
+        "P10": {"processes": 2, "status": "PASS"},
+        "P11": {"processes": 2, "status": "PASS"},
+        "P12": {"processes": 2, "status": "PASS"},
+    }
+    for scenario in ("P10", "P11", "P12"):
+        case = tmp_path / "suite" / scenario
+        assert {p.name for p in case.iterdir()} >= {
+            "operation.json", "validation.json", "facesets.json", "patches.json",
+            "components.json", "provenance.json", "repeatability.json", "operation_debug.FCStd",
+        }
+    assert (tmp_path / "suite" / "VIEW_INDEX.md").is_file()

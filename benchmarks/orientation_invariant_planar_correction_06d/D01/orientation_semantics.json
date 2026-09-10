@@ -1,0 +1,9 @@
+{
+  "reference_direction": [
+    0.7071067811865476,
+    0.0,
+    0.7071067811865475
+  ],
+  "schema_version": 1,
+  "semantic_role": "SIDE_1_EXPECTED_OUTWARD_INTERFACE_NORMAL"
+}

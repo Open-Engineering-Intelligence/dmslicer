@@ -1,0 +1,12 @@
+{
+  "analytic_area_formula": "2*pi*r^2*(1-cos(alpha))",
+  "case_id": "A08",
+  "geometry": "r=10 mm sphere against a concave upper-hemisphere cavity cap (alpha=90 deg)",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    30.0,
+    30.0,
+    25.0
+  ],
+  "scale": 2.030692330267238
+}

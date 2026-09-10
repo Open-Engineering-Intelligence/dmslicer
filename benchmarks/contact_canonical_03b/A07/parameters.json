@@ -1,0 +1,12 @@
+{
+  "analytic_area_formula": "2*pi*r*l",
+  "case_id": "A07",
+  "geometry": "r=10 mm shaft and r=10 mm bore over l=30 mm with end clearance",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    40.0,
+    40.0,
+    40.0
+  ],
+  "scale": 1.4433756729740643
+}

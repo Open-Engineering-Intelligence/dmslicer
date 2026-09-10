@@ -1,0 +1,36 @@
+{
+  "case_id": "A12",
+  "coverage": [
+    0.37699111843077515,
+    1.0
+  ],
+  "dimension": "2D",
+  "geometry": "r_o=20 mm, r_i=10 mm planar washer bottom coincident with a 50×50 mm plate",
+  "ground_truth_mode": "analytic",
+  "measures": {
+    "area_mm2": 1803.7852556496418
+  },
+  "patch_topology": {
+    "annular_or_multiply_connected": true,
+    "boundary_component_count": 2,
+    "component_count": 1,
+    "connectedness": "connected",
+    "first_betti_number": 1,
+    "hole_count": 1
+  },
+  "provenance_scope": "actual_brep_direct_common",
+  "relation": "exact",
+  "schema_version": 1,
+  "support_surface_family": "plane",
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07
+  },
+  "units": {
+    "area": "mm2",
+    "length": "mm"
+  }
+}

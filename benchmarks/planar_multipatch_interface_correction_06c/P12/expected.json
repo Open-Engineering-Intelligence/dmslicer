@@ -1,0 +1,19 @@
+{
+  "candidate_common_areas_mm2": [
+    192.0,
+    192.0
+  ],
+  "candidate_face_set_pair_count": 2,
+  "candidate_gaps_mm": [
+    0.05,
+    0.08
+  ],
+  "numeric_rules": {
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "scenario_id": "P12",
+  "schema_version": 1,
+  "status": "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET"
+}

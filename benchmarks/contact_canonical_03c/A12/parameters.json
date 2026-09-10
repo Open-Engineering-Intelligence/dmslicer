@@ -1,0 +1,12 @@
+{
+  "analytic_area_formula": "pi*(r_o^2-r_i^2)",
+  "case_id": "A12",
+  "geometry": "r_o=20 mm, r_i=10 mm planar washer bottom coincident with a 50×50 mm plate",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    50.0,
+    50.0,
+    15.0
+  ],
+  "scale": 1.3834289277321492
+}

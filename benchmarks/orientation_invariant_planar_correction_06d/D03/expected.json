@@ -1,0 +1,19 @@
+{
+  "boundary_component_count": 2,
+  "common_area_mm2": 942.4777960769379,
+  "component_count": 1,
+  "coverage": {
+    "Side_1": 0.2617993877991494,
+    "Side_2": 1.0
+  },
+  "gap_mm": 0.05,
+  "hole_count": 1,
+  "patch_count": 1,
+  "remaining_area_mm2": {
+    "Side_1": 2657.522203923062,
+    "Side_2": 0.0
+  },
+  "scenario_id": "D03",
+  "schema_version": 1,
+  "status": "SUPPORTED_UNIQUE_INTERFACE_FACESET"
+}

@@ -1,1 +1,1 @@
-"""DM-Slicer research infrastructure."""
+"""DM-Slicer research and STEP/B-rep evidence infrastructure."""

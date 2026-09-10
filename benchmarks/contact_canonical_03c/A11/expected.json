@@ -1,0 +1,36 @@
+{
+  "case_id": "A11",
+  "coverage": [
+    0.16,
+    1.0
+  ],
+  "dimension": "2D",
+  "geometry": "one connected bridge solid with two 12×16 mm feet, separated by 24 mm clearance, on a 60×40 mm plate",
+  "ground_truth_mode": "analytic",
+  "measures": {
+    "area_mm2": 685.7142857142857
+  },
+  "patch_topology": {
+    "annular_or_multiply_connected": false,
+    "boundary_component_count": 2,
+    "component_count": 2,
+    "connectedness": "disconnected",
+    "first_betti_number": 0,
+    "hole_count": 0
+  },
+  "provenance_scope": "actual_brep_direct_common",
+  "relation": "exact",
+  "schema_version": 1,
+  "support_surface_family": "plane",
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07
+  },
+  "units": {
+    "area": "mm2",
+    "length": "mm"
+  }
+}

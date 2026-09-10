@@ -1,0 +1,1359 @@
+{
+  "primary": "A01_delta_m2tauE_s0_01",
+  "fcstd_path": "D:\\Agent\\worktrees\\dmslicer-05c\\outputs\\contact_fixed_tolerance_05c\\a01_candidate_probe\\a01_candidate_selection.FCStd",
+  "samples": [
+    {
+      "sample_id": "A01_delta_m2tauE_s0_01",
+      "step_path": "outputs\\contact_fixed_tolerance_05c\\inputs\\A01_delta_m2tauE_s0_01\\inputs.step"
+    },
+    {
+      "sample_id": "A01_delta_m1tauE_s0_01",
+      "step_path": "outputs\\contact_fixed_tolerance_05c\\inputs\\A01_delta_m1tauE_s0_01\\inputs.step"
+    },
+    {
+      "sample_id": "A01_delta_m4tauE_s0_01",
+      "step_path": "outputs\\contact_fixed_tolerance_05c\\inputs\\A01_delta_m4tauE_s0_01\\inputs.step"
+    }
+  ],
+  "results": [
+    {
+      "sample_id": "A01_delta_m2tauE_s0_01",
+      "step_sha256": "sha256:5bff956f81e60806e0d52c6605f882e01cd26d71b3423bd5a034ba2c137c7159",
+      "production_return_mm": 0.08867513459481,
+      "faces": [
+        {
+          "body": "Side_1",
+          "face": "Face1",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face2",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face3",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.0,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face4",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.0
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.288675134595,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.288675134595
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face1",
+          "area_mm2": 0.1666666666669924,
+          "bbox": [
+            0.0,
+            0.0,
+            0.08867513459481,
+            0.0,
+            0.57735026919,
+            0.37735026919000003
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.08867513459481
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face2",
+          "area_mm2": 0.1666666666669924,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            0.08867513459481,
+            0.57735026919,
+            0.57735026919,
+            0.37735026919000003
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            0.08867513459481
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face3",
+          "area_mm2": 0.1666666666669924,
+          "bbox": [
+            0.0,
+            0.0,
+            0.08867513459481,
+            0.57735026919,
+            0.0,
+            0.37735026919000003
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.08867513459481
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face4",
+          "area_mm2": 0.1666666666669924,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            0.08867513459481,
+            0.57735026919,
+            0.57735026919,
+            0.37735026919000003
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            0.08867513459481
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.08867513459481,
+            0.57735026919,
+            0.57735026919,
+            0.08867513459481
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.08867513459481
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.37735026919,
+            0.57735026919,
+            0.57735026919,
+            0.37735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.37735026919
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        }
+      ],
+      "candidates": [
+        {
+          "first_face": "Face5",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.08867513459481,
+          "absolute_offset_mm": 0.08867513459481,
+          "comparison_tuple": [
+            0.08867513459481,
+            0.08867513459481
+          ],
+          "traversal_index": 0
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.08867513459499998,
+          "absolute_offset_mm": 0.08867513459499998,
+          "comparison_tuple": [
+            0.08867513459499998,
+            0.08867513459499998
+          ],
+          "traversal_index": 3
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.20000000000019,
+          "absolute_offset_mm": 0.20000000000019,
+          "comparison_tuple": [
+            0.20000000000019,
+            -0.20000000000019
+          ],
+          "traversal_index": 2
+        },
+        {
+          "first_face": "Face5",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.37735026919,
+          "absolute_offset_mm": 0.37735026919,
+          "comparison_tuple": [
+            0.37735026919,
+            0.37735026919
+          ],
+          "traversal_index": 1
+        }
+      ],
+      "minimum_tuple": [
+        0.08867513459481,
+        0.08867513459481
+      ],
+      "equal_minimum_candidates": [
+        {
+          "first_face": "Face5",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.08867513459481,
+          "absolute_offset_mm": 0.08867513459481,
+          "comparison_tuple": [
+            0.08867513459481,
+            0.08867513459481
+          ],
+          "traversal_index": 0
+        }
+      ],
+      "nominal_reference": {
+        "first_face": "Face6",
+        "second_face": "Face5",
+        "signed_offset_mm": -0.20000000000019
+      },
+      "common_volume_mm3": 0.06666666666681642
+    },
+    {
+      "sample_id": "A01_delta_m1tauE_s0_01",
+      "step_sha256": "sha256:26855e2582a571ce566c916f932c74319652ec3de7df6bc41b905203cc530220",
+      "production_return_mm": -0.1,
+      "faces": [
+        {
+          "body": "Side_1",
+          "face": "Face1",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face2",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face3",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.0,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face4",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.0
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.288675134595,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.288675134595
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face1",
+          "area_mm2": 0.16666666666688276,
+          "bbox": [
+            0.0,
+            0.0,
+            0.188675134595,
+            0.0,
+            0.57735026919,
+            0.47735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.188675134595
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face2",
+          "area_mm2": 0.16666666666688276,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            0.188675134595,
+            0.57735026919,
+            0.57735026919,
+            0.47735026919
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            0.188675134595
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face3",
+          "area_mm2": 0.16666666666688276,
+          "bbox": [
+            0.0,
+            0.0,
+            0.188675134595,
+            0.57735026919,
+            0.0,
+            0.47735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.188675134595
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face4",
+          "area_mm2": 0.16666666666688276,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            0.188675134595,
+            0.57735026919,
+            0.57735026919,
+            0.47735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            0.188675134595
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.188675134595,
+            0.57735026919,
+            0.57735026919,
+            0.188675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.188675134595
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.47735026919,
+            0.57735026919,
+            0.57735026919,
+            0.47735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.47735026919
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        }
+      ],
+      "candidates": [
+        {
+          "first_face": "Face6",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.1,
+          "absolute_offset_mm": 0.1,
+          "comparison_tuple": [
+            0.1,
+            -0.1
+          ],
+          "traversal_index": 2
+        },
+        {
+          "first_face": "Face5",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.188675134595,
+          "absolute_offset_mm": 0.188675134595,
+          "comparison_tuple": [
+            0.188675134595,
+            0.188675134595
+          ],
+          "traversal_index": 0
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.18867513459500002,
+          "absolute_offset_mm": 0.18867513459500002,
+          "comparison_tuple": [
+            0.18867513459500002,
+            0.18867513459500002
+          ],
+          "traversal_index": 3
+        },
+        {
+          "first_face": "Face5",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.47735026919,
+          "absolute_offset_mm": 0.47735026919,
+          "comparison_tuple": [
+            0.47735026919,
+            0.47735026919
+          ],
+          "traversal_index": 1
+        }
+      ],
+      "minimum_tuple": [
+        0.1,
+        -0.1
+      ],
+      "equal_minimum_candidates": [
+        {
+          "first_face": "Face6",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.1,
+          "absolute_offset_mm": 0.1,
+          "comparison_tuple": [
+            0.1,
+            -0.1
+          ],
+          "traversal_index": 2
+        }
+      ],
+      "nominal_reference": {
+        "first_face": "Face6",
+        "second_face": "Face5",
+        "signed_offset_mm": -0.1
+      },
+      "common_volume_mm3": 0.03333333333337654
+    },
+    {
+      "sample_id": "A01_delta_m4tauE_s0_01",
+      "step_sha256": "sha256:26cebd0de91127a84242e0cb9ac1184a8814bff7aa21f3a25369e3fd826b12c1",
+      "production_return_mm": -0.111324865405,
+      "faces": [
+        {
+          "body": "Side_1",
+          "face": "Face1",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face2",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face3",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.0,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face4",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.0,
+            0.57735026919,
+            0.57735026919,
+            0.0
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_1",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.288675134595,
+            0.57735026919,
+            0.57735026919,
+            0.288675134595
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.288675134595
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face1",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            -0.111324865405,
+            0.0,
+            0.57735026919,
+            0.17735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            -0.111324865405
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face2",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.57735026919,
+            0.0,
+            -0.111324865405,
+            0.57735026919,
+            0.57735026919,
+            0.17735026919
+          ],
+          "plane_position": [
+            0.57735026919,
+            0.0,
+            -0.111324865405
+          ],
+          "plane_axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face3",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.0,
+            -0.111324865405,
+            0.57735026919,
+            0.0,
+            0.17735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            -0.111324865405
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face4",
+          "area_mm2": 0.16666666666688273,
+          "bbox": [
+            0.0,
+            0.57735026919,
+            -0.111324865405,
+            0.57735026919,
+            0.57735026919,
+            0.17735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.57735026919,
+            -0.111324865405
+          ],
+          "plane_axis": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": null,
+          "passes_production_filter": false,
+          "filter_reason": "not a qualifying horizontal supporting plane"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face5",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            -0.111324865405,
+            0.57735026919,
+            0.57735026919,
+            -0.111324865405
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            -0.111324865405
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Reversed",
+          "face_normal_at_uv0": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        },
+        {
+          "body": "Side_2",
+          "face": "Face6",
+          "area_mm2": 0.33333333333376547,
+          "bbox": [
+            0.0,
+            0.0,
+            0.17735026919,
+            0.57735026919,
+            0.57735026919,
+            0.17735026919
+          ],
+          "plane_position": [
+            0.0,
+            0.0,
+            0.17735026919
+          ],
+          "plane_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "face_orientation": "Forward",
+          "face_normal_at_uv0": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "passes_production_filter": true,
+          "filter_reason": "planar and abs(Axis.z)>=1-1e-7"
+        }
+      ],
+      "candidates": [
+        {
+          "first_face": "Face5",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.111324865405,
+          "absolute_offset_mm": 0.111324865405,
+          "comparison_tuple": [
+            0.111324865405,
+            -0.111324865405
+          ],
+          "traversal_index": 0
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.111324865405,
+          "absolute_offset_mm": 0.111324865405,
+          "comparison_tuple": [
+            0.111324865405,
+            -0.111324865405
+          ],
+          "traversal_index": 3
+        },
+        {
+          "first_face": "Face5",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": 0.17735026919,
+          "absolute_offset_mm": 0.17735026919,
+          "comparison_tuple": [
+            0.17735026919,
+            0.17735026919
+          ],
+          "traversal_index": 1
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.4,
+          "absolute_offset_mm": 0.4,
+          "comparison_tuple": [
+            0.4,
+            -0.4
+          ],
+          "traversal_index": 2
+        }
+      ],
+      "minimum_tuple": [
+        0.111324865405,
+        -0.111324865405
+      ],
+      "equal_minimum_candidates": [
+        {
+          "first_face": "Face5",
+          "second_face": "Face5",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.111324865405,
+          "absolute_offset_mm": 0.111324865405,
+          "comparison_tuple": [
+            0.111324865405,
+            -0.111324865405
+          ],
+          "traversal_index": 0
+        },
+        {
+          "first_face": "Face6",
+          "second_face": "Face6",
+          "normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "signed_offset_mm": -0.111324865405,
+          "absolute_offset_mm": 0.111324865405,
+          "comparison_tuple": [
+            0.111324865405,
+            -0.111324865405
+          ],
+          "traversal_index": 3
+        }
+      ],
+      "nominal_reference": {
+        "first_face": "Face6",
+        "second_face": "Face5",
+        "signed_offset_mm": -0.4
+      },
+      "common_volume_mm3": 0.059116756396743304
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "numeric_rules": {
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "operation": "PLANAR_PARTIAL_OVERLAP_CORRECTION_06B",
+  "scenarios": [
+    {
+      "scenario_id": "P07",
+      "status": "CORRECTED_PARTIAL_INTERFACE_FUSED",
+      "step_sha256": "b9cee858852934a3faaa92b95fdc67ac951a6665a64efce2d9a78d58383d6d8e"
+    },
+    {
+      "scenario_id": "P08",
+      "status": "CORRECTED_PARTIAL_INTERFACE_FUSED",
+      "step_sha256": "89e1262d163ccfc89b9fc9a00c2fa97c12b5f783fc08d6bf8142e3eb3af83632"
+    },
+    {
+      "scenario_id": "P09",
+      "status": "NO_POSITIVE_AREA_INTERFACE",
+      "step_sha256": "d914c5c0c07b71483c9d3dfd2b0320fdd715ff431f47d8a25ed15dddca11f290"
+    }
+  ],
+  "schema_version": 1
+}

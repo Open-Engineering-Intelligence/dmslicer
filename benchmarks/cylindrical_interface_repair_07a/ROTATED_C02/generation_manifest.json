@@ -1,0 +1,11 @@
+{
+  "hash_semantics": "byte_integrity_only",
+  "input_sha256": "f56ac5e6abdbae8e8971e0b5d8d1b162ec882585ffb5c43dea4171f9bdf875f8",
+  "scenario_id": "ROTATED_C02",
+  "schema_version": 1,
+  "source": {
+    "control": "proper_rotation",
+    "geometry": "A07 dimensions; actual STEP is analysis input",
+    "mode": "07a_independent_generation"
+  }
+}

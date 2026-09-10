@@ -1,0 +1,25 @@
+{
+  "case_id": "A06",
+  "dimension": "3D",
+  "geometry": "20×20×20 prisms offset by raw (8,6,4)",
+  "ground_truth_mode": "analytic",
+  "measures": {
+    "volume_mm3": 29259.210532767505
+  },
+  "relation": "solid_material_interference",
+  "schema_version": 1,
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06,
+    "volume_unit": "mm3"
+  },
+  "units": {
+    "area": "mm2",
+    "length": "mm",
+    "volume": "mm3"
+  }
+}

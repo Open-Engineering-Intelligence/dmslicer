@@ -1,0 +1,10 @@
+{
+  "case_id": "A05",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    30,
+    30,
+    20
+  ],
+  "scale": 2.132007163556104
+}

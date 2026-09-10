@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "operation": "A01_PLANAR_GAP_ASSEMBLY_CORRECTION_06A",
+  "baseline_commit": "fa4436a2784574ffa336e87a9df898c35780a587",
+  "numeric_rules": {
+    "linear_epsilon_mm": 1e-07,
+    "area_epsilon_mm2": 1e-08,
+    "volume_epsilon_mm3": 1e-06,
+    "angular_epsilon": 1e-07
+  },
+  "scenarios": [
+    {
+      "scenario_id": "P01",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_5tauE/inputs.step", "step_sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P01.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P01.json"
+    },
+    {
+      "scenario_id": "P02",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_5tauE/inputs.step", "step_sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P02.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P02.json"
+    },
+    {
+      "scenario_id": "P03",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0_5tauE/inputs.step", "step_sha256": "802d1d379decdbfa8006e352f4881d9e289c0179235e64f9883f964e9f5404d8"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P03.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P03.json"
+    },
+    {
+      "scenario_id": "P04",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p1_1tauE/inputs.step", "step_sha256": "4829512bf3abddce5af645107d67bcfb3219c13495b1acf097780cb4ae1a803f"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P04.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P04.json"
+    },
+    {
+      "scenario_id": "P05",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_p0tauE/inputs.step", "step_sha256": "02a9bb35d7cbd21cf911a22a426ef05b5c2aefb61d79523a35c2bf42d1c1f627"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P05.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P05.json"
+    },
+    {
+      "scenario_id": "P06",
+      "input": {"step_path": "benchmarks/contact_tolerance_pilot_05a/A01_delta_m0_5tauE/inputs.step", "step_sha256": "7f7a837239e2c44a09e99e5fcd17e2237e188486d3b1d44941f7fc35a3c43a09"},
+      "policy_path": "benchmarks/planar_gap_assembly_correction_06a/policies/P06.json",
+      "expected_path": "benchmarks/planar_gap_assembly_correction_06a/expected/P06.json"
+    }
+  ]
+}

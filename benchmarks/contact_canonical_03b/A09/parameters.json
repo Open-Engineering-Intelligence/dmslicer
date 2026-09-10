@@ -1,0 +1,12 @@
+{
+  "analytic_area_formula": "pi*(r0+r1)*(r1-r0)/sin(beta)",
+  "case_id": "A09",
+  "geometry": "r0=10 mm, r1=20 mm, beta=45 deg matching conical frustum and a z=-5..12 mm seat",
+  "normalization": "combined bounding-box diagonal L=100 mm",
+  "raw_bounding_box_mm": [
+    54.0,
+    54.0,
+    17.0
+  ],
+  "scale": 1.2781705599783466
+}

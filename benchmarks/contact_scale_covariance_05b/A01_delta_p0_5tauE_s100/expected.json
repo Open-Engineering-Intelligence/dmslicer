@@ -1,0 +1,11 @@
+{
+  "case_id": "A01",
+  "engineering_state": "positive_gap_within_tolerance",
+  "exact_intersection_dimension": "none",
+  "ground_truth_mode": "construction_derived",
+  "intended_relation_dimension": "2D",
+  "pilot_level": "LEVEL_B_SCALE_PILOT",
+  "scale": 100.0,
+  "schema_version": 1,
+  "set_signed_offset_mm": 5.0
+}

@@ -1,0 +1,33 @@
+{
+  "case_id": "U06_cylinder_unequal_overlap",
+  "common_area_mm2": 2513.2741228718346,
+  "core_z_mm": [
+    -80.0,
+    20.0
+  ],
+  "coverage": [
+    0.5,
+    0.2
+  ],
+  "ground_truth_mode": "analytic_and_independent_axial_reference",
+  "remaining_counts": [
+    1,
+    1
+  ],
+  "schema_version": 1,
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06,
+    "volume_unit": "mm3"
+  },
+  "union_volume_mm3": 188495.5592153876,
+  "units": {
+    "area": "mm2",
+    "length": "mm",
+    "volume": "mm3"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "A01",
+  "delta_over_tauE": -0.9,
+  "geometry": {
+    "a_mm": 0.5773502691896257,
+    "b_mm": 0.5773502691896257,
+    "h_mm": 0.28867513459481287,
+    "scale": 0.028867513459481287
+  },
+  "normalization": "05A nominal L=100 mm; all dimensions and tauE co-scaled; perturbation is not renormalized",
+  "perturbation_kind": "rigid_pose",
+  "pilot_level": "LEVEL_B_SCALE_PILOT",
+  "sample_id": "A01_delta_m0_9tauE_s0_01",
+  "scale": 0.01,
+  "scale_mode": "co-scaled-tauE",
+  "schema_version": 1,
+  "set_signed_offset_mm": -0.0009000000000000001,
+  "tauE_mm": 0.001,
+  "tauK_mm": "NOT_AVAILABLE"
+}

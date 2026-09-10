@@ -1,0 +1,25 @@
+{
+  "case_id": "A05",
+  "dimension": "1D",
+  "geometry": "two prisms sharing only a 20 mm raw edge",
+  "ground_truth_mode": "analytic",
+  "measures": {
+    "length_mm": 42.64014327112208
+  },
+  "relation": "edge_touch",
+  "schema_version": 1,
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06,
+    "volume_unit": "mm3"
+  },
+  "units": {
+    "area": "mm2",
+    "length": "mm",
+    "volume": "mm3"
+  }
+}

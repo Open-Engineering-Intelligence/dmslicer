@@ -15,6 +15,7 @@ htmlcov/
 outputs/
 tmp/
 temp/
+work/
 *.log
 logs/
 

@@ -3,3 +3,6 @@ docs/research_v2/*.md -text
 
 # Stable evidence packages carry recorded byte-integrity digests.
 evidence/** -text
+
+# STEP is generated exchange data; preserve bytes and ignore exporter-owned trailing spaces.
+*.step -text whitespace=-trailing-space

@@ -1,0 +1,23 @@
+{
+  "construction": {
+    "Side_1": [
+      0,
+      40,
+      0,
+      20,
+      0,
+      10
+    ],
+    "Side_2": [
+      16,
+      56,
+      0,
+      20,
+      10.05,
+      20.05
+    ]
+  },
+  "scenario_id": "P07",
+  "schema_version": 1,
+  "units": "mm"
+}

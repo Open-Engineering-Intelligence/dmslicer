@@ -1,0 +1,25 @@
+{
+  "case_id": "A04",
+  "dimension": "0D",
+  "geometry": "r=10 sphere tangent to finite 60×60 plate",
+  "ground_truth_mode": "analytic",
+  "measures": {
+    "point_count": 1.0
+  },
+  "relation": "point_touch",
+  "schema_version": 1,
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "engineering_tolerance_mm": 0.1,
+    "length_unit": "mm",
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06,
+    "volume_unit": "mm3"
+  },
+  "units": {
+    "area": "mm2",
+    "length": "mm",
+    "volume": "mm3"
+  }
+}

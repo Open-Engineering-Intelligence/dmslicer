@@ -1,0 +1,11 @@
+{
+  "hash_semantics": "byte_integrity_only",
+  "input_sha256": "cc3b0ce6189a0bd7cd9e7ed5b591deafdd97c22499fd0a8dc19d438fd5e4d15d",
+  "scenario_id": "C02",
+  "schema_version": 1,
+  "source": {
+    "control": null,
+    "geometry": "A07 dimensions; actual STEP is analysis input",
+    "mode": "07a_independent_generation"
+  }
+}

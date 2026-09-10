@@ -1,0 +1,33 @@
+{
+  "case_id": "CASE01_planar_agb_exact",
+  "occurrences": [
+    {
+      "material_key": "A",
+      "participation_policy": {"gradient_eligible": false, "mode": "ACTIVE", "source_eligible": true},
+      "product_path": ["A"],
+      "semantic_id": "A",
+      "semantic_role": "SOURCE",
+      "source_boundary": {"boundary_role": "SOURCE_A", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 0.0},
+      "source_label": "A"
+    },
+    {
+      "material_key": "Gradient",
+      "participation_policy": {"gradient_eligible": true, "mode": "ACTIVE", "source_eligible": false},
+      "product_path": ["G"],
+      "semantic_id": "G",
+      "semantic_role": "GRADIENT",
+      "source_label": "G"
+    },
+    {
+      "material_key": "B",
+      "participation_policy": {"gradient_eligible": false, "mode": "ACTIVE", "source_eligible": true},
+      "product_path": ["B"],
+      "semantic_id": "B",
+      "semantic_role": "SOURCE",
+      "source_boundary": {"boundary_role": "SOURCE_B", "condition_kind": "DIRICHLET_SCALAR", "scalar_value": 1.0},
+      "source_label": "B"
+    }
+  ],
+  "schema_version": 1,
+  "semantic_order": ["A", "G", "B"]
+}

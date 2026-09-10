@@ -1,0 +1,2076 @@
+"""FreeCADCmd B-rep backend for 06D orientation-invariant FaceSets."""
+
+import json
+import math
+import os
+import traceback
+from pathlib import Path
+
+import FreeCAD
+import Import
+import Part
+
+
+REFERENCE = FreeCAD.Vector(0.0, 0.0, 1.0)
+
+
+def _finite_number(value):
+    return type(value) in (int, float) and not isinstance(value, bool) and math.isfinite(float(value))
+
+
+def _reference_contract(value):
+    if not isinstance(value, (list, tuple)) or len(value) != 3:
+        return None
+    if not all(_finite_number(component) for component in value):
+        return None
+    raw = [float(component) for component in value]
+    norm = math.sqrt(sum(component * component for component in raw))
+    if not math.isfinite(norm) or norm <= 0.0:
+        return None
+    return {
+        "raw_reference_direction": raw,
+        "normalized_reference_direction": [component / norm for component in raw],
+        "original_norm": norm,
+    }
+
+
+def _set_reference(value):
+    global REFERENCE
+    contract = _reference_contract(value)
+    if contract is not None:
+        REFERENCE = FreeCAD.Vector(*contract["normalized_reference_direction"])
+    return contract
+
+
+class UnsupportedComponentTopology(RuntimeError):
+    pass
+
+
+def _bounds(shape):
+    box = shape.BoundBox
+    return [float(value) for value in (
+        box.XMin, box.XMax, box.YMin, box.YMax, box.ZMin, box.ZMax
+    )]
+
+
+def _center(shape):
+    try:
+        center = shape.CenterOfMass
+        return [float(center.x), float(center.y), float(center.z)]
+    except Exception:
+        if shape.Solids:
+            weighted = [(solid.CenterOfMass, float(solid.Volume)) for solid in shape.Solids]
+        elif shape.Faces:
+            weighted = [(face.CenterOfMass, float(face.Area)) for face in shape.Faces]
+        else:
+            return None
+        total = sum(weight for _, weight in weighted)
+        if total <= 0.0:
+            return None
+        return [
+            sum(float(center[axis]) * weight for center, weight in weighted) / total
+            for axis in range(3)
+        ]
+
+
+def _shape_sort_key(shape):
+    """Non-authoritative spatial ordering key; never an equivalence predicate."""
+    box = shape.BoundBox
+    return (
+        shape.ShapeType,
+        float(box.XMin), float(box.YMin), float(box.ZMin),
+        float(box.XMax), float(box.YMax), float(box.ZMax),
+        float(shape.Area), float(shape.Length), len(shape.Faces), len(shape.Edges),
+        tuple(sorted(type(face.Surface).__name__ for face in shape.Faces)),
+        tuple(sorted(type(edge.Curve).__name__ for edge in shape.Edges)),
+    )
+
+
+def _geometry_evidence(shape):
+    """Human-readable measured evidence; not a geometry identity or match key."""
+    faces = []
+    for face in shape.Faces:
+        wires = []
+        for wire in face.Wires:
+            try:
+                enclosed_area = float(Part.Face(wire).Area)
+            except Exception:
+                enclosed_area = None
+            wires.append({
+                "length_mm": float(wire.Length),
+                "bounds_mm": _bounds(wire),
+                "enclosed_area_mm2": enclosed_area,
+                "curve_types": sorted(type(edge.Curve).__name__ for edge in wire.Edges),
+            })
+        wires.sort(key=lambda value: tuple(value["bounds_mm"]))
+        faces.append({
+            "surface_type": type(face.Surface).__name__,
+            "area_mm2": float(face.Area),
+            "center_mm": _center(face),
+            "bounds_mm": _bounds(face),
+            "wire_count": len(face.Wires),
+            "wires": wires,
+            "boundary_curve_types": sorted(
+                type(edge.Curve).__name__ for edge in face.Edges
+            ),
+        })
+    faces.sort(key=lambda value: tuple(value["bounds_mm"]))
+    return {
+        "shape_type": shape.ShapeType,
+        "area_mm2": float(shape.Area),
+        "length_mm": float(shape.Length),
+        "bounds_mm": _bounds(shape),
+        "face_count": len(shape.Faces),
+        "edge_count": len(shape.Edges),
+        "faces": faces,
+    }
+
+
+def _face_equivalence(first, second, rules):
+    if not hasattr(first, "Surface") and len(first.Faces) == 1:
+        first = first.Faces[0]
+    if not hasattr(second, "Surface") and len(second.Faces) == 1:
+        second = second.Faces[0]
+    surface_match = type(first.Surface).__name__ == type(second.Surface).__name__
+    def boundary_signature(face):
+        return {
+            "wire_count": len(face.Wires),
+            "closed_wire_count": sum(1 for wire in face.Wires if wire.isClosed()),
+            "hole_count": max(0, len(face.Wires) - 1),
+            "wire_curve_families": sorted(
+                tuple(sorted(set(type(edge.Curve).__name__ for edge in wire.Edges)))
+                for wire in face.Wires
+            ),
+        }
+
+    first_boundary = boundary_signature(first)
+    second_boundary = boundary_signature(second)
+    boundary_topology_match = (
+        first_boundary["wire_count"] == second_boundary["wire_count"]
+        and first_boundary["closed_wire_count"] == second_boundary["closed_wire_count"]
+        and first_boundary["hole_count"] == second_boundary["hole_count"]
+    )
+    boundary_curve_family_match = (
+        first_boundary["wire_curve_families"]
+        == second_boundary["wire_curve_families"]
+    )
+    distance, _, _ = first.distToShape(second)
+    first_minus_second = float(first.cut(second).Area)
+    second_minus_first = float(second.cut(first).Area)
+    common_area = float(first.common(second).Area)
+    area_delta = abs(float(first.Area) - float(second.Area))
+    equivalent = bool(
+        surface_match
+        and boundary_topology_match
+        and boundary_curve_family_match
+        and distance <= rules["linear_epsilon_mm"]
+        and first_minus_second <= rules["area_epsilon_mm2"]
+        and second_minus_first <= rules["area_epsilon_mm2"]
+        and area_delta <= rules["area_epsilon_mm2"]
+        and common_area > rules["area_epsilon_mm2"]
+    )
+    return {
+        "geometric_equivalence": "PASS" if equivalent else "FAIL",
+        "support_surface_match": surface_match,
+        "boundary_topology_match": boundary_topology_match,
+        "boundary_curve_family_match": boundary_curve_family_match,
+        "first_boundary_topology": first_boundary,
+        "second_boundary_topology": second_boundary,
+        "minimum_distance_mm": float(distance),
+        "first_minus_second_area_mm2": first_minus_second,
+        "second_minus_first_area_mm2": second_minus_first,
+        "actual_common_area_mm2": common_area,
+        "area_delta_mm2": area_delta,
+    }
+
+
+def _closed(shape):
+    return bool(shape.Shells) and all(shell.isClosed() for shell in shape.Shells)
+
+
+def _objects(document, reverse=False):
+    values = [
+        (obj.Label, obj.Shape)
+        for obj in document.Objects
+        if obj.TypeId == "Part::Feature"
+        and hasattr(obj, "Shape")
+        and not obj.Shape.isNull()
+    ]
+    return sorted(values, key=lambda value: value[0], reverse=reverse)
+
+
+def _roles(document, reverse=False):
+    sources = _objects(document, reverse)
+    if len(sources) != 2:
+        raise ValueError("06C requires exactly two imported Part::Feature objects")
+    roles = {}
+    for role in ("Side_1", "Side_2"):
+        matches = [shape for label, shape in sources if label == role]
+        if len(matches) != 1 or len(matches[0].Solids) != 1:
+            raise ValueError("missing, ambiguous, or non-solid role " + role)
+        solid = matches[0].Solids[0]
+        if not solid.isValid() or not _closed(solid):
+            raise ValueError(role + " is not a valid closed solid")
+        roles[role] = solid
+    return roles["Side_1"], roles["Side_2"]
+
+
+def _plane(face):
+    return face.Surface if "plane" in type(face.Surface).__name__.lower() else None
+
+
+def _normal(face):
+    value = face.normalAt(0.0, 0.0)
+    value.normalize()
+    return value
+
+
+def _face_descriptor(index, face, normal, support):
+    return {
+        "human_face_label": "Face" + str(index),
+        "geometry_evidence": _geometry_evidence(face),
+        "surface_type": type(face.Surface).__name__,
+        "area_mm2": float(face.Area),
+        "support_coordinate_mm": float(support),
+        "outward_normal": [float(normal.x), float(normal.y), float(normal.z)],
+    }
+
+
+def _face_sets(shape, role, sign, linear_epsilon, reverse=False):
+    indexed = list(enumerate(shape.Faces, start=1))
+    if reverse:
+        indexed.reverse()
+    candidates = []
+    for index, face in indexed:
+        plane = _plane(face)
+        if plane is None:
+            continue
+        try:
+            normal = _normal(face)
+        except Exception:
+            continue
+        if normal.dot(REFERENCE) * sign < 1.0 - linear_epsilon:
+            continue
+        support = float(plane.Position.dot(REFERENCE))
+        candidates.append(
+            {
+                "index": index,
+                "shape": face,
+                "normal": normal,
+                "support": support,
+                "descriptor": _face_descriptor(index, face, normal, support),
+            }
+        )
+    candidates.sort(key=lambda item: (item["support"], _shape_sort_key(item["shape"])))
+    groups = []
+    for candidate in candidates:
+        matching = next(
+            (
+                group
+                for group in groups
+                if abs(group["support_coordinate_mm"] - candidate["support"])
+                <= linear_epsilon
+            ),
+            None,
+        )
+        if matching is None:
+            matching = {
+                "role": role,
+                "support_coordinate_mm": candidate["support"],
+                "members": [],
+            }
+            groups.append(matching)
+        matching["members"].append(candidate)
+    groups.sort(key=lambda group: group["support_coordinate_mm"])
+    for group_index, group in enumerate(groups, start=1):
+        group["members"].sort(key=lambda member: _shape_sort_key(member["shape"]))
+        coordinates = [member["support"] for member in group["members"]]
+        group["face_set_id"] = f"{role}_FaceSet_{group_index}"
+        for member_index, member in enumerate(group["members"], start=1):
+            member["descriptor"]["member_id"] = (
+                f"{group['face_set_id']}_Member_{member_index}"
+            )
+        group["support_coordinate_mm"] = float(min(coordinates))
+        group["spread_mm"] = float(max(coordinates) - min(coordinates))
+        group["total_area_mm2"] = float(
+            sum(member["shape"].Area for member in group["members"])
+        )
+    return groups
+
+
+def _public_face_set(group):
+    members = [member["descriptor"] for member in group["members"]]
+    return {
+        "face_set_id": group["face_set_id"],
+        "role": group["role"],
+        "member_faces": [member["human_face_label"] for member in members],
+        "member_face_descriptors": members,
+        "member_face_count": len(members),
+        "component_member_count": len(members),
+        "reference_normal": [
+            float(REFERENCE.x) * (1.0 if group["role"] == "Side_1" else -1.0),
+            float(REFERENCE.y) * (1.0 if group["role"] == "Side_1" else -1.0),
+            float(REFERENCE.z) * (1.0 if group["role"] == "Side_1" else -1.0),
+        ],
+        "support_coordinate_mm": float(group["support_coordinate_mm"]),
+        "member_support_coordinates_mm": [
+            float(member["support_coordinate_mm"]) for member in members
+        ],
+        "spread_mm": float(group["spread_mm"]),
+        "total_area_mm2": float(group["total_area_mm2"]),
+        "selection_evidence": {
+            "surface_family": "plane",
+            "normal_role_match": True,
+            "grouping_rule": "absolute_support_coordinate_difference_le_linear_epsilon",
+        },
+    }
+
+
+def _common_patches(first_group, second_group, rules, reverse=False):
+    first_members = list(first_group["members"])
+    second_members = list(second_group["members"])
+    if reverse:
+        first_members.reverse()
+        second_members.reverse()
+    raw = []
+    for first in first_members:
+        for second in second_members:
+            common = first["shape"].common(second["shape"])
+            faces = list(common.Faces)
+            if reverse:
+                faces.reverse()
+            for common_face in faces:
+                if common_face.Area <= rules["area_epsilon_mm2"]:
+                    continue
+                raw.append(
+                    {
+                        "shape": common_face,
+                        "geometry_evidence": _geometry_evidence(common_face),
+                        "area_mm2": float(common_face.Area),
+                        "surface_type": type(common_face.Surface).__name__,
+                        "boundary_curve_types": sorted(
+                            type(edge.Curve).__name__ for edge in common_face.Edges
+                        ),
+                        "source_face_linkage": [
+                            {
+                                "Side_1": first["descriptor"]["human_face_label"],
+                                "Side_1_member_id": first["descriptor"]["member_id"],
+                                "Side_2": second["descriptor"]["human_face_label"],
+                                "Side_2_member_id": second["descriptor"]["member_id"],
+                            }
+                        ],
+                    }
+                )
+    patches = []
+    for record in raw:
+        existing = next(
+            (
+                patch for patch in patches
+                if _face_equivalence(record["shape"], patch["shape"], rules)[
+                    "geometric_equivalence"
+                ] == "PASS"
+            ),
+            None,
+        )
+        if existing is None:
+            patches.append(record)
+            continue
+        for linkage in record["source_face_linkage"]:
+            if linkage not in existing["source_face_linkage"]:
+                existing["source_face_linkage"].append(linkage)
+    patches.sort(key=lambda patch: _shape_sort_key(patch["shape"]))
+    for patch_index, patch in enumerate(patches, start=1):
+        patch["patch_id"] = f"Patch_{patch_index}"
+        patch["source_face_linkage"].sort(
+            key=lambda link: (
+                link["Side_1_member_id"], link["Side_2_member_id"]
+            )
+        )
+    return raw, patches
+
+
+def _translated_group(shape, sign, target_support, rules, reverse=False):
+    groups = _face_sets(
+        shape,
+        "Side_2",
+        sign,
+        rules["linear_epsilon_mm"],
+        reverse,
+    )
+    matches = [
+        group
+        for group in groups
+        if abs(group["support_coordinate_mm"] - target_support)
+        <= rules["linear_epsilon_mm"]
+    ]
+    if len(matches) != 1:
+        return None
+    return matches[0]
+
+
+def _candidate_pairs(first, second, policy, rules, reverse=False):
+    first_sets = _face_sets(
+        first, "Side_1", 1.0, rules["linear_epsilon_mm"], reverse
+    )
+    second_sets = _face_sets(
+        second, "Side_2", -1.0, rules["linear_epsilon_mm"], reverse
+    )
+    eligible = []
+    for first_set in first_sets:
+        for second_set in second_sets:
+            gap = float(
+                second_set["support_coordinate_mm"]
+                - first_set["support_coordinate_mm"]
+            )
+            if gap <= rules["linear_epsilon_mm"]:
+                continue
+            if not (
+                policy.get("policy_valid") is True
+                and policy.get("allow_motion") is True
+                and type(policy.get("tauE_mm")) in (int, float)
+                and type(policy.get("max_translation_mm")) in (int, float)
+                and math.isfinite(float(policy["tauE_mm"]))
+                and math.isfinite(float(policy["max_translation_mm"]))
+                and gap <= float(policy["tauE_mm"]) + rules["linear_epsilon_mm"]
+                and gap
+                <= float(policy["max_translation_mm"]) + rules["linear_epsilon_mm"]
+            ):
+                continue
+            preview = second.copy()
+            preview.translate(FreeCAD.Vector(REFERENCE).multiply(-gap))
+            moved_set = _translated_group(
+                preview,
+                -1.0,
+                first_set["support_coordinate_mm"],
+                rules,
+                reverse,
+            )
+            if moved_set is None:
+                continue
+            raw, patches = _common_patches(
+                first_set,
+                moved_set,
+                rules,
+                reverse,
+            )
+            area = float(sum(patch["area_mm2"] for patch in patches))
+            if area <= rules["area_epsilon_mm2"]:
+                continue
+            first_public = _public_face_set(first_set)
+            second_public = _public_face_set(second_set)
+            member_gaps = [
+                float(second_member["support"] - first_set["support_coordinate_mm"])
+                for second_member in second_set["members"]
+            ]
+            gap_spread = float(max(member_gaps) - min(member_gaps))
+            eligible.append(
+                {
+                    "first": first_set,
+                    "second": second_set,
+                    "moved_second": moved_set,
+                    "preview": preview,
+                    "raw": raw,
+                    "patches": patches,
+                    "record": {
+                        "pair_id": first_public["face_set_id"]
+                        + "__"
+                        + second_public["face_set_id"],
+                        "role_binding": {"fixed": "Side_1", "moving": "Side_2"},
+                        "Side_1": first_public,
+                        "Side_2": second_public,
+                        "gap_mm": gap,
+                        "member_gap_mm": member_gaps,
+                        "min_gap_mm": float(min(member_gaps)),
+                        "max_gap_mm": float(max(member_gaps)),
+                        "gap_spread_mm": gap_spread,
+                        "prospective_common_area_mm2": area,
+                        "prospective_raw_common_face_count": len(raw),
+                        "prospective_patch_count": len(patches),
+                        "selection_reason": "eligible_under_finite_planar_faceset_contract",
+                    },
+                }
+            )
+    eligible.sort(key=lambda pair: pair["record"]["pair_id"])
+    return first_sets, second_sets, eligible
+
+
+def _negative_overlap_gaps(first, second, first_sets, second_sets, rules, reverse=False):
+    overlaps = []
+    for first_set in first_sets:
+        for second_set in second_sets:
+            gap = float(second_set["support_coordinate_mm"] - first_set["support_coordinate_mm"])
+            if gap >= -rules["linear_epsilon_mm"]:
+                continue
+            preview = second.copy()
+            preview.translate(FreeCAD.Vector(REFERENCE).multiply(-gap))
+            moved_set = _translated_group(
+                preview, -1.0, first_set["support_coordinate_mm"], rules, reverse
+            )
+            if moved_set is None:
+                continue
+            _, patches = _common_patches(
+                first_set, moved_set, rules, reverse
+            )
+            if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
+                overlaps.append(gap)
+    return overlaps
+
+
+def _component_groups(patches, linear_epsilon):
+    parent = list(range(len(patches)))
+
+    def find(index):
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(first, second):
+        first_root = find(first)
+        second_root = find(second)
+        if first_root != second_root:
+            parent[second_root] = first_root
+
+    for first_index, first in enumerate(patches):
+        for second_index in range(first_index + 1, len(patches)):
+            distance, _, _ = first["shape"].distToShape(patches[second_index]["shape"])
+            if distance <= linear_epsilon:
+                union(first_index, second_index)
+    grouped = {}
+    for index in range(len(patches)):
+        grouped.setdefault(find(index), []).append(index)
+    return list(grouped.values())
+
+
+def _wire_descriptor(wire):
+    try:
+        enclosed = float(Part.Face(wire).Area)
+    except Exception:
+        enclosed = 0.0
+    return {
+        "geometry_evidence": _geometry_evidence(wire),
+        "edge_count": len(wire.Edges),
+        "length_mm": float(wire.Length),
+        "enclosed_area_mm2": enclosed,
+    }
+
+
+def _topology(patches, linear_epsilon):
+    groups = _component_groups(patches, linear_epsilon)
+    if any(len(group) > 1 for group in groups):
+        raise UnsupportedComponentTopology(
+            "UNSUPPORTED_COMPLEX_MULTIFACE_COMPONENT_BOUNDARY"
+        )
+    records = []
+    for patch_indices in groups:
+        component_patches = [patches[index] for index in patch_indices]
+        shape = Part.makeCompound([patch["shape"] for patch in component_patches])
+        loops = [
+            _wire_descriptor(wire)
+            for patch in component_patches
+            for wire in patch["shape"].Wires
+        ]
+        loops.sort(key=lambda loop: (
+            -loop["enclosed_area_mm2"], tuple(loop["geometry_evidence"]["bounds_mm"])
+        ))
+        for loop_index, loop in enumerate(loops):
+            loop["kind"] = "outer" if loop_index == 0 else "hole"
+            loop["boundary_id"] = "Boundary_" + str(loop_index + 1)
+        records.append(
+            {
+                "shape": shape,
+                "patch_indices": patch_indices,
+                "geometry_evidence": _geometry_evidence(shape),
+                "area_mm2": float(sum(patch["area_mm2"] for patch in component_patches)),
+                "patch_ids": sorted(patch["patch_id"] for patch in component_patches),
+                "boundary_loops": loops,
+                "source_face_linkage": sorted(
+                    {
+                        json.dumps(link, sort_keys=True)
+                        for patch in component_patches
+                        for link in patch["source_face_linkage"]
+                    }
+                ),
+            }
+        )
+    records.sort(key=lambda component: _shape_sort_key(component["shape"]))
+    for component_index, component in enumerate(records, start=1):
+        component["component_id"] = "Component_" + str(component_index)
+        component["source_face_linkage"] = [
+            json.loads(value) for value in component["source_face_linkage"]
+        ]
+        for patch_index in component["patch_indices"]:
+            patches[patch_index]["component_id"] = component["component_id"]
+    boundary_count = sum(len(component["boundary_loops"]) for component in records)
+    hole_count = sum(
+        sum(loop["kind"] == "hole" for loop in component["boundary_loops"])
+        for component in records
+    )
+    public = []
+    for component in records:
+        public.append(
+            {
+                key: value
+                for key, value in component.items()
+                if key not in {"shape", "patch_indices"}
+            }
+        )
+    return {
+        "patch_count": len(patches),
+        "component_count": len(records),
+        "connectedness": "connected" if len(records) == 1 else "disconnected",
+        "boundary_component_count": boundary_count,
+        "hole_count": hole_count,
+        "first_betti_number": hole_count,
+        "annular_or_multiply_connected": hole_count > 0,
+        "components": public,
+    }, records
+
+
+def _public_patches(patches):
+    return [
+        {key: value for key, value in patch.items() if key != "shape"}
+        for patch in patches
+    ]
+
+
+def _remaining(first_group, second_group, patches, area_epsilon):
+    patch_compound = Part.makeCompound([patch["shape"] for patch in patches])
+    result = {"Side_1": [], "Side_2": []}
+    records = []
+    for role, group in (("Side_1", first_group), ("Side_2", second_group)):
+        for member in group["members"]:
+            linked = []
+            linked_patch_ids = []
+            face_label = member["descriptor"]["human_face_label"]
+            member_id = member["descriptor"]["member_id"]
+            for patch in patches:
+                if any(
+                    link[role + "_member_id"] == member_id
+                    for link in patch["source_face_linkage"]
+                ):
+                    linked.append(patch["shape"])
+                    linked_patch_ids.append(patch["patch_id"])
+            tool = Part.makeCompound(linked) if linked else Part.Shape()
+            remainder = member["shape"].cut(tool) if linked else member["shape"].copy()
+            faces = sorted(
+                [face for face in remainder.Faces if face.Area > area_epsilon],
+                key=_shape_sort_key,
+            )
+            if not faces:
+                records.append(
+                    {
+                        "role": role,
+                        "source_face_set": group["face_set_id"],
+                        "source_member_face": face_label,
+                        "source_member_id": member_id,
+                        "linked_patch_ids": sorted(linked_patch_ids),
+                        "status": "EMPTY",
+                        "result_patch_id": None,
+                        "area_mm2": 0.0,
+                        "operation_kind": "FACE_CUT_REMAINDER",
+                    }
+                )
+            for result_index, face in enumerate(faces, start=1):
+                result[role].append(face)
+                records.append(
+                    {
+                        "role": role,
+                        "source_face_set": group["face_set_id"],
+                        "source_member_face": face_label,
+                        "source_member_id": member_id,
+                        "linked_patch_ids": sorted(linked_patch_ids),
+                        "status": "NONEMPTY",
+                        "result_patch_index": result_index,
+                        "result_patch_id": (
+                            role + "_Remaining_" + member_id.rsplit("_", 1)[-1]
+                            + "_" + str(result_index)
+                        ),
+                        "geometry_evidence": _geometry_evidence(face),
+                        "area_mm2": float(face.Area),
+                        "operation_kind": "FACE_CUT_REMAINDER",
+                    }
+                )
+    return result, records, patch_compound
+
+
+def _spatial_partition(group, common_shape, remaining_shapes, area_epsilon):
+    source = Part.makeCompound([member["shape"] for member in group["members"]])
+    remaining = Part.makeCompound(remaining_shapes) if remaining_shapes else Part.Shape()
+    pieces = [common_shape]
+    if remaining_shapes:
+        pieces.append(remaining)
+    result = Part.makeCompound(pieces)
+    overlap = common_shape.common(remaining).Area if remaining_shapes else 0.0
+    missing = source.cut(result).Area
+    outside = result.cut(source).Area
+    return {
+        "common_remaining_overlap_area_mm2": float(overlap),
+        "coverage_missing_area_mm2": float(missing),
+        "outside_area_mm2": float(outside),
+        "source_area_mm2": float(source.Area),
+        "result_area_mm2": float(result.Area),
+        "within_area_epsilon": bool(
+            overlap <= area_epsilon
+            and missing <= area_epsilon
+            and outside <= area_epsilon
+        ),
+    }
+
+
+def _export_brep(output, name, shape):
+    path = output / (name + ".brep")
+    shape.exportBrep(str(path))
+    return path.name
+
+
+def _export_step(output, name, objects):
+    document = FreeCAD.newDocument("Export06C_" + name)
+    try:
+        features = []
+        for object_name, label, shape in objects:
+            feature = document.addObject("Part::Feature", object_name)
+            feature.Label = label
+            feature.Shape = shape
+            features.append(feature)
+        document.recompute()
+        path = output / (name + ".step")
+        Import.export(features, str(path))
+        return path.name
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _reimport_corrected(path, rules, reverse=False):
+    document = FreeCAD.newDocument("ReimportCorrected06C")
+    try:
+        Import.insert(str(path), document.Name)
+        first, second = _roles(document, reverse)
+        first_sets = _face_sets(first, "Side_1", 1.0, rules["linear_epsilon_mm"], reverse)
+        second_sets = _face_sets(second, "Side_2", -1.0, rules["linear_epsilon_mm"], reverse)
+        matches = []
+        for first_set in first_sets:
+            for second_set in second_sets:
+                gap = second_set["support_coordinate_mm"] - first_set["support_coordinate_mm"]
+                if abs(gap) > rules["linear_epsilon_mm"]:
+                    continue
+                _, patches = _common_patches(
+                    first_set, second_set, rules, reverse
+                )
+                if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
+                    matches.append((first_set, second_set, gap, patches))
+        if len(matches) != 1:
+            raise RuntimeError(
+                "corrected STEP did not contain one semantic zero-gap FaceSet pair"
+            )
+        first_set, second_set, gap, patches = matches[0]
+        topology, _ = _topology(patches, rules["linear_epsilon_mm"])
+        common_area = float(sum(patch["area_mm2"] for patch in patches))
+        remaining, _, _ = _remaining(
+            first_set, second_set, patches, rules["area_epsilon_mm2"]
+        )
+        return {
+            "roles": ["Side_1", "Side_2"],
+            "residual_gap_mm": float(gap),
+            "support_coordinates_mm": {
+                "Side_1": float(first_set["support_coordinate_mm"]),
+                "Side_2": float(second_set["support_coordinate_mm"]),
+            },
+            "common_area_mm2": common_area,
+            "patch_count": topology["patch_count"],
+            "component_count": topology["component_count"],
+            "boundary_component_count": topology["boundary_component_count"],
+            "hole_count": topology["hole_count"],
+            "coverage": {
+                "Side_1": common_area / first_set["total_area_mm2"],
+                "Side_2": common_area / second_set["total_area_mm2"],
+            },
+            "remaining_area_mm2": {
+                role: float(sum(face.Area for face in remaining[role]))
+                for role in ("Side_1", "Side_2")
+            },
+            "solid_counts": [len(first.Solids), len(second.Solids)],
+            "valid": bool(first.isValid() and second.isValid()),
+            "closed": bool(_closed(first) and _closed(second)),
+            "volumes_mm3": [float(first.Volume), float(second.Volume)],
+        }
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _reimport_fused(path):
+    document = FreeCAD.newDocument("ReimportFused06C")
+    try:
+        Import.insert(str(path), document.Name)
+        objects = _objects(document)
+        solids = [solid for _, shape in objects for solid in shape.Solids]
+        return {
+            "solid_count": len(solids),
+            "valid": bool(len(solids) == 1 and solids[0].isValid()),
+            "closed": bool(len(solids) == 1 and _closed(solids[0])),
+            "volume_mm3": float(sum(solid.Volume for solid in solids)),
+        }
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _add_group(document, name, parent=None):
+    group = document.addObject("App::DocumentObjectGroup", name)
+    group.Label = name.replace("_", " ")
+    if parent is not None:
+        parent.addObject(group)
+    return group
+
+
+def _add_feature(document, group, name, label, shape, visible=False):
+    feature = document.addObject("Part::Feature", name)
+    feature.Label = label
+    feature.Shape = shape
+    group.addObject(feature)
+    if feature.ViewObject is not None:
+        feature.ViewObject.Visibility = visible
+    return feature
+
+
+def _debug_document(
+    path,
+    scenario_id,
+    first,
+    second,
+    status,
+    candidate_pairs,
+    selected,
+    corrected,
+    patches,
+    components,
+    remaining,
+    fused,
+):
+    document = FreeCAD.newDocument("PlanarMultipatch06CDebug")
+    try:
+        originals = _add_group(document, "Originals")
+        show_originals = status != "SUPPORTED_UNIQUE_INTERFACE_FACESET"
+        _add_feature(document, originals, "Original_Side_1", "Original Side_1", first, show_originals)
+        _add_feature(document, originals, "Original_Side_2", "Original Side_2", second, show_originals)
+        reference_group = _add_group(document, "Reference_Direction")
+        origin = first.CenterOfMass
+        endpoint = FreeCAD.Vector(origin).add(FreeCAD.Vector(REFERENCE).multiply(20.0))
+        reference_feature = _add_feature(
+            document,
+            reference_group,
+            "Reference_Vector",
+            "Reference Direction (DISPLAY ONLY)",
+            Part.makeLine(origin, endpoint),
+            True,
+        )
+        reference_feature.addProperty("App::PropertyBool", "DISPLAY_ONLY", "06D")
+        reference_feature.DISPLAY_ONLY = True
+        if status == "SUPPORTED_UNIQUE_INTERFACE_FACESET":
+            corrected_group = _add_group(document, "Corrected_Assembly")
+            _add_feature(document, corrected_group, "Corrected_Side_1", "Corrected Side_1", first)
+            _add_feature(document, corrected_group, "Corrected_Side_2", "Corrected Side_2", corrected)
+            selected_group = _add_group(document, "Selected_Interface_FaceSets")
+            _add_feature(
+                document,
+                selected_group,
+                "Selected_Side_1_FaceSet",
+                "Selected Side_1 FaceSet",
+                Part.makeCompound([member["shape"] for member in selected["first"]["members"]]),
+            )
+            _add_feature(
+                document,
+                selected_group,
+                "Selected_Side_2_FaceSet",
+                "Selected Side_2 FaceSet",
+                Part.makeCompound([member["shape"] for member in selected["moved_second"]["members"]]),
+            )
+            common_group = _add_group(document, "Common_Patches")
+            for index, patch in enumerate(patches, start=1):
+                label = "Annular Common" if scenario_id in ("P11", "D03") else "Common " + str(index)
+                name = "Annular_Common" if scenario_id in ("P11", "D03") else "Common_" + str(index)
+                _add_feature(document, common_group, name, label, patch["shape"])
+            component_group = _add_group(document, "Components")
+            for index, component in enumerate(components, start=1):
+                _add_feature(
+                    document,
+                    component_group,
+                    "Component_" + str(index),
+                    "Component " + str(index),
+                    component["shape"],
+                )
+            if scenario_id in ("P11", "D03"):
+                boundary_group = _add_group(document, "Boundary_Loops")
+                wires = patches[0]["shape"].Wires
+                descriptors = [(_wire_descriptor(wire), wire) for wire in wires]
+                descriptors.sort(key=lambda item: -item[0]["enclosed_area_mm2"])
+                for index, (_, wire) in enumerate(descriptors):
+                    name = "Outer" if index == 0 else "Hole"
+                    _add_feature(document, boundary_group, name, name, wire)
+            remaining_group = _add_group(document, "Remaining")
+            for role in ("Side_1", "Side_2"):
+                if remaining[role]:
+                    _add_feature(
+                        document,
+                        remaining_group,
+                        role + "_Remaining",
+                        role + " Remaining",
+                        Part.makeCompound(remaining[role]),
+                    )
+                else:
+                    empty = document.addObject("App::FeaturePython", role + "_Remaining_EMPTY")
+                    empty.Label = role + " Remaining EMPTY"
+                    empty.addProperty("App::PropertyBool", "EMPTY", "06C")
+                    empty.EMPTY = True
+                    remaining_group.addObject(empty)
+            fused_group = _add_group(document, "Fused_Result")
+            _add_feature(document, fused_group, "Fused_Solid", "Fused Result", fused, True)
+        else:
+            candidate_group = _add_group(document, "Candidate_Interface_FaceSets")
+            for index, pair in enumerate(candidate_pairs, start=1):
+                feature = _add_feature(
+                    document,
+                    candidate_group,
+                    "Candidate_Set_" + str(index),
+                    "Candidate Set " + str(index),
+                    Part.makeCompound(
+                        [member["shape"] for member in pair["second"]["members"]]
+                    ),
+                    False,
+                )
+                feature.addProperty("App::PropertyBool", "DISPLAY_ONLY", "06C")
+                feature.addProperty("App::PropertyBool", "NOT_EXECUTED", "06C")
+                feature.DISPLAY_ONLY = True
+                feature.NOT_EXECUTED = True
+            rejection_group = _add_group(document, "Rejection_Evidence")
+            evidence = document.addObject("App::FeaturePython", "Ambiguity_Rejection")
+            evidence.Label = "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET"
+            evidence.addProperty("App::PropertyString", "Status", "06C")
+            evidence.addProperty("App::PropertyInteger", "CandidateCount", "06C")
+            evidence.Status = status
+            evidence.CandidateCount = len(candidate_pairs)
+            rejection_group.addObject(evidence)
+            if evidence.ViewObject is not None:
+                evidence.ViewObject.Visibility = True
+        document.recompute()
+        document.saveAs(str(path))
+    finally:
+        FreeCAD.closeDocument(document.Name)
+    reopened = FreeCAD.openDocument(str(path))
+    try:
+        groups = [
+            obj.Name
+            for obj in reopened.Objects
+            if obj.TypeId == "App::DocumentObjectGroup"
+        ]
+        visible = [
+            obj.Name
+            for obj in reopened.Objects
+            if obj.ViewObject is not None and obj.ViewObject.Visibility
+        ]
+        if "Originals" not in groups:
+            raise RuntimeError("debug FCStd lost Originals group")
+        if status == "SUPPORTED_UNIQUE_INTERFACE_FACESET" and "Fused_Result" not in groups:
+            raise RuntimeError("debug FCStd lost Fused_Result group")
+        if status != "SUPPORTED_UNIQUE_INTERFACE_FACESET" and "Corrected_Assembly" in groups:
+            raise RuntimeError("rejected debug FCStd contains a corrected-success group")
+        return {"reopened": True, "groups": groups, "visible_objects": visible}
+    finally:
+        FreeCAD.closeDocument(reopened.Name)
+
+
+def _generate(request):
+    scenario_id = request["scenario_id"]
+    vector = FreeCAD.Vector
+    if scenario_id == "D01":
+        first = Part.makeBox(40.0, 20.0, 10.0, vector(0.0, 0.0, 0.0))
+        second = Part.makeBox(40.0, 20.0, 10.0, vector(16.0, 0.0, 10.05))
+        construction = {
+            "base_case": "P07",
+            "Side_1": {"kind": "box", "bounds_mm": [0, 40, 0, 20, 0, 10]},
+            "Side_2": {"kind": "box", "bounds_mm": [16, 56, 0, 20, 10.05, 20.05]},
+        }
+    elif scenario_id in ("P10", "D02"):
+        first = Part.makeBox(60.0, 40.0, 5.0, vector(0.0, 0.0, 0.0))
+        left = Part.makeBox(12.0, 16.0, 15.0, vector(6.0, 12.0, 5.05))
+        right = Part.makeBox(12.0, 16.0, 15.0, vector(42.0, 12.0, 5.05))
+        bridge = Part.makeBox(48.0, 8.0, 5.0, vector(6.0, 16.0, 15.05))
+        second = left.fuse(right).fuse(bridge).removeSplitter()
+        construction = {
+            "Side_1": {"kind": "box", "bounds_mm": [0, 60, 0, 40, 0, 5]},
+            "Side_2": {
+                "kind": "connected_fused_feet_bridge",
+                "left_foot_bounds_mm": [6, 18, 12, 28, 5.05, 20.05],
+                "right_foot_bounds_mm": [42, 54, 12, 28, 5.05, 20.05],
+                "upper_bridge_bounds_mm": [6, 54, 16, 24, 15.05, 20.05],
+            },
+        }
+    elif scenario_id in ("P11", "D03"):
+        first = Part.makeBox(60.0, 60.0, 5.0, vector(-30.0, -30.0, 0.0))
+        outer = Part.makeCylinder(20.0, 10.0, vector(0.0, 0.0, 5.05))
+        inner = Part.makeCylinder(10.0, 10.0, vector(0.0, 0.0, 5.05))
+        second = outer.cut(inner)
+        construction = {
+            "Side_1": {"kind": "box", "bounds_mm": [-30, 30, -30, 30, 0, 5]},
+            "Side_2": {
+                "kind": "direct_analytic_annular_cylinder",
+                "outer_radius_mm": 20.0,
+                "inner_radius_mm": 10.0,
+                "height_mm": 10.0,
+                "base_z_mm": 5.05,
+                "transformGeometry_used": False,
+            },
+        }
+    elif scenario_id == "P12":
+        first = Part.makeBox(60.0, 40.0, 5.0, vector(0.0, 0.0, 0.0))
+        left = Part.makeBox(12.0, 16.0, 15.0, vector(6.0, 12.0, 5.05))
+        right = Part.makeBox(12.0, 16.0, 15.0, vector(42.0, 12.0, 5.08))
+        bridge = Part.makeBox(48.0, 8.0, 5.08, vector(6.0, 16.0, 15.0))
+        second = left.fuse(right).fuse(bridge).removeSplitter()
+        construction = {
+            "Side_1": {"kind": "box", "bounds_mm": [0, 60, 0, 40, 0, 5]},
+            "Side_2": {
+                "kind": "connected_unequal_support_feet_bridge",
+                "left_foot_bounds_mm": [6, 18, 12, 28, 5.05, 20.05],
+                "right_foot_bounds_mm": [42, 54, 12, 28, 5.08, 20.08],
+                "upper_bridge_bounds_mm": [6, 54, 16, 24, 15.0, 20.08],
+            },
+        }
+    else:
+        raise ValueError("unknown 06C scenario " + scenario_id)
+    orientation = None
+    if scenario_id in ("D01", "D02", "D03"):
+        z_axis = vector(0.0, 0.0, 1.0)
+        if scenario_id == "D01":
+            if request.get("translation_only"):
+                rotation = FreeCAD.Rotation()
+                translation = vector(1000.0, -700.0, 250.0)
+            else:
+                rotation = FreeCAD.Rotation(vector(0.0, 1.0, 0.0), 45.0)
+                translation = vector(17.0, -23.0, 31.0)
+            roll_degrees = 0.0
+        elif scenario_id == "D02":
+            target = vector(1.0, 2.0, 3.0)
+            target.normalize()
+            align = FreeCAD.Rotation(z_axis, target)
+            roll = FreeCAD.Rotation(target, 37.0)
+            rotation = roll.multiply(align)
+            translation = vector(-41.0, 13.0, 27.0)
+            roll_degrees = 37.0
+        else:
+            rx = FreeCAD.Rotation(vector(1.0, 0.0, 0.0), 31.0)
+            ry = FreeCAD.Rotation(vector(0.0, 1.0, 0.0), -28.0)
+            rz = FreeCAD.Rotation(vector(0.0, 0.0, 1.0), 17.0)
+            rotation = rz.multiply(ry).multiply(rx)
+            translation = vector(29.0, 47.0, -18.0)
+            roll_degrees = None
+        pre_surface = sorted(set(type(face.Surface).__name__ for shape in (first, second) for face in shape.Faces))
+        pre_curves = sorted(set(type(edge.Curve).__name__ for shape in (first, second) for edge in shape.Edges))
+        placement = FreeCAD.Placement(translation, rotation)
+        if request.get("apply_transform", True):
+            first.Placement = placement
+            second.Placement = placement
+        transformed_reference = rotation.multVec(z_axis)
+        matrix = rotation.toMatrix()
+        rotation_matrix = [
+            [float(matrix.A11), float(matrix.A12), float(matrix.A13)],
+            [float(matrix.A21), float(matrix.A22), float(matrix.A23)],
+            [float(matrix.A31), float(matrix.A32), float(matrix.A33)],
+        ]
+        orientation = {
+            "base_case_id": construction["base_case"] if "base_case" in construction else ("P10" if scenario_id == "D02" else "P11"),
+            "rotation_matrix": rotation_matrix,
+            "translation_vector": [float(translation.x), float(translation.y), float(translation.z)],
+            "reference_direction": [float(transformed_reference.x), float(transformed_reference.y), float(transformed_reference.z)],
+            "roll_degrees": roll_degrees,
+            "transformGeometry_used": False,
+            "representation_families": {
+                "pre_surface": pre_surface,
+                "post_surface": sorted(set(type(face.Surface).__name__ for shape in (first, second) for face in shape.Faces)),
+                "pre_boundary_curve": pre_curves,
+                "post_boundary_curve": sorted(set(type(edge.Curve).__name__ for shape in (first, second) for edge in shape.Edges)),
+            },
+            "transform_applied": bool(request.get("apply_transform", True)),
+        }
+    if len(second.Solids) != 1 or not second.isValid() or not _closed(second):
+        raise RuntimeError("generated Side_2 is not one valid closed connected solid")
+    document = FreeCAD.newDocument("OrientationInvariant06DGenerator")
+    try:
+        first_object = document.addObject("Part::Feature", "Side_1")
+        second_object = document.addObject("Part::Feature", "Side_2")
+        first_object.Label = "Side_1"
+        second_object.Label = "Side_2"
+        first_object.Shape = first
+        second_object.Shape = second
+        document.recompute()
+        step_path = Path(request["step_path"])
+        step_path.parent.mkdir(parents=True, exist_ok=True)
+        Import.export([first_object, second_object], str(step_path))
+        return {
+            "status": "SUCCEEDED",
+            "scenario_id": scenario_id,
+            "step_path": str(step_path),
+            "construction": construction,
+            "orientation": orientation,
+            "solid_evidence": {
+                "Side_1": {"solid_count": len(first.Solids), "valid": bool(first.isValid()), "closed": bool(_closed(first))},
+                "Side_2": {"solid_count": len(second.Solids), "valid": bool(second.isValid()), "closed": bool(_closed(second))},
+            },
+        }
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _analyze(request):
+    reference_contract = _set_reference(request.get("reference_direction"))
+    rules = request["rules"]
+    policy = request["policy"]
+    reverse = request.get("traversal_order") == "reverse"
+    output = Path(request["output_dir"])
+    output.mkdir(parents=True, exist_ok=True)
+    if reference_contract is None:
+        return {
+            "schema_version": 1,
+            "scenario_id": request["scenario_id"],
+            "status": "UNSUPPORTED_INVALID_REFERENCE_DIRECTION",
+            "reference_direction": {
+                "raw_reference_direction": request.get("reference_direction"),
+                "normalized_reference_direction": None,
+                "original_norm": None,
+            },
+            "face_sets": {
+                "raw_face_set_count": {"Side_1": 0, "Side_2": 0},
+                "raw_face_sets": {"Side_1": [], "Side_2": []},
+                "eligible_face_set_pair_count": 0,
+                "candidate_face_set_pair_count": 0,
+                "candidate_pairs": [],
+            },
+            "motion": {
+                "motion_authorized": False,
+                "executed_translation_mm": [0.0, 0.0, 0.0],
+                "executed_translation_norm_mm": 0.0,
+                "normal_component_mm": 0.0,
+                "tangential_translation_norm_mm": 0.0,
+                "rigid_side_2_transform": True,
+                "rotation_executed": False,
+                "scale_executed": False,
+                "deformation_executed": False,
+            },
+            "partition": {},
+            "topology": {},
+            "fuse": {"executed": False},
+            "provenance": {"native_history_claimed": False},
+            "artifacts": {},
+        }
+    document = FreeCAD.newDocument("OrientationInvariant06DAnalysis")
+    try:
+        Import.insert(request["step_path"], document.Name)
+        first, second = _roles(document, reverse)
+        first_sets, second_sets, candidates = _candidate_pairs(
+            first, second, policy, rules, reverse
+        )
+        public_candidates = [candidate["record"] for candidate in candidates]
+        face_set_evidence = {
+            "raw_face_set_count": {
+                "Side_1": len(first_sets),
+                "Side_2": len(second_sets),
+            },
+            "raw_face_sets": {
+                "Side_1": [_public_face_set(group) for group in first_sets],
+                "Side_2": [_public_face_set(group) for group in second_sets],
+            },
+            "eligible_face_set_pair_count": len(candidates),
+            "candidate_face_set_pair_count": len(candidates),
+            "candidate_pairs": public_candidates,
+            "selection_policy": "execute_only_when_exactly_one_pair_satisfies_the_contract",
+        }
+        base_motion = {
+            "motion_authorized": False,
+            "executed_translation_mm": [0.0, 0.0, 0.0],
+            "executed_translation_norm_mm": 0.0,
+            "tangential_translation_norm_mm": 0.0,
+            "rigid_side_2_transform": True,
+            "rotation_executed": False,
+            "scale_executed": False,
+            "deformation_executed": False,
+        }
+        if not first_sets or not second_sets:
+            return {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": "UNSUPPORTED",
+                "preflight": {"reason": "NO_ROLE_MATCHED_PLANAR_FACESETS"},
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "operation_kind": "STRUCTURED_SCOPE_REJECTION",
+                    "native_history_claimed": False,
+                },
+            }
+        if len(candidates) > 1:
+            status = "UNSUPPORTED_AMBIGUOUS_INTERFACE_SET"
+            operation = {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": status,
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "face_sets": public_candidates,
+                    "operation_kind": "DIRECT_BREP_PROSPECTIVE_FACESET_COMMON",
+                    "native_history_claimed": False,
+                },
+            }
+            if request.get("create_view"):
+                operation["view_reopen"] = _debug_document(
+                    output / "operation_debug.FCStd",
+                    request["scenario_id"],
+                    first,
+                    second,
+                    status,
+                    candidates,
+                    None,
+                    None,
+                    [],
+                    [],
+                    {"Side_1": [], "Side_2": []},
+                    Part.Shape(),
+                )
+            return operation
+        if not candidates:
+            penetration_gaps = _negative_overlap_gaps(
+                first, second, first_sets, second_sets, rules, reverse
+            )
+            if penetration_gaps:
+                return {
+                    "schema_version": 1,
+                    "scenario_id": request["scenario_id"],
+                    "status": "UNSUPPORTED",
+                    "preflight": {
+                        "reason": "PENETRATION_SEPARATION_OUT_OF_SCOPE",
+                        "signed_gaps_mm": penetration_gaps,
+                    },
+                    "face_sets": face_set_evidence,
+                    "motion": base_motion,
+                    "partition": {},
+                    "topology": {},
+                    "fuse": {"executed": False},
+                    "provenance": {
+                        "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                        "operation_kind": "STRUCTURED_SCOPE_REJECTION",
+                        "native_history_claimed": False,
+                    },
+                }
+            numeric_policy = all(
+                type(policy.get(name)) in (int, float)
+                and not isinstance(policy.get(name), bool)
+                and math.isfinite(float(policy[name]))
+                and float(policy[name]) >= 0.0
+                for name in ("tauE_mm", "max_translation_mm")
+            )
+            if policy.get("policy_valid") is not True or not numeric_policy:
+                status = "MOTION_NOT_AUTHORIZED"
+            elif policy.get("allow_motion") is not True:
+                status = "MOTION_NOT_AUTHORIZED"
+            else:
+                permissive = dict(policy)
+                permissive.update(
+                    {
+                        "policy_valid": True,
+                        "allow_motion": True,
+                        "tauE_mm": 1.0e9,
+                        "max_translation_mm": 1.0e9,
+                    }
+                )
+                _, _, geometric_candidates = _candidate_pairs(
+                    first, second, permissive, rules, reverse
+                )
+                gaps = [candidate["record"]["gap_mm"] for candidate in geometric_candidates]
+                if gaps and all(
+                    gap > float(policy["tauE_mm"]) + rules["linear_epsilon_mm"]
+                    for gap in gaps
+                ):
+                    status = "ENGINEERING_TOLERANCE_EXCEEDED"
+                elif gaps and all(
+                    gap
+                    > float(policy["max_translation_mm"])
+                    + rules["linear_epsilon_mm"]
+                    for gap in gaps
+                ):
+                    status = "TRANSLATION_BUDGET_EXCEEDED"
+                else:
+                    status = "NO_POSITIVE_AREA_INTERFACE"
+            return {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": status,
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "operation_kind": "DIRECT_BREP_PROSPECTIVE_FACESET_COMMON",
+                    "native_history_claimed": False,
+                },
+            }
+        selected = candidates[0]
+        gap = selected["record"]["gap_mm"]
+        if selected["record"]["gap_spread_mm"] > rules["linear_epsilon_mm"]:
+            return {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": "UNSUPPORTED_NONCOPLANAR_INTERFACE_FACESET",
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {},
+                "fuse": {"executed": False},
+                "provenance": {"native_history_claimed": False},
+            }
+        corrected = second.copy()
+        correction = FreeCAD.Vector(REFERENCE).multiply(-gap)
+        corrected.translate(correction)
+        corrected_second = _translated_group(
+            corrected,
+            -1.0,
+            selected["first"]["support_coordinate_mm"],
+            rules,
+            reverse,
+        )
+        original_descriptors = {
+            member["descriptor"]["human_face_label"]: member["descriptor"]
+            for member in selected["second"]["members"]
+        }
+        for member in corrected_second["members"]:
+            label = member["descriptor"]["human_face_label"]
+            if label in original_descriptors:
+                member["descriptor"] = original_descriptors[label]
+        raw, patches = _common_patches(
+            selected["first"], corrected_second, rules, reverse
+        )
+        try:
+            topology, component_shapes = _topology(patches, rules["linear_epsilon_mm"])
+        except UnsupportedComponentTopology as error:
+            status = str(error)
+            selected_public = dict(selected["record"])
+            selected_public["selection_reason"] = status
+            face_set_evidence["selected_pair"] = selected_public
+            operation = {
+                "schema_version": 1,
+                "scenario_id": request["scenario_id"],
+                "status": status,
+                "face_sets": face_set_evidence,
+                "motion": base_motion,
+                "partition": {},
+                "topology": {"status": status},
+                "fuse": {"executed": False},
+                "provenance": {
+                    "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                    "operation_kind": "DIRECT_BREP_COMPONENT_BOUNDARY_REJECTION",
+                    "native_history_claimed": False,
+                },
+            }
+            if request.get("create_view"):
+                operation["view_reopen"] = _debug_document(
+                    output / "operation_debug.FCStd",
+                    request["scenario_id"],
+                    first,
+                    second,
+                    status,
+                    candidates,
+                    None,
+                    None,
+                    [],
+                    [],
+                    {"Side_1": [], "Side_2": []},
+                    Part.Shape(),
+                )
+            return operation
+        remaining, remaining_provenance, common_shape = _remaining(
+            selected["first"], corrected_second, patches, rules["area_epsilon_mm2"]
+        )
+        common_area = float(sum(patch["area_mm2"] for patch in patches))
+        carrier_areas = {
+            "Side_1": float(selected["first"]["total_area_mm2"]),
+            "Side_2": float(corrected_second["total_area_mm2"]),
+        }
+        remaining_areas = {
+            role: float(sum(face.Area for face in remaining[role]))
+            for role in ("Side_1", "Side_2")
+        }
+        spatial = {
+            "Side_1": _spatial_partition(
+                selected["first"], common_shape, remaining["Side_1"], rules["area_epsilon_mm2"]
+            ),
+            "Side_2": _spatial_partition(
+                corrected_second, common_shape, remaining["Side_2"], rules["area_epsilon_mm2"]
+            ),
+        }
+        fused = first.copy().fuse(corrected.copy()).removeSplitter()
+        material_common = first.common(corrected)
+        boundary_overlap = float(
+            sum(
+                patch["shape"].common(face).Area
+                for patch in patches
+                for face in fused.Faces
+            )
+        )
+        corrected_step = _export_step(
+            output,
+            "corrected_assembly",
+            (("Side_1", "Side_1", first), ("Side_2", "Side_2", corrected)),
+        )
+        fused_step = _export_step(
+            output, "fused", (("Fused_Result", "Fused_Result", fused),)
+        )
+        artifacts = {
+            "corrected_assembly_step": corrected_step,
+            "fused_step": fused_step,
+            "common_brep": _export_brep(output, "common", common_shape),
+            "common_patch_breps": [
+                _export_brep(output, "common_patch_" + str(index), patch["shape"])
+                for index, patch in enumerate(patches, start=1)
+            ],
+        }
+        for role in ("Side_1", "Side_2"):
+            if remaining[role]:
+                artifacts[role.lower() + "_remaining_brep"] = _export_brep(
+                    output,
+                    role.lower() + "_remaining",
+                    Part.makeCompound(remaining[role]),
+                )
+            else:
+                artifacts[role.lower() + "_remaining_brep"] = "EMPTY"
+        patch_provenance = []
+        for patch in patches:
+            patch_provenance.append(
+                {
+                    "Side_1_occurrence": "Side_1",
+                    "Side_2_occurrence": "Side_2",
+                    "Side_1_FaceSet": selected["first"]["face_set_id"],
+                    "Side_2_FaceSet": selected["second"]["face_set_id"],
+                    "source_face_member_pair": patch["source_face_linkage"],
+                    "actual_common_patch_id": patch["patch_id"],
+                    "component_id": patch["component_id"],
+                    "operation_kind": "DIRECT_BREP_FACE_COMMON",
+                }
+            )
+        selected_public = dict(selected["record"])
+        selected_public["selection_reason"] = "SUPPORTED_UNIQUE_INTERFACE_FACESET"
+        face_set_evidence["selected_pair"] = selected_public
+        motion = dict(base_motion)
+        motion.update(
+            {
+                "motion_authorized": True,
+                "executed_translation_mm": [
+                    float(correction.x), float(correction.y), float(correction.z)
+                ],
+                "executed_translation_norm_mm": float(abs(gap)),
+                "normal_component_mm": float(-gap),
+            }
+        )
+        operation = {
+            "schema_version": 1,
+            "scenario_id": request["scenario_id"],
+            "status": "SUPPORTED_UNIQUE_INTERFACE_FACESET",
+            "reference_direction": reference_contract,
+            "face_sets": face_set_evidence,
+            "motion": motion,
+            "partition": {
+                "raw_common_face_count": len(raw),
+                "common_area_mm2": common_area,
+                "common_centroid_mm": _center(common_shape),
+                "common_geometry_evidence": _geometry_evidence(common_shape),
+                "common_patches": _public_patches(patches),
+                "carrier_area_mm2": carrier_areas,
+                "coverage": {
+                    role: common_area / carrier_areas[role]
+                    for role in ("Side_1", "Side_2")
+                },
+                "remaining_area_mm2": remaining_areas,
+                "remaining_empty": {
+                    role: not bool(remaining[role]) for role in ("Side_1", "Side_2")
+                },
+                "spatial_validation": spatial,
+                "member_level_partition": remaining_provenance,
+            },
+            "topology": topology,
+            "fuse": {
+                "executed": True,
+                "solid_count": len(fused.Solids),
+                "valid": bool(fused.isValid()),
+                "closed": bool(_closed(fused)),
+                "volume_conservation_error_mm3": float(
+                    abs(fused.Volume - (first.Volume + corrected.Volume - material_common.Volume))
+                ),
+                "boundary_overlap_area_mm2": boundary_overlap,
+                "volume_mm3": float(fused.Volume),
+                "centroid_mm": _center(fused),
+            },
+            "body_evidence": {
+                "Side_1": {
+                    "solid_count": len(first.Solids),
+                    "valid": bool(first.isValid()),
+                    "closed": bool(_closed(first)),
+                    "volume_mm3": float(first.Volume),
+                    "centroid_mm": _center(first),
+                },
+                "Side_2_before": {
+                    "solid_count": len(second.Solids),
+                    "valid": bool(second.isValid()),
+                    "closed": bool(_closed(second)),
+                    "volume_mm3": float(second.Volume),
+                    "centroid_mm": _center(second),
+                },
+                "Side_2_after": {
+                    "solid_count": len(corrected.Solids),
+                    "valid": bool(corrected.isValid()),
+                    "closed": bool(_closed(corrected)),
+                    "volume_mm3": float(corrected.Volume),
+                    "centroid_mm": _center(corrected),
+                },
+            },
+            "provenance": {
+                "roles": {"Side_1": "Side_1", "Side_2": "Side_2"},
+                "face_sets": selected_public,
+                "common_patches": patch_provenance,
+                "remaining_patches": remaining_provenance,
+                "operation_kind": "DIRECT_BREP_FACESET_COMMON_AND_MEMBER_FACE_CUT_REMAINDER",
+                "native_history_claimed": False,
+            },
+            "artifacts": artifacts,
+            "step_reimport": {
+                "corrected_assembly": _reimport_corrected(
+                    output / corrected_step, rules, reverse
+                ),
+                "fused": _reimport_fused(output / fused_step),
+            },
+        }
+        if request.get("create_view"):
+            operation["view_reopen"] = _debug_document(
+                output / "operation_debug.FCStd",
+                request["scenario_id"],
+                first,
+                second,
+                operation["status"],
+                candidates,
+                selected,
+                corrected,
+                patches,
+                component_shapes,
+                remaining,
+                fused,
+            )
+        return operation
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _read_brep(path):
+    shape = Part.Shape()
+    shape.read(str(path))
+    if shape.isNull():
+        raise RuntimeError("empty BREP artifact: " + str(path))
+    return shape
+
+
+def _verify_artifacts(request):
+    if request.get("reference_direction") is not None:
+        _set_reference(request.get("reference_direction"))
+    output = Path(request["output_dir"])
+    artifacts = request["artifacts"]
+    rules = request["rules"]
+    common = _read_brep(output / artifacts["common_brep"])
+    patches = []
+    patch_shapes = []
+    for name in artifacts["common_patch_breps"]:
+        shape = _read_brep(output / name)
+        patch_shapes.append(shape)
+        patches.append(
+            {
+                "artifact": name,
+                "geometry_evidence": _geometry_evidence(shape),
+                "area_mm2": float(shape.Area),
+                "face_count": len(shape.Faces),
+                "surface_types": sorted(type(face.Surface).__name__ for face in shape.Faces),
+                "boundary_curve_types": sorted(
+                    type(edge.Curve).__name__ for face in shape.Faces for edge in face.Edges
+                ),
+            }
+        )
+    remaining = {}
+    for role in ("Side_1", "Side_2"):
+        name = artifacts[role.lower() + "_remaining_brep"]
+        if name == "EMPTY":
+            remaining[role] = {"status": "EMPTY", "area_mm2": 0.0}
+        else:
+            shape = _read_brep(output / name)
+            remaining[role] = {
+                "status": "NONEMPTY",
+                "artifact": name,
+                "geometry_evidence": _geometry_evidence(shape),
+                "area_mm2": float(shape.Area),
+                "face_count": len(shape.Faces),
+            }
+    spatial = _verify_spatial_artifacts(output, artifacts, rules, common, patch_shapes)
+    return {
+        "status": "SUCCEEDED",
+        "common": {
+            "artifact": artifacts["common_brep"],
+            "geometry_evidence": _geometry_evidence(common),
+            "area_mm2": float(common.Area),
+            "face_count": len(common.Faces),
+        },
+        "common_patches": patches,
+        "remaining": remaining,
+        "corrected_assembly": _reimport_corrected(
+            output / artifacts["corrected_assembly_step"], rules
+        ),
+        "fused": _reimport_fused(output / artifacts["fused_step"]),
+        "spatial_validation": spatial["spatial_validation"],
+        "fused_boundary_overlap_area_mm2": spatial[
+            "fused_boundary_overlap_area_mm2"
+        ],
+        "artifact_patch_geometric_equivalence": spatial[
+            "artifact_patch_geometric_equivalence"
+        ],
+        "artifact_patch_ids": spatial["artifact_patch_ids"],
+    }
+
+
+def _verify_spatial_artifacts(output, artifacts, rules, common, artifact_patches):
+    corrected_document = FreeCAD.newDocument("VerifyCorrectedSpatial06C")
+    try:
+        Import.insert(
+            str(output / artifacts["corrected_assembly_step"]),
+            corrected_document.Name,
+        )
+        first, second = _roles(corrected_document)
+        first_sets = _face_sets(first, "Side_1", 1.0, rules["linear_epsilon_mm"])
+        second_sets = _face_sets(second, "Side_2", -1.0, rules["linear_epsilon_mm"])
+        matches = []
+        for first_set in first_sets:
+            for second_set in second_sets:
+                gap = second_set["support_coordinate_mm"] - first_set["support_coordinate_mm"]
+                if abs(gap) > rules["linear_epsilon_mm"]:
+                    continue
+                _, patches = _common_patches(
+                    first_set, second_set, rules
+                )
+                if sum(patch["area_mm2"] for patch in patches) > rules["area_epsilon_mm2"]:
+                    matches.append((first_set, second_set, patches))
+        if len(matches) != 1:
+            raise RuntimeError("cannot independently identify corrected interface FaceSets")
+        first_set, second_set, reconstructed_patches = matches[0]
+        unmatched = list(enumerate(artifact_patches))
+        artifact_patch_ids = [None] * len(artifact_patches)
+        for reconstructed in reconstructed_patches:
+            equivalent_index = next(
+                (
+                    index for index, (_, artifact) in enumerate(unmatched)
+                    if _face_equivalence(
+                        reconstructed["shape"], artifact, rules
+                    )["geometric_equivalence"] == "PASS"
+                ),
+                None,
+            )
+            if equivalent_index is not None:
+                artifact_index, _ = unmatched.pop(equivalent_index)
+                artifact_patch_ids[artifact_index] = reconstructed["patch_id"]
+        patch_geometry_equivalent = (
+            len(reconstructed_patches) == len(artifact_patches) and not unmatched
+        )
+        remaining_shapes = {}
+        for role in ("Side_1", "Side_2"):
+            name = artifacts[role.lower() + "_remaining_brep"]
+            remaining_shapes[role] = [] if name == "EMPTY" else list(
+                _read_brep(output / name).Faces
+            )
+        spatial_validation = {
+            "Side_1": _spatial_partition(
+                first_set, common, remaining_shapes["Side_1"], rules["area_epsilon_mm2"]
+            ),
+            "Side_2": _spatial_partition(
+                second_set, common, remaining_shapes["Side_2"], rules["area_epsilon_mm2"]
+            ),
+        }
+    finally:
+        FreeCAD.closeDocument(corrected_document.Name)
+
+    fused_document = FreeCAD.newDocument("VerifyFusedBoundary06C")
+    try:
+        Import.insert(str(output / artifacts["fused_step"]), fused_document.Name)
+        fused_objects = _objects(fused_document)
+        fused_solids = [solid for _, shape in fused_objects for solid in shape.Solids]
+        if len(fused_solids) != 1:
+            raise RuntimeError("fused STEP does not contain exactly one solid")
+        overlap = sum(
+            common_face.common(fused_face).Area
+            for common_face in common.Faces
+            for fused_face in fused_solids[0].Faces
+        )
+    finally:
+        FreeCAD.closeDocument(fused_document.Name)
+    return {
+        "spatial_validation": spatial_validation,
+        "fused_boundary_overlap_area_mm2": float(overlap),
+        "artifact_patch_geometric_equivalence": (
+            "PASS" if patch_geometry_equivalent else "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+        ),
+        "artifact_patch_ids": artifact_patch_ids,
+    }
+
+
+def _probe_geometry_identity_collision():
+    outer = Part.makePlane(100.0, 100.0, FreeCAD.Vector(-50.0, -50.0, 0.0))
+
+    def perforated(centers):
+        result = outer.copy()
+        for x, y in centers:
+            circle = Part.Wire(Part.makeCircle(5.0, FreeCAD.Vector(x, y, 0.0)))
+            result = result.cut(Part.Face(circle))
+        return result.Faces[0]
+
+    first = perforated([(-20.0, 0.0), (20.0, 0.0)])
+    second = perforated([(0.0, -20.0), (0.0, 20.0)])
+    difference = first.cut(second).Area + second.cut(first).Area
+    records = [
+        {"shape": shape, "source_face_linkage": [], "area_mm2": float(shape.Area)}
+        for shape in (first, second)
+    ]
+    rules = {
+        "linear_epsilon_mm": 1.0e-7,
+        "area_epsilon_mm2": 1.0e-8,
+    }
+    deduplicated = []
+    for record in records:
+        if not any(
+            _face_equivalence(record["shape"], prior["shape"], rules)[
+                "geometric_equivalence"
+            ] == "PASS"
+            for prior in deduplicated
+        ):
+            deduplicated.append(record)
+    return {
+        "status": "SUCCEEDED",
+        "geometric_equivalence": _face_equivalence(first, second, rules)[
+            "geometric_equivalence"
+        ],
+        "deduplicated_patch_count": len(deduplicated),
+        "symmetric_difference_area_mm2": float(difference),
+    }
+
+
+def _probe_representation_equivalence(request):
+    first = Part.makePlane(10.0, 10.0, FreeCAD.Vector(0.0, 0.0, 0.0))
+    wire = Part.makePolygon([
+        FreeCAD.Vector(0.0, 0.0, 0.0),
+        FreeCAD.Vector(10.0, 0.0, 0.0),
+        FreeCAD.Vector(10.0, 10.0, 0.0),
+        FreeCAD.Vector(0.0, 10.0, 0.0),
+        FreeCAD.Vector(0.0, 0.0, 0.0),
+    ])
+    second = Part.Face(wire)
+    metrics = _face_equivalence(first, second, request["rules"])
+    metrics.update({
+        "status": "SUCCEEDED",
+        "representation_identity": (
+            "EXACT_REPRESENTATION_MATCH"
+            if first.exportBrepToString() == second.exportBrepToString()
+            else "DIFFERENT"
+        ),
+    })
+    return metrics
+
+
+def _probe_moved_patch_equivalence(request):
+    first = Part.makePlane(10.0, 10.0, FreeCAD.Vector(0.0, 0.0, 0.0))
+    second = first.copy()
+    second.translate(FreeCAD.Vector(0.0, 0.0, 0.001))
+    metrics = _face_equivalence(first, second, request["rules"])
+    metrics.update(
+        {
+            "status": "SUCCEEDED",
+            "recorded_hash_fields_equal": True,
+            "recorded_hash_used_as_geometry_predicate": False,
+        }
+    )
+    return metrics
+
+
+def _probe_connected_multiface_topology(request):
+    first = Part.makePlane(10.0, 10.0, FreeCAD.Vector(0.0, 0.0, 0.0))
+    second = Part.makePlane(10.0, 10.0, FreeCAD.Vector(10.0, 0.0, 0.0))
+    patches = [
+        {
+            "shape": shape,
+            "patch_id": "Patch_" + str(index),
+            "geometry_evidence": _geometry_evidence(shape),
+            "area_mm2": float(shape.Area),
+            "source_face_linkage": [
+                {
+                    "Side_1": "Face1", "Side_2": "Face1",
+                    "Side_1_member_id": "Side_1_FaceSet_1_Member_1",
+                    "Side_2_member_id": "Side_2_FaceSet_1_Member_1",
+                }
+            ],
+        }
+        for index, shape in enumerate((first, second), start=1)
+    ]
+    try:
+        _topology(patches, request["rules"]["linear_epsilon_mm"])
+    except UnsupportedComponentTopology as error:
+        return {"status": "SUCCEEDED", "topology_status": str(error)}
+    return {"status": "SUCCEEDED", "topology_status": "INCORRECTLY_SUPPORTED"}
+
+
+def _generate_unsupported_probe(request):
+    first = Part.makeBox(60.0, 60.0, 5.0, FreeCAD.Vector(-30.0, -30.0, 0.0))
+    if request.get("kind") == "sphere":
+        second = Part.makeSphere(5.0, FreeCAD.Vector(0.0, 0.0, 10.0))
+    elif request.get("kind") in {"penetration", "penetration_lateral"}:
+        x = -6.0 if request.get("kind") == "penetration" else 100.0
+        second = Part.makeBox(
+            12.0, 16.0, 15.0, FreeCAD.Vector(x, -8.0, 4.95)
+        )
+    else:
+        raise ValueError("unknown unsupported probe kind")
+    document = FreeCAD.newDocument("Unsupported06CProbe")
+    try:
+        objects = []
+        for role, shape in (("Side_1", first), ("Side_2", second)):
+            obj = document.addObject("Part::Feature", role)
+            obj.Label = role
+            obj.Shape = shape
+            objects.append(obj)
+        document.recompute()
+        path = Path(request["step_path"])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        Import.export(objects, str(path))
+        return {"status": "SUCCEEDED", "step_path": str(path)}
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _rigid_placement(rotation_matrix, translation_vector):
+    matrix = FreeCAD.Matrix()
+    matrix.A11, matrix.A12, matrix.A13 = rotation_matrix[0]
+    matrix.A21, matrix.A22, matrix.A23 = rotation_matrix[1]
+    matrix.A31, matrix.A32, matrix.A33 = rotation_matrix[2]
+    rotation = FreeCAD.Rotation(matrix)
+    return FreeCAD.Placement(FreeCAD.Vector(*translation_vector), rotation)
+
+
+def _inverse_rigid_shape(shape, placement):
+    result = shape.copy()
+    result.Placement = placement.inverse().multiply(result.Placement)
+    return result
+
+
+def _solid_equivalence(first, second, rules):
+    first_topology = {
+        "solid_count": len(first.Solids),
+        "shell_count": len(first.Shells),
+        "closed_shell_count": sum(1 for shell in first.Shells if shell.isClosed()),
+    }
+    second_topology = {
+        "solid_count": len(second.Solids),
+        "shell_count": len(second.Shells),
+        "closed_shell_count": sum(1 for shell in second.Shells if shell.isClosed()),
+    }
+    topology_match = first_topology == second_topology
+    first_surfaces = sorted(set(type(face.Surface).__name__ for face in first.Faces))
+    second_surfaces = sorted(set(type(face.Surface).__name__ for face in second.Faces))
+    first_curves = sorted(set(type(edge.Curve).__name__ for edge in first.Edges))
+    second_curves = sorted(set(type(edge.Curve).__name__ for edge in second.Edges))
+    surface_family_match = first_surfaces == second_surfaces
+    boundary_curve_family_match = first_curves == second_curves
+    distance, _, _ = first.distToShape(second)
+    first_minus_second = float(first.cut(second).Volume)
+    second_minus_first = float(second.cut(first).Volume)
+    volume_delta = abs(float(first.Volume) - float(second.Volume))
+    passed = bool(
+        first.isValid() and second.isValid()
+        and _closed(first) and _closed(second)
+        and len(first.Solids) == len(second.Solids) == 1
+        and topology_match
+        and surface_family_match
+        and boundary_curve_family_match
+        and distance <= rules["linear_epsilon_mm"]
+        and first_minus_second <= rules["volume_epsilon_mm3"]
+        and second_minus_first <= rules["volume_epsilon_mm3"]
+        and volume_delta <= rules["volume_epsilon_mm3"]
+    )
+    return {
+        "geometric_equivalence": "PASS" if passed else "FAIL",
+        "minimum_distance_mm": float(distance),
+        "first_minus_second_volume_mm3": first_minus_second,
+        "second_minus_first_volume_mm3": second_minus_first,
+        "volume_delta_mm3": volume_delta,
+        "valid_closed_single_solid": bool(
+            first.isValid() and second.isValid() and _closed(first) and _closed(second)
+            and len(first.Solids) == len(second.Solids) == 1
+        ),
+        "topology_match": topology_match,
+        "surface_family_match": surface_family_match,
+        "boundary_curve_family_match": boundary_curve_family_match,
+        "first_topology": first_topology,
+        "second_topology": second_topology,
+        "first_surface_families": first_surfaces,
+        "second_surface_families": second_surfaces,
+        "first_boundary_curve_families": first_curves,
+        "second_boundary_curve_families": second_curves,
+    }
+
+
+def _face_bipartite_equivalence(base_shape, transformed_shape, rules):
+    base_faces = list(base_shape.Faces)
+    transformed_faces = list(transformed_shape.Faces)
+    matches = []
+    for transformed_index, transformed in enumerate(transformed_faces):
+        candidates = []
+        for base_index, base in enumerate(base_faces):
+            evidence = _face_equivalence(base, transformed, rules)
+            if evidence["geometric_equivalence"] == "PASS":
+                candidates.append({"base_index": base_index, "evidence": evidence})
+        matches.append({"transformed_index": transformed_index, "candidates": candidates})
+    unique = (
+        len(base_faces) == len(transformed_faces)
+        and all(len(record["candidates"]) == 1 for record in matches)
+        and len({record["candidates"][0]["base_index"] for record in matches if record["candidates"]})
+        == len(base_faces)
+    )
+    matched_evidence = [
+        record["candidates"][0]["evidence"]
+        for record in matches
+        if len(record["candidates"]) == 1
+    ]
+    return {
+        "geometric_equivalence": "PASS" if unique else "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
+        "base_face_count": len(base_faces),
+        "transformed_face_count": len(transformed_faces),
+        "bipartite_correspondence": matches,
+        "support_surface_match": bool(unique and all(item["support_surface_match"] for item in matched_evidence)),
+        "boundary_topology_match": bool(unique and all(item["boundary_topology_match"] for item in matched_evidence)),
+        "boundary_curve_family_match": bool(unique and all(item["boundary_curve_family_match"] for item in matched_evidence)),
+        "matching_uses_patch_id": False,
+        "matching_uses_hash": False,
+        "matching_uses_world_aabb_order": False,
+    }
+
+
+def _step_shapes(path):
+    document = FreeCAD.newDocument("CovarianceStepRead")
+    try:
+        Import.insert(str(path), document.Name)
+        values = {}
+        for label, shape in _objects(document):
+            values[label] = shape.copy()
+        return values
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
+def _validate_covariance_artifacts(request):
+    rules = request["rules"]
+    placement = _rigid_placement(
+        request["rotation_matrix"], request["translation_vector"]
+    )
+    base_root = Path(request["base_output_dir"])
+    transformed_root = Path(request["transformed_output_dir"])
+    base_artifacts = request["base_artifacts"]
+    transformed_artifacts = request["transformed_artifacts"]
+    details = {}
+    representation = {}
+    for key, label in (
+        ("common_brep", "Common"),
+        ("side_1_remaining_brep", "Remaining_Side_1"),
+        ("side_2_remaining_brep", "Remaining_Side_2"),
+    ):
+        base_name = base_artifacts.get(key)
+        transformed_name = transformed_artifacts.get(key)
+        if base_name == transformed_name == "EMPTY":
+            details[label] = {"geometric_equivalence": "PASS", "both_empty": True}
+            representation[label] = "BOTH_EMPTY"
+            continue
+        if not isinstance(base_name, str) or not isinstance(transformed_name, str):
+            details[label] = {"geometric_equivalence": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"}
+            representation[label] = "UNAVAILABLE"
+            continue
+        base_shape = _read_brep(base_root / base_name)
+        transformed_shape = _inverse_rigid_shape(
+            _read_brep(transformed_root / transformed_name), placement
+        )
+        details[label] = _face_bipartite_equivalence(base_shape, transformed_shape, rules)
+        representation[label] = (
+            "EXACT_REPRESENTATION_MATCH"
+            if base_shape.exportBrepToString() == transformed_shape.exportBrepToString()
+            else "DIFFERENT"
+        )
+    base_corrected = _step_shapes(base_root / base_artifacts["corrected_assembly_step"])
+    transformed_corrected = _step_shapes(
+        transformed_root / transformed_artifacts["corrected_assembly_step"]
+    )
+    for role in ("Side_1", "Side_2"):
+        details["Corrected_" + role] = _solid_equivalence(
+            base_corrected[role].Solids[0],
+            _inverse_rigid_shape(transformed_corrected[role].Solids[0], placement),
+            rules,
+        )
+    base_fused = next(iter(_step_shapes(base_root / base_artifacts["fused_step"]).values())).Solids[0]
+    transformed_fused = next(iter(_step_shapes(transformed_root / transformed_artifacts["fused_step"]).values())).Solids[0]
+    details["Fused"] = _solid_equivalence(
+        base_fused, _inverse_rigid_shape(transformed_fused, placement), rules
+    )
+    status = "PASS" if all(
+        record.get("geometric_equivalence") == "PASS" for record in details.values()
+    ) else "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+    return {
+        "status": "SUCCEEDED",
+        "geometric_equivalence": status,
+        "geometry_equivalence_details": details,
+        "representation_identity": representation,
+    }
+
+
+def _main():
+    response_path = Path(os.environ["DMSLICER_FREECAD_RESPONSE"])
+    try:
+        request = json.loads(
+            Path(os.environ["DMSLICER_FREECAD_REQUEST"]).read_text(encoding="utf-8")
+        )
+        if request["action"] == "generate":
+            response = _generate(request)
+        elif request["action"] == "analyze":
+            response = {"status": "SUCCEEDED", "operation": _analyze(request)}
+        elif request["action"] == "verify_artifacts":
+            response = _verify_artifacts(request)
+        elif request["action"] == "probe_connected_multiface_topology":
+            response = _probe_connected_multiface_topology(request)
+        elif request["action"] == "generate_unsupported_probe":
+            response = _generate_unsupported_probe(request)
+        elif request["action"] == "probe_geometry_identity_collision":
+            response = _probe_geometry_identity_collision()
+        elif request["action"] == "probe_representation_equivalence":
+            response = _probe_representation_equivalence(request)
+        elif request["action"] == "probe_moved_patch_equivalence":
+            response = _probe_moved_patch_equivalence(request)
+        elif request["action"] == "validate_covariance_artifacts":
+            response = _validate_covariance_artifacts(request)
+        else:
+            raise ValueError("unknown 06C action " + str(request["action"]))
+    except Exception:
+        response = {"status": "FAILED", "traceback": traceback.format_exc()}
+    response_path.write_text(json.dumps(response, sort_keys=True), encoding="utf-8")
+
+
+_main()

@@ -1,0 +1,1 @@
+{"schema_version": 1, "status": "TRANSLATION_BUDGET_EXCEEDED", "numeric_rules": {"linear_epsilon_mm": 1e-07, "area_epsilon_mm2": 1e-08, "volume_epsilon_mm3": 1e-06}}
