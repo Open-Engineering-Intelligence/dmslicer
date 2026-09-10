@@ -214,6 +214,20 @@ off-host custody record.
 
 ## P2-MVP acceptance evidence
 
+The CAD closed-loop package created from implementation commit
+`fbedef574580bf860f8c08e2a8d4cb18f6070515` is:
+
+```text
+evidence/P2-EVIDENCE-PROMOTION-SEMANTIC-SNAPSHOT/fbedef574580bf860f8c08e2a8d4cb18f6070515/p2-cad-closed-loop-001/
+```
+
+Its manifest independently records Case A geometry/semantic/UI results, Case B
+geometry-different measurement evidence, serialization/reopen equivalence,
+104 focused tests, FreeCAD 1.1.1, OCCT 7.8.1, and human inspection as
+`NOT_EVALUATED`. The 25 promoted artifacts passed byte recount, CAD schema, and
+relative-link verification. Local custody remains `NOT_FULLY_PRESERVED` and
+publication remains unauthorized.
+
 The current immutable local acceptance package is:
 
 ```text

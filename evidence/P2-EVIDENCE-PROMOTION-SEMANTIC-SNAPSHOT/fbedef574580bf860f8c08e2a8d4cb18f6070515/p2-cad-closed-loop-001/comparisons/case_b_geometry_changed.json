@@ -1,0 +1,84 @@
+{
+  "artifact_type": "geometry_comparison",
+  "case_id": "case_b",
+  "checks": {
+    "area_delta": false,
+    "bounding_box": true,
+    "first_minus_second": false,
+    "second_minus_first": true,
+    "topology_counts": true,
+    "valid_closed_single_solids": true,
+    "volume_delta": false
+  },
+  "comparison_role": "GEOMETRY_MUTATION",
+  "failed_checks": [
+    "area_delta",
+    "volume_delta",
+    "first_minus_second"
+  ],
+  "geometry_decision_inputs": [
+    "topology",
+    "area",
+    "volume",
+    "bounding_box",
+    "bidirectional_boolean_cut"
+  ],
+  "measurements": {
+    "area_delta": {
+      "unit": "mm2",
+      "value": 18.849555921538013
+    },
+    "first_minus_second_volume": {
+      "unit": "mm3",
+      "value": 339.2920065876977
+    },
+    "max_bounding_box_delta": {
+      "unit": "mm",
+      "value": 0.0
+    },
+    "minimum_distance": {
+      "unit": "mm",
+      "value": 0.0
+    },
+    "second_minus_first_volume": {
+      "unit": "mm3",
+      "value": 0.0
+    },
+    "volume_delta": {
+      "unit": "mm3",
+      "value": 339.2920065876988
+    }
+  },
+  "method": "BREP_BOOLEAN_AND_MEASUREMENTS",
+  "reasons": [
+    "AREA_DELTA_EXCEEDS_TOLERANCE",
+    "VOLUME_DELTA_EXCEEDS_TOLERANCE",
+    "FIRST_MINUS_SECOND_VOLUME_EXCEEDS_TOLERANCE"
+  ],
+  "schema_version": "1.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "status": "GEOMETRY_DIFFERENT",
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "bounding box and minimum distance",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "surface area delta",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "volume delta and Boolean differences",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

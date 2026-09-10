@@ -1,0 +1,34 @@
+{
+  "artifact_role": "CLOSING",
+  "artifact_type": "ui_state_snapshot",
+  "case_id": "ui_only_changed",
+  "object_role": "fixture_body",
+  "schema_version": "1.0.0",
+  "source_artifact_id": "p2-fixture/ui_only_changed/fixture.FCStd",
+  "state": {
+    "camera": {
+      "reason": "stable per-object saved camera extraction is outside the P2 fixture contract",
+      "status": "UNSUPPORTED"
+    },
+    "display_mode": {
+      "status": "SUPPORTED",
+      "value": "Flat Lines"
+    },
+    "shape_color": {
+      "status": "SUPPORTED",
+      "value": [
+        0.10196078568696976,
+        0.45098039507865906,
+        0.9019607901573181
+      ]
+    },
+    "transparency": {
+      "status": "SUPPORTED",
+      "value": 60
+    },
+    "visibility": {
+      "status": "SUPPORTED",
+      "value": false
+    }
+  }
+}
