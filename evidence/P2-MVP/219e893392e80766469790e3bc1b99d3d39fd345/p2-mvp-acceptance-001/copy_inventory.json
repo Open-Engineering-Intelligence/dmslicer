@@ -1,0 +1,39 @@
+{
+  "artifact_count": 4,
+  "artifacts": [
+    {
+      "artifact_id": "acceptance-summary",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/ACCEPTANCE_SUMMARY.md",
+      "sha256": "768032ab3343758049322d7ad7f5673d7b7930c4bf3c56210b3bfae310f5277a",
+      "size_bytes": 1234,
+      "source_logical_path": "outputs/p2-mvp-acceptance-001/ACCEPTANCE_SUMMARY.md"
+    },
+    {
+      "artifact_id": "negative-policy-evidence",
+      "copy_status": "BYTE_SAME",
+      "public_path": "history/negative-policy-evidence.json",
+      "sha256": "90245033826ae5277c59505dba96c64f280251a2a45d9fd909097aea9370c703",
+      "size_bytes": 637,
+      "source_logical_path": "outputs/p2-mvp-acceptance-001/negative-policy-evidence.json"
+    },
+    {
+      "artifact_id": "pytest-junit",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/pytest.xml",
+      "sha256": "831ab0d52ed0d953a191472db18d9331e0e6ef0cffaed2dab8c5243bd7d61159",
+      "size_bytes": 7872,
+      "source_logical_path": "outputs/p2-mvp-acceptance-001/pytest.xml"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/validator-result.json",
+      "sha256": "fe39867a95a505ec1809fdb9c4fbc23cd3ff8fb3faa4b6f3bb42d8c725eb5f05",
+      "size_bytes": 1248,
+      "source_logical_path": "outputs/p2-mvp-acceptance-001/validator-result.json"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
+}

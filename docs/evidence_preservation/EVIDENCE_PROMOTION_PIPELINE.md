@@ -207,6 +207,35 @@ the same time. Two paths on one host are not independent protection. P2-MVP
 does not authorize or create a push, PR, Release, external-storage object, or
 off-host custody record.
 
+## P2-MVP acceptance evidence
+
+The current immutable local acceptance package is:
+
+```text
+evidence/P2-MVP/8d9df8403cb3505037724d13f465531b277515f9/p2-mvp-acceptance-002/
+```
+
+It was created with:
+
+```powershell
+$env:PYTHONPATH = "src"
+py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/p2-mvp-acceptance-002/request.json
+py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/p2-mvp-acceptance-002/request.json
+```
+
+The package binds the run to implementation commit
+`8d9df8403cb3505037724d13f465531b277515f9`, contains a public-safe 65-test
+JUnit result, retains negative policy evidence, and independently recounts all
+four selected source/copy pairs. Its local package status is PASS while
+preservation remains incomplete and publication unauthorized. It contains no
+CAD validation or Human Inspection claim.
+
+The earlier immutable package at
+`evidence/P2-MVP/219e893392e80766469790e3bc1b99d3d39fd345/p2-mvp-acceptance-001/`
+is retained as historical evidence. Run 002 supersedes it for completion
+because it also covers host-independent Windows/POSIX path parsing and
+public-safe JUnit case labels; no file in run 001 was changed or deleted.
+
 ## Verification
 
 Run the complete local gate:

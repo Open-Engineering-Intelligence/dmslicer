@@ -326,41 +326,43 @@ git commit -m "feat: expose P2 MVP promotion gate"
 ### Task 6: Artifact-backed local acceptance run and completion audit
 
 **Files:**
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/manifest.json`
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/copy_inventory.json`
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/policy_report.json`
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/artifacts/pytest.xml`
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/artifacts/validator-result.json`
-- Create: `evidence/P2-MVP/<implementation_commit>/p2-mvp-acceptance-001/artifacts/ACCEPTANCE_SUMMARY.md`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/manifest.json`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/copy_inventory.json`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/policy_report.json`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/artifacts/pytest.xml`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/artifacts/validator-result.json`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/artifacts/ACCEPTANCE_SUMMARY.md`
+- Create per immutable run: `evidence/P2-MVP/<implementation_commit>/<run_id>/history/negative-policy-evidence.json`
+- Retain run 001 unchanged; create run 002 as the superseding portability-corrected acceptance package
 - Modify: `docs/evidence_preservation/EVIDENCE_PROMOTION_PIPELINE.md`
 
 **Interfaces:**
 - Consumes: committed MVP code, schemas, CLI, and complete tests.
 - Produces: stable proof of local package success with incomplete preservation/publication.
 
-- [ ] **Step 1: Record the implementation commit**
+- [x] **Step 1: Record the implementation commit**
 
 Run: `git rev-parse HEAD`. Use the full commit in the request and destination; do not rewrite it after evidence generation.
 
-- [ ] **Step 2: Generate fresh staging evidence**
+- [x] **Step 2: Generate fresh staging evidence**
 
-Run pytest with JUnit output under `outputs/p2-mvp-acceptance-001/pytest.xml`. Create validator JSON there with exact command, exit code, timestamp, versions, implementation commit, separate result domains, `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`, and no FreeCAD claim. Create a factual `ACCEPTANCE_SUMMARY.md` in the same staging root before promotion. The summary records code commit, branch, commands, test count, schemas, SHA role, copy policy, and every deferred/not-authorized item. Create an explicit three-file allowlist and reference JUnit from `pytest_result`.
+Run pytest with JUnit output under the run-specific staging root. Create validator JSON there with exact command, exit code, timestamp, versions, implementation commit, separate result domains, `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`, and no FreeCAD claim. Create a factual `ACCEPTANCE_SUMMARY.md` and retained `negative-policy-evidence.json` in the same staging root before promotion. The summary records code commit, branch, commands, test count, schemas, SHA role, copy policy, and every deferred/not-authorized item. Create an explicit four-file allowlist, reference JUnit from `pytest_result`, and reference the negative artifact from `history.failure_artifact_ids` with retention role `FAILURE`. Run 002 repeats this process after the portable-path correction and public-safe JUnit labels; run 001 remains immutable.
 
-- [ ] **Step 3: Validate and locally promote**
+- [x] **Step 3: Validate and locally promote**
 
 ```powershell
 $env:PYTHONPATH = "src"
-py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/p2-mvp-acceptance-001/request.json
-py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/p2-mvp-acceptance-001/request.json
+py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/p2-mvp-acceptance-002/request.json
+py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/p2-mvp-acceptance-002/request.json
 ```
 
 Expected: `LOCAL_PACKAGE_CREATED`, `NOT_FULLY_PRESERVED`, `PUBLICATION_NOT_AUTHORIZED`, and `GEOMETRIC_EQUIVALENCE_NOT_PROVEN`.
 
-- [ ] **Step 4: Verify the immutable package and update pipeline documentation**
+- [x] **Step 4: Verify the immutable package and update pipeline documentation**
 
 Revalidate all package JSON against schema, recompute every copied digest, and confirm every public path is relative. Add the immutable package path and local acceptance command to `EVIDENCE_PROMOTION_PIPELINE.md`. After the atomic install, do not edit any file inside the stable package. Do not claim CAD validation, full preservation, hosted CI success, remote SHA, or PR state.
 
-- [ ] **Step 5: Run the complete verification matrix**
+- [x] **Step 5: Run the complete verification matrix**
 
 ```powershell
 py -3.12 -m pytest -q

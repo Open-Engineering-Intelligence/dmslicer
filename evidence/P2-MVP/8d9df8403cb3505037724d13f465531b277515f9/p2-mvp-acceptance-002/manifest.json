@@ -1,0 +1,137 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "acceptance-summary",
+      "copy_status": "BYTE_SAME",
+      "kind": "TEXT",
+      "public_path": "artifacts/ACCEPTANCE_SUMMARY.md",
+      "retention_role": "STANDARD",
+      "sha256": "082a2c7285b0f6bb9f15a1c8e965095c5bb0b296b95bc8bced0cecfc0028fc96",
+      "size_bytes": 1334,
+      "validation_role": "local_acceptance_summary"
+    },
+    {
+      "artifact_id": "negative-policy-evidence",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "history/negative-policy-evidence.json",
+      "retention_role": "FAILURE",
+      "sha256": "48e2d36a067be3bb74fc34e196756cca3a4f14adf339f7b5844de4554536b82e",
+      "size_bytes": 774,
+      "validation_role": "retained_negative_policy_evidence"
+    },
+    {
+      "artifact_id": "pytest-junit",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "04b7ae008cb1cb3bd415177f99eb8f40009ebbe32886798169438d912c1d65d5",
+      "size_bytes": 8845,
+      "validation_role": "software_pytest_result"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "kind": "VALIDATOR",
+      "public_path": "artifacts/validator-result.json",
+      "retention_role": "STANDARD",
+      "sha256": "231ee4049d0cb2d7ff7c1ea5041baf9048bd71b3a883aba903e61eadf5e816ac",
+      "size_bytes": 1248,
+      "validation_role": "p2_mvp_validator_result"
+    }
+  ],
+  "environment": {
+    "freecad_version": null,
+    "occt_version": null,
+    "pytest_version": "8.4.2",
+    "python_version": "3.12.0"
+  },
+  "execution": [
+    {
+      "command": "py -3.12 -m pytest -q --junitxml=outputs/p2-mvp-acceptance-002/pytest.xml",
+      "exit_code": 0,
+      "timestamp": "2026-09-10T10:04:02.8524548Z"
+    }
+  ],
+  "geometry_validation": {
+    "evidence_artifact_ids": [],
+    "evidence_method": "NOT_EVALUATED_P2_MVP",
+    "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+    "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+  },
+  "goal_id": "P2-MVP",
+  "history": {
+    "failure_artifact_ids": [
+      "negative-policy-evidence"
+    ],
+    "mismatch_artifact_ids": [],
+    "rejection_artifact_ids": [],
+    "reviewer_finding_artifact_ids": []
+  },
+  "identity": {
+    "branch": "feat/evidence-promotion-semantic-snapshot",
+    "implementation_commit": "8d9df8403cb3505037724d13f465531b277515f9",
+    "merge_base": "ea617b6b6fa8d074c1c89d6f61513fe4d892cef3",
+    "parent_baseline": "ea617b6b6fa8d074c1c89d6f61513fe4d892cef3"
+  },
+  "local_package_result": {
+    "package_path": "evidence/P2-MVP/8d9df8403cb3505037724d13f465531b277515f9/p2-mvp-acceptance-002",
+    "status": "LOCAL_PACKAGE_CREATED"
+  },
+  "policy_result": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "preservation_result": {
+    "recoverable_copy_count": 2,
+    "recoverable_copy_policy": "LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY",
+    "status": "NOT_FULLY_PRESERVED"
+  },
+  "publication_result": {
+    "off_host_copy_count": 0,
+    "status": "PUBLICATION_NOT_AUTHORIZED"
+  },
+  "results": {
+    "byte_identity_result": {
+      "evidence_artifact_ids": [],
+      "status": "BYTE_NOT_EVALUATED"
+    },
+    "geometry_equivalence_result": {
+      "evidence_artifact_ids": [],
+      "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+    },
+    "human_inspection_result": {
+      "evidence_artifact_ids": [],
+      "status": "NOT_EVALUATED"
+    },
+    "pytest_result": {
+      "evidence_artifact_ids": [
+        "pytest-junit"
+      ],
+      "status": "PASS"
+    },
+    "scientific_experiment_result": {
+      "evidence_artifact_ids": [],
+      "status": "NOT_EVALUATED"
+    },
+    "semantic_equivalence_result": {
+      "evidence_artifact_ids": [],
+      "status": "SEMANTIC_EQUIVALENCE_NOT_PROVEN"
+    },
+    "ui_state_result": {
+      "evidence_artifact_ids": [],
+      "status": "UI_STATE_NOT_PROVEN"
+    },
+    "validator_result": {
+      "evidence_artifact_ids": [
+        "validator-result"
+      ],
+      "status": "PASS"
+    }
+  },
+  "run_id": "p2-mvp-acceptance-002",
+  "schema_version": "2.0.0",
+  "source_staging_root": "outputs/p2-mvp-acceptance-002",
+  "tolerances": []
+}

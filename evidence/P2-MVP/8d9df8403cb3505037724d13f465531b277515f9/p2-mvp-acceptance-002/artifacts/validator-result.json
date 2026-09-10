@@ -1,0 +1,36 @@
+{
+  "schema_version": "2.0.0",
+  "goal_id": "P2-MVP",
+  "run_id": "p2-mvp-acceptance-002",
+  "branch": "feat/evidence-promotion-semantic-snapshot",
+  "implementation_commit": "8d9df8403cb3505037724d13f465531b277515f9",
+  "command": "py -3.12 -m pytest -q --junitxml=outputs/p2-mvp-acceptance-002/pytest.xml",
+  "exit_code": 0,
+  "execution_timestamp": "2026-09-10T10:04:02.8524548Z",
+  "environment": {
+    "python_version": "3.12.0",
+    "pytest_version": "8.4.2",
+    "freecad_version": null,
+    "occt_version": null
+  },
+  "pytest_result": {
+    "status": "PASS",
+    "passed": 65,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "validator_result": {
+    "status": "PASS",
+    "scope": "P2-MVP pure-Python schema, policy, integrity, promotion, and CLI"
+  },
+  "byte_identity_result": "BYTE_NOT_EVALUATED",
+  "geometry_equivalence_result": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
+  "semantic_equivalence_result": "SEMANTIC_EQUIVALENCE_NOT_PROVEN",
+  "ui_state_result": "UI_STATE_NOT_PROVEN",
+  "scientific_experiment_result": "NOT_EVALUATED",
+  "human_inspection_result": "NOT_EVALUATED",
+  "tolerances": [],
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "phase_2_cad_validation": "DEFERRED_NOT_EVALUATED"
+}
