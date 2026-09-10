@@ -7,6 +7,8 @@
   "required": [
     "schema_version",
     "goal_id",
+    "run_id",
+    "run_role",
     "identity",
     "inputs",
     "environment",
@@ -80,8 +82,10 @@
     }
   },
   "properties": {
-    "schema_version": {"const": "1.0.0"},
+    "schema_version": {"const": "1.1.0"},
     "goal_id": {"type": "string", "pattern": "^(02C|03A|03B|03C|04A|04B|05A|05B|05C|06A|06B|06C|06D)$"},
+    "run_id": {"type": "string", "pattern": "^p0-preservation-(02c|03a|03b|03c|04a|04b|05a|05b|05c|06a|06b|06c|06d)-[0-9a-f]{7}$"},
+    "run_role": {"$ref": "#/$defs/fact"},
     "identity": {
       "type": "object",
       "additionalProperties": false,

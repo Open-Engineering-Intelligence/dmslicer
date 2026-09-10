@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "goal_id": "06D",
   "identity": {
     "branch": {
@@ -1496,6 +1496,12 @@
     "url": "https://github.com/Open-Engineering-Intelligence/dmslicer/releases/tag/goal-06d-evidence-b7054f3",
     "supersedes": null,
     "superseded_by": null
+  },
+  "run_id": "p0-preservation-06d-b7054f3",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
   },
   "conversation_provenance": [
     {

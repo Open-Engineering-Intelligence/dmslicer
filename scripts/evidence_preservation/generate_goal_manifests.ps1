@@ -207,8 +207,10 @@ foreach ($goal in $configs.Keys) {
     }
 
     $manifest = [ordered]@{
-        schema_version = "1.0.0"
+        schema_version = "1.1.0"
         goal_id = $goal
+        run_id = "p0-preservation-$($goal.ToLowerInvariant())-$($c.impl.Substring(0,7))"
+        run_role = Fact "preservation_control_plane" "L" "P0/P1 custody audit; not a historical experiment execution run"
         identity = [ordered]@{
             branch = Fact $c.branch "GH" "local Git refs"
             branch_tip = Fact $c.tip "GH" "local Git refs"

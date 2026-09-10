@@ -50,7 +50,7 @@ This is a custody/integrity result only. No FreeCAD artifact was opened or resav
 
 ## E. Manifest enrichment
 
-All 13 P0 Goal manifests now include schema-valid `conversation_provenance` references. The schema remains backward compatible because the new field is optional. Relevant manifests also retain recovered failure/fix/reviewer/diagnostic facts and historical test statements with `CHAT` confidence.
+All 13 P0 Goal manifests now include schema-valid `conversation_provenance` references and required stable preservation `run_id`/`run_role` fields. Schema revision 1.1.0 distinguishes the preservation control-plane run from an unrecovered historical experiment execution; it does not infer or manufacture an experiment run. Relevant manifests also retain recovered failure/fix/reviewer/diagnostic facts and historical test statements with `CHAT` confidence.
 
 Validation result: 13/13 manifests pass `Test-Json` against `evidence_manifest.schema.json`.
 

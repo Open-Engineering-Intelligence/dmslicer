@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "goal_id": "06B",
   "identity": {
     "branch": {
@@ -661,6 +661,12 @@
     "url": null,
     "supersedes": null,
     "superseded_by": null
+  },
+  "run_id": "p0-preservation-06b-c23cc83",
+  "run_role": {
+    "value": "preservation_control_plane",
+    "confidence": "L",
+    "source": "P0/P1 custody audit; not a historical experiment execution run"
   },
   "conversation_provenance": [
     {

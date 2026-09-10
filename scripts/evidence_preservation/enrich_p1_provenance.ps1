@@ -124,6 +124,9 @@ $conversation | ConvertTo-Json -Depth 15 | Set-Content -LiteralPath $Conversatio
 foreach ($goal in $manifestByGoal.Keys) {
     $entry = $manifestByGoal[$goal]
     $manifest = $entry.document
+    $manifest.schema_version = "1.1.0"
+    $manifest | Add-Member -NotePropertyName run_id -NotePropertyValue ("p0-preservation-{0}-{1}" -f $goal.ToLowerInvariant(), $manifest.identity.implementation_commit.value.Substring(0, 7)) -Force
+    $manifest | Add-Member -NotePropertyName run_role -NotePropertyValue (New-Fact "preservation_control_plane" "L" "P0/P1 custody audit; not a historical experiment execution run") -Force
     $refs = @($conversation.records | Where-Object { $_.related_goal_ids -contains $goal } | ForEach-Object {
         [pscustomobject][ordered]@{
             task_id = $_.task_id
