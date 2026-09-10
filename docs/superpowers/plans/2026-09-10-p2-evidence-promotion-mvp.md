@@ -117,7 +117,7 @@ git commit -m "feat: define P2 MVP evidence contracts"
 - Produces: `compare_bytes(first: Path, second: Path) -> dict[str, Any]`.
 - Produces: `copy_and_verify(source: Path, destination: Path) -> dict[str, Any]`.
 
-- [ ] **Step 1: Write failing same-byte and different-byte tests**
+- [x] **Step 1: Write failing same-byte and different-byte tests**
 
 ```python
 def test_compare_bytes_reports_different_bytes_without_geometry_status(tmp_path: Path) -> None:
@@ -131,25 +131,25 @@ def test_compare_bytes_reports_different_bytes_without_geometry_status(tmp_path:
 
 Also assert equal bytes return `BYTE_SAME` with equal digests and sizes.
 
-- [ ] **Step 2: Write a failing verified-copy test**
+- [x] **Step 2: Write a failing verified-copy test**
 
 Assert that `copy_and_verify` creates the destination, records equal source/destination SHA-256 and size, returns `BYTE_SAME`, and refuses an existing destination.
 
-- [ ] **Step 3: Run and verify RED**
+- [x] **Step 3: Run and verify RED**
 
 Run: `py -3.12 -m pytest tests/test_integrity.py -q`
 
 Expected: import failure because `integrity.py` does not exist.
 
-- [ ] **Step 4: Implement streaming SHA-256 and copy verification**
+- [x] **Step 4: Implement streaming SHA-256 and copy verification**
 
 Read in 1 MiB blocks, use `shutil.copy2`, refuse an existing destination, and delete only a just-created incomplete copy if verification fails. Return byte-only fields and statuses.
 
-- [ ] **Step 5: Run focused and cumulative tests and verify GREEN**
+- [x] **Step 5: Run focused and cumulative tests and verify GREEN**
 
 Run: `py -3.12 -m pytest tests/test_integrity.py tests/test_schema_contracts.py -q`
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```powershell
 git add src/dmslicer/evidence_promotion/integrity.py tests/test_integrity.py
