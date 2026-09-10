@@ -135,3 +135,30 @@ def test_malformed_json_does_not_echo_secret_or_traceback(cli_case) -> None:
     }
     assert secret not in combined
     assert "Traceback" not in combined
+
+
+def test_cli_exposes_only_validate_promote_and_demo() -> None:
+    environment = os.environ.copy()
+    environment["PYTHONPATH"] = str(SOURCE_ROOT)
+    result = subprocess.run(
+        [sys.executable, "-m", "dmslicer.evidence_promotion", "--help"],
+        env=environment,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0
+    assert "{validate,promote,demo}" in result.stdout
+    assert "snapshot" not in result.stdout
+    assert "compare" not in result.stdout
+
+
+def test_demo_rejects_output_outside_staging(repository_root: Path) -> None:
+    result = _run(
+        repository_root,
+        "demo",
+        "--output-root",
+        str(repository_root / "evidence"),
+    )
+    assert result.returncode == 2
+    assert json.loads(result.stdout)["code"] == "DEMO_OUTPUT_ROOT_INVALID"

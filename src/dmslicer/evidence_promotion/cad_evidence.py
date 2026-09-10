@@ -8,6 +8,9 @@ import shutil
 import subprocess
 import tempfile
 import hashlib
+import importlib.metadata
+import platform
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -255,9 +258,19 @@ def generate_demo(output_root: Path) -> dict[str, Any]:
     serialization_comparison = read_json(
         output_root / "comparisons" / "serialization_reopen.json"
     )
+    cad_json_paths = list((output_root / "snapshots").rglob("*.json")) + list(
+        (output_root / "comparisons").glob("*.json")
+    )
+    invalid = [path for path in cad_json_paths if validate_cad_artifact(read_json(path))]
+    if invalid:
+        raise RuntimeError("generated CAD evidence failed schema validation")
     return {
         "status": "PASS",
         "cases": generated["cases"],
+        "environment": {
+            "freecad_version": generated["freecad_version"],
+            "occt_version": generated["occt_version"],
+        },
         "case_a": {
             "geometry_status": comparison["status"],
             "semantic_status": compare_semantics(first_semantic, second_semantic)["status"],
@@ -284,3 +297,166 @@ def generate_demo(output_root: Path) -> dict[str, Any]:
         },
         "comparison_worker": compared["status"],
     }
+
+
+def _git_value(repository_root: Path, *arguments: str) -> str:
+    completed = subprocess.run(
+        ["git", *arguments],
+        cwd=repository_root,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode:
+        raise RuntimeError("required Git provenance is unavailable")
+    return completed.stdout.strip()
+
+
+def write_demo_promotion_request(
+    output_root: Path,
+    repository_root: Path,
+    demo_result: Mapping[str, Any],
+    *,
+    parent_ref: str = "feat/cylindrical-interface-repairability",
+) -> Path:
+    """Write the one explicit allowlist request needed to close the P2 demo loop."""
+    output_root = Path(output_root).resolve()
+    repository_root = Path(repository_root).resolve()
+    staging_root = output_root.relative_to(repository_root).as_posix()
+    implementation = _git_value(repository_root, "rev-parse", "HEAD")
+    parent = _git_value(repository_root, "rev-parse", parent_ref)
+    merge_base = _git_value(repository_root, "merge-base", parent, implementation)
+    branch = _git_value(repository_root, "branch", "--show-current")
+    timestamp = datetime.now().astimezone()
+    run_id = "p2-cad-demo-" + timestamp.strftime("%Y%m%dt%H%M%S")
+
+    artifact_specs = []
+    for case_id in ("original", "ui_only_changed", "geometry_changed"):
+        for suffix, kind in (("FCStd", "FCSTD"), ("brep", "BREP"), ("step", "STEP")):
+            artifact_specs.append(
+                (
+                    f"{case_id}-{suffix.lower()}",
+                    f"cad/{case_id}/fixture.{suffix}",
+                    kind,
+                    "fixture CAD source or mutation",
+                    "STANDARD",
+                )
+            )
+        for filename, short_name in (
+            ("geometry_semantic_snapshot.json", "geometry"),
+            ("topology_snapshot.json", "topology"),
+            ("ui_state_snapshot.json", "ui"),
+        ):
+            artifact_specs.append(
+                (
+                    f"{case_id}-{short_name}-snapshot",
+                    f"snapshots/{case_id}/{filename}",
+                    "JSON",
+                    f"{short_name} fixture snapshot",
+                    "STANDARD",
+                )
+            )
+    artifact_specs.extend(
+        [
+            ("case-a-comparison", "comparisons/case_a_ui_only.json", "JSON", "Case A B-rep comparison", "STANDARD"),
+            ("case-b-comparison", "comparisons/case_b_geometry_changed.json", "JSON", "Case B B-rep mutation comparison", "FAILURE"),
+            ("serialization-comparison", "comparisons/serialization_reopen.json", "JSON", "serialization/reopen B-rep comparison", "STANDARD"),
+        ]
+    )
+    allowlist = [
+        {
+            "artifact_id": artifact_id,
+            "source_path": source_path,
+            "public_path": source_path,
+            "kind": kind,
+            "validation_role": validation_role,
+            "retention_role": retention_role,
+        }
+        for artifact_id, source_path, kind, validation_role, retention_role in artifact_specs
+    ]
+    comparison = read_json(output_root / "comparisons/case_b_geometry_changed.json")
+    request = {
+        "schema_version": "2.0.0",
+        "goal_id": "P2-EVIDENCE-PROMOTION-SEMANTIC-SNAPSHOT",
+        "run_id": run_id,
+        "identity": {
+            "branch": branch,
+            "implementation_commit": implementation,
+            "parent_baseline": parent,
+            "merge_base": merge_base,
+        },
+        "source": {"staging_root": staging_root, "allowlist": allowlist},
+        "environment": {
+            "python_version": platform.python_version(),
+            "pytest_version": importlib.metadata.version("pytest"),
+            **demo_result["environment"],
+        },
+        "execution": [
+            {
+                "command": (
+                    "py -3.12 -m dmslicer.evidence_promotion demo --output-root "
+                    + staging_root
+                ),
+                "exit_code": 0,
+                "timestamp": timestamp.isoformat(timespec="seconds"),
+            }
+        ],
+        "tolerances": comparison["tolerances"],
+        "results": {
+            "byte_identity_result": {
+                "status": demo_result["case_a"]["byte_status"],
+                "evidence_artifact_ids": ["original-fcstd", "ui_only_changed-fcstd"],
+            },
+            "geometry_equivalence_result": {
+                "status": demo_result["case_b"]["geometry_status"],
+                "evidence_artifact_ids": ["case-b-comparison"],
+            },
+            "semantic_equivalence_result": {
+                "status": demo_result["case_a"]["semantic_status"],
+                "evidence_artifact_ids": [
+                    "original-geometry-snapshot",
+                    "ui_only_changed-geometry-snapshot",
+                ],
+            },
+            "ui_state_result": {
+                "status": demo_result["case_a"]["ui_status"],
+                "evidence_artifact_ids": [
+                    "original-ui-snapshot",
+                    "ui_only_changed-ui-snapshot",
+                ],
+            },
+            "pytest_result": {"status": "NOT_EVALUATED", "evidence_artifact_ids": []},
+            "validator_result": {
+                "status": "PASS",
+                "evidence_artifact_ids": [
+                    "case-a-comparison",
+                    "case-b-comparison",
+                    "serialization-comparison",
+                ],
+            },
+            "scientific_experiment_result": {
+                "status": "PASS",
+                "evidence_artifact_ids": ["case-a-comparison", "case-b-comparison"],
+            },
+            "human_inspection_result": {
+                "status": "NOT_EVALUATED",
+                "evidence_artifact_ids": [],
+            },
+        },
+        "history": {
+            "failure_artifact_ids": ["case-b-comparison"],
+            "mismatch_artifact_ids": [],
+            "rejection_artifact_ids": [],
+            "reviewer_finding_artifact_ids": [],
+        },
+        "custody": {"off_host_copies": [], "publication_authorized": False},
+        "geometry_validation": {
+            "status": demo_result["case_b"]["geometry_status"],
+            "evidence_method": comparison["method"],
+            "evidence_artifact_ids": ["case-b-comparison"],
+            "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+        },
+    }
+    request_path = output_root / "promotion_request.json"
+    write_json(request_path, request)
+    return request_path

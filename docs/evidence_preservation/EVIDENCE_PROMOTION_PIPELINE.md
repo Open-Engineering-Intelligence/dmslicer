@@ -1,6 +1,6 @@
 # Evidence Promotion Pipeline
 
-Status: P2-MVP implemented control-plane contract. FreeCAD/OCCT geometry comparison is phase 2.
+Status: P2-MVP CAD evidence and local promotion closed loop implemented.
 
 ## Purpose
 
@@ -35,28 +35,27 @@ SHA-256 is used only for custody, copy verification, acquisition provenance,
 off-host verification, and reproducibility lookup. A hash, stable fingerprint,
 or serialized-file identity is never a geometry predicate.
 
-## Immediate MVP and deferred phase 2
+## P2-MVP CAD boundary
 
-P2-MVP includes versioned request/manifest schemas, explicit allowlist handling,
-separate result domains, SHA-misuse rejection, failure retention, local package
-creation, copy recounting, and pure-Python tests.
+P2-MVP opens a fixed FreeCAD fixture: a 40 × 30 × 12 mm block with a vertical
+through-hole. It creates immutable original, UI-only, and hole-radius-mutated
+FCStd/BREP/STEP files, then reopens them and writes separate
+`geometry_semantic_snapshot`, `topology_snapshot`, and `ui_state_snapshot`
+artifacts. Geometry authority comes from reopened Part shapes and actual B-rep
+operations, never from a display mesh or file hash.
 
-P2-MVP does not open CAD files and does not claim geometry, semantic, or UI
-equivalence. Every MVP package records:
+Case A changes only color, transparency, and visibility. Its expected statuses
+are `GEOMETRY_EQUIVALENT`, `SEMANTIC_EQUIVALENT`, and `UI_DIFFERENT`; its byte
+status may be either `BYTE_SAME` or `BYTE_DIFFERENT`. Case B changes the hole
+radius from 4.0 mm to 5.0 mm and must report `GEOMETRY_DIFFERENT` with literal
+area, volume, or bidirectional Boolean-difference reasons. Serialization/reopen
+is compared through the same B-rep path and cannot become geometry-different
+merely because bytes differ.
 
-```json
-{
-  "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
-  "evidence_method": "NOT_EVALUATED_P2_MVP",
-  "evidence_artifact_ids": [],
-  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
-}
-```
-
-Phase 2 may add schema-backed `geometry_semantic_snapshot`,
-`topology_snapshot`, and `ui_state_snapshot` artifacts plus actual
-tolerance-aware FreeCAD/OCCT comparisons and CAD demo fixtures. Until then,
-snapshot hashes and byte hashes cannot upgrade the status above.
+The fixture comparison records inclusive 0.001 mm, 0.001 mm², and 0.001 mm³
+tolerances with their roles and source. Manifold inference remains `UNKNOWN`;
+Hausdorff metrics, arbitrary subshape correspondence, registration, and general
+CAD semantics remain deferred.
 
 ## Request contract
 
@@ -67,7 +66,7 @@ Requests validate against
 - Goal ID, run ID, branch, full implementation commit, parent baseline, and merge base;
 - a repository-relative staging root below `outputs/` or `work/`;
 - an allowlist of individual source files and their public package paths;
-- Python/pytest versions and explicit null FreeCAD/OCCT versions in MVP;
+- Python, pytest, FreeCAD, and OCCT versions for CAD-backed runs;
 - commands, exit codes, and timestamps;
 - every declared tolerance with value, unit, role, and source;
 - eight independent result domains;
@@ -148,9 +147,15 @@ From the repository root after installing the package with
 `py -3.12 -m pip install -e .`:
 
 ```powershell
-py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/p2-mvp-local-001/request.json
-py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/p2-mvp-local-001/request.json
+py -3.12 -m dmslicer.evidence_promotion demo --output-root outputs/p2-cad-demo
+py -3.12 -m dmslicer.evidence_promotion validate --repository-root . --request outputs/p2-cad-demo/promotion_request.json
+py -3.12 -m dmslicer.evidence_promotion promote --repository-root . --request outputs/p2-cad-demo/promotion_request.json
 ```
+
+The `demo` command requires a local GUI-capable FreeCAD plus FreeCADCmd/OCCT.
+It accepts only a repository-local `outputs/` or `work/` target and creates the
+explicit allowlist request used by the next two commands. Case B's expected
+`GEOMETRY_DIFFERENT` scientific result does not make the command fail.
 
 `validate` exits 0 only when all request policies pass. `promote` exits 0 when
 the local package is safely created. A malformed, unsafe, incomplete, or
@@ -244,7 +249,9 @@ Run the complete local gate:
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/evidence_preservation/run_p2_mvp_checks.ps1
 ```
 
-The GitHub Actions workflow runs the same pure-Python test contract and checks
-that the frozen `docs/research_v2/` tree has not changed. The presence of the
-workflow is not evidence that hosted CI ran; hosted status is reported only
-after an authorized push or PR causes an actual run.
+The GitHub Actions workflow runs only `-m "not freecad"` portable tests and
+checks that `docs/research_v2/` is unchanged from
+`feat/cylindrical-interface-repairability`. It does not claim a FreeCAD run.
+The local PowerShell gate runs the CAD tests and complete inherited suite. The
+presence of the workflow is not evidence that hosted CI ran; hosted status is
+reported only after an authorized push or PR causes an actual run.

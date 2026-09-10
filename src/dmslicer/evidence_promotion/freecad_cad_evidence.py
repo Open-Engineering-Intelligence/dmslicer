@@ -227,7 +227,12 @@ def _generate_fixture_set(output_root: Path) -> dict:
         _write_snapshots(output_root, "serialization_reopen", serialized, 4.0)
     finally:
         FreeCAD.closeDocument(serialized.Name)
-    return {"status": "PASS", "cases": sorted(definitions)}
+    return {
+        "status": "PASS",
+        "cases": sorted(definitions),
+        "freecad_version": ".".join(str(item) for item in FreeCAD.Version()[:3]),
+        "occt_version": getattr(Part, "OCC_VERSION", "unknown"),
+    }
 
 
 def _unavailable(reason: str) -> dict:
