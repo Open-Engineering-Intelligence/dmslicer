@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-engineering-intelligence.example.com/schemas/cad_evidence.schema.json",
+  "title": "DM-Slicer CAD evidence preservation manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "goal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "geometry_semantic_snapshot": {
+      "$ref": "#/$defs/geometry_semantic_snapshot"
+    },
+    "topology_snapshot": {
+      "$ref": "#/$defs/topology_snapshot"
+    },
+    "ui_state_snapshot": {
+      "$ref": "#/$defs/ui_state_snapshot"
+    },
+    "geometry_comparison": {
+      "$ref": "#/$defs/geometry_comparison"
+    }
+  },
+  "$defs": {
+    "unit_code": {
+      "type": "string",
+      "enum": [
+        "mm",
+        "mm2",
+        "mm3",
+        "cm",
+        "cm2",
+        "cm3",
+        "m",
+        "m2",
+        "m3",
+        "percent",
+        "count",
+        "unitless"
+      ]
+    },
+    "continuous_measurement": {
+      "type": "object",
+      "required": [
+        "value",
+        "unit"
+      ],
+      "propertyNames": {
+        "pattern": "^(?!.*(sha|hash|digest|sha256)).*$"
+      },
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "$ref": "#/$defs/unit_code"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/continuous_measurement"
+        }
+      },
+      "additionalProperties": true
+    },
+    "geometry_snapshot": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(?!.*(sha|hash|digest|sha256)).*$"
+      },
+      "additionalProperties": true
+    },
+    "geometry_semantic_snapshot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/geometry_snapshot"
+        },
+        {
+          "type": "object",
+          "required": [
+            "component_role",
+            "interface_role"
+          ],
+          "properties": {
+            "component_role": {
+              "type": "string"
+            },
+            "interface_role": {
+              "type": "string"
+            },
+            "semantic_components": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/continuous_measurement"
+              }
+            },
+            "allowable_transform": {
+              "type": "string"
+            },
+            "source_regions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_faces": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "topology_snapshot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/geometry_snapshot"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "solid_volume": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "solid_area": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "surface_area": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "edge_length": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "component_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "patch_topology": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "ui_state_snapshot": {
+      "type": "object",
+      "required": [
+        "visibility",
+        "color",
+        "transparency"
+      ],
+      "properties": {
+        "visibility": {
+          "type": "boolean"
+        },
+        "color": {
+          "type": ["array", "string", "object"],
+          "minItems": 3
+        },
+        "transparency": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "camera_state": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "geometry_comparison": {
+      "type": "object",
+      "required": [
+        "byte_identity",
+        "semantic_comparison",
+        "topology_comparison",
+        "ui_comparison"
+      ],
+      "properties": {
+        "byte_identity": {
+          "type": "string",
+          "enum": [
+            "BYTE_IDENTICAL",
+            "BYTE_DIFFERENT",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "byte_identity_input": {
+          "type": "object",
+          "required": [
+            "input_sha256_left",
+            "input_sha256_right"
+          ],
+          "properties": {
+            "input_sha256_left": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "input_sha256_right": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "semantic_comparison": {
+          "type": "string",
+          "enum": [
+            "SEMANTIC_EQUIVALENT",
+            "SEMANTIC_DIFFERENT",
+            "SEMANTIC_EQUIVALENCE_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "topology_comparison": {
+          "type": "string",
+          "enum": [
+            "TOPOLOGY_EQUIVALENT",
+            "TOPOLOGY_DIFFERENT",
+            "TOPOLOGY_COMPARISON_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "ui_comparison": {
+          "type": "string",
+          "enum": [
+            "UI_SAME",
+            "UI_DIFFERENT",
+            "UI_COMPARISON_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
+
