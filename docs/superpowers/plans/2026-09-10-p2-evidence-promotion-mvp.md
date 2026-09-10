@@ -374,14 +374,14 @@ git status --short
 
 Validate both P2 schemas, the generated manifest, and all 13 historical manifests. Recount all promoted files and scan the package for absolute paths/secrets.
 
-- [ ] **Step 6: Commit stable acceptance evidence**
+- [x] **Step 6: Commit stable acceptance evidence**
 
 ```powershell
 git add evidence/P2-MVP docs/evidence_preservation/EVIDENCE_PROMOTION_PIPELINE.md
 git commit -m "evidence: record P2 MVP local promotion"
 ```
 
-- [ ] **Step 7: Perform final local completion audit**
+- [x] **Step 7: Perform final local completion audit**
 
 ```powershell
 git branch --show-current
