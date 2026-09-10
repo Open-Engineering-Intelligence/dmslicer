@@ -78,3 +78,61 @@ def test_ui_properties_survive_actual_fcstd_reopen(tmp_path: Path) -> None:
         tmp_path / "demo/snapshots/ui_only_changed/ui_state_snapshot.json"
     )
     assert compare_ui_states(original, changed)["status"] == "UI_DIFFERENT"
+
+
+@pytest.mark.freecad
+def test_case_a_proves_geometry_and_semantics_while_ui_differs(tmp_path: Path) -> None:
+    result = generate_demo(tmp_path / "demo")
+    case = result["case_a"]
+    assert case["geometry_status"] == "GEOMETRY_EQUIVALENT"
+    assert case["semantic_status"] == "SEMANTIC_EQUIVALENT"
+    assert case["ui_status"] == "UI_DIFFERENT"
+    assert case["byte_status"] in {"BYTE_SAME", "BYTE_DIFFERENT"}
+    comparison = _read_json(tmp_path / "demo/comparisons/case_a_ui_only.json")
+    _cad_validator().validate(comparison)
+    assert (
+        comparison["sha256_role"]
+        == "file_and_copy_integrity_only_not_geometry_equivalence"
+    )
+    assert comparison["measurements"]["first_minus_second_volume"]["value"] <= 0.001
+    assert comparison["measurements"]["second_minus_first_volume"]["value"] <= 0.001
+
+
+@pytest.mark.freecad
+def test_case_b_reports_actual_geometry_measurement_reasons(tmp_path: Path) -> None:
+    result = generate_demo(tmp_path / "demo")
+    case = result["case_b"]
+    assert case["geometry_status"] == "GEOMETRY_DIFFERENT"
+    comparison = _read_json(
+        tmp_path / "demo/comparisons/case_b_geometry_changed.json"
+    )
+    _cad_validator().validate(comparison)
+    assert "SHA" not in " ".join(comparison["reasons"]).upper()
+    assert any(
+        check in comparison["failed_checks"]
+        for check in (
+            "area_delta",
+            "volume_delta",
+            "first_minus_second",
+            "second_minus_first",
+        )
+    )
+    assert comparison["measurements"]["volume_delta"]["unit"] == "mm3"
+
+
+@pytest.mark.freecad
+def test_serialization_reopen_geometry_is_not_decided_by_bytes(tmp_path: Path) -> None:
+    result = generate_demo(tmp_path / "demo")
+    serialization = result["serialization"]
+    assert serialization["byte_status"] in {"BYTE_SAME", "BYTE_DIFFERENT"}
+    assert serialization["geometry_status"] == "GEOMETRY_EQUIVALENT"
+    assert serialization["geometry_decision_inputs"] == [
+        "topology",
+        "area",
+        "volume",
+        "bounding_box",
+        "bidirectional_boolean_cut",
+    ]
+    _cad_validator().validate(
+        _read_json(tmp_path / "demo/comparisons/serialization_reopen.json")
+    )

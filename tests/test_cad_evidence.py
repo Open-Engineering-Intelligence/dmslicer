@@ -52,11 +52,15 @@ def _ui_snapshot(
 
 
 @pytest.mark.parametrize(
-    ("delta", "expected"),
-    [(0.000999, True), (0.001, True), (0.001001, False)],
+    ("unit", "delta", "expected"),
+    [
+        (unit, delta, expected)
+        for unit in ("mm", "mm2", "mm3")
+        for delta, expected in ((0.000999, True), (0.001, True), (0.001001, False))
+    ],
 )
-def test_tolerance_boundary_is_inclusive(delta: float, expected: bool) -> None:
-    assert within_tolerance(delta, _tolerance(0.001, "mm"), "mm") is expected
+def test_tolerance_boundary_is_inclusive(unit: str, delta: float, expected: bool) -> None:
+    assert within_tolerance(delta, _tolerance(0.001, unit), unit) is expected
 
 
 @pytest.mark.parametrize("invalid", [True, False, float("nan"), float("inf")])

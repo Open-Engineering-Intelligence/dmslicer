@@ -7,6 +7,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import hashlib
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -211,6 +212,75 @@ def generate_demo(output_root: Path) -> dict[str, Any]:
     output_root = Path(output_root)
     if output_root.exists() and any(output_root.iterdir()):
         raise FileExistsError("demo output root must be absent or empty")
-    return run_freecad_worker(
+    generated = run_freecad_worker(
         {"operation": "generate_fixture_set"}, output_root, gui=True
     )
+    compared = run_freecad_worker(
+        {
+            "operation": "snapshot_and_compare",
+            "comparisons": ["case_a", "case_b", "serialization"],
+        },
+        output_root,
+        gui=False,
+    )
+    original_root = output_root / "cad" / "original"
+    changed_root = output_root / "cad" / "ui_only_changed"
+    first_semantic = read_json(
+        output_root / "snapshots" / "original" / "geometry_semantic_snapshot.json"
+    )["semantic_binding"]
+    second_semantic = read_json(
+        output_root
+        / "snapshots"
+        / "ui_only_changed"
+        / "geometry_semantic_snapshot.json"
+    )["semantic_binding"]
+    first_ui = read_json(
+        output_root / "snapshots" / "original" / "ui_state_snapshot.json"
+    )
+    second_ui = read_json(
+        output_root / "snapshots" / "ui_only_changed" / "ui_state_snapshot.json"
+    )
+
+    def digest(path: Path) -> str:
+        value = hashlib.sha256()
+        with path.open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                value.update(chunk)
+        return value.hexdigest()
+
+    comparison = read_json(output_root / "comparisons" / "case_a_ui_only.json")
+    case_b_comparison = read_json(
+        output_root / "comparisons" / "case_b_geometry_changed.json"
+    )
+    serialization_comparison = read_json(
+        output_root / "comparisons" / "serialization_reopen.json"
+    )
+    return {
+        "status": "PASS",
+        "cases": generated["cases"],
+        "case_a": {
+            "geometry_status": comparison["status"],
+            "semantic_status": compare_semantics(first_semantic, second_semantic)["status"],
+            "ui_status": compare_ui_states(first_ui, second_ui)["status"],
+            "byte_status": (
+                "BYTE_SAME"
+                if digest(original_root / "fixture.FCStd")
+                == digest(changed_root / "fixture.FCStd")
+                else "BYTE_DIFFERENT"
+            ),
+        },
+        "case_b": {"geometry_status": case_b_comparison["status"]},
+        "serialization": {
+            "geometry_status": serialization_comparison["status"],
+            "byte_status": (
+                "BYTE_SAME"
+                if digest(original_root / "fixture.FCStd")
+                == digest(output_root / "cad/serialization_reopen/fixture.FCStd")
+                else "BYTE_DIFFERENT"
+            ),
+            "geometry_decision_inputs": serialization_comparison[
+                "geometry_decision_inputs"
+            ],
+        },
+        "comparison_worker": compared["status"],
+    }
