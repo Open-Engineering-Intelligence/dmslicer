@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Open-Engineering-Intelligence/dmslicer/blob/feat/evidence-promotion-semantic-snapshot/docs/evidence_preservation/schemas/cad_evidence.schema.json",
+  "title": "DM-Slicer P2 Fixture CAD Evidence",
+  "oneOf": [
+    {"$ref": "#/$defs/geometrySemanticSnapshot"},
+    {"$ref": "#/$defs/topologySnapshot"},
+    {"$ref": "#/$defs/uiStateSnapshot"},
+    {"$ref": "#/$defs/geometryComparison"}
+  ],
+  "$defs": {
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number"},
+        "unit": {"enum": ["mm", "mm2", "mm3", "rad", "count", "unitless"]}
+      }
+    },
+    "countMeasurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "integer", "minimum": 0},
+        "unit": {"const": "count"}
+      }
+    },
+    "unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"enum": ["UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "semanticBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component_role", "interface_role", "allowed_transform"],
+      "properties": {
+        "component_role": {"const": "fixture_body"},
+        "interface_role": {"const": "through_hole_wall"},
+        "allowed_transform": {"const": "IDENTITY"}
+      }
+    },
+    "boundingBox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x_min", "y_min", "z_min", "x_max", "y_max", "z_max"],
+      "properties": {
+        "x_min": {"$ref": "#/$defs/measurement"},
+        "y_min": {"$ref": "#/$defs/measurement"},
+        "z_min": {"$ref": "#/$defs/measurement"},
+        "x_max": {"$ref": "#/$defs/measurement"},
+        "y_max": {"$ref": "#/$defs/measurement"},
+        "z_max": {"$ref": "#/$defs/measurement"}
+      }
+    },
+    "geometrySemanticSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "artifact_type", "case_id", "artifact_role", "source_artifact_id", "length_unit", "semantic_binding", "shape"],
+      "properties": {
+        "schema_version": {"const": "1.0.0"},
+        "artifact_type": {"const": "geometry_semantic_snapshot"},
+        "case_id": {"type": "string", "minLength": 1},
+        "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+        "source_artifact_id": {"type": "string", "minLength": 1},
+        "length_unit": {"const": "mm"},
+        "semantic_binding": {"$ref": "#/$defs/semanticBinding"},
+        "shape": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["solid_count", "shell_count", "face_count", "edge_count", "vertex_count", "area", "volume", "bounding_box", "valid", "closed"],
+          "properties": {
+            "solid_count": {"$ref": "#/$defs/countMeasurement"},
+            "shell_count": {"$ref": "#/$defs/countMeasurement"},
+            "face_count": {"$ref": "#/$defs/countMeasurement"},
+            "edge_count": {"$ref": "#/$defs/countMeasurement"},
+            "vertex_count": {"$ref": "#/$defs/countMeasurement"},
+            "area": {"$ref": "#/$defs/measurement"},
+            "volume": {"$ref": "#/$defs/measurement"},
+            "bounding_box": {"$ref": "#/$defs/boundingBox"},
+            "valid": {"type": "boolean"},
+            "closed": {"type": "boolean"}
+          }
+        }
+      }
+    },
+    "throughHoleProven": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "count", "selection"],
+      "properties": {
+        "status": {"const": "PROVEN"},
+        "count": {"$ref": "#/$defs/countMeasurement"},
+        "selection": {"type": "string", "minLength": 1}
+      }
+    },
+    "topologySnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "artifact_type", "case_id", "artifact_role", "source_artifact_id", "topology"],
+      "properties": {
+        "schema_version": {"const": "1.0.0"},
+        "artifact_type": {"const": "topology_snapshot"},
+        "case_id": {"type": "string", "minLength": 1},
+        "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+        "source_artifact_id": {"type": "string", "minLength": 1},
+        "topology": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["solid_count", "shell_count", "face_count", "edge_count", "vertex_count", "connected_solid_count", "valid", "closed", "through_hole", "manifold"],
+          "properties": {
+            "solid_count": {"$ref": "#/$defs/countMeasurement"},
+            "shell_count": {"$ref": "#/$defs/countMeasurement"},
+            "face_count": {"$ref": "#/$defs/countMeasurement"},
+            "edge_count": {"$ref": "#/$defs/countMeasurement"},
+            "vertex_count": {"$ref": "#/$defs/countMeasurement"},
+            "connected_solid_count": {"$ref": "#/$defs/countMeasurement"},
+            "valid": {"type": "boolean"},
+            "closed": {"type": "boolean"},
+            "through_hole": {"oneOf": [{"$ref": "#/$defs/throughHoleProven"}, {"$ref": "#/$defs/unavailable"}]},
+            "manifold": {"$ref": "#/$defs/unavailable"}
+          }
+        }
+      }
+    },
+    "supportedVisibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {"status": {"const": "SUPPORTED"}, "value": {"type": "boolean"}}
+    },
+    "supportedColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+        }
+      }
+    },
+    "supportedTransparency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {"status": {"const": "SUPPORTED"}, "value": {"type": "integer", "minimum": 0, "maximum": 100}}
+    },
+    "supportedText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {"status": {"const": "SUPPORTED"}, "value": {"type": "string", "minLength": 1}}
+    },
+    "uiStateSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "artifact_type", "case_id", "artifact_role", "source_artifact_id", "object_role", "state"],
+      "properties": {
+        "schema_version": {"const": "1.0.0"},
+        "artifact_type": {"const": "ui_state_snapshot"},
+        "case_id": {"type": "string", "minLength": 1},
+        "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+        "source_artifact_id": {"type": "string", "minLength": 1},
+        "object_role": {"const": "fixture_body"},
+        "state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["visibility", "shape_color", "transparency", "display_mode", "camera"],
+          "properties": {
+            "visibility": {"oneOf": [{"$ref": "#/$defs/supportedVisibility"}, {"$ref": "#/$defs/unavailable"}]},
+            "shape_color": {"oneOf": [{"$ref": "#/$defs/supportedColor"}, {"$ref": "#/$defs/unavailable"}]},
+            "transparency": {"oneOf": [{"$ref": "#/$defs/supportedTransparency"}, {"$ref": "#/$defs/unavailable"}]},
+            "display_mode": {"oneOf": [{"$ref": "#/$defs/supportedText"}, {"$ref": "#/$defs/unavailable"}]},
+            "camera": {"oneOf": [{"$ref": "#/$defs/supportedText"}, {"$ref": "#/$defs/unavailable"}]}
+          }
+        }
+      }
+    },
+    "tolerance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "unit", "role", "source"],
+      "properties": {
+        "name": {"enum": ["linear", "area", "volume"]},
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"enum": ["mm", "mm2", "mm3"]},
+        "role": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "measurementOrUnavailable": {
+      "oneOf": [{"$ref": "#/$defs/measurement"}, {"$ref": "#/$defs/unavailable"}]
+    },
+    "checkOrUnavailable": {
+      "oneOf": [{"type": "boolean"}, {"$ref": "#/$defs/unavailable"}]
+    },
+    "geometryComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "artifact_type", "case_id", "comparison_role", "status", "method", "sha256_role", "tolerances", "measurements", "checks", "failed_checks", "reasons", "geometry_decision_inputs"],
+      "properties": {
+        "schema_version": {"const": "1.0.0"},
+        "artifact_type": {"const": "geometry_comparison"},
+        "case_id": {"type": "string", "minLength": 1},
+        "comparison_role": {"enum": ["UI_ONLY_MUTATION", "GEOMETRY_MUTATION", "SERIALIZATION_REOPEN"]},
+        "status": {"enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT", "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"]},
+        "method": {"enum": ["BREP_BOOLEAN_AND_MEASUREMENTS", "NOT_EVALUATED"]},
+        "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"},
+        "tolerances": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/$defs/tolerance"}},
+        "measurements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["area_delta", "volume_delta", "max_bounding_box_delta", "minimum_distance", "first_minus_second_volume", "second_minus_first_volume"],
+          "properties": {
+            "area_delta": {"$ref": "#/$defs/measurementOrUnavailable"},
+            "volume_delta": {"$ref": "#/$defs/measurementOrUnavailable"},
+            "max_bounding_box_delta": {"$ref": "#/$defs/measurementOrUnavailable"},
+            "minimum_distance": {"$ref": "#/$defs/measurementOrUnavailable"},
+            "first_minus_second_volume": {"$ref": "#/$defs/measurementOrUnavailable"},
+            "second_minus_first_volume": {"$ref": "#/$defs/measurementOrUnavailable"}
+          }
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["valid_closed_single_solids", "topology_counts", "area_delta", "volume_delta", "bounding_box", "first_minus_second", "second_minus_first"],
+          "properties": {
+            "valid_closed_single_solids": {"$ref": "#/$defs/checkOrUnavailable"},
+            "topology_counts": {"$ref": "#/$defs/checkOrUnavailable"},
+            "area_delta": {"$ref": "#/$defs/checkOrUnavailable"},
+            "volume_delta": {"$ref": "#/$defs/checkOrUnavailable"},
+            "bounding_box": {"$ref": "#/$defs/checkOrUnavailable"},
+            "first_minus_second": {"$ref": "#/$defs/checkOrUnavailable"},
+            "second_minus_first": {"$ref": "#/$defs/checkOrUnavailable"}
+          }
+        },
+        "failed_checks": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "geometry_decision_inputs": {
+          "const": ["topology", "area", "volume", "bounding_box", "bidirectional_boolean_cut"]
+        }
+      }
+    }
+  }
+}
