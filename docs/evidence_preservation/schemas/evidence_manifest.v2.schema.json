@@ -105,7 +105,25 @@
         "required": ["artifact_id", "kind", "public_path", "sha256", "size_bytes", "validation_role", "retention_role", "copy_status"],
         "properties": {
           "artifact_id": {"$ref": "#/$defs/artifactId"},
-          "kind": {"type": "string"},
+          "kind": {
+            "type": "string",
+            "enum": [
+              "JUNIT",
+              "VALIDATOR",
+              "JSON",
+              "TEXT",
+              "STEP",
+              "BREP",
+              "FCSTD",
+              "GEOMETRY_SNAPSHOT",
+              "TOPOLOGY_SNAPSHOT",
+              "UI_SNAPSHOT",
+              "COMPARISON_JSON",
+              "VIEW_INDEX",
+              "HUMAN_REVIEW",
+              "OTHER"
+            ]
+          },
           "public_path": {"type": "string", "minLength": 1},
           "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
           "size_bytes": {"type": "integer", "minimum": 0},

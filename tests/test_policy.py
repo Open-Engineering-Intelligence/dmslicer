@@ -256,6 +256,49 @@ def test_ordinary_sha256_integrity_value_is_public_safe(policy_case) -> None:
     assert validate_request(request, repository)["status"] == "PASS"
 
 
+def test_result_evidence_must_match_result_domain(policy_case) -> None:
+    repository, request, _ = policy_case
+    request["source"]["allowlist"].append(
+        {
+            "artifact_id": "case-a-ui",
+            "source_path": "validator-result.json",
+            "public_path": "ui/snapshot.json",
+            "kind": "UI_SNAPSHOT",
+            "validation_role": "ui snapshot artifact",
+            "retention_role": "STANDARD",
+        }
+    )
+    request["results"]["pytest_result"]["evidence_artifact_ids"] = ["case-a-ui"]
+
+    assert "RESULT_EVIDENCE_MISMATCH" in _codes(validate_request(request, repository))
+
+
+def test_result_evidence_domain_overlap_is_rejected(policy_case) -> None:
+    repository, request, _ = policy_case
+    request["source"]["allowlist"].append(
+        {
+            "artifact_id": "shared-junit",
+            "source_path": "validator-result.json",
+            "public_path": "reports/shared-junit.json",
+            "kind": "JUNIT",
+            "validation_role": "shared junit evidence",
+            "retention_role": "STANDARD",
+        }
+    )
+    request["results"]["pytest_result"] = {
+        "status": "PASS",
+        "evidence_artifact_ids": ["shared-junit"],
+    }
+    request["results"]["scientific_experiment_result"] = {
+        "status": "PASS",
+        "evidence_artifact_ids": ["shared-junit"],
+    }
+
+    assert "RESULT_EVIDENCE_DOMAIN_OVERLAP" in _codes(
+        validate_request(request, repository)
+    )
+
+
 def test_sha_geometry_predicate_is_rejected(policy_case) -> None:
     repository, request, _ = policy_case
     request["source"]["allowlist"][0]["validation_role"] = (

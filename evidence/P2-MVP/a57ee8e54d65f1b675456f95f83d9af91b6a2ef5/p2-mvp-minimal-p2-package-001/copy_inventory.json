@@ -1,0 +1,127 @@
+{
+  "artifact_count": 15,
+  "artifacts": [
+    {
+      "artifact_id": "acceptance-summary",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/ACCEPTANCE_SUMMARY.md",
+      "sha256": "a03bab20d71a3d42fbd09313082f9e2d9f897013458b73eec4117d3fe6f9b4cf",
+      "size_bytes": 254,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/ACCEPTANCE_SUMMARY.md"
+    },
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_comparison.json",
+      "sha256": "86a698e0a9be6fe87958cbb157d327e9c552b732ca45440968a40b5d6092093d",
+      "size_bytes": 139,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_comparison.json"
+    },
+    {
+      "artifact_id": "case-a-geometry-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_geometry_changed.FCStd",
+      "sha256": "50b84edcdfc237567967cbd2f247bb4c0b11d0cc082a1fd3e0e7bb4c6f0a0b44",
+      "size_bytes": 17744,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_geometry_changed.FCStd"
+    },
+    {
+      "artifact_id": "case-a-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_geometry_snapshot.json",
+      "sha256": "92265f59deb33c87777d18ad047c0172a55b6235a5af8381c595240dfa95aa7c",
+      "size_bytes": 887,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_geometry_snapshot.json"
+    },
+    {
+      "artifact_id": "case-a-original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_original.FCStd",
+      "sha256": "50b84edcdfc237567967cbd2f247bb4c0b11d0cc082a1fd3e0e7bb4c6f0a0b44",
+      "size_bytes": 17744,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_original.FCStd"
+    },
+    {
+      "artifact_id": "case-a-reference-brep",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_reference.brep",
+      "sha256": "5e63df7db03cafb593a91b120703e872c778348814729a3bdcffc331660046cf",
+      "size_bytes": 15304,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/reference.brep"
+    },
+    {
+      "artifact_id": "case-a-reference-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_reference.step",
+      "sha256": "5e63df7db03cafb593a91b120703e872c778348814729a3bdcffc331660046cf",
+      "size_bytes": 15304,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/reference.step"
+    },
+    {
+      "artifact_id": "case-a-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_topology_snapshot.json",
+      "sha256": "92265f59deb33c87777d18ad047c0172a55b6235a5af8381c595240dfa95aa7c",
+      "size_bytes": 887,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_topology_snapshot.json"
+    },
+    {
+      "artifact_id": "case-a-ui-only-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_ui_only_changed.FCStd",
+      "sha256": "50b84edcdfc237567967cbd2f247bb4c0b11d0cc082a1fd3e0e7bb4c6f0a0b44",
+      "size_bytes": 17744,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_ui_only_changed.FCStd"
+    },
+    {
+      "artifact_id": "case-a-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_ui_snapshot.json",
+      "sha256": "f9bc1133762be15e466a524691489dd2c1919ff1d50fa04a72cd545cdfb96767",
+      "size_bytes": 101,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_a_ui_snapshot.json"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_b_comparison.json",
+      "sha256": "51d4da53db0a59623618feb8e51da046eb4bf72fdbb9efec4128324f6cf2f212",
+      "size_bytes": 127,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/case_b_comparison.json"
+    },
+    {
+      "artifact_id": "human-review",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/HUMAN_REVIEW.md",
+      "sha256": "6a204b921143a7e886280958d2e8d3a1be27f667c7b8db3b0ef790aabf47d039",
+      "size_bytes": 208,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/HUMAN_REVIEW.md"
+    },
+    {
+      "artifact_id": "pytest-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/pytest.xml",
+      "sha256": "04b7ae008cb1cb3bd415177f99eb8f40009ebbe32886798169438d912c1d65d5",
+      "size_bytes": 8845,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/pytest.xml"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/validator-result.json",
+      "sha256": "231ee4049d0cb2d7ff7c1ea5041baf9048bd71b3a883aba903e61eadf5e816ac",
+      "size_bytes": 1248,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/validator-result.json"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/VIEW_INDEX.md",
+      "sha256": "6abb3bc613aea1d43aab14f75e6e6f0bbd32d805fe9c652c3970c3cd9f9e8af6",
+      "size_bytes": 431,
+      "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/VIEW_INDEX.md"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
+}
