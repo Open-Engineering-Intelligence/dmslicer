@@ -286,35 +286,35 @@ git commit -m "feat: promote allowlisted local evidence"
 - Produces: `python -m dmslicer.evidence_promotion validate --repository-root ROOT --request FILE`.
 - Produces: `python -m dmslicer.evidence_promotion promote --repository-root ROOT --request FILE`.
 
-- [ ] **Step 1: Write failing CLI tests**
+- [x] **Step 1: Write failing CLI tests**
 
 Use subprocess with `sys.executable`. Assert valid `validate` exits 0, policy failure exits 2, `promote` exits 0 for a created/not-fully-preserved package, and malformed JSON reports a concise error without a traceback or secret echo.
 
-- [ ] **Step 2: Run and verify RED**
+- [x] **Step 2: Run and verify RED**
 
 Run: `py -3.12 -m pytest tests/test_cli.py -q`
 
 Expected: module execution failure because CLI files do not exist.
 
-- [ ] **Step 3: Implement the CLI**
+- [x] **Step 3: Implement the CLI**
 
 Use `argparse`. Emit UTF-8 JSON to stdout. Return 0 only for validation PASS or `LOCAL_PACKAGE_CREATED`; return 2 for input, policy, or packaging failure. Do not expose private absolute paths in normal output.
 
-- [ ] **Step 4: Write the pipeline documentation**
+- [x] **Step 4: Write the pipeline documentation**
 
 Document `outputs/work -> allowlist -> manifest -> policy checks -> local stable evidence`; explain `Hash != Geometry`, `Geometry != Semantic`, `Semantic != UI`, and `pytest != Scientific Result`; give a complete request and CLI example; explain local PASS versus incomplete preservation; and state all phase-2 and authorization boundaries.
 
-- [ ] **Step 5: Add local and GitHub Actions checks**
+- [x] **Step 5: Add local and GitHub Actions checks**
 
 The PowerShell script runs `py -3.12 -m pytest -q` and the module help. The workflow uses Python 3.12, `pip install -e .`, and `pytest -q`; it also fails if `docs/research_v2/` differs from the base.
 
-- [ ] **Step 6: Run and verify GREEN**
+- [x] **Step 6: Run and verify GREEN**
 
 Run: `py -3.12 -m pytest -q`
 
 Run: `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/evidence_preservation/run_p2_mvp_checks.ps1`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```powershell
 git add src/dmslicer/evidence_promotion/cli.py src/dmslicer/evidence_promotion/__main__.py tests/test_cli.py scripts/evidence_preservation/run_p2_mvp_checks.ps1 .github/workflows/evidence-promotion.yml docs/evidence_preservation/EVIDENCE_PROMOTION_PIPELINE.md
