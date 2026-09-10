@@ -277,6 +277,32 @@ def test_byte_difference_does_not_set_geometry_failure(policy_case) -> None:
     )
 
 
+def test_valid_case_a_cad_evidence_passes_policy(
+    valid_cad_request, repository_root
+) -> None:
+    report = validate_request(valid_cad_request(), repository_root)
+    assert report["status"] == "PASS"
+
+
+@pytest.mark.parametrize(
+    ("mutation", "code"),
+    [
+        ("missing_comparison", "CAD_EVIDENCE_REFERENCE_MISSING"),
+        ("malformed_snapshot", "CAD_EVIDENCE_SCHEMA_INVALID"),
+        ("result_mismatch", "CAD_RESULT_MISMATCH"),
+        ("sha_method", "SHA_GEOMETRY_MISUSE"),
+    ],
+)
+def test_unbacked_cad_claims_fail_closed(
+    valid_cad_request, repository_root, mutation: str, code: str
+) -> None:
+    request = valid_cad_request(mutation=mutation)
+    assert code in {
+        finding["code"]
+        for finding in validate_request(request, repository_root)["findings"]
+    }
+
+
 def _add_retained_history(request: dict, staging: Path) -> None:
     mapping = {
         "failure_artifact_ids": ("failure-1", "FAILURE"),

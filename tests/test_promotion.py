@@ -224,3 +224,46 @@ def test_copy_corruption_retains_failure_report_and_source_evidence(promotion_ca
     assert not _destination(repository, request).exists()
     assert failure.read_bytes() == original_failure
     assert read_json(failure_report)["status"] == "FAIL"
+
+
+def test_promotes_case_a_and_case_b_without_collapsing_results(
+    valid_cad_request_file, repository_root
+) -> None:
+    result = promote(valid_cad_request_file, repository_root)
+    assert result["local_package_status"] == "LOCAL_PACKAGE_CREATED"
+    manifest = read_json(repository_root / result["package_path"] / "manifest.json")
+    assert manifest["results"]["geometry_equivalence_result"]["status"] == (
+        "GEOMETRY_DIFFERENT"
+    )
+    assert manifest["results"]["semantic_equivalence_result"]["status"] == (
+        "SEMANTIC_EQUIVALENT"
+    )
+    assert manifest["results"]["ui_state_result"]["status"] == "UI_DIFFERENT"
+    assert manifest["history"]["failure_artifact_ids"]
+
+
+def test_second_cad_promotion_refuses_overwrite(
+    valid_cad_request_file, repository_root
+) -> None:
+    first = promote(valid_cad_request_file, repository_root)
+    second = promote(valid_cad_request_file, repository_root)
+    assert first["local_package_status"] == "LOCAL_PACKAGE_CREATED"
+    assert second["local_package_status"] == "LOCAL_PACKAGE_BLOCKED"
+    assert {item["code"] for item in second["findings"]} == {"DESTINATION_EXISTS"}
+
+
+def test_missing_cad_snapshot_installs_no_package(
+    valid_cad_request_file, repository_root
+) -> None:
+    request = read_json(valid_cad_request_file)
+    missing = repository_root / "outputs/cad-policy/original-ui-snapshot.json"
+    missing.unlink()
+    request["run_id"] = "p2-cad-missing-001"
+    request_path = _write_json(
+        repository_root / "outputs/cad-policy/missing-request.json", request
+    )
+
+    result = promote(request_path, repository_root)
+
+    assert result["local_package_status"] == "LOCAL_PACKAGE_BLOCKED"
+    assert not _destination(repository_root, request).exists()

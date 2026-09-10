@@ -13,6 +13,7 @@ from typing import Any, Mapping
 
 from jsonschema import Draft202012Validator
 
+from .cad_evidence import compare_semantics, compare_ui_states, validate_cad_artifact
 from .models import read_json, schema_path
 
 
@@ -323,6 +324,164 @@ def _result_findings(request: Mapping[str, Any]) -> list[PolicyFinding]:
     return findings
 
 
+def _cad_evidence_findings(
+    request: Mapping[str, Any], artifacts: list[ResolvedArtifact]
+) -> list[PolicyFinding]:
+    """Validate only the fixture-scoped CAD claims admitted by the P2 schema."""
+    results = request["results"]
+    domain_results = {
+        "geometry": results["geometry_equivalence_result"],
+        "semantic": results["semantic_equivalence_result"],
+        "ui": results["ui_state_result"],
+    }
+    proven = {
+        domain: result
+        for domain, result in domain_results.items()
+        if result["evidence_artifact_ids"]
+    }
+    if not proven:
+        return []
+
+    allowlisted_ids = {
+        artifact["artifact_id"] for artifact in request["source"]["allowlist"]
+    }
+    resolved_by_id = {artifact.artifact_id: artifact for artifact in artifacts}
+    referenced_ids = {
+        artifact_id
+        for result in proven.values()
+        for artifact_id in result["evidence_artifact_ids"]
+    }
+    referenced_ids.update(request["geometry_validation"]["evidence_artifact_ids"])
+    findings: list[PolicyFinding] = []
+    values: dict[str, dict[str, Any]] = {}
+    for artifact_id in sorted(referenced_ids):
+        if artifact_id not in allowlisted_ids or artifact_id not in resolved_by_id:
+            findings.append(
+                PolicyFinding(
+                    "CAD_EVIDENCE_REFERENCE_MISSING",
+                    "CAD result references unavailable allowlisted evidence",
+                    artifact_id,
+                )
+            )
+            continue
+        try:
+            value = read_json(resolved_by_id[artifact_id].source_path)
+        except (OSError, ValueError, json.JSONDecodeError):
+            findings.append(
+                PolicyFinding(
+                    "CAD_EVIDENCE_SCHEMA_INVALID",
+                    "CAD evidence is not a valid JSON artifact",
+                    artifact_id,
+                )
+            )
+            continue
+        strings = list(_all_strings(value))
+        artifact_claims_hash_geometry = any(
+            text != _SAFE_SHA_ROLE
+            and any(token in text.lower() for token in ("sha", "hash", "digest"))
+            and "geometr" in text.lower()
+            and any(
+                token in text.lower()
+                for token in ("equival", "predicate", "proof", "proves")
+            )
+            for text in strings
+        )
+        if validate_cad_artifact(value):
+            findings.append(
+                PolicyFinding(
+                    "CAD_EVIDENCE_SCHEMA_INVALID",
+                    "CAD evidence does not satisfy the fixture evidence schema",
+                    artifact_id,
+                )
+            )
+            method = str(value.get("method", "")).lower()
+            if any(token in method for token in ("sha", "hash", "digest")) or artifact_claims_hash_geometry:
+                findings.append(
+                    PolicyFinding(
+                        "SHA_GEOMETRY_MISUSE",
+                        "A hash or digest is presented as a geometry comparison method",
+                        artifact_id,
+                    )
+                )
+            continue
+        if artifact_claims_hash_geometry:
+            findings.append(
+                PolicyFinding(
+                    "SHA_GEOMETRY_MISUSE",
+                    "A hash or digest is presented as geometry evidence",
+                    artifact_id,
+                )
+            )
+        values[artifact_id] = value
+
+    geometry = proven.get("geometry")
+    if geometry is not None:
+        comparisons = [
+            values[artifact_id]
+            for artifact_id in geometry["evidence_artifact_ids"]
+            if artifact_id in values
+            and values[artifact_id].get("artifact_type") == "geometry_comparison"
+        ]
+        validation = request["geometry_validation"]
+        if (
+            not comparisons
+            or comparisons[0]["status"] != geometry["status"]
+            or validation["status"] != geometry["status"]
+            or comparisons[0]["method"] != validation["evidence_method"]
+            or not set(validation["evidence_artifact_ids"]).issubset(
+                set(geometry["evidence_artifact_ids"])
+            )
+        ):
+            findings.append(
+                PolicyFinding(
+                    "CAD_RESULT_MISMATCH",
+                    "Geometry result does not match its B-rep comparison evidence",
+                )
+            )
+
+    semantic = proven.get("semantic")
+    if semantic is not None:
+        snapshots = [
+            values[artifact_id]
+            for artifact_id in semantic["evidence_artifact_ids"]
+            if artifact_id in values
+            and values[artifact_id].get("artifact_type")
+            == "geometry_semantic_snapshot"
+        ]
+        status = (
+            compare_semantics(
+                snapshots[0]["semantic_binding"], snapshots[1]["semantic_binding"]
+            )["status"]
+            if len(snapshots) == 2
+            else None
+        )
+        if status != semantic["status"]:
+            findings.append(
+                PolicyFinding(
+                    "CAD_RESULT_MISMATCH",
+                    "Semantic result does not match its two fixture snapshots",
+                )
+            )
+
+    ui = proven.get("ui")
+    if ui is not None:
+        snapshots = [
+            values[artifact_id]
+            for artifact_id in ui["evidence_artifact_ids"]
+            if artifact_id in values
+            and values[artifact_id].get("artifact_type") == "ui_state_snapshot"
+        ]
+        status = compare_ui_states(snapshots[0], snapshots[1])["status"] if len(snapshots) == 2 else None
+        if status != ui["status"]:
+            findings.append(
+                PolicyFinding(
+                    "CAD_RESULT_MISMATCH",
+                    "UI result does not match its two saved-state snapshots",
+                )
+            )
+    return findings
+
+
 def _retention_findings(request: Mapping[str, Any]) -> list[PolicyFinding]:
     artifacts = {
         artifact["artifact_id"]: artifact for artifact in request["source"]["allowlist"]
@@ -391,7 +550,9 @@ def validate_request(request: Mapping[str, Any], repository_root: Path) -> dict[
             "git": _git_findings(request, Path(repository_root)),
             "allowlist": path_findings,
             "content": _sensitive_content_findings(resolved),
-            "result_separation": _result_findings(request),
+            "result_separation": (
+                _result_findings(request) + _cad_evidence_findings(request, resolved)
+            ),
             "failure_retention": _retention_findings(request),
         }
     )

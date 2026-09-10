@@ -41,6 +41,48 @@
         {"properties": {"status": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED"]}}}
       ]
     },
+    "geometryResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "semanticResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["SEMANTIC_EQUIVALENT", "SEMANTIC_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "SEMANTIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "uiResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["UI_SAME", "UI_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["UI_COMPARISON_NOT_PROVEN", "UI_STATE_NOT_PROVEN"]}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "geometryValidation": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "evidence_method", "evidence_artifact_ids", "sha256_role"],
+          "properties": {
+            "status": {"enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT"]},
+            "evidence_method": {"const": "BREP_BOOLEAN_AND_MEASUREMENTS"},
+            "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds", "minItems": 1},
+            "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "evidence_method", "evidence_artifact_ids", "sha256_role"],
+          "properties": {
+            "status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"},
+            "evidence_method": {"const": "NOT_EVALUATED_P2_MVP"},
+            "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds", "maxItems": 0},
+            "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"}
+          }
+        }
+      ]
+    },
     "tolerance": {
       "type": "object",
       "additionalProperties": false,
@@ -137,32 +179,16 @@
             {"properties": {"status": {"enum": ["BYTE_SAME", "BYTE_DIFFERENT", "BYTE_NOT_EVALUATED"]}}}
           ]
         },
-        "geometry_equivalence_result": {
-          "allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]
-        },
-        "semantic_equivalence_result": {
-          "allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "SEMANTIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]
-        },
-        "ui_state_result": {
-          "allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "UI_STATE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]
-        },
+        "geometry_equivalence_result": {"$ref": "#/$defs/geometryResult"},
+        "semantic_equivalence_result": {"$ref": "#/$defs/semanticResult"},
+        "ui_state_result": {"$ref": "#/$defs/uiResult"},
         "pytest_result": {"$ref": "#/$defs/softwareResult"},
         "validator_result": {"$ref": "#/$defs/softwareResult"},
         "scientific_experiment_result": {"$ref": "#/$defs/scientificResult"},
         "human_inspection_result": {"$ref": "#/$defs/humanResult"}
       }
     },
-    "geometry_validation": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["status", "evidence_method", "evidence_artifact_ids", "sha256_role"],
-      "properties": {
-        "status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"},
-        "evidence_method": {"const": "NOT_EVALUATED_P2_MVP"},
-        "evidence_artifact_ids": {"type": "array", "maxItems": 0},
-        "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"}
-      }
-    },
+    "geometry_validation": {"$ref": "#/$defs/geometryValidation"},
     "local_package_result": {
       "type": "object",
       "additionalProperties": false,

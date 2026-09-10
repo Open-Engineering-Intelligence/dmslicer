@@ -45,7 +45,7 @@ def test_historical_manifests_remain_valid() -> None:
         validator.validate(json.loads(manifest.read_text(encoding="utf-8")))
 
 
-def test_valid_mvp_request_requires_unproven_geometry(valid_request) -> None:
+def test_valid_mvp_request_allows_unproven_geometry(valid_request) -> None:
     request = valid_request()
 
     _validator("promotion_request.schema.json").validate(request)
@@ -81,6 +81,28 @@ def test_manifest_allows_byte_difference_without_geometry_claim(valid_manifest) 
     assert manifest["geometry_validation"]["status"] == "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
 
 
+def test_request_allows_proven_cad_results_only_with_evidence(valid_cad_request) -> None:
+    request = valid_cad_request()
+    _validator("promotion_request.schema.json").validate(request)
+    request["results"]["geometry_equivalence_result"]["evidence_artifact_ids"] = []
+    with pytest.raises(ValidationError):
+        _validator("promotion_request.schema.json").validate(request)
+
+
+def test_historical_manifests_still_validate_after_cad_extension() -> None:
+    schema = json.loads(HISTORICAL_SCHEMA.read_text(encoding="utf-8"))
+    for manifest in sorted(HISTORICAL_MANIFESTS.glob("goal-*.json")):
+        Draft202012Validator(schema).validate(read_json(manifest))
+
+
+def test_existing_p2_mvp_manifests_remain_valid() -> None:
+    validator = _validator("evidence_manifest.v2.schema.json")
+    manifests = sorted((REPOSITORY_ROOT / "evidence/P2-MVP").glob("*/*/manifest.json"))
+    assert manifests
+    for manifest in manifests:
+        validator.validate(read_json(manifest))
+
+
 @pytest.mark.parametrize(
     "mutation",
     [
@@ -88,7 +110,7 @@ def test_manifest_allows_byte_difference_without_geometry_claim(valid_manifest) 
         "invalid_run_id",
         "missing_tolerance_unit",
         "unknown_property",
-        "geometry_pass",
+        "geometry_pass_without_evidence",
         "geometry_evidence",
         "collapsed_result_status",
     ],
@@ -105,7 +127,7 @@ def test_request_schema_rejects_incomplete_or_claiming_input(valid_request, muta
         ]
     elif mutation == "unknown_property":
         request["geometry_hash_is_truth"] = True
-    elif mutation == "geometry_pass":
+    elif mutation == "geometry_pass_without_evidence":
         request["results"]["geometry_equivalence_result"]["status"] = "GEOMETRY_EQUIVALENT"
     elif mutation == "collapsed_result_status":
         request["results"]["pytest_result"]["status"] = "GEOMETRY_EQUIVALENT"
