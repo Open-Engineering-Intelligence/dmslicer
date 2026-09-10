@@ -3,6 +3,11 @@
 from __future__ import annotations
 
 import math
+import os
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
 from typing import Any, Mapping
 
 from jsonschema import Draft202012Validator
@@ -16,11 +21,13 @@ from .models import (
     UI_SAME,
     read_json,
     schema_path,
+    write_json,
 )
 
 
 _SEMANTIC_FIELDS = ("component_role", "interface_role", "allowed_transform")
 _UI_FIELDS = ("shape_color", "transparency", "visibility")
+_FREECAD_WORKER = Path(__file__).with_name("freecad_cad_evidence.py")
 
 
 def _nonfinite_paths(value: Any, path: tuple[str, ...] = ()):
@@ -133,3 +140,77 @@ def compare_ui_states(
         if first_state[field]["value"] != second_state[field]["value"]
     )
     return {"status": UI_DIFFERENT if differences else UI_SAME, "differences": differences}
+
+
+def _freecad_executable(*, gui: bool) -> Path:
+    names = ("FreeCAD.exe", "freecad") if gui else ("FreeCADCmd.exe", "freecadcmd")
+    discovered = next((shutil.which(name) for name in names if shutil.which(name)), None)
+    installed = Path(r"C:\Program Files\FreeCAD 1.1\bin") / names[0]
+    for candidate in (Path(discovered) if discovered else None, installed):
+        if candidate is not None and candidate.is_file():
+            return candidate
+    raise FileNotFoundError("required FreeCAD executable was not found")
+
+
+def run_freecad_worker(
+    request: Mapping[str, Any], output_root: Path, *, gui: bool
+) -> dict[str, Any]:
+    """Run the fixture-scoped worker without exposing temporary paths on failure."""
+    output_root = Path(output_root).resolve()
+    output_root.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="dmslicer_p2_cad_") as temporary:
+        request_path = Path(temporary) / "request.json"
+        response_path = Path(temporary) / "response.json"
+        write_json(request_path, {**request, "output_root": str(output_root)})
+        environment = os.environ.copy()
+        environment.update(
+            {
+                "DMSLICER_CAD_REQUEST": str(request_path),
+                "DMSLICER_CAD_RESPONSE": str(response_path),
+            }
+        )
+        executable = _freecad_executable(gui=gui)
+        if gui:
+            command = [str(executable), "--safe-mode", str(_FREECAD_WORKER)]
+            completed = subprocess.run(
+                command,
+                env=environment,
+                text=True,
+                capture_output=True,
+                timeout=120,
+                check=False,
+            )
+        else:
+            console = (
+                "import os; p=r'%s'; "
+                "exec(compile(open(p, encoding='utf-8').read(), p, 'exec'))\n"
+                % str(_FREECAD_WORKER)
+            )
+            completed = subprocess.run(
+                [str(executable), "--safe-mode", "-c"],
+                input=console,
+                env=environment,
+                text=True,
+                capture_output=True,
+                timeout=120,
+                check=False,
+            )
+        if not response_path.is_file():
+            raise RuntimeError(
+                f"FreeCAD worker failed without a response (exit_code={completed.returncode})"
+            )
+        response = read_json(response_path)
+        if completed.returncode or response.get("status") != "PASS":
+            code = response.get("error_code", "WORKER_FAILED")
+            raise RuntimeError(f"FreeCAD worker failed ({code})")
+        return response
+
+
+def generate_demo(output_root: Path) -> dict[str, Any]:
+    """Generate three immutable fixture variants and their reopened snapshots."""
+    output_root = Path(output_root)
+    if output_root.exists() and any(output_root.iterdir()):
+        raise FileExistsError("demo output root must be absent or empty")
+    return run_freecad_worker(
+        {"operation": "generate_fixture_set"}, output_root, gui=True
+    )
