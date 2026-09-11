@@ -46,6 +46,12 @@ _EXPECTED_HISTORY_ROLES = {
     "reviewer_finding_artifact_ids": "REVIEWER_FINDING",
 }
 _SAFE_SHA_ROLE = "file_and_copy_integrity_only_not_geometry_equivalence"
+_CAD_KIND_ARTIFACT_TYPES = {
+    "GEOMETRY_SNAPSHOT": "geometry_semantic_snapshot",
+    "TOPOLOGY_SNAPSHOT": "topology_snapshot",
+    "UI_SNAPSHOT": "ui_state_snapshot",
+    "COMPARISON_JSON": "geometry_comparison",
+}
 _SENSITIVE_PATTERNS = (
     re.compile(r"(?i)\b[A-Z]:[\\/]+"),
     re.compile(r"(?i)/(?:home|users|tmp)/[^\s\"']+"),
@@ -380,6 +386,123 @@ def _result_findings(request: Mapping[str, Any]) -> list[PolicyFinding]:
     return findings
 
 
+def _comparison_consistency_findings(
+    artifact_id: str,
+    comparison: Mapping[str, Any],
+    request_tolerances: list[Mapping[str, Any]],
+) -> list[PolicyFinding]:
+    """Recompute the fixture comparison decision from measurements and tolerances."""
+    findings: list[PolicyFinding] = []
+    comparison_tolerances = {
+        item["name"]: (item["value"], item["unit"])
+        for item in comparison["tolerances"]
+    }
+    declared_tolerances = {
+        item["name"]: (item["value"], item["unit"])
+        for item in request_tolerances
+    }
+    if comparison_tolerances != declared_tolerances:
+        findings.append(
+            PolicyFinding(
+                "CAD_COMPARISON_INCONSISTENT",
+                "Comparison tolerances do not match the promotion request",
+                artifact_id,
+            )
+        )
+    expected_units = {"linear": "mm", "area": "mm2", "volume": "mm3"}
+    if (
+        set(comparison_tolerances) != set(expected_units)
+        or any(
+            comparison_tolerances[name][1] != unit
+            for name, unit in expected_units.items()
+            if name in comparison_tolerances
+        )
+    ):
+        findings.append(
+            PolicyFinding(
+                "CAD_COMPARISON_INCONSISTENT",
+                "Comparison tolerance names and units are not the fixture contract",
+                artifact_id,
+            )
+        )
+
+    measurement_checks = {
+        "area_delta": ("area_delta", "area"),
+        "volume_delta": ("volume_delta", "volume"),
+        "bounding_box": ("max_bounding_box_delta", "linear"),
+        "first_minus_second": ("first_minus_second_volume", "volume"),
+        "second_minus_first": ("second_minus_first_volume", "volume"),
+    }
+    checks = comparison["checks"]
+    measurements = comparison["measurements"]
+    for check_name, (measurement_name, tolerance_name) in measurement_checks.items():
+        measurement = measurements[measurement_name]
+        declared_check = checks[check_name]
+        if "value" not in measurement or tolerance_name not in comparison_tolerances:
+            expected_check: bool | None = None
+        else:
+            expected_check = (
+                abs(float(measurement["value"]))
+                <= float(comparison_tolerances[tolerance_name][0])
+            )
+        if expected_check is not None and declared_check is not expected_check:
+            findings.append(
+                PolicyFinding(
+                    "CAD_COMPARISON_INCONSISTENT",
+                    f"{check_name} does not match its measurement and tolerance",
+                    artifact_id,
+                )
+            )
+
+    boolean_checks = {
+        name: value for name, value in checks.items() if isinstance(value, bool)
+    }
+    unavailable_checks = [
+        name for name, value in checks.items() if isinstance(value, Mapping)
+    ]
+    expected_failed = sorted(
+        name for name, value in boolean_checks.items() if value is False
+    )
+    if unavailable_checks:
+        expected_status = "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+    elif expected_failed:
+        expected_status = "GEOMETRY_DIFFERENT"
+    else:
+        expected_status = "GEOMETRY_EQUIVALENT"
+    reasons = comparison["reasons"]
+    reason_text = " ".join(reasons).lower()
+    reason_tokens = {
+        "valid_closed_single_solids": ("valid", "closed", "solid"),
+        "topology_counts": ("topology",),
+        "area_delta": ("area",),
+        "volume_delta": ("volume",),
+        "bounding_box": ("bounding", "bbox"),
+        "first_minus_second": ("boolean", "first", "cut"),
+        "second_minus_first": ("boolean", "second", "cut"),
+    }
+    uncovered_failures = [
+        name
+        for name in expected_failed
+        if not any(token in reason_text for token in reason_tokens[name])
+    ]
+    if (
+        comparison["status"] != expected_status
+        or sorted(comparison["failed_checks"]) != expected_failed
+        or (expected_status == "GEOMETRY_EQUIVALENT" and reasons)
+        or (expected_status != "GEOMETRY_EQUIVALENT" and not reasons)
+        or uncovered_failures
+        or any(token in reason_text for token in ("sha", "hash", "digest", "byte"))
+    ):
+        findings.append(
+            PolicyFinding(
+                "CAD_COMPARISON_INCONSISTENT",
+                "Comparison status, failed checks, and reasons are not mutually consistent",
+                artifact_id,
+            )
+        )
+    return findings
+
+
 def _cad_evidence_findings(
     request: Mapping[str, Any], artifacts: list[ResolvedArtifact]
 ) -> list[PolicyFinding]:
@@ -395,9 +518,6 @@ def _cad_evidence_findings(
         for domain, result in domain_results.items()
         if result["evidence_artifact_ids"]
     }
-    if not proven:
-        return []
-
     allowlisted_ids = {
         artifact["artifact_id"] for artifact in request["source"]["allowlist"]
     }
@@ -408,9 +528,14 @@ def _cad_evidence_findings(
         for artifact_id in result["evidence_artifact_ids"]
     }
     referenced_ids.update(request["geometry_validation"]["evidence_artifact_ids"])
+    cad_artifact_ids = {
+        artifact.artifact_id
+        for artifact in artifacts
+        if artifact.kind in _CAD_KIND_ARTIFACT_TYPES
+    }
     findings: list[PolicyFinding] = []
     values: dict[str, dict[str, Any]] = {}
-    for artifact_id in sorted(referenced_ids):
+    for artifact_id in sorted(referenced_ids | cad_artifact_ids):
         if artifact_id not in allowlisted_ids or artifact_id not in resolved_by_id:
             findings.append(
                 PolicyFinding(
@@ -442,7 +567,8 @@ def _cad_evidence_findings(
             )
             for text in strings
         )
-        if validate_cad_artifact(value):
+        schema_errors = validate_cad_artifact(value)
+        if schema_errors:
             findings.append(
                 PolicyFinding(
                     "CAD_EVIDENCE_SCHEMA_INVALID",
@@ -460,6 +586,20 @@ def _cad_evidence_findings(
                     )
                 )
             continue
+        artifact = resolved_by_id[artifact_id]
+        expected_artifact_type = _CAD_KIND_ARTIFACT_TYPES.get(artifact.kind)
+        if (
+            expected_artifact_type is not None
+            and value.get("artifact_type") != expected_artifact_type
+        ):
+            findings.append(
+                PolicyFinding(
+                    "CAD_EVIDENCE_KIND_MISMATCH",
+                    f"{artifact.kind} requires artifact_type={expected_artifact_type}",
+                    artifact_id,
+                )
+            )
+            continue
         if artifact_claims_hash_geometry:
             findings.append(
                 PolicyFinding(
@@ -469,6 +609,12 @@ def _cad_evidence_findings(
                 )
             )
         values[artifact_id] = value
+        if value.get("artifact_type") == "geometry_comparison":
+            findings.extend(
+                _comparison_consistency_findings(
+                    artifact_id, value, request["tolerances"]
+                )
+            )
 
     geometry = proven.get("geometry")
     if geometry is not None:

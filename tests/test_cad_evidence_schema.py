@@ -120,3 +120,50 @@ def test_cad_evidence_schema_accepts_policy_consumed_artifact_envelopes(
         )
         validator.validate(value)
 
+
+def test_cad_evidence_schema_rejects_bare_string_version() -> None:
+    validator = jsonschema.Draft202012Validator(_load_schema())
+
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate({"schema_version": "1.0.0"})
+
+
+@pytest.mark.parametrize(
+    ("field", "invalid_value"),
+    [
+        ("checks", {"area_delta": "yes"}),
+        ("reasons", [7]),
+    ],
+)
+def test_cad_evidence_schema_rejects_untyped_comparison_decisions(
+    valid_cad_request, repository_root: Path, field: str, invalid_value
+) -> None:
+    validator = jsonschema.Draft202012Validator(_load_schema())
+    request = valid_cad_request()
+    staging_root = repository_root / request["source"]["staging_root"]
+    comparison = json.loads(
+        (staging_root / "case-a-comparison.json").read_text(encoding="utf-8")
+    )
+    if field == "checks":
+        comparison[field].update(invalid_value)
+    else:
+        comparison[field] = invalid_value
+
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(comparison)
+
+
+def test_cad_evidence_schema_rejects_wrong_comparison_measurement_unit(
+    valid_cad_request, repository_root: Path
+) -> None:
+    validator = jsonschema.Draft202012Validator(_load_schema())
+    request = valid_cad_request()
+    staging_root = repository_root / request["source"]["staging_root"]
+    comparison = json.loads(
+        (staging_root / "case-a-comparison.json").read_text(encoding="utf-8")
+    )
+    comparison["measurements"]["area_delta"]["unit"] = "percent"
+
+    with pytest.raises(jsonschema.ValidationError):
+        validator.validate(comparison)
+

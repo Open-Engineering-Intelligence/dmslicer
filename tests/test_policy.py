@@ -346,6 +346,113 @@ def test_unbacked_cad_claims_fail_closed(
     }
 
 
+def _add_unreferenced_cad_artifact(
+    request: dict, repository_root: Path, artifact_id: str, kind: str, value: dict
+) -> None:
+    staging = repository_root / request["source"]["staging_root"]
+    filename = f"{artifact_id}.json"
+    (staging / filename).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    request["source"]["allowlist"].append(
+        {
+            "artifact_id": artifact_id,
+            "source_path": filename,
+            "public_path": f"cad/{filename}",
+            "kind": kind,
+            "validation_role": "unreferenced CAD evidence under validation",
+            "retention_role": "STANDARD",
+        }
+    )
+
+
+def test_unreferenced_specialized_cad_artifact_is_still_schema_validated(
+    valid_cad_request, repository_root: Path
+) -> None:
+    request = valid_cad_request()
+    _add_unreferenced_cad_artifact(
+        request,
+        repository_root,
+        "unreferenced-reopen-comparison",
+        "COMPARISON_JSON",
+        {"schema_version": "1.0.0", "artifact_type": "geometry_comparison"},
+    )
+
+    assert "CAD_EVIDENCE_SCHEMA_INVALID" in _codes(
+        validate_request(request, repository_root)
+    )
+
+
+def test_specialized_cad_artifact_is_validated_without_any_proven_result(
+    valid_cad_request, repository_root: Path
+) -> None:
+    request = valid_cad_request()
+    request["results"]["geometry_equivalence_result"] = {
+        "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
+        "evidence_artifact_ids": [],
+    }
+    request["results"]["semantic_equivalence_result"] = {
+        "status": "SEMANTIC_EQUIVALENCE_NOT_PROVEN",
+        "evidence_artifact_ids": [],
+    }
+    request["results"]["ui_state_result"] = {
+        "status": "UI_COMPARISON_NOT_PROVEN",
+        "evidence_artifact_ids": [],
+    }
+    request["geometry_validation"] = {
+        "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN",
+        "evidence_method": "NOT_EVALUATED_P2_MVP",
+        "evidence_artifact_ids": [],
+        "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+    }
+    staging = repository_root / request["source"]["staging_root"]
+    malformed = staging / "case-a-comparison.json"
+    malformed.write_text('{"schema_version":"1.0.0"}\n', encoding="utf-8")
+
+    assert "CAD_EVIDENCE_SCHEMA_INVALID" in _codes(
+        validate_request(request, repository_root)
+    )
+
+
+def test_specialized_cad_kind_must_match_artifact_discriminator(
+    valid_cad_request, repository_root: Path
+) -> None:
+    request = valid_cad_request()
+    staging = repository_root / request["source"]["staging_root"]
+    value = json.loads(
+        (staging / "original-ui-snapshot.json").read_text(encoding="utf-8")
+    )
+    _add_unreferenced_cad_artifact(
+        request, repository_root, "mislabeled-snapshot", "GEOMETRY_SNAPSHOT", value
+    )
+
+    assert "CAD_EVIDENCE_KIND_MISMATCH" in _codes(
+        validate_request(request, repository_root)
+    )
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["false_check_omitted", "status_contradicts_measurements", "tolerance_mismatch"],
+)
+def test_geometry_comparison_decision_must_follow_measurements_and_tolerances(
+    valid_cad_request, repository_root: Path, mutation: str
+) -> None:
+    request = valid_cad_request()
+    staging = repository_root / request["source"]["staging_root"]
+    path = staging / "case-a-comparison.json"
+    comparison = json.loads(path.read_text(encoding="utf-8"))
+    if mutation == "false_check_omitted":
+        comparison["checks"]["area_delta"] = False
+    elif mutation == "status_contradicts_measurements":
+        comparison["measurements"]["area_delta"]["value"] = 1.0
+    else:
+        comparison["tolerances"][0]["value"] = 0.01
+    path.write_text(json.dumps(comparison, indent=2) + "\n", encoding="utf-8")
+
+    assert "CAD_COMPARISON_INCONSISTENT" in _codes(
+        validate_request(request, repository_root)
+    )
+
+
 def _add_retained_history(request: dict, staging: Path) -> None:
     mapping = {
         "failure_artifact_ids": ("failure-1", "FAILURE"),

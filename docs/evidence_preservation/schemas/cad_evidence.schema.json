@@ -48,6 +48,16 @@
       "$ref": "#/$defs/geometry_comparison"
     }
   },
+  "anyOf": [
+    {
+      "properties": {
+        "schema_version": {"type": "integer", "minimum": 1}
+      }
+    },
+    {
+      "required": ["artifact_type"]
+    }
+  ],
   "allOf": [
     {
       "if": {
@@ -57,6 +67,7 @@
         "required": ["artifact_type"]
       },
       "then": {
+        "additionalProperties": false,
         "required": [
           "schema_version",
           "artifact_type",
@@ -69,10 +80,14 @@
         ],
         "properties": {
           "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "geometry_semantic_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
           "artifact_role": {"enum": ["OPENING", "CLOSING"]},
           "length_unit": {"const": "mm"},
           "semantic_binding": {
             "type": "object",
+            "additionalProperties": false,
             "required": ["component_role", "interface_role", "allowed_transform"],
             "properties": {
               "component_role": {"const": "fixture_body"},
@@ -82,6 +97,7 @@
           },
           "shape": {
             "type": "object",
+            "additionalProperties": false,
             "required": [
               "solid_count",
               "shell_count",
@@ -104,6 +120,7 @@
               "volume": {"$ref": "#/$defs/continuous_measurement"},
               "bounding_box": {
                 "type": "object",
+                "additionalProperties": false,
                 "required": ["x_min", "y_min", "z_min", "x_max", "y_max", "z_max"],
                 "properties": {
                   "x_min": {"$ref": "#/$defs/continuous_measurement"},
@@ -129,6 +146,7 @@
         "required": ["artifact_type"]
       },
       "then": {
+        "additionalProperties": false,
         "required": [
           "schema_version",
           "artifact_type",
@@ -139,9 +157,13 @@
         ],
         "properties": {
           "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "topology_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
           "artifact_role": {"enum": ["OPENING", "CLOSING"]},
           "topology": {
             "type": "object",
+            "additionalProperties": false,
             "required": [
               "solid_count",
               "shell_count",
@@ -178,6 +200,7 @@
         "required": ["artifact_type"]
       },
       "then": {
+        "additionalProperties": false,
         "required": [
           "schema_version",
           "artifact_type",
@@ -189,17 +212,21 @@
         ],
         "properties": {
           "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "ui_state_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
           "artifact_role": {"enum": ["OPENING", "CLOSING"]},
           "object_role": {"const": "fixture_body"},
           "state": {
             "type": "object",
+            "additionalProperties": false,
             "required": ["visibility", "shape_color", "transparency", "display_mode", "camera"],
             "properties": {
-              "visibility": {"$ref": "#/$defs/ui_value"},
-              "shape_color": {"$ref": "#/$defs/ui_value"},
-              "transparency": {"$ref": "#/$defs/ui_value"},
-              "display_mode": {"$ref": "#/$defs/ui_value"},
-              "camera": {"$ref": "#/$defs/ui_value"}
+              "visibility": {"oneOf": [{"$ref": "#/$defs/supported_visibility"}, {"$ref": "#/$defs/unavailable"}]},
+              "shape_color": {"oneOf": [{"$ref": "#/$defs/supported_color"}, {"$ref": "#/$defs/unavailable"}]},
+              "transparency": {"oneOf": [{"$ref": "#/$defs/supported_transparency"}, {"$ref": "#/$defs/unavailable"}]},
+              "display_mode": {"oneOf": [{"$ref": "#/$defs/supported_text"}, {"$ref": "#/$defs/unavailable"}]},
+              "camera": {"oneOf": [{"$ref": "#/$defs/supported_text"}, {"$ref": "#/$defs/unavailable"}]}
             }
           }
         }
@@ -213,6 +240,7 @@
         "required": ["artifact_type"]
       },
       "then": {
+        "additionalProperties": false,
         "required": [
           "schema_version",
           "artifact_type",
@@ -230,6 +258,8 @@
         ],
         "properties": {
           "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "geometry_comparison"},
+          "case_id": {"type": "string", "minLength": 1},
           "comparison_role": {
             "enum": ["UI_ONLY_MUTATION", "GEOMETRY_MUTATION", "SERIALIZATION_REOPEN"]
           },
@@ -238,13 +268,24 @@
           },
           "method": {"enum": ["BREP_BOOLEAN_AND_MEASUREMENTS", "NOT_EVALUATED"]},
           "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"},
+          "byte_identity": {
+            "enum": ["BYTE_IDENTICAL", "BYTE_DIFFERENT", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
+          "semantic_comparison": {
+            "enum": ["SEMANTIC_EQUIVALENT", "SEMANTIC_DIFFERENT", "SEMANTIC_EQUIVALENCE_NOT_PROVEN", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
+          "ui_comparison": {
+            "enum": ["UI_SAME", "UI_DIFFERENT", "UI_COMPARISON_NOT_PROVEN", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
           "tolerances": {
             "type": "array",
             "minItems": 3,
+            "maxItems": 3,
             "items": {"$ref": "#/$defs/tolerance"}
           },
           "measurements": {
             "type": "object",
+            "additionalProperties": false,
             "required": [
               "area_delta",
               "volume_delta",
@@ -254,16 +295,17 @@
               "second_minus_first_volume"
             ],
             "properties": {
-              "area_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
-              "volume_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
-              "max_bounding_box_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
-              "minimum_distance": {"$ref": "#/$defs/measurement_or_unavailable"},
-              "first_minus_second_volume": {"$ref": "#/$defs/measurement_or_unavailable"},
-              "second_minus_first_volume": {"$ref": "#/$defs/measurement_or_unavailable"}
+              "area_delta": {"$ref": "#/$defs/area_measurement_or_unavailable"},
+              "volume_delta": {"$ref": "#/$defs/volume_measurement_or_unavailable"},
+              "max_bounding_box_delta": {"$ref": "#/$defs/linear_measurement_or_unavailable"},
+              "minimum_distance": {"$ref": "#/$defs/linear_measurement_or_unavailable"},
+              "first_minus_second_volume": {"$ref": "#/$defs/volume_measurement_or_unavailable"},
+              "second_minus_first_volume": {"$ref": "#/$defs/volume_measurement_or_unavailable"}
             }
           },
           "checks": {
             "type": "object",
+            "additionalProperties": false,
             "required": [
               "valid_closed_single_solids",
               "topology_counts",
@@ -272,10 +314,26 @@
               "bounding_box",
               "first_minus_second",
               "second_minus_first"
-            ]
+            ],
+            "properties": {
+              "valid_closed_single_solids": {"$ref": "#/$defs/check_or_unavailable"},
+              "topology_counts": {"$ref": "#/$defs/check_or_unavailable"},
+              "area_delta": {"$ref": "#/$defs/check_or_unavailable"},
+              "volume_delta": {"$ref": "#/$defs/check_or_unavailable"},
+              "bounding_box": {"$ref": "#/$defs/check_or_unavailable"},
+              "first_minus_second": {"$ref": "#/$defs/check_or_unavailable"},
+              "second_minus_first": {"$ref": "#/$defs/check_or_unavailable"}
+            }
           },
-          "failed_checks": {"type": "array", "uniqueItems": true},
-          "reasons": {"type": "array"},
+          "failed_checks": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "reasons": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          },
           "geometry_decision_inputs": {
             "const": ["topology", "area", "volume", "bounding_box", "bidirectional_boolean_cut"]
           }
@@ -334,6 +392,7 @@
     },
     "unavailable": {
       "type": "object",
+      "additionalProperties": false,
       "required": ["status", "reason"],
       "properties": {
         "status": {"enum": ["UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]},
@@ -347,6 +406,53 @@
           "required": ["status", "value"],
           "properties": {"status": {"const": "SUPPORTED"}}
         },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "supported_visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "boolean"}
+      }
+    },
+    "supported_color": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+        }
+      }
+    },
+    "supported_transparency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "integer", "minimum": 0, "maximum": 100}
+      }
+    },
+    "supported_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "check_or_unavailable": {
+      "oneOf": [
+        {"type": "boolean"},
         {"$ref": "#/$defs/unavailable"}
       ]
     },
@@ -364,6 +470,48 @@
     "measurement_or_unavailable": {
       "oneOf": [
         {"$ref": "#/$defs/continuous_measurement"},
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "linear_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm"}
+          }
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "area_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm2"}
+          }
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "volume_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm3"}
+          }
+        },
         {"$ref": "#/$defs/unavailable"}
       ]
     },
