@@ -7,10 +7,8 @@
   "required": [
     "contract",
     "decision_id",
-    "input_snapshot_id",
     "status",
-    "reason_code",
-    "provenance_reference"
+    "reason_code"
   ],
   "properties": {
     "contract": {
@@ -66,9 +64,23 @@
   },
   "allOf": [
     {
+      "if": {
+        "properties": {
+          "status": { "const": "FAILED" },
+          "reason_code": { "const": "INVALID_SNAPSHOT" }
+        },
+        "required": ["status", "reason_code"]
+      },
+      "else": {
+        "required": ["input_snapshot_id", "provenance_reference"]
+      }
+    },
+    {
       "if": { "properties": { "status": { "const": "DECIDED" } }, "required": ["status"] },
       "then": {
         "required": [
+          "input_snapshot_id",
+          "provenance_reference",
           "selected_interface_id",
           "selected_patch_ids",
           "target_region_id",

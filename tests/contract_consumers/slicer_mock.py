@@ -3,28 +3,40 @@
 from __future__ import annotations
 
 from pathlib import Path
+import re
 from typing import Any, Mapping
 
 from dmslicer.geometry_contract.ids import decision_id
 from dmslicer.geometry_contract.validation import validate_geometry_snapshot
 
 
+_SNAPSHOT_ID = re.compile(r"snapshot:v0\.1:[0-9a-f]{64}")
+_IDENTIFIER = re.compile(r"[A-Za-z][A-Za-z0-9_.-]*:\S+")
+
+
 def _base(snapshot: Mapping[str, Any], status: str, reason_code: str) -> dict[str, Any]:
+    snapshot_identifier = snapshot.get("snapshot_id")
     provenance = sorted(
-        item["provenance_id"] for item in snapshot.get("provenance_references", [])
+        identifier
+        for item in snapshot.get("provenance_references", [])
+        if isinstance(item, Mapping)
+        if isinstance(identifier := item.get("provenance_id"), str)
+        if _IDENTIFIER.fullmatch(identifier)
     )
     result = {
         "contract": {
             "name": "dmslicer.slicer-decision",
             "version": snapshot.get("contract", {}).get("version", "0.1-rc1"),
         },
-        "input_snapshot_id": snapshot.get(
-            "snapshot_id", "snapshot:v0.1:" + "0" * 64
-        ),
         "status": status,
         "reason_code": reason_code,
-        "provenance_reference": provenance[0] if provenance else "provenance:unavailable",
     }
+    if isinstance(snapshot_identifier, str) and _SNAPSHOT_ID.fullmatch(
+        snapshot_identifier
+    ):
+        result["input_snapshot_id"] = snapshot_identifier
+    if provenance:
+        result["provenance_reference"] = provenance[0]
     result["decision_id"] = decision_id(result)
     return result
 

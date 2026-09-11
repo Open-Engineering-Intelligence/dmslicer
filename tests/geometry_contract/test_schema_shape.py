@@ -169,3 +169,36 @@ def test_non_decided_slicer_decision_omits_selection_fields() -> None:
 
     decision["selected_interface_id"] = "interface:one"
     assert _schema_errors(decision, "slicer_decision")
+
+
+def test_invalid_snapshot_failure_may_omit_untrustworthy_references() -> None:
+    decision = {
+        "contract": {
+            "name": "dmslicer.slicer-decision",
+            "version": "0.1-rc1",
+        },
+        "decision_id": "decision:v0.1:" + "2" * 64,
+        "status": "FAILED",
+        "reason_code": "INVALID_SNAPSHOT",
+    }
+
+    assert _schema_errors(decision, "slicer_decision") == ()
+
+
+@pytest.mark.parametrize("status", ["REJECTED", "UNSUPPORTED"])
+def test_valid_snapshot_outcomes_require_input_references(status: str) -> None:
+    decision = {
+        "contract": {
+            "name": "dmslicer.slicer-decision",
+            "version": "0.1-rc1",
+        },
+        "decision_id": "decision:v0.1:" + "2" * 64,
+        "status": status,
+        "reason_code": (
+            "AMBIGUOUS_INTERFACE"
+            if status == "REJECTED"
+            else "UNSUPPORTED_GEOMETRY_FAMILY"
+        ),
+    }
+
+    assert _schema_errors(decision, "slicer_decision")

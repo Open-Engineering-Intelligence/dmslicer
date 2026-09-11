@@ -64,13 +64,40 @@ def test_e1_produces_schema_valid_planar_partition_decision() -> None:
     ],
 )
 def test_negative_examples_fail_closed(name: str, status: str, reason: str) -> None:
-    decision = _decide(_load("negative", name))
+    snapshot = _load("negative", name)
+    decision = _decide(snapshot)
 
     assert schema_errors(decision, schema_name="slicer_decision") == ()
     assert decision["status"] == status
     assert decision["reason_code"] == reason
+    assert decision["input_snapshot_id"] == snapshot["snapshot_id"]
+    assert decision["provenance_reference"] == sorted(
+        item["provenance_id"] for item in snapshot["provenance_references"]
+    )[0]
     assert "selected_interface_id" not in decision
     assert "selected_patch_ids" not in decision
+
+
+def test_invalid_snapshot_without_trustworthy_references_omits_them() -> None:
+    decision = _decide({})
+
+    assert decision["status"] == "FAILED"
+    assert decision["reason_code"] == "INVALID_SNAPSHOT"
+    assert "input_snapshot_id" not in decision
+    assert "provenance_reference" not in decision
+    assert schema_errors(decision, schema_name="slicer_decision") == ()
+
+
+def test_invalid_snapshot_does_not_copy_malformed_references() -> None:
+    decision = _decide(
+        {
+            "snapshot_id": "snapshot:not-verifiable",
+            "provenance_references": [{"provenance_id": "not-an-identifier"}],
+        }
+    )
+
+    assert "input_snapshot_id" not in decision
+    assert "provenance_reference" not in decision
 
 
 def test_collection_reorder_produces_byte_identical_decision() -> None:
