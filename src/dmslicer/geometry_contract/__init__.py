@@ -1,0 +1,17 @@
+"""Versioned downstream contracts for DM-Slicer geometry consumers."""
+
+from .schema import (
+    CURRENT_GEOMETRY_VERSION,
+    GEOMETRY_CONTRACT_NAME,
+    GEOMETRY_RC_VERSION,
+    GEOMETRY_RELEASE_VERSION,
+    SLICER_CONTRACT_NAME,
+)
+
+__all__ = [
+    "CURRENT_GEOMETRY_VERSION",
+    "GEOMETRY_CONTRACT_NAME",
+    "GEOMETRY_RC_VERSION",
+    "GEOMETRY_RELEASE_VERSION",
+    "SLICER_CONTRACT_NAME",
+]

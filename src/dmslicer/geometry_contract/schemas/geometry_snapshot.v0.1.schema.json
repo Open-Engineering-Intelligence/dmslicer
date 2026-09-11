@@ -1,0 +1,487 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dmslicer.local/schemas/geometry_snapshot.v0.1.schema.json",
+  "title": "DM-Slicer GeometrySnapshot v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "snapshot_id",
+    "source_documents",
+    "model_frame",
+    "regions",
+    "relations",
+    "artifact_references",
+    "provenance_references"
+  ],
+  "properties": {
+    "contract": { "$ref": "#/$defs/contract" },
+    "snapshot_id": {
+      "type": "string",
+      "pattern": "^snapshot:v0\\.1:[0-9a-f]{64}$"
+    },
+    "source_documents": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceDocument" }
+    },
+    "model_frame": { "$ref": "#/$defs/frame" },
+    "regions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/region" }
+    },
+    "relations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relation" }
+    },
+    "artifact_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/artifactReference" }
+    },
+    "provenance_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/provenanceReference" }
+    },
+    "tolerances": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/tolerance" }
+    },
+    "interfaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/interface" }
+    },
+    "interface_components": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/interfaceComponent" }
+    },
+    "patches": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/patch" }
+    },
+    "boundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/boundary" }
+    },
+    "surface_partitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/surfacePartition" }
+    },
+    "semantic_bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/semanticBinding" }
+    },
+    "parent_snapshot_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^snapshot:v0\\.1:[0-9a-f]{64}$"
+      }
+    },
+    "label": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "extensions": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_.-]+$" }
+    }
+  },
+  "$defs": {
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "dmslicer.geometry-snapshot" },
+        "version": { "enum": ["0.1-rc1", "0.1.0"] }
+      }
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[^\\s]+$"
+    },
+    "relativeUri": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "vector3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    },
+    "axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": { "$ref": "#/$defs/vector3" },
+        "y": { "$ref": "#/$defs/vector3" },
+        "z": { "$ref": "#/$defs/vector3" }
+      }
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame_id", "length_unit", "origin", "axes"],
+      "properties": {
+        "frame_id": { "$ref": "#/$defs/identifier" },
+        "length_unit": { "const": "mm" },
+        "origin": { "$ref": "#/$defs/vector3" },
+        "axes": { "$ref": "#/$defs/axes" }
+      }
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheme", "value"],
+      "properties": {
+        "scheme": {
+          "enum": ["STEP_OCCURRENCE", "STEP_FACE", "BREP_ROOT", "CAD_OBJECT"]
+        },
+        "value": { "type": "string", "minLength": 1 }
+      }
+    },
+    "geometryReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_ref", "locator"],
+      "properties": {
+        "artifact_ref": { "$ref": "#/$defs/identifier" },
+        "locator": { "$ref": "#/$defs/locator" }
+      }
+    },
+    "sourceDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_document_id",
+        "artifact_ref",
+        "source_length_unit",
+        "internal_length_unit"
+      ],
+      "properties": {
+        "source_document_id": { "$ref": "#/$defs/identifier" },
+        "artifact_ref": { "$ref": "#/$defs/identifier" },
+        "source_length_unit": { "const": "mm" },
+        "internal_length_unit": { "const": "mm" }
+      }
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "region_id",
+        "source_document_id",
+        "validity_state",
+        "frame_ref",
+        "geometry_ref"
+      ],
+      "properties": {
+        "region_id": { "$ref": "#/$defs/identifier" },
+        "source_document_id": { "$ref": "#/$defs/identifier" },
+        "validity_state": { "enum": ["VALID", "INVALID"] },
+        "frame_ref": { "$ref": "#/$defs/identifier" },
+        "geometry_ref": { "$ref": "#/$defs/geometryReference" },
+        "label": { "type": "string", "minLength": 1 }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_id",
+        "region_refs",
+        "taxonomy",
+        "confirmation",
+        "intersection_dimension"
+      ],
+      "properties": {
+        "relation_id": { "$ref": "#/$defs/identifier" },
+        "region_refs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "taxonomy": {
+          "enum": [
+            "DISJOINT",
+            "NEAR_MISS",
+            "TOUCH_POINT",
+            "TOUCH_EDGE",
+            "FACE_CONTACT",
+            "PARTIAL_FACE_OVERLAP",
+            "FULL_FACE_OVERLAP",
+            "CONTAINMENT",
+            "CROSSING",
+            "VOLUME_OVERLAP",
+            "AMBIGUOUS"
+          ]
+        },
+        "confirmation": {
+          "enum": ["CANDIDATE", "CONFIRMED", "REJECTED", "AMBIGUOUS"]
+        },
+        "intersection_dimension": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 3
+        },
+        "tolerance_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "kind", "uri"],
+      "properties": {
+        "artifact_id": { "$ref": "#/$defs/identifier" },
+        "kind": { "enum": ["STEP", "BREP", "FCSTD", "DISPLAY_MESH", "OTHER"] },
+        "uri": { "$ref": "#/$defs/relativeUri" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "hash_semantics": { "const": "byte_integrity_only" },
+        "media_type": { "type": "string", "minLength": 1 }
+      },
+      "dependentRequired": {
+        "sha256": ["hash_semantics"],
+        "hash_semantics": ["sha256"]
+      }
+    },
+    "provenanceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provenance_id",
+        "goal_id",
+        "implementation_commit",
+        "fixture_uri",
+        "evidence_uri"
+      ],
+      "properties": {
+        "provenance_id": { "$ref": "#/$defs/identifier" },
+        "goal_id": { "type": "string", "minLength": 1 },
+        "implementation_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "fixture_uri": { "$ref": "#/$defs/relativeUri" },
+        "evidence_uri": { "$ref": "#/$defs/relativeUri" },
+        "run_id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "enum": ["mm", "mm2", "mm3", "rad", "unitless"] }
+      }
+    },
+    "tolerance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tolerance_id", "role", "value", "unit", "source"],
+      "properties": {
+        "tolerance_id": { "$ref": "#/$defs/identifier" },
+        "role": { "type": "string", "minLength": 1 },
+        "value": { "type": "number", "exclusiveMinimum": 0 },
+        "unit": { "enum": ["mm", "mm2", "mm3", "rad", "unitless"] },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interface_id", "relation_ref", "region_refs", "patch_refs"],
+      "properties": {
+        "interface_id": { "$ref": "#/$defs/identifier" },
+        "relation_ref": { "$ref": "#/$defs/identifier" },
+        "region_refs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "patch_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "interfaceComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component_id", "interface_ref", "patch_refs"],
+      "properties": {
+        "component_id": { "$ref": "#/$defs/identifier" },
+        "interface_ref": { "$ref": "#/$defs/identifier" },
+        "patch_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "planarParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "unit_normal", "tangent_u", "tangent_v"],
+      "properties": {
+        "origin": { "$ref": "#/$defs/vector3" },
+        "unit_normal": { "$ref": "#/$defs/vector3" },
+        "tangent_u": { "$ref": "#/$defs/vector3" },
+        "tangent_v": { "$ref": "#/$defs/vector3" }
+      }
+    },
+    "cylindricalParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "axis_origin",
+        "axis_direction",
+        "radius",
+        "axial_interval",
+        "periodic",
+        "full_period"
+      ],
+      "properties": {
+        "axis_origin": { "$ref": "#/$defs/vector3" },
+        "axis_direction": { "$ref": "#/$defs/vector3" },
+        "radius": { "$ref": "#/$defs/measurement" },
+        "axial_interval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum", "maximum", "unit"],
+          "properties": {
+            "minimum": { "type": "number" },
+            "maximum": { "type": "number" },
+            "unit": { "const": "mm" }
+          }
+        },
+        "periodic": { "type": "boolean" },
+        "full_period": { "type": "boolean" }
+      }
+    },
+    "patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "patch_id",
+        "interface_ref",
+        "component_ref",
+        "family",
+        "frame_ref",
+        "geometry_ref"
+      ],
+      "properties": {
+        "patch_id": { "$ref": "#/$defs/identifier" },
+        "interface_ref": { "$ref": "#/$defs/identifier" },
+        "component_ref": { "$ref": "#/$defs/identifier" },
+        "family": { "enum": ["PLANE", "CYLINDER", "OTHER"] },
+        "family_name": { "type": "string", "minLength": 1 },
+        "frame_ref": { "$ref": "#/$defs/identifier" },
+        "source_face_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "area": { "$ref": "#/$defs/measurement" },
+        "geometry_ref": { "$ref": "#/$defs/geometryReference" },
+        "planar_parameters": { "$ref": "#/$defs/planarParameters" },
+        "cylindrical_parameters": { "$ref": "#/$defs/cylindricalParameters" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "family": { "const": "PLANE" } }, "required": ["family"] },
+          "then": {
+            "required": ["planar_parameters"],
+            "not": { "required": ["cylindrical_parameters"] }
+          }
+        },
+        {
+          "if": { "properties": { "family": { "const": "CYLINDER" } }, "required": ["family"] },
+          "then": {
+            "required": ["cylindrical_parameters"],
+            "not": { "required": ["planar_parameters"] }
+          }
+        },
+        {
+          "if": { "properties": { "family": { "const": "OTHER" } }, "required": ["family"] },
+          "then": {
+            "required": ["family_name"],
+            "not": {
+              "anyOf": [
+                { "required": ["planar_parameters"] },
+                { "required": ["cylindrical_parameters"] }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boundary_id", "patch_ref", "role", "closed", "geometry_ref"],
+      "properties": {
+        "boundary_id": { "$ref": "#/$defs/identifier" },
+        "patch_ref": { "$ref": "#/$defs/identifier" },
+        "role": { "enum": ["OUTER", "INNER"] },
+        "closed": { "type": "boolean" },
+        "geometry_ref": { "$ref": "#/$defs/geometryReference" }
+      }
+    },
+    "surfacePartition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["partition_id", "source_geometry_ref", "role", "patch_refs"],
+      "properties": {
+        "partition_id": { "$ref": "#/$defs/identifier" },
+        "source_geometry_ref": { "$ref": "#/$defs/geometryReference" },
+        "role": { "enum": ["COMMON", "REMAINING", "EMPTY"] },
+        "patch_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "geometry_ref": { "$ref": "#/$defs/geometryReference" },
+        "area": { "$ref": "#/$defs/measurement" }
+      }
+    },
+    "semanticBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding_id", "subject_ref", "semantic_role", "activation"],
+      "properties": {
+        "binding_id": { "$ref": "#/$defs/identifier" },
+        "subject_ref": { "$ref": "#/$defs/identifier" },
+        "semantic_role": { "type": "string", "minLength": 1 },
+        "activation": { "enum": ["UNASSIGNED", "ACTIVE", "INACTIVE"] },
+        "material_key": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dmslicer.local/schemas/slicer_decision.v0.1.schema.json",
+  "title": "DM-Slicer SlicerDecision v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "decision_id",
+    "input_snapshot_id",
+    "status",
+    "reason_code",
+    "provenance_reference"
+  ],
+  "properties": {
+    "contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "dmslicer.slicer-decision" },
+        "version": { "enum": ["0.1-rc1", "0.1.0"] }
+      }
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^decision:v0\\.1:[0-9a-f]{64}$"
+    },
+    "input_snapshot_id": {
+      "type": "string",
+      "pattern": "^snapshot:v0\\.1:[0-9a-f]{64}$"
+    },
+    "selected_interface_id": { "$ref": "#/$defs/identifier" },
+    "selected_patch_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "target_region_id": { "$ref": "#/$defs/identifier" },
+    "strategy_kind": {
+      "enum": ["PLANAR_INTERFACE_PARTITION", "CYLINDRICAL_INTERFACE_PARTITION"]
+    },
+    "local_frame_ref": { "$ref": "#/$defs/identifier" },
+    "partition_direction": { "$ref": "#/$defs/vector3" },
+    "partition_operation": { "const": "SPLIT_COMMON_AND_REMAINING" },
+    "expected_partition_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "status": { "enum": ["DECIDED", "REJECTED", "UNSUPPORTED", "FAILED"] },
+    "reason_code": {
+      "enum": [
+        "NONE",
+        "INVALID_SNAPSHOT",
+        "AMBIGUOUS_INTERFACE",
+        "MISSING_SEMANTIC_BINDING",
+        "UNRESOLVED_ARTIFACT",
+        "UNSUPPORTED_GEOMETRY_FAMILY",
+        "UNSUPPORTED_STRATEGY"
+      ]
+    },
+    "provenance_reference": { "$ref": "#/$defs/identifier" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "DECIDED" } }, "required": ["status"] },
+      "then": {
+        "required": [
+          "selected_interface_id",
+          "selected_patch_ids",
+          "target_region_id",
+          "strategy_kind",
+          "local_frame_ref",
+          "partition_direction",
+          "partition_operation",
+          "expected_partition_refs"
+        ],
+        "properties": { "reason_code": { "const": "NONE" } }
+      },
+      "else": {
+        "properties": {
+          "reason_code": {
+            "enum": [
+              "INVALID_SNAPSHOT",
+              "AMBIGUOUS_INTERFACE",
+              "MISSING_SEMANTIC_BINDING",
+              "UNRESOLVED_ARTIFACT",
+              "UNSUPPORTED_GEOMETRY_FAMILY",
+              "UNSUPPORTED_STRATEGY"
+            ]
+          }
+        },
+        "not": {
+          "anyOf": [
+            { "required": ["selected_interface_id"] },
+            { "required": ["selected_patch_ids"] },
+            { "required": ["target_region_id"] },
+            { "required": ["strategy_kind"] },
+            { "required": ["local_frame_ref"] },
+            { "required": ["partition_direction"] },
+            { "required": ["partition_operation"] },
+            { "required": ["expected_partition_refs"] }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]*:[^\\s]+$"
+    },
+    "vector3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "number" }
+    }
+  }
+}

@@ -12,6 +12,9 @@ dependencies = ["jsonschema>=4.23"]
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"dmslicer.geometry_contract.schemas" = ["*.json"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
