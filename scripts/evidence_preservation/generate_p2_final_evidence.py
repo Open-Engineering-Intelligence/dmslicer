@@ -37,7 +37,6 @@ RUN_ID = ""
 STAGING = REPOSITORY / "outputs" / "UNSET"
 IMPLEMENTATION = ""
 BASELINE = "d65ac32e04115e5627f1c2988fd486e2353cada9"
-POLICY_COMMIT = "1c0718edf16e637048c8df6a2df8aefd6afcb72d"
 FAILURE_COMMIT = "a16914d3c398d84f245375f6b3ca2a1d7022db5d"
 PRIOR_FAILED_RUNS = {
     "run-001-validation-failure.json": REPOSITORY / "outputs" / "p2-mvp-final-caseab-dc44cbb-001" / "validation-failure.json",
@@ -247,16 +246,50 @@ def add_artifact(allowlist: list[dict], artifact_id: str, source_path: str, kind
 def _sanitized_junit(source: Path, destination: Path) -> dict[str, int]:
     tree = ET.parse(source)
     root = tree.getroot()
+    suites = [root] if root.tag == "testsuite" else list(root.iter("testsuite"))
+    counts = {
+        key: sum(int(suite.attrib.get(key, 0)) for suite in suites)
+        for key in ("tests", "failures", "errors", "skipped")
+    }
+    if (
+        counts["tests"] <= 0
+        or counts["failures"]
+        or counts["errors"]
+        or counts["skipped"]
+    ):
+        raise ValueError(f"JUnit input is not a complete green run: {counts}")
     for suite in root.iter("testsuite"):
         if "hostname" in suite.attrib:
             suite.attrib["hostname"] = "LOCAL_HOST"
     destination.parent.mkdir(parents=True, exist_ok=True)
     tree.write(destination, encoding="utf-8", xml_declaration=True)
-    suites = [root] if root.tag == "testsuite" else list(root.iter("testsuite"))
-    return {
-        key: sum(int(suite.attrib.get(key, 0)) for suite in suites)
-        for key in ("tests", "failures", "errors", "skipped")
-    }
+    return counts
+
+
+def _junit_exit_code(counts: dict[str, int]) -> int:
+    return int(
+        counts["tests"] <= 0
+        or counts["failures"] > 0
+        or counts["errors"] > 0
+        or counts["skipped"] > 0
+    )
+
+
+def _scientific_status(
+    case_a_geometry: str,
+    case_a_semantic: str,
+    case_a_ui: str,
+    case_b_geometry: str,
+    reopen_geometry: str,
+) -> str:
+    required = (
+        case_a_geometry == "GEOMETRY_EQUIVALENT",
+        case_a_semantic == "SEMANTIC_EQUIVALENT",
+        case_a_ui == "UI_DIFFERENT",
+        case_b_geometry == "GEOMETRY_DIFFERENT",
+        reopen_geometry == "GEOMETRY_EQUIVALENT",
+    )
+    return "PASS" if all(required) else "FAIL"
 
 
 def _parse_arguments() -> argparse.Namespace:
@@ -355,17 +388,17 @@ def main() -> None:
     execution = [
         {
             "command": "py -3.12 -m pytest -q tests/test_cad_demo.py --junitxml=<cad-junit>",
-            "exit_code": 0,
+            "exit_code": _junit_exit_code(cad_counts),
             "timestamp": timestamp,
         },
         {
             "command": "py -3.12 -m pytest -q <P2-focused-test-set> --junitxml=<focused-junit>",
-            "exit_code": 0,
+            "exit_code": _junit_exit_code(focused_counts),
             "timestamp": timestamp,
         },
         {
             "command": "py -3.12 -m pytest -q --junitxml=<full-junit>",
-            "exit_code": 0,
+            "exit_code": _junit_exit_code(full_counts),
             "timestamp": timestamp,
         },
         {
@@ -377,7 +410,13 @@ def main() -> None:
     versions = get_freecad_and_occt_versions()
     scientific = {
         "schema_version": "1.0.0",
-        "scientific_experiment_result": "PASS" if case_a.status == "GEOMETRY_EQUIVALENT" and case_b.status == "GEOMETRY_DIFFERENT" and reopen.status == "GEOMETRY_EQUIVALENT" else "FAIL",
+        "scientific_experiment_result": _scientific_status(
+            case_a.status,
+            case_a_json["semantic_comparison"],
+            case_a_json["ui_comparison"],
+            case_b.status,
+            reopen.status,
+        ),
         "case_a": {"byte": case_a_json["byte_identity"], "geometry": case_a.status, "semantic": case_a_json["semantic_comparison"], "ui": case_a_json["ui_comparison"], "comparison": "comparisons/case_a_ui_only.json"},
         "case_b": {"byte": case_b_json["byte_identity"], "geometry": case_b.status, "reasons": list(case_b.reasons), "comparison": "comparisons/case_b_geometry_changed.json"},
         "reopen": {"byte": reopen_json["byte_identity"], "geometry": reopen.status, "comparison": "comparisons/serialization_reopen.json"},
@@ -451,7 +490,7 @@ Human inspection result: `NOT_EVALUATED`.
         "run_id": RUN_ID,
         "branch": git("branch", "--show-current"),
         "implementation_commit": IMPLEMENTATION,
-        "policy_commit": POLICY_COMMIT,
+        "policy_commit": IMPLEMENTATION,
         "parent_baseline": BASELINE,
         "merge_base": git("merge-base", BASELINE, IMPLEMENTATION),
         "input_fixture": "artifacts/cad/original.FCStd",
@@ -544,7 +583,21 @@ Human inspection result: `NOT_EVALUATED`.
             "geometry_equivalence_result": {"status": case_b.status, "evidence_artifact_ids": ["case-b-comparison"]},
             "semantic_equivalence_result": {"status": case_a_json["semantic_comparison"], "evidence_artifact_ids": ["original-opening-geometry", "ui_only_changed-closing-geometry"]},
             "ui_state_result": {"status": case_a_json["ui_comparison"], "evidence_artifact_ids": ["original-opening-ui", "ui_only_changed-closing-ui"]},
-            "pytest_result": {"status": "PASS", "evidence_artifact_ids": ["cad-pytest", "focused-pytest", "full-pytest"]},
+            "pytest_result": {
+                "status": (
+                    "PASS"
+                    if all(
+                        _junit_exit_code(counts) == 0
+                        for counts in (cad_counts, focused_counts, full_counts)
+                    )
+                    else "FAIL"
+                ),
+                "evidence_artifact_ids": [
+                    "cad-pytest",
+                    "focused-pytest",
+                    "full-pytest",
+                ],
+            },
             "validator_result": {"status": validator["status"], "evidence_artifact_ids": ["validator-result"]},
             "scientific_experiment_result": {"status": scientific["scientific_experiment_result"], "evidence_artifact_ids": ["scientific-summary"]},
             "human_inspection_result": {"status": "NOT_EVALUATED", "evidence_artifact_ids": ["human-review"]},

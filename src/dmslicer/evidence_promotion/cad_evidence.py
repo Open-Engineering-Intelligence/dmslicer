@@ -314,4 +314,3 @@ def compare_ui_states(first: Mapping[str, Any], second: Mapping[str, Any]) -> di
             key for key in first_supported if first_supported[key] != second_supported[key]
         ),
     }
-

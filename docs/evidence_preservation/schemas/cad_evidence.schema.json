@@ -92,7 +92,10 @@
             "properties": {
               "component_role": {"const": "fixture_body"},
               "interface_role": {"const": "through_hole_wall"},
-              "allowed_transform": {"const": "IDENTITY"}
+              "allowed_transform": {"const": "IDENTITY"},
+              "evidence_fixture": {
+                "const": "rectangular_block_one_through_hole"
+              }
             }
           },
           "shape": {
@@ -116,19 +119,19 @@
               "face_count": {"$ref": "#/$defs/count_measurement"},
               "edge_count": {"$ref": "#/$defs/count_measurement"},
               "vertex_count": {"$ref": "#/$defs/count_measurement"},
-              "area": {"$ref": "#/$defs/continuous_measurement"},
-              "volume": {"$ref": "#/$defs/continuous_measurement"},
+              "area": {"$ref": "#/$defs/area_measurement"},
+              "volume": {"$ref": "#/$defs/volume_measurement"},
               "bounding_box": {
                 "type": "object",
                 "additionalProperties": false,
                 "required": ["x_min", "y_min", "z_min", "x_max", "y_max", "z_max"],
                 "properties": {
-                  "x_min": {"$ref": "#/$defs/continuous_measurement"},
-                  "y_min": {"$ref": "#/$defs/continuous_measurement"},
-                  "z_min": {"$ref": "#/$defs/continuous_measurement"},
-                  "x_max": {"$ref": "#/$defs/continuous_measurement"},
-                  "y_max": {"$ref": "#/$defs/continuous_measurement"},
-                  "z_max": {"$ref": "#/$defs/continuous_measurement"}
+                  "x_min": {"$ref": "#/$defs/linear_measurement"},
+                  "y_min": {"$ref": "#/$defs/linear_measurement"},
+                  "z_min": {"$ref": "#/$defs/linear_measurement"},
+                  "x_max": {"$ref": "#/$defs/linear_measurement"},
+                  "y_max": {"$ref": "#/$defs/linear_measurement"},
+                  "z_max": {"$ref": "#/$defs/linear_measurement"}
                 }
               },
               "valid": {"type": "boolean"},
@@ -389,6 +392,33 @@
         "unit": {"const": "count"}
       },
       "additionalProperties": false
+    },
+    "linear_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number"},
+        "unit": {"const": "mm"}
+      }
+    },
+    "area_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"const": "mm2"}
+      }
+    },
+    "volume_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"const": "mm3"}
+      }
     },
     "unavailable": {
       "type": "object",
@@ -706,4 +736,3 @@
     }
   }
 }
-

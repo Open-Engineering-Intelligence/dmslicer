@@ -167,3 +167,38 @@ def test_cad_evidence_schema_rejects_wrong_comparison_measurement_unit(
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(comparison)
 
+
+def _geometry_snapshot_from_fixture(valid_cad_request, repository_root: Path) -> dict:
+    request = valid_cad_request()
+    staging_root = repository_root / request["source"]["staging_root"]
+    return json.loads(
+        (staging_root / "original-geometry-snapshot.json").read_text(encoding="utf-8")
+    )
+
+
+def test_geometry_snapshot_schema_accepts_declared_fixture_identity(
+    valid_cad_request, repository_root: Path
+) -> None:
+    snapshot = _geometry_snapshot_from_fixture(valid_cad_request, repository_root)
+    snapshot["semantic_binding"]["evidence_fixture"] = (
+        "rectangular_block_one_through_hole"
+    )
+
+    jsonschema.Draft202012Validator(_load_schema()).validate(snapshot)
+
+
+@pytest.mark.parametrize(
+    ("measurement", "unit"),
+    [("area", "percent"), ("volume", "mm"), ("bounding_box.x_min", "mm3")],
+)
+def test_geometry_snapshot_schema_rejects_wrong_dimension_unit(
+    valid_cad_request, repository_root: Path, measurement: str, unit: str
+) -> None:
+    snapshot = _geometry_snapshot_from_fixture(valid_cad_request, repository_root)
+    if measurement.startswith("bounding_box."):
+        snapshot["shape"]["bounding_box"][measurement.split(".")[1]]["unit"] = unit
+    else:
+        snapshot["shape"][measurement]["unit"] = unit
+
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.Draft202012Validator(_load_schema()).validate(snapshot)

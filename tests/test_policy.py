@@ -453,6 +453,28 @@ def test_geometry_comparison_decision_must_follow_measurements_and_tolerances(
     )
 
 
+@pytest.mark.parametrize("mutation", ["unavailable_measurement", "unevaluated_method"])
+def test_proven_geometry_comparison_requires_available_measurements_and_method(
+    valid_cad_request, repository_root: Path, mutation: str
+) -> None:
+    request = valid_cad_request()
+    staging = repository_root / request["source"]["staging_root"]
+    path = staging / "case-a-comparison.json"
+    comparison = json.loads(path.read_text(encoding="utf-8"))
+    if mutation == "unavailable_measurement":
+        comparison["measurements"]["area_delta"] = {
+            "status": "NOT_PROVEN",
+            "reason": "measurement unavailable",
+        }
+    else:
+        comparison["method"] = "NOT_EVALUATED"
+    path.write_text(json.dumps(comparison, indent=2) + "\n", encoding="utf-8")
+
+    assert "CAD_COMPARISON_INCONSISTENT" in _codes(
+        validate_request(request, repository_root)
+    )
+
+
 def _add_retained_history(request: dict, staging: Path) -> None:
     mapping = {
         "failure_artifact_ids": ("failure-1", "FAILURE"),

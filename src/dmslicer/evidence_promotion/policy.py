@@ -435,11 +435,13 @@ def _comparison_consistency_findings(
     }
     checks = comparison["checks"]
     measurements = comparison["measurements"]
+    unavailable_measurements: list[str] = []
     for check_name, (measurement_name, tolerance_name) in measurement_checks.items():
         measurement = measurements[measurement_name]
         declared_check = checks[check_name]
         if "value" not in measurement or tolerance_name not in comparison_tolerances:
             expected_check: bool | None = None
+            unavailable_measurements.append(check_name)
         else:
             expected_check = (
                 abs(float(measurement["value"]))
@@ -453,11 +455,19 @@ def _comparison_consistency_findings(
                     artifact_id,
                 )
             )
+        if expected_check is None and not isinstance(declared_check, Mapping):
+            findings.append(
+                PolicyFinding(
+                    "CAD_COMPARISON_INCONSISTENT",
+                    f"{check_name} must be unavailable when its measurement is unavailable",
+                    artifact_id,
+                )
+            )
 
     boolean_checks = {
         name: value for name, value in checks.items() if isinstance(value, bool)
     }
-    unavailable_checks = [
+    unavailable_checks = unavailable_measurements + [
         name for name, value in checks.items() if isinstance(value, Mapping)
     ]
     expected_failed = sorted(
@@ -492,6 +502,10 @@ def _comparison_consistency_findings(
         or (expected_status != "GEOMETRY_EQUIVALENT" and not reasons)
         or uncovered_failures
         or any(token in reason_text for token in ("sha", "hash", "digest", "byte"))
+        or (
+            expected_status != "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+            and comparison["method"] != "BREP_BOOLEAN_AND_MEASUREMENTS"
+        )
     ):
         findings.append(
             PolicyFinding(
