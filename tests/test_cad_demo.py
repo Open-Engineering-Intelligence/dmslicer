@@ -18,6 +18,7 @@ from dmslicer.evidence_promotion.freecad_cad_evidence import (
     GEOMETRY_DIFFERENT,
     GEOMETRY_EQUIVALENT,
     GeometryTolerance,
+    freecad_cmd_is_available,
     generate_demo_fixtures,
     get_freecad_and_occt_versions,
     reopen_and_snapshot,
@@ -26,7 +27,11 @@ from dmslicer.evidence_promotion.freecad_cad_evidence import (
 )
 
 
-pytest.importorskip("FreeCAD", reason="FreeCAD is required for CAD demo tests")
+if not freecad_cmd_is_available():
+    pytest.skip(
+        "FreeCADCmd runtime is required for CAD demo tests",
+        allow_module_level=True,
+    )
 
 
 @pytest.fixture
@@ -99,4 +104,3 @@ def test_cad_worker_reports_runtime_versions():
     versions = get_freecad_and_occt_versions()
     assert "freecad_version" in versions
     assert "occt_version" in versions
-
