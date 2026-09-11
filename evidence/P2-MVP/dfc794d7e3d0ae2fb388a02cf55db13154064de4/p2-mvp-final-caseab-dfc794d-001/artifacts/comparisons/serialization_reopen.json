@@ -1,0 +1,77 @@
+{
+  "artifact_type": "geometry_comparison",
+  "byte_identity": "BYTE_DIFFERENT",
+  "case_id": "serialization_reopen",
+  "checks": {
+    "area_delta": true,
+    "bounding_box": true,
+    "first_minus_second": true,
+    "second_minus_first": true,
+    "topology_counts": true,
+    "valid_closed_single_solids": true,
+    "volume_delta": true
+  },
+  "comparison_role": "SERIALIZATION_REOPEN",
+  "failed_checks": [],
+  "geometry_decision_inputs": [
+    "topology",
+    "area",
+    "volume",
+    "bounding_box",
+    "bidirectional_boolean_cut"
+  ],
+  "measurements": {
+    "area_delta": {
+      "unit": "mm2",
+      "value": 0.0
+    },
+    "first_minus_second_volume": {
+      "unit": "mm3",
+      "value": 0.0
+    },
+    "max_bounding_box_delta": {
+      "unit": "mm",
+      "value": 0.0
+    },
+    "minimum_distance": {
+      "reason": "bidirectional Boolean differences are the fixture distance surrogate",
+      "status": "NOT_PROVEN"
+    },
+    "second_minus_first_volume": {
+      "unit": "mm3",
+      "value": 0.0
+    },
+    "volume_delta": {
+      "unit": "mm3",
+      "value": 0.0
+    }
+  },
+  "method": "BREP_BOOLEAN_AND_MEASUREMENTS",
+  "reasons": [],
+  "schema_version": "1.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "status": "GEOMETRY_EQUIVALENT",
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "bounding box and distance",
+      "source": "P2 final fixture contract",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "area delta",
+      "source": "P2 final fixture contract",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "volume and bidirectional Boolean cut",
+      "source": "P2 final fixture contract",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

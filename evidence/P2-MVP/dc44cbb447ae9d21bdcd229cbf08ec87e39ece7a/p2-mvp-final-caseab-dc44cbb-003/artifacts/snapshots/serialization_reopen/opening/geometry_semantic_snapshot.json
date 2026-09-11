@@ -1,0 +1,72 @@
+{
+  "artifact_role": "OPENING",
+  "artifact_type": "geometry_semantic_snapshot",
+  "case_id": "serialization_reopen",
+  "length_unit": "mm",
+  "schema_version": "1.0.0",
+  "semantic_binding": {
+    "allowed_transform": "IDENTITY",
+    "component_role": "fixture_body",
+    "evidence_fixture": "rectangular_block_one_through_hole",
+    "interface_role": "through_hole_wall"
+  },
+  "shape": {
+    "area": {
+      "unit": "mm2",
+      "value": 5602.123859659493
+    },
+    "bounding_box": {
+      "x_max": {
+        "unit": "mm",
+        "value": 40.0
+      },
+      "x_min": {
+        "unit": "mm",
+        "value": 0.0
+      },
+      "y_max": {
+        "unit": "mm",
+        "value": 30.0
+      },
+      "y_min": {
+        "unit": "mm",
+        "value": 0.0
+      },
+      "z_max": {
+        "unit": "mm",
+        "value": 20.0
+      },
+      "z_min": {
+        "unit": "mm",
+        "value": 0.0
+      }
+    },
+    "closed": true,
+    "edge_count": {
+      "unit": "count",
+      "value": 15
+    },
+    "face_count": {
+      "unit": "count",
+      "value": 7
+    },
+    "shell_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "solid_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "valid": true,
+    "vertex_count": {
+      "unit": "count",
+      "value": 10
+    },
+    "volume": {
+      "unit": "mm3",
+      "value": 22994.690350851266
+    }
+  },
+  "source_artifact_id": "cad/serialization_reopen.FCStd"
+}

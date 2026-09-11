@@ -1,0 +1,47 @@
+{
+  "artifact_role": "OPENING",
+  "artifact_type": "topology_snapshot",
+  "case_id": "original",
+  "schema_version": "1.0.0",
+  "source_artifact_id": "cad/original.FCStd",
+  "topology": {
+    "closed": true,
+    "connected_solid_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "edge_count": {
+      "unit": "count",
+      "value": 15
+    },
+    "face_count": {
+      "unit": "count",
+      "value": 7
+    },
+    "manifold": {
+      "reason": "not required by the fixture acceptance gate",
+      "status": "NOT_PROVEN"
+    },
+    "shell_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "solid_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "through_hole": {
+      "count": {
+        "unit": "count",
+        "value": 1
+      },
+      "selection": "cylindrical through-hole wall",
+      "status": "PROVEN"
+    },
+    "valid": true,
+    "vertex_count": {
+      "unit": "count",
+      "value": 10
+    }
+  }
+}

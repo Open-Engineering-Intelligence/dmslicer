@@ -1,0 +1,70 @@
+{
+  "case_a": {
+    "byte": "BYTE_DIFFERENT",
+    "comparison": "comparisons/case_a_ui_only.json",
+    "geometry": "GEOMETRY_EQUIVALENT",
+    "semantic": "SEMANTIC_EQUIVALENT",
+    "ui": "UI_DIFFERENT"
+  },
+  "case_b": {
+    "byte": "BYTE_DIFFERENT",
+    "comparison": "comparisons/case_b_geometry_changed.json",
+    "geometry": "GEOMETRY_DIFFERENT",
+    "reasons": [
+      "area delta exceeds tolerance",
+      "volume delta exceeds tolerance",
+      "bidirectional Boolean cut volume exceeds tolerance"
+    ]
+  },
+  "reopen": {
+    "byte": "BYTE_DIFFERENT",
+    "comparison": "comparisons/serialization_reopen.json",
+    "geometry": "GEOMETRY_EQUIVALENT"
+  },
+  "schema_version": "1.0.0",
+  "scientific_experiment_result": "PASS",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "test_results": {
+    "cad": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 5
+    },
+    "focused": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 125
+    },
+    "full": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 429
+    }
+  },
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "bounding box and distance",
+      "source": "P2 final fixture contract",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "area delta",
+      "source": "P2 final fixture contract",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "volume and bidirectional Boolean cut",
+      "source": "P2 final fixture contract",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

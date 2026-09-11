@@ -1,0 +1,34 @@
+{
+  "artifact_role": "CLOSING",
+  "artifact_type": "ui_state_snapshot",
+  "case_id": "serialization_reopen",
+  "object_role": "fixture_body",
+  "schema_version": "1.0.0",
+  "source_artifact_id": "cad/serialization_reopen.FCStd",
+  "state": {
+    "camera": {
+      "reason": "headless FreeCADCmd does not provide a stable camera",
+      "status": "UNSUPPORTED"
+    },
+    "display_mode": {
+      "status": "SUPPORTED",
+      "value": "Flat Lines"
+    },
+    "shape_color": {
+      "status": "SUPPORTED",
+      "value": [
+        1.0,
+        0.5,
+        0.0
+      ]
+    },
+    "transparency": {
+      "status": "SUPPORTED",
+      "value": 0
+    },
+    "visibility": {
+      "status": "SUPPORTED",
+      "value": true
+    }
+  }
+}

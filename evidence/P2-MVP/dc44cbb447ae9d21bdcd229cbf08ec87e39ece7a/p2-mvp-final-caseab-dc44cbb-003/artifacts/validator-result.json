@@ -1,0 +1,11 @@
+{
+  "cad_schema_validation": "PASS",
+  "case_a": "GEOMETRY_EQUIVALENT",
+  "case_b": "GEOMETRY_DIFFERENT",
+  "implementation_commit": "dc44cbb447ae9d21bdcd229cbf08ec87e39ece7a",
+  "invalid_artifacts": {},
+  "schema_version": "1.0.0",
+  "serialization_reopen": "GEOMETRY_EQUIVALENT",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "status": "PASS"
+}

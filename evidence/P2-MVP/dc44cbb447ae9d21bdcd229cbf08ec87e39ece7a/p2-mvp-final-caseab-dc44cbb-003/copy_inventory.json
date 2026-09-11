@@ -1,0 +1,375 @@
+{
+  "artifact_count": 46,
+  "artifacts": [
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/comparisons/case_a_ui_only.json",
+      "sha256": "802e4be52c0c0e57f6ef59eba84f7891dde214cc306cafb7532de379ee65138a",
+      "size_bytes": 1957,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/comparisons/case_a_ui_only.json"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/comparisons/case_b_geometry_changed.json",
+      "sha256": "ed8ae48cd07db433c3153200960169b60359b53fa3bc1d8d11a99e58a1685cfd",
+      "size_bytes": 2124,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/comparisons/case_b_geometry_changed.json"
+    },
+    {
+      "artifact_id": "geometry_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/geometry_changed.brep",
+      "sha256": "763899fa960d0d4dd9f1530c77831b2d68c9a600ec08fa2a7927f20e72f607b9",
+      "size_bytes": 3579,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/geometry_changed.brep"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/geometry_semantic_snapshot.json",
+      "sha256": "8fc092039afbe9ec536582b67710c7af31c16e8c7f622209233c7aa142ecc3c6",
+      "size_bytes": 1496,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/closing/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/topology_snapshot.json",
+      "sha256": "c13fec9e38d67300d0fa01cd7c176ca8cda590160213f6de48441a64e5a6fa0d",
+      "size_bytes": 1007,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/closing/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/ui_state_snapshot.json",
+      "sha256": "62bbab2663f0c6038781cba268fd6677dc52a6fae904323b8d3f7c7f8b2d91f3",
+      "size_bytes": 755,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/closing/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/geometry_changed.FCStd",
+      "sha256": "649eb6769ae72b3bfd6e5c19610291d9e3de3a03794994955ab8e49d4369ddc9",
+      "size_bytes": 2608,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/geometry_changed.FCStd"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/geometry_semantic_snapshot.json",
+      "sha256": "2b759baf4f25adbe11eadba96c962f58896cbbf8c1c5a99954fadbc8fd59e6b7",
+      "size_bytes": 1496,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/opening/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/topology_snapshot.json",
+      "sha256": "5c69cd627517b810c74bdbb859de28b0750455f0f6c49e4fa65dbc6507a41ed7",
+      "size_bytes": 1007,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/opening/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/ui_state_snapshot.json",
+      "sha256": "40ce934b052af7131142603e20acd3c5a09554aa818a6bb5e5ecdaf42cb2829f",
+      "size_bytes": 755,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/geometry_changed/opening/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "geometry_changed-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/geometry_changed.step",
+      "sha256": "5d0039042b85c723b60000cdd706f07ff5b4cacb7e24b6dcf7f37fc7fd7e0651",
+      "size_bytes": 8306,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/geometry_changed.step"
+    },
+    {
+      "artifact_id": "human-review",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/HUMAN_REVIEW.md",
+      "sha256": "5fcc6af9ab5a24c2575882c027bb4de863ad4028bc1933fa174db1c2bb94bef4",
+      "size_bytes": 391,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/HUMAN_REVIEW.md"
+    },
+    {
+      "artifact_id": "original-brep",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/original.brep",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/original.brep"
+    },
+    {
+      "artifact_id": "original-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/closing/geometry_semantic_snapshot.json",
+      "sha256": "e20698a67bbee52a240608a449638a33ac57ea2cea1ceae11defa63d886f1e7b",
+      "size_bytes": 1480,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/closing/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "original-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/closing/topology_snapshot.json",
+      "sha256": "dd9526263be79e5913083499a0aee08b5ba42033fd3caa5dea78a59a9fab78f1",
+      "size_bytes": 991,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/closing/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "original-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/closing/ui_state_snapshot.json",
+      "sha256": "c8fd0d4ced7a4ca821d1a526a5a772aec00257b21af6dbacc8af9e4953f8ebec",
+      "size_bytes": 739,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/closing/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/original.FCStd",
+      "sha256": "95757f4d53523593c4166dcdfa22d3b1918823a25510b19e9ed45467b60104e3",
+      "size_bytes": 2599,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/original.FCStd"
+    },
+    {
+      "artifact_id": "original-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/opening/geometry_semantic_snapshot.json",
+      "sha256": "afec27001d2efe32b291fbfe42a933b089d147bdf58c82b06cfaed6bb0d65378",
+      "size_bytes": 1480,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/opening/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "original-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/opening/topology_snapshot.json",
+      "sha256": "c66c88b1cc3bd2e1577e76739f2162e438e6f50434263620fa449892915184b1",
+      "size_bytes": 991,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/opening/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "original-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/original/opening/ui_state_snapshot.json",
+      "sha256": "ccf15ba2eea84f737771e1dacf8de9fb35f8466ec0119d931801a6c00c09a579",
+      "size_bytes": 739,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/original/opening/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "original-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/original.step",
+      "sha256": "afd416109c5784b4fec9c4a1e8a19a1b877547286d99183c10063b0656075a47",
+      "size_bytes": 8306,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/original.step"
+    },
+    {
+      "artifact_id": "pytest-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/pytest.xml",
+      "sha256": "15ebc27871f1db8e68e74bdff0f6b4321f84e2b578622312e8376aca2f0af89f",
+      "size_bytes": 761,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/pytest.xml"
+    },
+    {
+      "artifact_id": "run-001-validation-failure",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/history/run-001-validation-failure.json",
+      "sha256": "131075795cfb675720c77d28d342b0d14a28eda49dc5ed4659c0361937a408c3",
+      "size_bytes": 462,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/history/run-001-validation-failure.json"
+    },
+    {
+      "artifact_id": "run-002-runner-failure",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/history/run-002-runner-failure.json",
+      "sha256": "34a7d7d7ac7851d935b5ede4186a8a4dcb2a3c4c217c9b8350c23976ed8fd78b",
+      "size_bytes": 394,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/history/run-002-runner-failure.json"
+    },
+    {
+      "artifact_id": "scientific-summary",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/scientific-summary.json",
+      "sha256": "67ef5f1aa03c26a39296f74d1d60d3c9d52e620661f5d10899f7100593f4bdb7",
+      "size_bytes": 1374,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/scientific-summary.json"
+    },
+    {
+      "artifact_id": "serialization-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/comparisons/serialization_reopen.json",
+      "sha256": "32d4e5c9fdd49fcb24dd265e365f561b903872a17d8243a705080d806eae8868",
+      "size_bytes": 1890,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/comparisons/serialization_reopen.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-brep",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/serialization_reopen.brep",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/serialization_reopen.brep"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/geometry_semantic_snapshot.json",
+      "sha256": "ebd162181aea29752ed5574459889bfddc4664033ba6c634c001a19574540d39",
+      "size_bytes": 1504,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/closing/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/topology_snapshot.json",
+      "sha256": "991fdfa5aa3306106c2c7ff80d0cc23faf171a9ffde900ac2421b6012ddd7ef5",
+      "size_bytes": 1015,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/closing/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/ui_state_snapshot.json",
+      "sha256": "2bc07beceefa60de3babc8a38c84e97571212d0aa5b1ce68fa1f8707598892a3",
+      "size_bytes": 763,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/closing/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/serialization_reopen.FCStd",
+      "sha256": "5b3e9d69f06dfa34f5edb2aa1f7b2737f84410251cc939f79daa20be867eaebf",
+      "size_bytes": 2609,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/serialization_reopen.FCStd"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/geometry_semantic_snapshot.json",
+      "sha256": "b301cafc62ea0ddf3ab2c215c4966a0be5c9ffe4a2b57f248b6c3d23abde6cfd",
+      "size_bytes": 1504,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/opening/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/topology_snapshot.json",
+      "sha256": "1cbf973d5cf9ec3ac97de111e3c51f08617ab0a43ceb3e4564827307ecabf174",
+      "size_bytes": 1015,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/opening/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/ui_state_snapshot.json",
+      "sha256": "1e324368bf5b8d95e9e417f1a7a25faf17beb3a7ba7c64b7b4bea2deef2e0088",
+      "size_bytes": 763,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/serialization_reopen/opening/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "serialization_reopen-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/serialization_reopen.step",
+      "sha256": "f7aea0d9a888eb2bacfd7572c16f0d8e9e172450b978dba4ca856a3af032088b",
+      "size_bytes": 8306,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/serialization_reopen.step"
+    },
+    {
+      "artifact_id": "ui_only_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/ui_only_changed.brep",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/ui_only_changed.brep"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/geometry_semantic_snapshot.json",
+      "sha256": "c26de0f4ca79be1dfadc5658e199032d37f0fd1ed60da81fbf38b274d82eaa2e",
+      "size_bytes": 1494,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/closing/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/topology_snapshot.json",
+      "sha256": "f3f7f66ee5a4954872ef88e16a9fa5bcaaae83c27708e8ad9d6292c28a620cdb",
+      "size_bytes": 1005,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/closing/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/ui_state_snapshot.json",
+      "sha256": "42e491278d2bd69dddea2a3ace3bb489e8b103d910ddc511c2a90ef653e1aba1",
+      "size_bytes": 755,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/closing/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/ui_only_changed.FCStd",
+      "sha256": "0fffc73ce5aed5f26db0acdbf112e73d47d603684e8207323f2320c5a6a8719f",
+      "size_bytes": 2603,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/ui_only_changed.FCStd"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/geometry_semantic_snapshot.json",
+      "sha256": "d83422151b437036290afbc0d30a6674f46587e3da576451477c4e026fd1058c",
+      "size_bytes": 1494,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/opening/geometry_semantic_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/topology_snapshot.json",
+      "sha256": "0687d982492519c27a7a7a7d900e82c66cff3e2d889a346ec0e94a977ec61e49",
+      "size_bytes": 1005,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/opening/topology_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/ui_state_snapshot.json",
+      "sha256": "b4e3699e9500431ca43c3b06a2b476e06e7b209351c24eedcea0009fa73ae33b",
+      "size_bytes": 755,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/snapshots/ui_only_changed/opening/ui_state_snapshot.json"
+    },
+    {
+      "artifact_id": "ui_only_changed-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/cad/ui_only_changed.step",
+      "sha256": "98a42df11b13eb3fcc649a2b5947866e8a409a25f4a82b010518ad26d448291a",
+      "size_bytes": 8306,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/cad/ui_only_changed.step"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/validator-result.json",
+      "sha256": "eecfc9cf48a7a9675b83d033471e9a86438b9b72f91435ffb32d8fe595d29224",
+      "size_bytes": 388,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/validator-result.json"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/VIEW_INDEX.md",
+      "sha256": "3c77d12fcf00586428471f1826ec9d8fa19222f763244d50d8c5eb64ef47faaa",
+      "size_bytes": 530,
+      "source_logical_path": "outputs/p2-mvp-final-caseab-dc44cbb-003/artifacts/VIEW_INDEX.md"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
+}
