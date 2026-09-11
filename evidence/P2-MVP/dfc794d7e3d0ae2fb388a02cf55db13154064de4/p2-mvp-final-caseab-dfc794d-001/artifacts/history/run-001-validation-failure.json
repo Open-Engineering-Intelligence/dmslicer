@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "status": "FAIL",
+  "stage": "promotion_policy_validation",
+  "implementation_commit": "dc44cbb447ae9d21bdcd229cbf08ec87e39ece7a",
+  "run_id": "p2-mvp-final-caseab-dc44cbb-001",
+  "findings": [
+    {
+      "artifact_id": "serialization_reopen-fcstd",
+      "code": "ALLOWLIST_SOURCE_MISSING",
+      "message": "Allowlisted source file does not exist because the reopen FCStd logical name and allowlist name differed"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "artifact_role": "CLOSING",
+  "artifact_type": "topology_snapshot",
+  "case_id": "ui_only_changed",
+  "schema_version": "1.0.0",
+  "source_artifact_id": "p2-fixture/ui_only_changed/fixture.FCStd",
+  "topology": {
+    "closed": true,
+    "connected_solid_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "edge_count": {
+      "unit": "count",
+      "value": 15
+    },
+    "face_count": {
+      "unit": "count",
+      "value": 7
+    },
+    "manifold": {
+      "reason": "manifold inference is deferred for the P2 fixture",
+      "status": "UNKNOWN"
+    },
+    "shell_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "solid_count": {
+      "unit": "count",
+      "value": 1
+    },
+    "through_hole": {
+      "count": {
+        "unit": "count",
+        "value": 1
+      },
+      "selection": "unique cylindrical face matching declared radius 4.000000 mm within 0.001 mm",
+      "status": "PROVEN"
+    },
+    "valid": true,
+    "vertex_count": {
+      "unit": "count",
+      "value": 10
+    }
+  }
+}

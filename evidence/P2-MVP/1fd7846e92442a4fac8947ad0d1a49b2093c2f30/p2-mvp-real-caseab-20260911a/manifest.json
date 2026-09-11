@@ -1,0 +1,249 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "COMPARISON_JSON",
+      "public_path": "artifacts/case_a_comparison.json",
+      "retention_role": "STANDARD",
+      "sha256": "e545b6a03c4a9f13d0c39229744bb5e630216ae5fd78841cf66e7b36db555225",
+      "size_bytes": 765,
+      "validation_role": "case A geometry comparison"
+    },
+    {
+      "artifact_id": "case-a-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/case_a_geometry_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "acee1be09a565bfe2a09d42f5ed4b5ecd769bd227fed97e338486d00484a15ad",
+      "size_bytes": 1007,
+      "validation_role": "case A geometry snapshot"
+    },
+    {
+      "artifact_id": "case-a-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/case_a_topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "f6fd02fcee5de8fc68f657a94b787b2a8d1d1276a991430fcf854c11faa2fcfb",
+      "size_bytes": 503,
+      "validation_role": "case A topology snapshot"
+    },
+    {
+      "artifact_id": "case-a-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/case_a_ui_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "b02506e65a4f7717b49f9d2fc8724554350ff03d315e3d0dc36a2d6991ee9be1",
+      "size_bytes": 101,
+      "validation_role": "case A ui snapshot"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "COMPARISON_JSON",
+      "public_path": "artifacts/case_b_comparison.json",
+      "retention_role": "STANDARD",
+      "sha256": "47a381adff4ff3ce0d49db087cd6e676b06b7ebf9fa8f616208d8e3571b1471c",
+      "size_bytes": 703,
+      "validation_role": "case B geometry comparison"
+    },
+    {
+      "artifact_id": "geometry-changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/case_a_geometry_changed.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "e5223644c7d7c8b551b3a986b2151c3bfe290b28c42831bff88313734edcae6e",
+      "size_bytes": 2607,
+      "validation_role": "case B geometry-changed CAD"
+    },
+    {
+      "artifact_id": "human-review",
+      "copy_status": "BYTE_SAME",
+      "kind": "HUMAN_REVIEW",
+      "public_path": "artifacts/HUMAN_REVIEW.md",
+      "retention_role": "STANDARD",
+      "sha256": "1cb86a53a36ea9fc5f96a589faa42d7e36ae5fa2e308bd62755630fbd970dc71",
+      "size_bytes": 47,
+      "validation_role": "human inspection note"
+    },
+    {
+      "artifact_id": "original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/case_a_original.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "f5ca424e78a6c79a33931a5fae8c741652b67cf717df8f88192e93c9eed3986d",
+      "size_bytes": 2602,
+      "validation_role": "case A original CAD"
+    },
+    {
+      "artifact_id": "pytest-result",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "f8baf42828cddf08ce21e7269138fd92ba5ff59ed754a516876f630e02c49919",
+      "size_bytes": 761,
+      "validation_role": "pytest summary"
+    },
+    {
+      "artifact_id": "reopened-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/case_a_original_reopened.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "d448f8010c75fddc47d4262ebc34218747ff08af7dc1fb120892a9221ce9c7f5",
+      "size_bytes": 2612,
+      "validation_role": "reopened validation CAD"
+    },
+    {
+      "artifact_id": "ui-only-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/case_a_ui_only_changed.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "01a70d27670c618d3dde16919af83238a51df4c589d7917394a328e1383c935c",
+      "size_bytes": 2606,
+      "validation_role": "case A ui-only CAD"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "kind": "VALIDATOR",
+      "public_path": "artifacts/validator-result.json",
+      "retention_role": "STANDARD",
+      "sha256": "64d582ddacc8b5c8ba7e95b43e6b2dc599a92ac3745c512c0ffe46e11730012d",
+      "size_bytes": 73,
+      "validation_role": "validator result"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "kind": "VIEW_INDEX",
+      "public_path": "artifacts/VIEW_INDEX.md",
+      "retention_role": "STANDARD",
+      "sha256": "6af3d8932646a9db4eca49499574e92e86a6e84c036af7f7d016e5c10b827ff5",
+      "size_bytes": 14,
+      "validation_role": "human readable view index"
+    }
+  ],
+  "environment": {
+    "freecad_version": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+    "occt_version": "7.8.1",
+    "pytest_version": "8.4.2",
+    "python_version": "3.12.0"
+  },
+  "execution": [
+    {
+      "command": "py -3.12 -m pytest tests/test_cad_demo.py -q --junitxml=outputs/p2-mvp-real-caseab-20260911a/case_a/pytest.xml",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T08:25:28.244116+08:00"
+    }
+  ],
+  "geometry_validation": {
+    "evidence_artifact_ids": [],
+    "evidence_method": "NOT_EVALUATED_P2_MVP",
+    "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+    "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+  },
+  "goal_id": "P2-MVP",
+  "history": {
+    "failure_artifact_ids": [],
+    "mismatch_artifact_ids": [],
+    "rejection_artifact_ids": [],
+    "reviewer_finding_artifact_ids": []
+  },
+  "identity": {
+    "branch": "feat/evidence-promotion-semantic-snapshot",
+    "implementation_commit": "1fd7846e92442a4fac8947ad0d1a49b2093c2f30",
+    "merge_base": "4b1fd5cdb92932bef3ba75aaef294bb5b38a0564",
+    "parent_baseline": "4b1fd5cdb92932bef3ba75aaef294bb5b38a0564"
+  },
+  "local_package_result": {
+    "package_path": "evidence/P2-MVP/1fd7846e92442a4fac8947ad0d1a49b2093c2f30/p2-mvp-real-caseab-20260911a",
+    "status": "LOCAL_PACKAGE_CREATED"
+  },
+  "policy_result": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "preservation_result": {
+    "recoverable_copy_count": 2,
+    "recoverable_copy_policy": "LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY",
+    "status": "NOT_FULLY_PRESERVED"
+  },
+  "publication_result": {
+    "off_host_copy_count": 0,
+    "status": "PUBLICATION_NOT_AUTHORIZED"
+  },
+  "results": {
+    "byte_identity_result": {
+      "evidence_artifact_ids": [],
+      "status": "BYTE_NOT_EVALUATED"
+    },
+    "geometry_equivalence_result": {
+      "evidence_artifact_ids": [],
+      "status": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+    },
+    "human_inspection_result": {
+      "evidence_artifact_ids": [
+        "human-review"
+      ],
+      "status": "NOT_EVALUATED"
+    },
+    "pytest_result": {
+      "evidence_artifact_ids": [
+        "pytest-result"
+      ],
+      "status": "PASS"
+    },
+    "scientific_experiment_result": {
+      "evidence_artifact_ids": [],
+      "status": "NOT_EVALUATED"
+    },
+    "semantic_equivalence_result": {
+      "evidence_artifact_ids": [],
+      "status": "SEMANTIC_EQUIVALENCE_NOT_PROVEN"
+    },
+    "ui_state_result": {
+      "evidence_artifact_ids": [],
+      "status": "UI_STATE_NOT_PROVEN"
+    },
+    "validator_result": {
+      "evidence_artifact_ids": [
+        "validator-result"
+      ],
+      "status": "PASS"
+    }
+  },
+  "run_id": "p2-mvp-real-caseab-20260911a",
+  "schema_version": "2.0.0",
+  "source_staging_root": "outputs/p2-mvp-real-caseab-20260911a",
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "geometry",
+      "source": "policy",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "geometry",
+      "source": "policy",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "geometry",
+      "source": "policy",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

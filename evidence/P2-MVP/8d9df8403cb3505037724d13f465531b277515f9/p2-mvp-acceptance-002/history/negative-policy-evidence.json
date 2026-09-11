@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "status": "RETAINED",
+  "evidence_role": "FAILURE",
+  "description": "Negative regression cases are retained as required evidence rather than discarded after the suite becomes green.",
+  "covered_rejections": [
+    "SHA_GEOMETRY_MISUSE",
+    "FAILURE_EVIDENCE_NOT_RETAINED",
+    "SCHEMA_INVALID",
+    "GIT_COMMIT_NOT_FOUND",
+    "GIT_ANCESTRY_INVALID",
+    "PATH_ESCAPE",
+    "PUBLIC_PATH_INVALID",
+    "SENSITIVE_CONTENT",
+    "ALLOWLIST_SOURCE_MISSING",
+    "DESTINATION_EXISTS",
+    "COPY_VERIFY_FAILED"
+  ],
+  "portable_path_cases": [
+    "WINDOWS_ABSOLUTE_REJECTED",
+    "POSIX_ABSOLUTE_REJECTED",
+    "MIXED_SEPARATOR_TRAVERSAL_REJECTED"
+  ],
+  "software_test_result": "PASS",
+  "geometry_result": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"
+}

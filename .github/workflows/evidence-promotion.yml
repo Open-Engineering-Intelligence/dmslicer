@@ -1,0 +1,39 @@
+name: Evidence promotion MVP
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pure-python-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install P2 MVP
+        run: |
+          python -m pip install -e .
+          python -m pip install pytest==8.4.2
+      - name: Run pure-Python evidence tests
+        run: >-
+          python -m pytest -q
+          tests/test_cad_evidence.py
+          tests/test_cad_evidence_schema.py
+          tests/test_promotion.py
+          tests/test_schema_contracts.py
+          tests/test_policy.py
+          tests/test_cli.py
+          tests/test_integrity.py
+          tests/test_p2_final_evidence_generator.py
+      - name: Protect frozen research contract
+        shell: bash
+        run: |
+          git fetch --no-tags origin feat/cylindrical-interface-repairability
+          git diff --exit-code origin/feat/cylindrical-interface-repairability -- docs/research_v2

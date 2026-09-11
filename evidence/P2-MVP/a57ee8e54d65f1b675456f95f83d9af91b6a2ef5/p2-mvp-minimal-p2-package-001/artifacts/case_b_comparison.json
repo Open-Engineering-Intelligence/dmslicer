@@ -1,0 +1,6 @@
+{
+  "case": "B",
+  "type": "GEOMETRY_CHANGE",
+  "status": "FAIL",
+  "notes": "Geometry differs under configured tolerances"
+}

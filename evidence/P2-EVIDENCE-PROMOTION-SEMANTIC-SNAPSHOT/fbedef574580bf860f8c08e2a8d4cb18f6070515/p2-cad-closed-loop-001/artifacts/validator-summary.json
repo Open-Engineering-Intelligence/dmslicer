@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "implementation_commit": "fbedef574580bf860f8c08e2a8d4cb18f6070515",
+  "environment": {
+    "python_version": "3.12.0",
+    "pytest_version": "8.4.2",
+    "freecad_version": "1.1.1",
+    "occt_version": "7.8.1"
+  },
+  "focused_pytest": {
+    "status": "PASS",
+    "tests_passed": 104,
+    "junit": "artifacts/pytest.xml"
+  },
+  "case_a": {
+    "geometry_status": "GEOMETRY_EQUIVALENT",
+    "semantic_status": "SEMANTIC_EQUIVALENT",
+    "ui_status": "UI_DIFFERENT",
+    "byte_status": "BYTE_DIFFERENT",
+    "bidirectional_boolean_difference_mm3": [0.0, 0.0]
+  },
+  "case_b": {
+    "geometry_status": "GEOMETRY_DIFFERENT",
+    "area_delta_mm2": 18.849555921538013,
+    "volume_delta_mm3": 339.2920065876988,
+    "first_minus_second_volume_mm3": 339.2920065876977
+  },
+  "serialization_reopen": {
+    "geometry_status": "GEOMETRY_EQUIVALENT",
+    "byte_status": "BYTE_DIFFERENT"
+  },
+  "tolerances": [
+    {"name": "linear", "value": 0.001, "unit": "mm"},
+    {"name": "area", "value": 0.001, "unit": "mm2"},
+    {"name": "volume", "value": 0.001, "unit": "mm3"}
+  ],
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+  "human_inspection_status": "NOT_EVALUATED",
+  "known_limitations": [
+    "manifold inference is UNKNOWN",
+    "camera evidence is UNSUPPORTED",
+    "general CAD entity correspondence is deferred",
+    "Hausdorff-style metrics and best-fit registration are deferred"
+  ]
+}

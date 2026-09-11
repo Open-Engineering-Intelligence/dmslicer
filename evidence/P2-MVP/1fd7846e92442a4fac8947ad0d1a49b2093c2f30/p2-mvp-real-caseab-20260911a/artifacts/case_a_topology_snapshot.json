@@ -1,0 +1,27 @@
+{
+  "closed": true,
+  "shell_count": 1,
+  "solid_area": {
+    "value": 5602.123859659493,
+    "unit": "mm2"
+  },
+  "solid_volume": {
+    "value": 22994.690350851266,
+    "unit": "mm3"
+  },
+  "valid": true,
+  "connected_solid_count": 1,
+  "edge_count": 15,
+  "solid_count": 1,
+  "face_count": 7,
+  "vertex_count": 10,
+  "through_hole_wall": true,
+  "bounding_box": {
+    "xmax": 40.0,
+    "xmin": 0.0,
+    "ymax": 30.0,
+    "ymin": 0.0,
+    "zmax": 20.0,
+    "zmin": 0.0
+  }
+}

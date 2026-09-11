@@ -1,0 +1,738 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-engineering-intelligence.example.com/schemas/cad_evidence.schema.json",
+  "title": "DM-Slicer CAD evidence preservation manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version"
+  ],
+  "properties": {
+    "schema_version": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "const": "1.0.0"
+        }
+      ]
+    },
+    "artifact_type": {
+      "enum": [
+        "geometry_semantic_snapshot",
+        "topology_snapshot",
+        "ui_state_snapshot",
+        "geometry_comparison"
+      ]
+    },
+    "goal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "geometry_semantic_snapshot": {
+      "$ref": "#/$defs/geometry_semantic_snapshot"
+    },
+    "topology_snapshot": {
+      "$ref": "#/$defs/topology_snapshot"
+    },
+    "ui_state_snapshot": {
+      "$ref": "#/$defs/ui_state_snapshot"
+    },
+    "geometry_comparison": {
+      "$ref": "#/$defs/geometry_comparison"
+    }
+  },
+  "anyOf": [
+    {
+      "properties": {
+        "schema_version": {"type": "integer", "minimum": 1}
+      }
+    },
+    {
+      "required": ["artifact_type"]
+    }
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "geometry_semantic_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "length_unit",
+          "semantic_binding",
+          "shape"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "geometry_semantic_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "length_unit": {"const": "mm"},
+          "semantic_binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["component_role", "interface_role", "allowed_transform"],
+            "properties": {
+              "component_role": {"const": "fixture_body"},
+              "interface_role": {"const": "through_hole_wall"},
+              "allowed_transform": {"const": "IDENTITY"},
+              "evidence_fixture": {
+                "const": "rectangular_block_one_through_hole"
+              }
+            }
+          },
+          "shape": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "solid_count",
+              "shell_count",
+              "face_count",
+              "edge_count",
+              "vertex_count",
+              "area",
+              "volume",
+              "bounding_box",
+              "valid",
+              "closed"
+            ],
+            "properties": {
+              "solid_count": {"$ref": "#/$defs/count_measurement"},
+              "shell_count": {"$ref": "#/$defs/count_measurement"},
+              "face_count": {"$ref": "#/$defs/count_measurement"},
+              "edge_count": {"$ref": "#/$defs/count_measurement"},
+              "vertex_count": {"$ref": "#/$defs/count_measurement"},
+              "area": {"$ref": "#/$defs/area_measurement"},
+              "volume": {"$ref": "#/$defs/volume_measurement"},
+              "bounding_box": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["x_min", "y_min", "z_min", "x_max", "y_max", "z_max"],
+                "properties": {
+                  "x_min": {"$ref": "#/$defs/linear_measurement"},
+                  "y_min": {"$ref": "#/$defs/linear_measurement"},
+                  "z_min": {"$ref": "#/$defs/linear_measurement"},
+                  "x_max": {"$ref": "#/$defs/linear_measurement"},
+                  "y_max": {"$ref": "#/$defs/linear_measurement"},
+                  "z_max": {"$ref": "#/$defs/linear_measurement"}
+                }
+              },
+              "valid": {"type": "boolean"},
+              "closed": {"type": "boolean"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "topology_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "topology"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "topology_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "topology": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "solid_count",
+              "shell_count",
+              "face_count",
+              "edge_count",
+              "vertex_count",
+              "connected_solid_count",
+              "valid",
+              "closed",
+              "through_hole",
+              "manifold"
+            ],
+            "properties": {
+              "solid_count": {"$ref": "#/$defs/count_measurement"},
+              "shell_count": {"$ref": "#/$defs/count_measurement"},
+              "face_count": {"$ref": "#/$defs/count_measurement"},
+              "edge_count": {"$ref": "#/$defs/count_measurement"},
+              "vertex_count": {"$ref": "#/$defs/count_measurement"},
+              "connected_solid_count": {"$ref": "#/$defs/count_measurement"},
+              "valid": {"type": "boolean"},
+              "closed": {"type": "boolean"},
+              "through_hole": {"type": "object"},
+              "manifold": {"type": "object"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "ui_state_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "object_role",
+          "state"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "ui_state_snapshot"},
+          "case_id": {"type": "string", "minLength": 1},
+          "source_artifact_id": {"type": "string", "minLength": 1},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "object_role": {"const": "fixture_body"},
+          "state": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["visibility", "shape_color", "transparency", "display_mode", "camera"],
+            "properties": {
+              "visibility": {"oneOf": [{"$ref": "#/$defs/supported_visibility"}, {"$ref": "#/$defs/unavailable"}]},
+              "shape_color": {"oneOf": [{"$ref": "#/$defs/supported_color"}, {"$ref": "#/$defs/unavailable"}]},
+              "transparency": {"oneOf": [{"$ref": "#/$defs/supported_transparency"}, {"$ref": "#/$defs/unavailable"}]},
+              "display_mode": {"oneOf": [{"$ref": "#/$defs/supported_text"}, {"$ref": "#/$defs/unavailable"}]},
+              "camera": {"oneOf": [{"$ref": "#/$defs/supported_text"}, {"$ref": "#/$defs/unavailable"}]}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "geometry_comparison"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "comparison_role",
+          "status",
+          "method",
+          "sha256_role",
+          "tolerances",
+          "measurements",
+          "checks",
+          "failed_checks",
+          "reasons",
+          "geometry_decision_inputs"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_type": {"const": "geometry_comparison"},
+          "case_id": {"type": "string", "minLength": 1},
+          "comparison_role": {
+            "enum": ["UI_ONLY_MUTATION", "GEOMETRY_MUTATION", "SERIALIZATION_REOPEN"]
+          },
+          "status": {
+            "enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT", "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"]
+          },
+          "method": {"enum": ["BREP_BOOLEAN_AND_MEASUREMENTS", "NOT_EVALUATED"]},
+          "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"},
+          "byte_identity": {
+            "enum": ["BYTE_IDENTICAL", "BYTE_DIFFERENT", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
+          "semantic_comparison": {
+            "enum": ["SEMANTIC_EQUIVALENT", "SEMANTIC_DIFFERENT", "SEMANTIC_EQUIVALENCE_NOT_PROVEN", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
+          "ui_comparison": {
+            "enum": ["UI_SAME", "UI_DIFFERENT", "UI_COMPARISON_NOT_PROVEN", "UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]
+          },
+          "tolerances": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {"$ref": "#/$defs/tolerance"}
+          },
+          "measurements": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "area_delta",
+              "volume_delta",
+              "max_bounding_box_delta",
+              "minimum_distance",
+              "first_minus_second_volume",
+              "second_minus_first_volume"
+            ],
+            "properties": {
+              "area_delta": {"$ref": "#/$defs/area_measurement_or_unavailable"},
+              "volume_delta": {"$ref": "#/$defs/volume_measurement_or_unavailable"},
+              "max_bounding_box_delta": {"$ref": "#/$defs/linear_measurement_or_unavailable"},
+              "minimum_distance": {"$ref": "#/$defs/linear_measurement_or_unavailable"},
+              "first_minus_second_volume": {"$ref": "#/$defs/volume_measurement_or_unavailable"},
+              "second_minus_first_volume": {"$ref": "#/$defs/volume_measurement_or_unavailable"}
+            }
+          },
+          "checks": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "valid_closed_single_solids",
+              "topology_counts",
+              "area_delta",
+              "volume_delta",
+              "bounding_box",
+              "first_minus_second",
+              "second_minus_first"
+            ],
+            "properties": {
+              "valid_closed_single_solids": {"$ref": "#/$defs/check_or_unavailable"},
+              "topology_counts": {"$ref": "#/$defs/check_or_unavailable"},
+              "area_delta": {"$ref": "#/$defs/check_or_unavailable"},
+              "volume_delta": {"$ref": "#/$defs/check_or_unavailable"},
+              "bounding_box": {"$ref": "#/$defs/check_or_unavailable"},
+              "first_minus_second": {"$ref": "#/$defs/check_or_unavailable"},
+              "second_minus_first": {"$ref": "#/$defs/check_or_unavailable"}
+            }
+          },
+          "failed_checks": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "reasons": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          },
+          "geometry_decision_inputs": {
+            "const": ["topology", "area", "volume", "bounding_box", "bidirectional_boolean_cut"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "unit_code": {
+      "type": "string",
+      "enum": [
+        "mm",
+        "mm2",
+        "mm3",
+        "cm",
+        "cm2",
+        "cm3",
+        "m",
+        "m2",
+        "m3",
+        "percent",
+        "count",
+        "unitless"
+      ]
+    },
+    "continuous_measurement": {
+      "type": "object",
+      "required": [
+        "value",
+        "unit"
+      ],
+      "propertyNames": {
+        "pattern": "^(?!.*(sha|hash|digest|sha256)).*$"
+      },
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "$ref": "#/$defs/unit_code"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/continuous_measurement"
+        }
+      },
+      "additionalProperties": true
+    },
+    "count_measurement": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "integer", "minimum": 0},
+        "unit": {"const": "count"}
+      },
+      "additionalProperties": false
+    },
+    "linear_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number"},
+        "unit": {"const": "mm"}
+      }
+    },
+    "area_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"const": "mm2"}
+      }
+    },
+    "volume_measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"const": "mm3"}
+      }
+    },
+    "unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"enum": ["UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "ui_value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["status", "value"],
+          "properties": {"status": {"const": "SUPPORTED"}}
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "supported_visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "boolean"}
+      }
+    },
+    "supported_color": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+        }
+      }
+    },
+    "supported_transparency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "integer", "minimum": 0, "maximum": 100}
+      }
+    },
+    "supported_text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "value"],
+      "properties": {
+        "status": {"const": "SUPPORTED"},
+        "value": {"type": "string", "minLength": 1}
+      }
+    },
+    "check_or_unavailable": {
+      "oneOf": [
+        {"type": "boolean"},
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "tolerance": {
+      "type": "object",
+      "required": ["name", "value", "unit", "role", "source"],
+      "properties": {
+        "name": {"enum": ["linear", "area", "volume"]},
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"enum": ["mm", "mm2", "mm3"]},
+        "role": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "measurement_or_unavailable": {
+      "oneOf": [
+        {"$ref": "#/$defs/continuous_measurement"},
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "linear_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm"}
+          }
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "area_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm2"}
+          }
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "volume_measurement_or_unavailable": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "unit"],
+          "properties": {
+            "value": {"type": "number", "minimum": 0},
+            "unit": {"const": "mm3"}
+          }
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "geometry_snapshot": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(?!.*(sha|hash|digest|sha256)).*$"
+      },
+      "additionalProperties": true
+    },
+    "geometry_semantic_snapshot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/geometry_snapshot"
+        },
+        {
+          "type": "object",
+          "required": [
+            "component_role",
+            "interface_role"
+          ],
+          "properties": {
+            "component_role": {
+              "type": "string"
+            },
+            "interface_role": {
+              "type": "string"
+            },
+            "semantic_components": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/continuous_measurement"
+              }
+            },
+            "allowable_transform": {
+              "type": "string"
+            },
+            "source_regions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "source_faces": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "topology_snapshot": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/geometry_snapshot"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "solid_volume": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "solid_area": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "surface_area": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "edge_length": {
+              "$ref": "#/$defs/continuous_measurement"
+            },
+            "component_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "patch_topology": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "ui_state_snapshot": {
+      "type": "object",
+      "required": [
+        "visibility",
+        "color",
+        "transparency"
+      ],
+      "properties": {
+        "visibility": {
+          "type": "boolean"
+        },
+        "color": {
+          "type": ["array", "string", "object"],
+          "minItems": 3
+        },
+        "transparency": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "camera_state": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "geometry_comparison": {
+      "type": "object",
+      "required": [
+        "byte_identity",
+        "semantic_comparison",
+        "topology_comparison",
+        "ui_comparison"
+      ],
+      "properties": {
+        "byte_identity": {
+          "type": "string",
+          "enum": [
+            "BYTE_IDENTICAL",
+            "BYTE_DIFFERENT",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "byte_identity_input": {
+          "type": "object",
+          "required": [
+            "input_sha256_left",
+            "input_sha256_right"
+          ],
+          "properties": {
+            "input_sha256_left": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "input_sha256_right": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "semantic_comparison": {
+          "type": "string",
+          "enum": [
+            "SEMANTIC_EQUIVALENT",
+            "SEMANTIC_DIFFERENT",
+            "SEMANTIC_EQUIVALENCE_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "topology_comparison": {
+          "type": "string",
+          "enum": [
+            "TOPOLOGY_EQUIVALENT",
+            "TOPOLOGY_DIFFERENT",
+            "TOPOLOGY_COMPARISON_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        },
+        "ui_comparison": {
+          "type": "string",
+          "enum": [
+            "UI_SAME",
+            "UI_DIFFERENT",
+            "UI_COMPARISON_NOT_PROVEN",
+            "UNKNOWN",
+            "UNSUPPORTED",
+            "NOT_PROVEN"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

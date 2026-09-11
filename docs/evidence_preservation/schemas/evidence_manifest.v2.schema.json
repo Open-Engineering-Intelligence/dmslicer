@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Open-Engineering-Intelligence/dmslicer/blob/main/docs/evidence_preservation/schemas/evidence_manifest.v2.schema.json",
+  "title": "DM-Slicer P2 MVP Stable Evidence Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "goal_id", "run_id", "identity", "source_staging_root",
+    "environment", "execution", "tolerances", "artifacts", "history", "results",
+    "geometry_validation", "local_package_result", "preservation_result",
+    "publication_result", "policy_result"
+  ],
+  "$defs": {
+    "artifactId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,127}$"},
+    "artifactIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/artifactId"}},
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence_artifact_ids"],
+      "properties": {
+        "status": {"type": "string"},
+        "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds"}
+      }
+    },
+    "softwareResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "NOT_EVALUATED"]}}}
+      ]
+    },
+    "scientificResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED"]}}}
+      ]
+    },
+    "humanResult": {
+      "allOf": [
+        {"$ref": "#/$defs/result"},
+        {"properties": {"status": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "NOT_EVALUATED"]}}}
+      ]
+    },
+    "geometryResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "semanticResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["SEMANTIC_EQUIVALENT", "SEMANTIC_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"const": "SEMANTIC_EQUIVALENCE_NOT_PROVEN"}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "uiResult": {
+      "oneOf": [
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["UI_SAME", "UI_DIFFERENT"]}, "evidence_artifact_ids": {"minItems": 1}}}]},
+        {"allOf": [{"$ref": "#/$defs/result"}, {"properties": {"status": {"enum": ["UI_COMPARISON_NOT_PROVEN", "UI_STATE_NOT_PROVEN"]}, "evidence_artifact_ids": {"maxItems": 0}}}]}
+      ]
+    },
+    "geometryValidation": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "evidence_method", "evidence_artifact_ids", "sha256_role"],
+          "properties": {
+            "status": {"enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT"]},
+            "evidence_method": {"const": "BREP_BOOLEAN_AND_MEASUREMENTS"},
+            "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds", "minItems": 1},
+            "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "evidence_method", "evidence_artifact_ids", "sha256_role"],
+          "properties": {
+            "status": {"const": "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"},
+            "evidence_method": {"const": "NOT_EVALUATED_P2_MVP"},
+            "evidence_artifact_ids": {"$ref": "#/$defs/artifactIds", "maxItems": 0},
+            "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"}
+          }
+        }
+      ]
+    },
+    "tolerance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "unit", "role", "source"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "value": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "2.0.0"},
+    "goal_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]{1,63}$"},
+    "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["branch", "implementation_commit", "parent_baseline", "merge_base"],
+      "properties": {
+        "branch": {"type": "string", "minLength": 1},
+        "implementation_commit": {"$ref": "#/$defs/commit"},
+        "parent_baseline": {"$ref": "#/$defs/commit"},
+        "merge_base": {"$ref": "#/$defs/commit"}
+      }
+    },
+    "source_staging_root": {"type": "string", "minLength": 1},
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["python_version", "pytest_version", "freecad_version", "occt_version"],
+      "properties": {
+        "python_version": {"type": "string"},
+        "pytest_version": {"type": "string"},
+        "freecad_version": {"type": ["string", "null"]},
+        "occt_version": {"type": ["string", "null"]}
+      }
+    },
+    "execution": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "exit_code", "timestamp"],
+        "properties": {
+          "command": {"type": "string"},
+          "exit_code": {"type": "integer"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "tolerances": {"type": "array", "items": {"$ref": "#/$defs/tolerance"}},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifact_id", "kind", "public_path", "sha256", "size_bytes", "validation_role", "retention_role", "copy_status"],
+        "properties": {
+          "artifact_id": {"$ref": "#/$defs/artifactId"},
+          "kind": {
+            "type": "string",
+            "enum": [
+              "JUNIT",
+              "VALIDATOR",
+              "JSON",
+              "TEXT",
+              "STEP",
+              "BREP",
+              "FCSTD",
+              "GEOMETRY_SNAPSHOT",
+              "TOPOLOGY_SNAPSHOT",
+              "UI_SNAPSHOT",
+              "COMPARISON_JSON",
+              "VIEW_INDEX",
+              "HUMAN_REVIEW",
+              "OTHER"
+            ]
+          },
+          "public_path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "validation_role": {"type": "string", "minLength": 1},
+          "retention_role": {"enum": ["STANDARD", "FAILURE", "MISMATCH", "REJECTION", "REVIEWER_FINDING"]},
+          "copy_status": {"const": "BYTE_SAME"}
+        }
+      }
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failure_artifact_ids", "mismatch_artifact_ids", "rejection_artifact_ids", "reviewer_finding_artifact_ids"],
+      "properties": {
+        "failure_artifact_ids": {"$ref": "#/$defs/artifactIds"},
+        "mismatch_artifact_ids": {"$ref": "#/$defs/artifactIds"},
+        "rejection_artifact_ids": {"$ref": "#/$defs/artifactIds"},
+        "reviewer_finding_artifact_ids": {"$ref": "#/$defs/artifactIds"}
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["byte_identity_result", "geometry_equivalence_result", "semantic_equivalence_result", "ui_state_result", "pytest_result", "validator_result", "scientific_experiment_result", "human_inspection_result"],
+      "properties": {
+        "byte_identity_result": {
+          "allOf": [
+            {"$ref": "#/$defs/result"},
+            {"properties": {"status": {"enum": ["BYTE_SAME", "BYTE_DIFFERENT", "BYTE_NOT_EVALUATED"]}}}
+          ]
+        },
+        "geometry_equivalence_result": {"$ref": "#/$defs/geometryResult"},
+        "semantic_equivalence_result": {"$ref": "#/$defs/semanticResult"},
+        "ui_state_result": {"$ref": "#/$defs/uiResult"},
+        "pytest_result": {"$ref": "#/$defs/softwareResult"},
+        "validator_result": {"$ref": "#/$defs/softwareResult"},
+        "scientific_experiment_result": {"$ref": "#/$defs/scientificResult"},
+        "human_inspection_result": {"$ref": "#/$defs/humanResult"}
+      }
+    },
+    "geometry_validation": {"$ref": "#/$defs/geometryValidation"},
+    "local_package_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "package_path"],
+      "properties": {
+        "status": {"const": "LOCAL_PACKAGE_CREATED"},
+        "package_path": {"type": "string", "pattern": "^evidence/"}
+      }
+    },
+    "preservation_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "recoverable_copy_count", "recoverable_copy_policy"],
+      "properties": {
+        "status": {"const": "NOT_FULLY_PRESERVED"},
+        "recoverable_copy_count": {"const": 2},
+        "recoverable_copy_policy": {"const": "LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY"}
+      }
+    },
+    "publication_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "off_host_copy_count"],
+      "properties": {
+        "status": {"enum": ["PUBLICATION_NOT_AUTHORIZED", "PUBLICATION_BLOCKED_OFF_HOST_COPY"]},
+        "off_host_copy_count": {"const": 0}
+      }
+    },
+    "policy_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "findings"],
+      "properties": {
+        "status": {"const": "PASS"},
+        "findings": {"type": "array", "maxItems": 0}
+      }
+    }
+  }
+}

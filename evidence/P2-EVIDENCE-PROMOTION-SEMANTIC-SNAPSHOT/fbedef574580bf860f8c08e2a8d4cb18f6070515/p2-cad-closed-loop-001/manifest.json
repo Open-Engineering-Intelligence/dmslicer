@@ -1,0 +1,393 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "comparisons/case_a_ui_only.json",
+      "retention_role": "STANDARD",
+      "sha256": "824b66cffd428e5149ee258db0a20c18f3d2e799602971c7b5bf00d602f55725",
+      "size_bytes": 1766,
+      "validation_role": "Case A B-rep comparison"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "comparisons/case_b_geometry_changed.json",
+      "retention_role": "FAILURE",
+      "sha256": "cd673f9b1e145f3ab0cdee4c3e7c80ee9e130ff8b4f2e16e4a2cdad599b929e1",
+      "size_bytes": 2013,
+      "validation_role": "Case B B-rep mutation comparison"
+    },
+    {
+      "artifact_id": "geometry_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "cad/geometry_changed/fixture.brep",
+      "retention_role": "STANDARD",
+      "sha256": "5f99cb4cfa96e7c707ce471f13dcc5d46a49af4692506a57528554134cab2fe0",
+      "size_bytes": 3581,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "geometry_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "cad/geometry_changed/fixture.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "4a41da50f6ce99a4765cb993676529f1dbb09c2247b911c5b5c5de1665a57259",
+      "size_bytes": 4373,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "geometry_changed-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/geometry_changed/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "198eb5b98a44f1a53ff45784b3c687ce89a19f87112302040bd5c4ed999247c7",
+      "size_bytes": 1448,
+      "validation_role": "geometry fixture snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "cad/geometry_changed/fixture.step",
+      "retention_role": "STANDARD",
+      "sha256": "f446c067707a27807f98852b5b97e86c6a32d3d0db53e51915388ea41d79073d",
+      "size_bytes": 8296,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "geometry_changed-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/geometry_changed/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "2d56167d3a256ace0840a7fba70cc56e05c1745e89c1842c14bb4f43faca5aab",
+      "size_bytes": 1072,
+      "validation_role": "topology fixture snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/geometry_changed/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "8791a964abf6eeae8fe457e7dad929a3f888c3dd63a87851927356b0bc85c845",
+      "size_bytes": 839,
+      "validation_role": "ui fixture snapshot"
+    },
+    {
+      "artifact_id": "human-review-guide",
+      "copy_status": "BYTE_SAME",
+      "kind": "HUMAN_REVIEW",
+      "public_path": "HUMAN_REVIEW.md",
+      "retention_role": "STANDARD",
+      "sha256": "77041283056d9a9eef2af88f5b568c56ff7ba104d748c8235b7d3fe098362e3d",
+      "size_bytes": 1128,
+      "validation_role": "human review guide without approval claim"
+    },
+    {
+      "artifact_id": "original-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "cad/original/fixture.brep",
+      "retention_role": "STANDARD",
+      "sha256": "d08ca12270f62905e32e1497c333cbcf1cf7456541be9e941f5cbf89e2c15214",
+      "size_bytes": 3581,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "cad/original/fixture.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "32eb96df18124a9fee2666bff74e827756827fb8e924b7f2bea3494d131597a5",
+      "size_bytes": 4372,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "original-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/original/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "186989d8916116229167e7bbce3c0e8c0d899ecc3c3760468e659979c76188ee",
+      "size_bytes": 1431,
+      "validation_role": "geometry fixture snapshot"
+    },
+    {
+      "artifact_id": "original-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "cad/original/fixture.step",
+      "retention_role": "STANDARD",
+      "sha256": "56e789dbbd75650d96e52ed759fd4e62e2d11f5bed1dac17ee3fe79ae5c8df9a",
+      "size_bytes": 8296,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "original-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/original/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "ce13b8e0c5fb4aee721b5e59d677b2deb2656119cca5d1c13ec43a80a07067fb",
+      "size_bytes": 1056,
+      "validation_role": "topology fixture snapshot"
+    },
+    {
+      "artifact_id": "original-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/original/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "00b5e84ec64dd696441d22863750a32926b7e9059f1c14ede68d8fdab5d5a006",
+      "size_bytes": 823,
+      "validation_role": "ui fixture snapshot"
+    },
+    {
+      "artifact_id": "pytest-junit",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "e3c1d3690f1ebe33c2987b0a0218eedf8a53378608549dba24d52c0f6d531908",
+      "size_bytes": 13638,
+      "validation_role": "focused inherited and CAD pytest result"
+    },
+    {
+      "artifact_id": "serialization-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "comparisons/serialization_reopen.json",
+      "retention_role": "STANDARD",
+      "sha256": "4d5417d10b91b077619d67fda5d21db3594a05601ae0e7e1954f95ee0dafe6ef",
+      "size_bytes": 1784,
+      "validation_role": "serialization/reopen B-rep comparison"
+    },
+    {
+      "artifact_id": "ui_only_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "cad/ui_only_changed/fixture.brep",
+      "retention_role": "STANDARD",
+      "sha256": "d08ca12270f62905e32e1497c333cbcf1cf7456541be9e941f5cbf89e2c15214",
+      "size_bytes": 3581,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "ui_only_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "cad/ui_only_changed/fixture.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "c7d4744c94e66cf1d20ad3407c49c3242520b7afcb8ce6b19da267676c072426",
+      "size_bytes": 4343,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "ui_only_changed-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/ui_only_changed/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "e357bef967bd0c92e6331172befa0fa8e29e7b083abae43bdc2836989c2e188f",
+      "size_bytes": 1445,
+      "validation_role": "geometry fixture snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "cad/ui_only_changed/fixture.step",
+      "retention_role": "STANDARD",
+      "sha256": "1274779a4cfcad8211f49f212a57b4737eec4dbb2630aaacfe1bc273f0f468ea",
+      "size_bytes": 8296,
+      "validation_role": "fixture CAD source or mutation"
+    },
+    {
+      "artifact_id": "ui_only_changed-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/ui_only_changed/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "88a99e0751566ab6bb56959f0218dfb55ebc8c624b85f911304e02f50544f1fe",
+      "size_bytes": 1070,
+      "validation_role": "topology fixture snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "snapshots/ui_only_changed/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "85747d3b61d91fc1b2b38ddeea4a8c3b441ed384b13159bae9d54544209fbeb3",
+      "size_bytes": 841,
+      "validation_role": "ui fixture snapshot"
+    },
+    {
+      "artifact_id": "validator-summary",
+      "copy_status": "BYTE_SAME",
+      "kind": "VALIDATOR",
+      "public_path": "artifacts/validator-summary.json",
+      "retention_role": "STANDARD",
+      "sha256": "6617da0bf66d98eff14328301b5c8851d64feaafc1f66385ff8a4b1d8dfc0d60",
+      "size_bytes": 1466,
+      "validation_role": "separate CAD and software result summary"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "kind": "VIEW_INDEX",
+      "public_path": "VIEW_INDEX.md",
+      "retention_role": "STANDARD",
+      "sha256": "71d8af905c2517a198795c9c71fc46c683c650232ca18ac9b8d7619a197fcf87",
+      "size_bytes": 1495,
+      "validation_role": "relative human review navigation"
+    }
+  ],
+  "environment": {
+    "freecad_version": "1.1.1",
+    "occt_version": "7.8.1",
+    "pytest_version": "8.4.2",
+    "python_version": "3.12.0"
+  },
+  "execution": [
+    {
+      "command": "py -3.12 -m dmslicer.evidence_promotion demo --output-root outputs/p2-cad-closed-loop-001",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T00:59:28+08:00"
+    },
+    {
+      "command": "py -3.12 -m pytest tests/test_cad_evidence_schema.py tests/test_cad_evidence.py tests/test_cad_demo.py tests/test_schema_contracts.py tests/test_policy.py tests/test_promotion.py tests/test_cli.py -q --junitxml=outputs/p2-cad-closed-loop-001/artifacts/pytest.xml",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T01:03:01+08:00"
+    }
+  ],
+  "geometry_validation": {
+    "evidence_artifact_ids": [
+      "case-b-comparison"
+    ],
+    "evidence_method": "BREP_BOOLEAN_AND_MEASUREMENTS",
+    "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+    "status": "GEOMETRY_DIFFERENT"
+  },
+  "goal_id": "P2-EVIDENCE-PROMOTION-SEMANTIC-SNAPSHOT",
+  "history": {
+    "failure_artifact_ids": [
+      "case-b-comparison"
+    ],
+    "mismatch_artifact_ids": [],
+    "rejection_artifact_ids": [],
+    "reviewer_finding_artifact_ids": []
+  },
+  "identity": {
+    "branch": "feat/evidence-promotion-semantic-snapshot",
+    "implementation_commit": "fbedef574580bf860f8c08e2a8d4cb18f6070515",
+    "merge_base": "d65ac32e04115e5627f1c2988fd486e2353cada9",
+    "parent_baseline": "d65ac32e04115e5627f1c2988fd486e2353cada9"
+  },
+  "local_package_result": {
+    "package_path": "evidence/P2-EVIDENCE-PROMOTION-SEMANTIC-SNAPSHOT/fbedef574580bf860f8c08e2a8d4cb18f6070515/p2-cad-closed-loop-001",
+    "status": "LOCAL_PACKAGE_CREATED"
+  },
+  "policy_result": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "preservation_result": {
+    "recoverable_copy_count": 2,
+    "recoverable_copy_policy": "LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY",
+    "status": "NOT_FULLY_PRESERVED"
+  },
+  "publication_result": {
+    "off_host_copy_count": 0,
+    "status": "PUBLICATION_NOT_AUTHORIZED"
+  },
+  "results": {
+    "byte_identity_result": {
+      "evidence_artifact_ids": [
+        "original-fcstd",
+        "ui_only_changed-fcstd"
+      ],
+      "status": "BYTE_DIFFERENT"
+    },
+    "geometry_equivalence_result": {
+      "evidence_artifact_ids": [
+        "case-b-comparison"
+      ],
+      "status": "GEOMETRY_DIFFERENT"
+    },
+    "human_inspection_result": {
+      "evidence_artifact_ids": [
+        "human-review-guide"
+      ],
+      "status": "NOT_EVALUATED"
+    },
+    "pytest_result": {
+      "evidence_artifact_ids": [
+        "pytest-junit"
+      ],
+      "status": "PASS"
+    },
+    "scientific_experiment_result": {
+      "evidence_artifact_ids": [
+        "case-a-comparison",
+        "case-b-comparison",
+        "validator-summary"
+      ],
+      "status": "PASS"
+    },
+    "semantic_equivalence_result": {
+      "evidence_artifact_ids": [
+        "original-geometry-snapshot",
+        "ui_only_changed-geometry-snapshot"
+      ],
+      "status": "SEMANTIC_EQUIVALENT"
+    },
+    "ui_state_result": {
+      "evidence_artifact_ids": [
+        "original-ui-snapshot",
+        "ui_only_changed-ui-snapshot"
+      ],
+      "status": "UI_DIFFERENT"
+    },
+    "validator_result": {
+      "evidence_artifact_ids": [
+        "validator-summary"
+      ],
+      "status": "PASS"
+    }
+  },
+  "run_id": "p2-cad-closed-loop-001",
+  "schema_version": "2.0.0",
+  "source_staging_root": "outputs/p2-cad-closed-loop-001",
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "bounding box and minimum distance",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "surface area delta",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "volume delta and Boolean differences",
+      "source": "P2-MVP fixture contract",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

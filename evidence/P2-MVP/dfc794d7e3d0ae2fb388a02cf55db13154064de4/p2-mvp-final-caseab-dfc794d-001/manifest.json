@@ -1,0 +1,657 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "cad-pytest",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/reports/cad-pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "f4e177f51dae39411fa8c21b293979b65ef4958cdaea825256487fd186e2b32d",
+      "size_bytes": 758,
+      "validation_role": "FreeCAD scientific pytest execution"
+    },
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "COMPARISON_JSON",
+      "public_path": "artifacts/comparisons/case_a_ui_only.json",
+      "retention_role": "STANDARD",
+      "sha256": "802e4be52c0c0e57f6ef59eba84f7891dde214cc306cafb7532de379ee65138a",
+      "size_bytes": 1957,
+      "validation_role": "Case A geometry comparison"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "COMPARISON_JSON",
+      "public_path": "artifacts/comparisons/case_b_geometry_changed.json",
+      "retention_role": "FAILURE",
+      "sha256": "ed8ae48cd07db433c3153200960169b60359b53fa3bc1d8d11a99e58a1685cfd",
+      "size_bytes": 2124,
+      "validation_role": "Case B geometry difference"
+    },
+    {
+      "artifact_id": "final-review",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "artifacts/review/final-review.json",
+      "retention_role": "REVIEWER_FINDING",
+      "sha256": "f09daad8293640c5af7f475bf02040f2b48c4411d50e5fe5e2db2d01cd98366c",
+      "size_bytes": 937,
+      "validation_role": "final reviewer finding"
+    },
+    {
+      "artifact_id": "focused-pytest",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/reports/focused-pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "e52e51e7e43c51f7a9039f9d0c77a1b949d1886dac28e24a685adaa0932f5ab4",
+      "size_bytes": 16960,
+      "validation_role": "focused P2 regression execution"
+    },
+    {
+      "artifact_id": "full-pytest",
+      "copy_status": "BYTE_SAME",
+      "kind": "JUNIT",
+      "public_path": "artifacts/reports/full-pytest.xml",
+      "retention_role": "STANDARD",
+      "sha256": "d665ca6ad9aad991e50c73ba5b0402f41ab76871b4bba60b3ab639092f4723f1",
+      "size_bytes": 66514,
+      "validation_role": "full regression execution"
+    },
+    {
+      "artifact_id": "geometry_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "artifacts/cad/geometry_changed.brep",
+      "retention_role": "STANDARD",
+      "sha256": "763899fa960d0d4dd9f1530c77831b2d68c9a600ec08fa2a7927f20e72f607b9",
+      "size_bytes": 3579,
+      "validation_role": "geometry_changed B-rep artifact"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "8fc092039afbe9ec536582b67710c7af31c16e8c7f622209233c7aa142ecc3c6",
+      "size_bytes": 1496,
+      "validation_role": "geometry_changed closing geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "c13fec9e38d67300d0fa01cd7c176ca8cda590160213f6de48441a64e5a6fa0d",
+      "size_bytes": 1007,
+      "validation_role": "geometry_changed closing topology snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/closing/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "b17fe0660876a43f227af77f964b83b0f9ac0d838ec0eb7c6173c8e91778d59a",
+      "size_bytes": 808,
+      "validation_role": "geometry_changed closing UI snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/cad/geometry_changed.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "270eded05384b959c3fb39ab53f7ada7b49d0a8b0b2520649d3ceab2fc4a6fc2",
+      "size_bytes": 2609,
+      "validation_role": "geometry_changed FreeCAD artifact"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "2b759baf4f25adbe11eadba96c962f58896cbbf8c1c5a99954fadbc8fd59e6b7",
+      "size_bytes": 1496,
+      "validation_role": "geometry_changed opening geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "5c69cd627517b810c74bdbb859de28b0750455f0f6c49e4fa65dbc6507a41ed7",
+      "size_bytes": 1007,
+      "validation_role": "geometry_changed opening topology snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/geometry_changed/opening/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "42ca1b5157d70713c39711ff66f19da52aa0d51586c32a1436410c8ae9728894",
+      "size_bytes": 808,
+      "validation_role": "geometry_changed opening UI snapshot"
+    },
+    {
+      "artifact_id": "geometry_changed-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "artifacts/cad/geometry_changed.step",
+      "retention_role": "STANDARD",
+      "sha256": "a116c1ffe4430818f08e289d27dcc65f6d54483ccb1ec558aedef3cc7d905aa5",
+      "size_bytes": 8306,
+      "validation_role": "geometry_changed STEP artifact"
+    },
+    {
+      "artifact_id": "goal-evidence-metadata",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "artifacts/goal-evidence-metadata.json",
+      "retention_role": "STANDARD",
+      "sha256": "3939d5c49c954c8c4e7852d813f06a93eb185ceabd2eb8f6d83de685967e73cf",
+      "size_bytes": 3273,
+      "validation_role": "stable goal and run provenance"
+    },
+    {
+      "artifact_id": "human-review",
+      "copy_status": "BYTE_SAME",
+      "kind": "HUMAN_REVIEW",
+      "public_path": "artifacts/HUMAN_REVIEW.md",
+      "retention_role": "STANDARD",
+      "sha256": "5fcc6af9ab5a24c2575882c027bb4de863ad4028bc1933fa174db1c2bb94bef4",
+      "size_bytes": 391,
+      "validation_role": "human inspection instructions"
+    },
+    {
+      "artifact_id": "original-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "artifacts/cad/original.brep",
+      "retention_role": "STANDARD",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "validation_role": "original B-rep artifact"
+    },
+    {
+      "artifact_id": "original-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/closing/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "e20698a67bbee52a240608a449638a33ac57ea2cea1ceae11defa63d886f1e7b",
+      "size_bytes": 1480,
+      "validation_role": "original closing geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "original-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/closing/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "dd9526263be79e5913083499a0aee08b5ba42033fd3caa5dea78a59a9fab78f1",
+      "size_bytes": 991,
+      "validation_role": "original closing topology snapshot"
+    },
+    {
+      "artifact_id": "original-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/closing/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "437dd882fc84ad11768e804db0ccab420f85599e34d62b6924db0a8e085ad05d",
+      "size_bytes": 792,
+      "validation_role": "original closing UI snapshot"
+    },
+    {
+      "artifact_id": "original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/cad/original.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "b1473deb26f65c1b244c15b304dd40787703daf51fc346c84321b88fdd2b9e60",
+      "size_bytes": 2601,
+      "validation_role": "original FreeCAD artifact"
+    },
+    {
+      "artifact_id": "original-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/opening/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "afec27001d2efe32b291fbfe42a933b089d147bdf58c82b06cfaed6bb0d65378",
+      "size_bytes": 1480,
+      "validation_role": "original opening geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "original-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/opening/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "c66c88b1cc3bd2e1577e76739f2162e438e6f50434263620fa449892915184b1",
+      "size_bytes": 991,
+      "validation_role": "original opening topology snapshot"
+    },
+    {
+      "artifact_id": "original-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/original/opening/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "c9d29dc7718a933033222394da95a390a7676ed85c23db60c9e85c26d6d63314",
+      "size_bytes": 792,
+      "validation_role": "original opening UI snapshot"
+    },
+    {
+      "artifact_id": "original-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "artifacts/cad/original.step",
+      "retention_role": "STANDARD",
+      "sha256": "05bdb8978ffd687fcde076c2178e65c1265a91dddf3b6a3ee332d408ed543a05",
+      "size_bytes": 8306,
+      "validation_role": "original STEP artifact"
+    },
+    {
+      "artifact_id": "run-001-validation-failure",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "artifacts/history/run-001-validation-failure.json",
+      "retention_role": "FAILURE",
+      "sha256": "131075795cfb675720c77d28d342b0d14a28eda49dc5ed4659c0361937a408c3",
+      "size_bytes": 462,
+      "validation_role": "retained failed policy validation"
+    },
+    {
+      "artifact_id": "run-002-runner-failure",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "artifacts/history/run-002-runner-failure.json",
+      "retention_role": "FAILURE",
+      "sha256": "34a7d7d7ac7851d935b5ede4186a8a4dcb2a3c4c217c9b8350c23976ed8fd78b",
+      "size_bytes": 394,
+      "validation_role": "retained failed evidence generation"
+    },
+    {
+      "artifact_id": "scientific-summary",
+      "copy_status": "BYTE_SAME",
+      "kind": "JSON",
+      "public_path": "artifacts/scientific-summary.json",
+      "retention_role": "STANDARD",
+      "sha256": "aabd9a42266bc8520375af68f30a19afa398c88861ea72e6414c405aff0cf713",
+      "size_bytes": 1718,
+      "validation_role": "separate scientific experiment summary"
+    },
+    {
+      "artifact_id": "serialization-comparison",
+      "copy_status": "BYTE_SAME",
+      "kind": "COMPARISON_JSON",
+      "public_path": "artifacts/comparisons/serialization_reopen.json",
+      "retention_role": "STANDARD",
+      "sha256": "32d4e5c9fdd49fcb24dd265e365f561b903872a17d8243a705080d806eae8868",
+      "size_bytes": 1890,
+      "validation_role": "serialization and reopen geometry comparison"
+    },
+    {
+      "artifact_id": "serialization_reopen-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "artifacts/cad/serialization_reopen.brep",
+      "retention_role": "STANDARD",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "validation_role": "serialization_reopen B-rep artifact"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "ebd162181aea29752ed5574459889bfddc4664033ba6c634c001a19574540d39",
+      "size_bytes": 1504,
+      "validation_role": "serialization_reopen closing geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "991fdfa5aa3306106c2c7ff80d0cc23faf171a9ffde900ac2421b6012ddd7ef5",
+      "size_bytes": 1015,
+      "validation_role": "serialization_reopen closing topology snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/closing/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "3414c7636e9a7087b368c5b0ee43680da6db47244656c904d8ab0dbe749942d6",
+      "size_bytes": 816,
+      "validation_role": "serialization_reopen closing UI snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/cad/serialization_reopen.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "ea055783fdbff942e1140e704f89ad6e761b6f3718ddceb22dff66fe9ee3974d",
+      "size_bytes": 2606,
+      "validation_role": "serialization_reopen FreeCAD artifact"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "b301cafc62ea0ddf3ab2c215c4966a0be5c9ffe4a2b57f248b6c3d23abde6cfd",
+      "size_bytes": 1504,
+      "validation_role": "serialization_reopen opening geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "1cbf973d5cf9ec3ac97de111e3c51f08617ab0a43ceb3e4564827307ecabf174",
+      "size_bytes": 1015,
+      "validation_role": "serialization_reopen opening topology snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/serialization_reopen/opening/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "d6877fcaa18dc203aee3442cc2d97c4f9b7b3b4972c07366fe7a192a247e0a4f",
+      "size_bytes": 816,
+      "validation_role": "serialization_reopen opening UI snapshot"
+    },
+    {
+      "artifact_id": "serialization_reopen-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "artifacts/cad/serialization_reopen.step",
+      "retention_role": "STANDARD",
+      "sha256": "1df967578ed4c2f1e16ddebe160652bd95e1f845a3d038d8aeef95eafd0310b5",
+      "size_bytes": 8306,
+      "validation_role": "serialization_reopen STEP artifact"
+    },
+    {
+      "artifact_id": "ui_only_changed-brep",
+      "copy_status": "BYTE_SAME",
+      "kind": "BREP",
+      "public_path": "artifacts/cad/ui_only_changed.brep",
+      "retention_role": "STANDARD",
+      "sha256": "c22c70d57d3af5184ed8353d33212bf22bea77bc46207c38b51b799c5e825e68",
+      "size_bytes": 3579,
+      "validation_role": "ui_only_changed B-rep artifact"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "c26de0f4ca79be1dfadc5658e199032d37f0fd1ed60da81fbf38b274d82eaa2e",
+      "size_bytes": 1494,
+      "validation_role": "ui_only_changed closing geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "f3f7f66ee5a4954872ef88e16a9fa5bcaaae83c27708e8ad9d6292c28a620cdb",
+      "size_bytes": 1005,
+      "validation_role": "ui_only_changed closing topology snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-closing-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/closing/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "48e1fd676151c786b439cf440c9bc25899e48262d1c60b51fa117234330561a9",
+      "size_bytes": 808,
+      "validation_role": "ui_only_changed closing UI snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "kind": "FCSTD",
+      "public_path": "artifacts/cad/ui_only_changed.FCStd",
+      "retention_role": "STANDARD",
+      "sha256": "1978923506cba79373474132626a6447dec06fd8761b47f4c5cb66d0718744b6",
+      "size_bytes": 2605,
+      "validation_role": "ui_only_changed FreeCAD artifact"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-geometry",
+      "copy_status": "BYTE_SAME",
+      "kind": "GEOMETRY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/geometry_semantic_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "d83422151b437036290afbc0d30a6674f46587e3da576451477c4e026fd1058c",
+      "size_bytes": 1494,
+      "validation_role": "ui_only_changed opening geometry-semantic snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-topology",
+      "copy_status": "BYTE_SAME",
+      "kind": "TOPOLOGY_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/topology_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "0687d982492519c27a7a7a7d900e82c66cff3e2d889a346ec0e94a977ec61e49",
+      "size_bytes": 1005,
+      "validation_role": "ui_only_changed opening topology snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-opening-ui",
+      "copy_status": "BYTE_SAME",
+      "kind": "UI_SNAPSHOT",
+      "public_path": "artifacts/snapshots/ui_only_changed/opening/ui_state_snapshot.json",
+      "retention_role": "STANDARD",
+      "sha256": "deb72a5ea26aca31cb5301ce71d1a3aa7f6e0e5628d6bd4134bbbbc1ca1fcfd4",
+      "size_bytes": 808,
+      "validation_role": "ui_only_changed opening UI snapshot"
+    },
+    {
+      "artifact_id": "ui_only_changed-step",
+      "copy_status": "BYTE_SAME",
+      "kind": "STEP",
+      "public_path": "artifacts/cad/ui_only_changed.step",
+      "retention_role": "STANDARD",
+      "sha256": "d5675d1444b135f2a19ab1e2f18b5399ad692cb0e7ae96f16715a633a7f13960",
+      "size_bytes": 8306,
+      "validation_role": "ui_only_changed STEP artifact"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "kind": "VALIDATOR",
+      "public_path": "artifacts/validator-result.json",
+      "retention_role": "STANDARD",
+      "sha256": "990c0ba6b4291bf474fe8c7cdaea4791c751d9109e527072159f6414567fe7eb",
+      "size_bytes": 388,
+      "validation_role": "artifact and result validator"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "kind": "VIEW_INDEX",
+      "public_path": "artifacts/VIEW_INDEX.md",
+      "retention_role": "STANDARD",
+      "sha256": "2d1be8f8644f4642406e6272a72f91a89bf6c4896b93e44142ccfb558aef5a95",
+      "size_bytes": 1285,
+      "validation_role": "human review index"
+    }
+  ],
+  "environment": {
+    "freecad_version": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+    "occt_version": "7.8.1",
+    "pytest_version": "8.4.2",
+    "python_version": "3.12.0"
+  },
+  "execution": [
+    {
+      "command": "py -3.12 -m pytest -q tests/test_cad_demo.py --junitxml=<cad-junit>",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T11:18:04+08:00"
+    },
+    {
+      "command": "py -3.12 -m pytest -q <P2-focused-test-set> --junitxml=<focused-junit>",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T11:18:04+08:00"
+    },
+    {
+      "command": "py -3.12 -m pytest -q --junitxml=<full-junit>",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T11:18:04+08:00"
+    },
+    {
+      "command": "py -3.12 scripts/evidence_preservation/generate_p2_final_evidence.py --run-id <run-id> --implementation-commit <sha> --cad-junit <path> --focused-junit <path> --full-junit <path> --review-json <path>",
+      "exit_code": 0,
+      "timestamp": "2026-09-11T11:18:04+08:00"
+    }
+  ],
+  "geometry_validation": {
+    "evidence_artifact_ids": [
+      "case-b-comparison"
+    ],
+    "evidence_method": "BREP_BOOLEAN_AND_MEASUREMENTS",
+    "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence",
+    "status": "GEOMETRY_DIFFERENT"
+  },
+  "goal_id": "P2-MVP",
+  "history": {
+    "failure_artifact_ids": [
+      "case-b-comparison",
+      "run-001-validation-failure",
+      "run-002-runner-failure"
+    ],
+    "mismatch_artifact_ids": [],
+    "rejection_artifact_ids": [],
+    "reviewer_finding_artifact_ids": [
+      "final-review"
+    ]
+  },
+  "identity": {
+    "branch": "feat/evidence-promotion-semantic-snapshot",
+    "implementation_commit": "dfc794d7e3d0ae2fb388a02cf55db13154064de4",
+    "merge_base": "d65ac32e04115e5627f1c2988fd486e2353cada9",
+    "parent_baseline": "d65ac32e04115e5627f1c2988fd486e2353cada9"
+  },
+  "local_package_result": {
+    "package_path": "evidence/P2-MVP/dfc794d7e3d0ae2fb388a02cf55db13154064de4/p2-mvp-final-caseab-dfc794d-001",
+    "status": "LOCAL_PACKAGE_CREATED"
+  },
+  "policy_result": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "preservation_result": {
+    "recoverable_copy_count": 2,
+    "recoverable_copy_policy": "LOCAL_TWO_PATHS_NOT_OFF_HOST_REDUNDANCY",
+    "status": "NOT_FULLY_PRESERVED"
+  },
+  "publication_result": {
+    "off_host_copy_count": 0,
+    "status": "PUBLICATION_NOT_AUTHORIZED"
+  },
+  "results": {
+    "byte_identity_result": {
+      "evidence_artifact_ids": [
+        "original-fcstd",
+        "ui_only_changed-fcstd"
+      ],
+      "status": "BYTE_DIFFERENT"
+    },
+    "geometry_equivalence_result": {
+      "evidence_artifact_ids": [
+        "case-b-comparison"
+      ],
+      "status": "GEOMETRY_DIFFERENT"
+    },
+    "human_inspection_result": {
+      "evidence_artifact_ids": [
+        "human-review"
+      ],
+      "status": "NOT_EVALUATED"
+    },
+    "pytest_result": {
+      "evidence_artifact_ids": [
+        "cad-pytest",
+        "focused-pytest",
+        "full-pytest"
+      ],
+      "status": "PASS"
+    },
+    "scientific_experiment_result": {
+      "evidence_artifact_ids": [
+        "scientific-summary"
+      ],
+      "status": "PASS"
+    },
+    "semantic_equivalence_result": {
+      "evidence_artifact_ids": [
+        "original-opening-geometry",
+        "ui_only_changed-closing-geometry"
+      ],
+      "status": "SEMANTIC_EQUIVALENT"
+    },
+    "ui_state_result": {
+      "evidence_artifact_ids": [
+        "original-opening-ui",
+        "ui_only_changed-closing-ui"
+      ],
+      "status": "UI_DIFFERENT"
+    },
+    "validator_result": {
+      "evidence_artifact_ids": [
+        "validator-result"
+      ],
+      "status": "PASS"
+    }
+  },
+  "run_id": "p2-mvp-final-caseab-dfc794d-001",
+  "schema_version": "2.0.0",
+  "source_staging_root": "outputs/p2-mvp-final-caseab-dfc794d-001",
+  "tolerances": [
+    {
+      "name": "linear",
+      "role": "bounding box and distance",
+      "source": "P2 final fixture contract",
+      "unit": "mm",
+      "value": 0.001
+    },
+    {
+      "name": "area",
+      "role": "area delta",
+      "source": "P2 final fixture contract",
+      "unit": "mm2",
+      "value": 0.001
+    },
+    {
+      "name": "volume",
+      "role": "volume and bidirectional Boolean cut",
+      "source": "P2 final fixture contract",
+      "unit": "mm3",
+      "value": 0.001
+    }
+  ]
+}

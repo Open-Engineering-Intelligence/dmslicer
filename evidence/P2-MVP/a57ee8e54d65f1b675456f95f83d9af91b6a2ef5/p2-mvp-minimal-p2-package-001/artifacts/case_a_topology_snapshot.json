@@ -1,0 +1,48 @@
+{
+  "geometry": {
+    "source_regions": [
+      "A",
+      "G",
+      "B"
+    ],
+    "component_role": "fixture_body",
+    "interface_role": "through_hole_wall"
+  },
+  "topology": {
+    "closed": true,
+    "shell_count": 1,
+    "solid_volume": {
+      "unit": "mm3",
+      "value": 24000.0
+    },
+    "valid": true,
+    "connected_solid_count": 1,
+    "edge_count": 28,
+    "solid_area": {
+      "unit": "mm2",
+      "value": 2400.0
+    },
+    "bounding_box": {
+      "xmin": 0.0,
+      "zmax": 20.0,
+      "ymax": 30.0,
+      "ymin": 0.0,
+      "xmax": 40.0,
+      "zmin": 0.0
+    },
+    "vertex_count": 16,
+    "solid_count": 1,
+    "through_hole_wall": true,
+    "face_count": 12
+  },
+  "ui": {
+    "transparency": 0.0,
+    "visibility": true,
+    "color": [
+      1.0,
+      0.5,
+      0.0
+    ]
+  },
+  "artifact": "case_a_original"
+}

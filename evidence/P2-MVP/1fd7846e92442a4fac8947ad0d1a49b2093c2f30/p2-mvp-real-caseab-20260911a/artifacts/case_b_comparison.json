@@ -1,0 +1,24 @@
+{
+  "case": "B",
+  "type": "GEOMETRY_CHANGE",
+  "status": "GEOMETRY_DIFFERENT",
+  "byte_identity": "BYTE_DIFFERENT",
+  "geometry_comparison_status": "GEOMETRY_DIFFERENT",
+  "geometry_comparison_reasons": [
+    "area delta exceeds tolerance",
+    "volume delta exceeds tolerance",
+    "bidirectional Boolean cut volume exceeds tolerance"
+  ],
+  "geometry_comparison_deltas": {
+    "area_delta_mm2": 69.11503837897453,
+    "bbox_delta_mm": 0.0,
+    "boolean_cut_left_right_mm3": 565.4866776461629,
+    "boolean_cut_right_left_mm3": 0.0,
+    "volume_delta_mm3": 565.486677646164
+  },
+  "tolerances_mm": {
+    "linear_mm": 0.001,
+    "area_mm2": 0.001,
+    "volume_mm3": 0.001
+  }
+}

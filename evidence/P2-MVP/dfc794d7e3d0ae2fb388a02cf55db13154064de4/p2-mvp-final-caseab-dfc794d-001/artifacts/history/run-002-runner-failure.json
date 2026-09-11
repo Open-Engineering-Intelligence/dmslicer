@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "status": "FAIL",
+  "stage": "evidence_generation",
+  "implementation_commit": "dc44cbb447ae9d21bdcd229cbf08ec87e39ece7a",
+  "run_id": "p2-mvp-final-caseab-dc44cbb-002",
+  "failure_code": "REOPEN_BYTE_INPUT_MISSING",
+  "message": "The reopen FCStd was generated under the corrected logical name, but the byte-comparison input still referenced the prior name"
+}

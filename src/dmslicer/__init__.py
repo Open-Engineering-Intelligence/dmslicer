@@ -1,2 +1,1 @@
-"""DM-Slicer CASE01 STEP/B-rep evidence package."""
-
+"""DM-Slicer research and STEP/B-rep evidence infrastructure."""

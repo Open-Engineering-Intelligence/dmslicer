@@ -1,0 +1,25 @@
+{
+  "case": "A",
+  "type": "UI_ONLY_CHANGE",
+  "status": "GEOMETRY_EQUIVALENT",
+  "byte_identity": "BYTE_DIFFERENT",
+  "ui_comparison": "UI_DIFFERENT",
+  "semantic_comparison": "SEMANTIC_EQUIVALENT",
+  "geometry_comparison_status": "GEOMETRY_EQUIVALENT",
+  "geometry_comparison_reasons": [],
+  "geometry_comparison_deltas": {
+    "area_delta_mm2": 0.0,
+    "bbox_delta_mm": 0.0,
+    "boolean_cut_left_right_mm3": 0.0,
+    "boolean_cut_right_left_mm3": 0.0,
+    "volume_delta_mm3": 0.0
+  },
+  "reopen_comparison_status": "GEOMETRY_EQUIVALENT",
+  "reopen_comparison_deltas": {
+    "area_delta_mm2": 0.0,
+    "bbox_delta_mm": 0.0,
+    "boolean_cut_left_right_mm3": 0.0,
+    "boolean_cut_right_left_mm3": 0.0,
+    "volume_delta_mm3": 0.0
+  }
+}
