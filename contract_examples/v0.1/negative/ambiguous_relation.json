@@ -1,0 +1,97 @@
+{
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1-rc1"
+  },
+  "snapshot_id": "snapshot:v0.1:5ea8d0d770bcf15b2b6a653ca1dcb96c5b07e609f94dcf526e0b82bc422e5917",
+  "source_documents": [
+    {
+      "source_document_id": "document:negative",
+      "artifact_ref": "artifact:negative-step",
+      "source_length_unit": "mm",
+      "internal_length_unit": "mm"
+    }
+  ],
+  "model_frame": {
+    "frame_id": "frame:model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    }
+  },
+  "regions": [
+    {
+      "region_id": "region:negative-a",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/A"
+        }
+      }
+    },
+    {
+      "region_id": "region:negative-b",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/B"
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "relation:v0.1:f737d1fee098d97bde0972489e8f98dc23f3d7f4275b2e1333717163edb70e91",
+      "region_refs": [
+        "region:negative-a",
+        "region:negative-b"
+      ],
+      "taxonomy": "AMBIGUOUS",
+      "confirmation": "AMBIGUOUS",
+      "intersection_dimension": 2
+    }
+  ],
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:negative-step",
+      "kind": "STEP",
+      "uri": "benchmarks/interface_case01/case01.step"
+    }
+  ],
+  "provenance_references": [
+    {
+      "provenance_id": "provenance:negative",
+      "goal_id": "CONTRACT-NEGATIVE",
+      "implementation_commit": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "fixture_uri": "benchmarks/interface_case01/case01.step",
+      "evidence_uri": "docs/implementation/02b_step_interface_case01.md"
+    }
+  ]
+}

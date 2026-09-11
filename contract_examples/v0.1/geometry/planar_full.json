@@ -1,0 +1,304 @@
+{
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1-rc1"
+  },
+  "snapshot_id": "snapshot:v0.1:15882f8c1db08ff09f2db655f96341f5c07d74472bed28994e266b2b6ee3923c",
+  "source_documents": [
+    {
+      "source_document_id": "document:e0-case01",
+      "artifact_ref": "artifact:e0-step",
+      "source_length_unit": "mm",
+      "internal_length_unit": "mm"
+    }
+  ],
+  "model_frame": {
+    "frame_id": "frame:model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    }
+  },
+  "regions": [
+    {
+      "region_id": "region:e0-a",
+      "source_document_id": "document:e0-case01",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e0-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/A"
+        }
+      }
+    },
+    {
+      "region_id": "region:e0-g",
+      "source_document_id": "document:e0-case01",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e0-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/G"
+        }
+      }
+    },
+    {
+      "region_id": "region:e0-b",
+      "source_document_id": "document:e0-case01",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e0-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/B"
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "relation:v0.1:4cbe89bac92474f86cc5b6d2901fd5573b4bddea321cebafebb2b7a30818eee5",
+      "region_refs": [
+        "region:e0-a",
+        "region:e0-g"
+      ],
+      "taxonomy": "FULL_FACE_OVERLAP",
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2,
+      "tolerance_refs": [
+        "tolerance:e0-linear",
+        "tolerance:e0-area"
+      ]
+    },
+    {
+      "relation_id": "relation:v0.1:6dd5f14bd4ba49f2a5eca910eb3f4f2531d77f3b110a221eed382d52a2227127",
+      "region_refs": [
+        "region:e0-g",
+        "region:e0-b"
+      ],
+      "taxonomy": "FULL_FACE_OVERLAP",
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2,
+      "tolerance_refs": [
+        "tolerance:e0-linear",
+        "tolerance:e0-area"
+      ]
+    },
+    {
+      "relation_id": "relation:v0.1:ee6a54dd89338447312c1d8f6387df946ab88a9e211b9b3110e0e9efe1015672",
+      "region_refs": [
+        "region:e0-a",
+        "region:e0-b"
+      ],
+      "taxonomy": "DISJOINT",
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": -1,
+      "tolerance_refs": [
+        "tolerance:e0-linear"
+      ]
+    }
+  ],
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:e0-step",
+      "kind": "STEP",
+      "uri": "benchmarks/interface_case01/case01.step"
+    }
+  ],
+  "provenance_references": [
+    {
+      "provenance_id": "provenance:e0",
+      "goal_id": "02C-CASE01",
+      "implementation_commit": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "fixture_uri": "benchmarks/interface_case01/case01.step",
+      "evidence_uri": "docs/implementation/02b_step_interface_case01.md"
+    }
+  ],
+  "tolerances": [
+    {
+      "tolerance_id": "tolerance:e0-linear",
+      "role": "contact_classification",
+      "value": 1e-7,
+      "unit": "mm",
+      "source": "02C"
+    },
+    {
+      "tolerance_id": "tolerance:e0-area",
+      "role": "interface_area_acceptance",
+      "value": 1e-8,
+      "unit": "mm2",
+      "source": "02C"
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "interface:v0.1:5bfc51c311e751387c84055eda96043b11b423b1b261b3faef630bf386e77c86",
+      "relation_ref": "relation:v0.1:4cbe89bac92474f86cc5b6d2901fd5573b4bddea321cebafebb2b7a30818eee5",
+      "region_refs": [
+        "region:e0-a",
+        "region:e0-g"
+      ],
+      "patch_refs": [
+        "patch:e0-ag"
+      ]
+    },
+    {
+      "interface_id": "interface:v0.1:56f4c980d46fedb44a9dac34fa7979bbbd14d24cea37315c301dd1d906063c87",
+      "relation_ref": "relation:v0.1:6dd5f14bd4ba49f2a5eca910eb3f4f2531d77f3b110a221eed382d52a2227127",
+      "region_refs": [
+        "region:e0-g",
+        "region:e0-b"
+      ],
+      "patch_refs": [
+        "patch:e0-gb"
+      ]
+    }
+  ],
+  "interface_components": [
+    {
+      "component_id": "component:v0.1:7d992a5ab9e330bd08b2a8f24239f35d86ed31c4f2b61e3d5259892118e8ff20",
+      "interface_ref": "interface:v0.1:5bfc51c311e751387c84055eda96043b11b423b1b261b3faef630bf386e77c86",
+      "patch_refs": [
+        "patch:e0-ag"
+      ]
+    },
+    {
+      "component_id": "component:v0.1:04642d6fec239997d184611963bfbe023650264b0da6da8ac6aa7b262cf63770",
+      "interface_ref": "interface:v0.1:56f4c980d46fedb44a9dac34fa7979bbbd14d24cea37315c301dd1d906063c87",
+      "patch_refs": [
+        "patch:e0-gb"
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "patch_id": "patch:e0-ag",
+      "interface_ref": "interface:v0.1:5bfc51c311e751387c84055eda96043b11b423b1b261b3faef630bf386e77c86",
+      "component_ref": "component:v0.1:7d992a5ab9e330bd08b2a8f24239f35d86ed31c4f2b61e3d5259892118e8ff20",
+      "family": "PLANE",
+      "frame_ref": "frame:model",
+      "area": {
+        "value": 400,
+        "unit": "mm2"
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:e0-step",
+        "locator": {
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e0-ag",
+          "provenance_ref": "provenance:e0"
+        }
+      },
+      "planar_parameters": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "unit_normal": [
+          0,
+          0,
+          1
+        ],
+        "tangent_u": [
+          1,
+          0,
+          0
+        ],
+        "tangent_v": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "patch_id": "patch:e0-gb",
+      "interface_ref": "interface:v0.1:56f4c980d46fedb44a9dac34fa7979bbbd14d24cea37315c301dd1d906063c87",
+      "component_ref": "component:v0.1:04642d6fec239997d184611963bfbe023650264b0da6da8ac6aa7b262cf63770",
+      "family": "PLANE",
+      "frame_ref": "frame:model",
+      "area": {
+        "value": 400,
+        "unit": "mm2"
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:e0-step",
+        "locator": {
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e0-gb",
+          "provenance_ref": "provenance:e0"
+        }
+      },
+      "planar_parameters": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "unit_normal": [
+          0,
+          0,
+          1
+        ],
+        "tangent_u": [
+          1,
+          0,
+          0
+        ],
+        "tangent_v": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  ],
+  "semantic_bindings": [
+    {
+      "binding_id": "binding:e0-source-a",
+      "subject_ref": "region:e0-a",
+      "semantic_role": "SOURCE_A",
+      "activation": "ACTIVE",
+      "material_key": "A"
+    },
+    {
+      "binding_id": "binding:e0-gradient",
+      "subject_ref": "region:e0-g",
+      "semantic_role": "GRADIENT_REGION",
+      "activation": "ACTIVE",
+      "material_key": "Gradient"
+    },
+    {
+      "binding_id": "binding:e0-source-b",
+      "subject_ref": "region:e0-b",
+      "semantic_role": "SOURCE_B",
+      "activation": "ACTIVE",
+      "material_key": "B"
+    }
+  ]
+}

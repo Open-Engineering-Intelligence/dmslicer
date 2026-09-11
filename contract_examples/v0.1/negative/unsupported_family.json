@@ -1,0 +1,151 @@
+{
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1-rc1"
+  },
+  "snapshot_id": "snapshot:v0.1:d9d3dc0d62b590ac3352f55f74d73bc7b80c42655e8e4daf84c9abc124970414",
+  "source_documents": [
+    {
+      "source_document_id": "document:negative",
+      "artifact_ref": "artifact:negative-step",
+      "source_length_unit": "mm",
+      "internal_length_unit": "mm"
+    }
+  ],
+  "model_frame": {
+    "frame_id": "frame:model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    }
+  },
+  "regions": [
+    {
+      "region_id": "region:negative-a",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/A"
+        }
+      }
+    },
+    {
+      "region_id": "region:negative-b",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/B"
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "relation:v0.1:2efec4612e83cc9e14a993479419a204461d531905563ba229b2bf258b30de62",
+      "region_refs": [
+        "region:negative-a",
+        "region:negative-b"
+      ],
+      "taxonomy": "FACE_CONTACT",
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2
+    }
+  ],
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:negative-step",
+      "kind": "STEP",
+      "uri": "benchmarks/interface_case01/case01.step"
+    }
+  ],
+  "provenance_references": [
+    {
+      "provenance_id": "provenance:negative",
+      "goal_id": "CONTRACT-NEGATIVE",
+      "implementation_commit": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "fixture_uri": "benchmarks/interface_case01/case01.step",
+      "evidence_uri": "docs/implementation/02b_step_interface_case01.md"
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "interface:v0.1:a93ccc84baa025b2586b254d9b4b67f53d8feebbf8d4117982f0e35e0968b33b",
+      "relation_ref": "relation:v0.1:2efec4612e83cc9e14a993479419a204461d531905563ba229b2bf258b30de62",
+      "region_refs": [
+        "region:negative-a",
+        "region:negative-b"
+      ],
+      "patch_refs": [
+        "patch:negative-other"
+      ]
+    }
+  ],
+  "interface_components": [
+    {
+      "component_id": "component:v0.1:12b452e9627ab795b4949d5b38ec7eb326f57de0b9bb159caf255524082eefb1",
+      "interface_ref": "interface:v0.1:a93ccc84baa025b2586b254d9b4b67f53d8feebbf8d4117982f0e35e0968b33b",
+      "patch_refs": [
+        "patch:negative-other"
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "patch_id": "patch:negative-other",
+      "interface_ref": "interface:v0.1:a93ccc84baa025b2586b254d9b4b67f53d8feebbf8d4117982f0e35e0968b33b",
+      "component_ref": "component:v0.1:12b452e9627ab795b4949d5b38ec7eb326f57de0b9bb159caf255524082eefb1",
+      "family": "OTHER",
+      "family_name": "SPHERE",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_FACE",
+          "value": "face:v1:negative-other",
+          "provenance_ref": "provenance:negative"
+        }
+      }
+    }
+  ],
+  "semantic_bindings": [
+    {
+      "binding_id": "binding:negative-target",
+      "subject_ref": "region:negative-a",
+      "semantic_role": "TARGET_REGION",
+      "activation": "ACTIVE"
+    },
+    {
+      "binding_id": "binding:negative-interface",
+      "subject_ref": "interface:v0.1:a93ccc84baa025b2586b254d9b4b67f53d8feebbf8d4117982f0e35e0968b33b",
+      "semantic_role": "INTERFACE_SOURCE_BOUNDARY",
+      "activation": "ACTIVE"
+    }
+  ]
+}

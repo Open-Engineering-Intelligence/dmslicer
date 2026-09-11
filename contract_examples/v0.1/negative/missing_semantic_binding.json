@@ -1,0 +1,162 @@
+{
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1-rc1"
+  },
+  "snapshot_id": "snapshot:v0.1:1a19256e58b793e2afd415b0cc06e7d1b275c9c08748d51aa4665949306e6937",
+  "source_documents": [
+    {
+      "source_document_id": "document:negative",
+      "artifact_ref": "artifact:negative-step",
+      "source_length_unit": "mm",
+      "internal_length_unit": "mm"
+    }
+  ],
+  "model_frame": {
+    "frame_id": "frame:model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    }
+  },
+  "regions": [
+    {
+      "region_id": "region:negative-a",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/A"
+        }
+      }
+    },
+    {
+      "region_id": "region:negative-b",
+      "source_document_id": "document:negative",
+      "validity_state": "VALID",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "CASE01/B"
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "relation:v0.1:eaf87c58c1d8013034a609cf002f569b331709f843c3fdf37894f4fbd14cd2e0",
+      "region_refs": [
+        "region:negative-a",
+        "region:negative-b"
+      ],
+      "taxonomy": "PARTIAL_FACE_OVERLAP",
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2
+    }
+  ],
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:negative-step",
+      "kind": "STEP",
+      "uri": "benchmarks/interface_case01/case01.step"
+    }
+  ],
+  "provenance_references": [
+    {
+      "provenance_id": "provenance:negative",
+      "goal_id": "CONTRACT-NEGATIVE",
+      "implementation_commit": "b6460270f2932b8bc2bbe1bcb4c052daba1ae277",
+      "fixture_uri": "benchmarks/interface_case01/case01.step",
+      "evidence_uri": "docs/implementation/02b_step_interface_case01.md"
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "interface:v0.1:9de1554a0bcb2c398095cadf247916ab5be37d8314d66b44bd76c59190a94ee9",
+      "relation_ref": "relation:v0.1:eaf87c58c1d8013034a609cf002f569b331709f843c3fdf37894f4fbd14cd2e0",
+      "region_refs": [
+        "region:negative-a",
+        "region:negative-b"
+      ],
+      "patch_refs": [
+        "patch:negative-missing"
+      ]
+    }
+  ],
+  "interface_components": [
+    {
+      "component_id": "component:v0.1:4901b2d9ff9400f27aacfb30c4065b50dc22667b476374958a77b58a5c1f788e",
+      "interface_ref": "interface:v0.1:9de1554a0bcb2c398095cadf247916ab5be37d8314d66b44bd76c59190a94ee9",
+      "patch_refs": [
+        "patch:negative-missing"
+      ]
+    }
+  ],
+  "patches": [
+    {
+      "patch_id": "patch:negative-missing",
+      "interface_ref": "interface:v0.1:9de1554a0bcb2c398095cadf247916ab5be37d8314d66b44bd76c59190a94ee9",
+      "component_ref": "component:v0.1:4901b2d9ff9400f27aacfb30c4065b50dc22667b476374958a77b58a5c1f788e",
+      "family": "PLANE",
+      "frame_ref": "frame:model",
+      "area": {
+        "value": 1,
+        "unit": "mm2"
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:negative-step",
+        "locator": {
+          "scheme": "STEP_FACE",
+          "value": "face:v1:negative-missing",
+          "provenance_ref": "provenance:negative"
+        }
+      },
+      "planar_parameters": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "unit_normal": [
+          0,
+          0,
+          1
+        ],
+        "tangent_u": [
+          1,
+          0,
+          0
+        ],
+        "tangent_v": [
+          0,
+          1,
+          0
+        ]
+      }
+    }
+  ]
+}
