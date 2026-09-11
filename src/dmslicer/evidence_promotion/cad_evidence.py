@@ -8,6 +8,7 @@ from typing import Any, Mapping
 
 import hashlib
 import json
+from jsonschema import Draft202012Validator
 
 
 class _ComparableStr(str):
@@ -228,4 +229,89 @@ def within_tolerance(
 def _manifest_to_json_lines(manifest: Mapping[str, Any]) -> str:
     """Utility helper for stable manifest serialization in tests or diagnostics."""
     return json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False)
+
+
+def validate_cad_artifact(value: Mapping[str, Any]) -> list[str]:
+    from .models import schema_path, read_json
+
+    schema = read_json(schema_path("cad_evidence.schema.json"))
+    validator = Draft202012Validator(schema)
+    findings = []
+    for error in sorted(validator.iter_errors(value), key=lambda item: list(item.absolute_path)):
+        path = ".".join(str(item) for item in error.absolute_path) or "artifact"
+        findings.append(f"{path}: {error.message}")
+    return findings
+
+
+def _extract_ui_state(value: Mapping[str, Any]) -> Any:
+    if "state" in value:
+        return value["state"]
+    if "ui_state_snapshot" in value:
+        return value["ui_state_snapshot"]
+    return value
+
+
+def compare_semantics(first: Mapping[str, Any], second: Mapping[str, Any]) -> dict[str, Any]:
+    required = ("component_role", "interface_role", "allowed_transform")
+    if not isinstance(first, Mapping) or not isinstance(second, Mapping):
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    if any(not isinstance(first.get(field), str) or not first.get(field) for field in required):
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    if any(not isinstance(second.get(field), str) or not second.get(field) for field in required):
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    if first.get("component_role") != _SUPPORTED_COMPONENT_ROLE or second.get("component_role") != _SUPPORTED_COMPONENT_ROLE:
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    if first.get("interface_role") != _SUPPORTED_INTERFACE_ROLE or second.get("interface_role") != _SUPPORTED_INTERFACE_ROLE:
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    if first.get("allowed_transform", _SUPPORTED_TRANSFORM) != _SUPPORTED_TRANSFORM or second.get("allowed_transform", _SUPPORTED_TRANSFORM) != _SUPPORTED_TRANSFORM:
+        return {"status": SEMANTIC_EQUIVALENCE_NOT_PROVEN, "differences": []}
+    differences = sorted(
+        field for field in required if first.get(field) != second.get(field)
+    )
+    return {
+        "status": SEMANTIC_EQUIVALENT if not differences else SEMANTIC_DIFFERENT,
+        "differences": differences,
+    }
+
+
+def compare_ui_states(first: Mapping[str, Any], second: Mapping[str, Any]) -> dict[str, Any]:
+    first_state = _extract_ui_state(first)
+    second_state = _extract_ui_state(second)
+    if not isinstance(first_state, Mapping) or not isinstance(second_state, Mapping):
+        return {
+            "status": UI_COMPARISON_NOT_PROVEN,
+            "differences": [],
+            "reason": "required saved UI state is unavailable",
+        }
+    required_fields = ("visibility", "shape_color", "transparency", "display_mode", "camera")
+    for state in (first_state, second_state):
+        if not isinstance(state, Mapping):
+            return {
+                "status": UI_COMPARISON_NOT_PROVEN,
+                "differences": [],
+                "reason": "required saved UI state is unavailable",
+            }
+        for key in required_fields:
+            if key not in state:
+                return {
+                    "status": UI_COMPARISON_NOT_PROVEN,
+                    "differences": [],
+                    "reason": "required saved UI state is unavailable",
+                }
+    first_supported = {
+        "visibility": first_state.get("visibility"),
+        "shape_color": first_state.get("shape_color"),
+        "transparency": first_state.get("transparency"),
+    }
+    second_supported = {
+        "visibility": second_state.get("visibility"),
+        "shape_color": second_state.get("shape_color"),
+        "transparency": second_state.get("transparency"),
+    }
+    return {
+        "status": UI_SAME if first_supported == second_supported else UI_DIFFERENT,
+        "differences": sorted(
+            key for key in first_supported if first_supported[key] != second_supported[key]
+        ),
+    }
 
