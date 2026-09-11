@@ -91,7 +91,11 @@ def _patch(family: str) -> dict:
         "area": {"value": 1.0, "unit": "mm2"},
         "geometry_ref": {
             "artifact_ref": "artifact:source-step",
-            "locator": {"scheme": "STEP_FACE", "value": "face:stable-one"},
+            "locator": {
+                "scheme": "STEP_FACE",
+                "value": "face:stable-one",
+                "provenance_ref": "provenance:case01",
+            },
         },
     }
     if family == "PLANE":

@@ -150,8 +150,20 @@
         "scheme": {
           "enum": ["STEP_OCCURRENCE", "STEP_FACE", "BREP_ROOT", "CAD_OBJECT"]
         },
-        "value": { "type": "string", "minLength": 1 }
-      }
+        "value": { "type": "string", "minLength": 1 },
+        "provenance_ref": { "$ref": "#/$defs/identifier" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scheme": { "enum": ["STEP_FACE", "CAD_OBJECT"] }
+            },
+            "required": ["scheme"]
+          },
+          "then": { "required": ["provenance_ref"] }
+        }
+      ]
     },
     "geometryReference": {
       "type": "object",
