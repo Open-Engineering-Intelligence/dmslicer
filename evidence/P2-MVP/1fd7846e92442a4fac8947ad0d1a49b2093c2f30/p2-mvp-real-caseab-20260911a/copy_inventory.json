@@ -1,0 +1,111 @@
+{
+  "artifact_count": 13,
+  "artifacts": [
+    {
+      "artifact_id": "case-a-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_comparison.json",
+      "sha256": "e545b6a03c4a9f13d0c39229744bb5e630216ae5fd78841cf66e7b36db555225",
+      "size_bytes": 765,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_comparison.json"
+    },
+    {
+      "artifact_id": "case-a-geometry-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_geometry_snapshot.json",
+      "sha256": "acee1be09a565bfe2a09d42f5ed4b5ecd769bd227fed97e338486d00484a15ad",
+      "size_bytes": 1007,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_geometry_snapshot.json"
+    },
+    {
+      "artifact_id": "case-a-topology-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_topology_snapshot.json",
+      "sha256": "f6fd02fcee5de8fc68f657a94b787b2a8d1d1276a991430fcf854c11faa2fcfb",
+      "size_bytes": 503,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_topology_snapshot.json"
+    },
+    {
+      "artifact_id": "case-a-ui-snapshot",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_ui_snapshot.json",
+      "sha256": "b02506e65a4f7717b49f9d2fc8724554350ff03d315e3d0dc36a2d6991ee9be1",
+      "size_bytes": 101,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_ui_snapshot.json"
+    },
+    {
+      "artifact_id": "case-b-comparison",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_b_comparison.json",
+      "sha256": "47a381adff4ff3ce0d49db087cd6e676b06b7ebf9fa8f616208d8e3571b1471c",
+      "size_bytes": 703,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_b_comparison.json"
+    },
+    {
+      "artifact_id": "geometry-changed-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_geometry_changed.FCStd",
+      "sha256": "e5223644c7d7c8b551b3a986b2151c3bfe290b28c42831bff88313734edcae6e",
+      "size_bytes": 2607,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_geometry_changed.FCStd"
+    },
+    {
+      "artifact_id": "human-review",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/HUMAN_REVIEW.md",
+      "sha256": "1cb86a53a36ea9fc5f96a589faa42d7e36ae5fa2e308bd62755630fbd970dc71",
+      "size_bytes": 47,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/HUMAN_REVIEW.md"
+    },
+    {
+      "artifact_id": "original-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_original.FCStd",
+      "sha256": "f5ca424e78a6c79a33931a5fae8c741652b67cf717df8f88192e93c9eed3986d",
+      "size_bytes": 2602,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_original.FCStd"
+    },
+    {
+      "artifact_id": "pytest-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/pytest.xml",
+      "sha256": "f8baf42828cddf08ce21e7269138fd92ba5ff59ed754a516876f630e02c49919",
+      "size_bytes": 761,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/pytest.xml"
+    },
+    {
+      "artifact_id": "reopened-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_original_reopened.FCStd",
+      "sha256": "d448f8010c75fddc47d4262ebc34218747ff08af7dc1fb120892a9221ce9c7f5",
+      "size_bytes": 2612,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_original_reopened.FCStd"
+    },
+    {
+      "artifact_id": "ui-only-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/case_a_ui_only_changed.FCStd",
+      "sha256": "01a70d27670c618d3dde16919af83238a51df4c589d7917394a328e1383c935c",
+      "size_bytes": 2606,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/case_a_ui_only_changed.FCStd"
+    },
+    {
+      "artifact_id": "validator-result",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/validator-result.json",
+      "sha256": "64d582ddacc8b5c8ba7e95b43e6b2dc599a92ac3745c512c0ffe46e11730012d",
+      "size_bytes": 73,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/validator-result.json"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/VIEW_INDEX.md",
+      "sha256": "6af3d8932646a9db4eca49499574e92e86a6e84c036af7f7d016e5c10b827ff5",
+      "size_bytes": 14,
+      "source_logical_path": "outputs/p2-mvp-real-caseab-20260911a/case_a/VIEW_INDEX.md"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
+}

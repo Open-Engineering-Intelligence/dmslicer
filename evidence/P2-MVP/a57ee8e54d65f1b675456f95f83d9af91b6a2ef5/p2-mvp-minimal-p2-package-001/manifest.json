@@ -121,6 +121,16 @@
       "validation_role": "human-review"
     },
     {
+      "artifact_id": "preliminary-not-scientifically-validated",
+      "copy_status": "BYTE_SAME",
+      "kind": "TEXT",
+      "public_path": "artifacts/preliminary-not-scientifically-validated.md",
+      "retention_role": "REJECTION",
+      "sha256": "0fae3e587b78f2f7dda6c6e985d6fbba479994b4900d3ae2485f9b27d1b4adb5",
+      "size_bytes": 839,
+      "validation_role": "preliminary evidence supersession"
+    },
+    {
       "artifact_id": "pytest-result",
       "copy_status": "BYTE_SAME",
       "kind": "JUNIT",
@@ -174,7 +184,9 @@
   "history": {
     "failure_artifact_ids": [],
     "mismatch_artifact_ids": [],
-    "rejection_artifact_ids": [],
+    "rejection_artifact_ids": [
+      "preliminary-not-scientifically-validated"
+    ],
     "reviewer_finding_artifact_ids": []
   },
   "identity": {

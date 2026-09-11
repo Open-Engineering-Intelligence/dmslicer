@@ -1,5 +1,5 @@
 {
-  "artifact_count": 15,
+  "artifact_count": 16,
   "artifacts": [
     {
       "artifact_id": "acceptance-summary",
@@ -112,6 +112,14 @@
       "sha256": "231ee4049d0cb2d7ff7c1ea5041baf9048bd71b3a883aba903e61eadf5e816ac",
       "size_bytes": 1248,
       "source_logical_path": "outputs/p2-mvp-p2evidence-package/case_a/validator-result.json"
+    },
+    {
+      "artifact_id": "preliminary-not-scientifically-validated",
+      "copy_status": "BYTE_SAME",
+      "public_path": "artifacts/preliminary-not-scientifically-validated.md",
+      "sha256": "0fae3e587b78f2f7dda6c6e985d6fbba479994b4900d3ae2485f9b27d1b4adb5",
+      "size_bytes": 839,
+      "source_logical_path": "case_a/preliminary-not-scientifically-validated.md"
     },
     {
       "artifact_id": "view-index",
