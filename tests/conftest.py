@@ -343,6 +343,13 @@ def valid_cad_request(repository_root: Path, valid_request):
             "original-ui-snapshot": _ui_snapshot("original", changed=False),
             "ui-changed-snapshot": _ui_snapshot("ui_only_changed", changed=True),
         }
+        artifact_kinds = {
+            "case-a-comparison": "COMPARISON_JSON",
+            "original-geometry-snapshot": "GEOMETRY_SNAPSHOT",
+            "ui-geometry-snapshot": "GEOMETRY_SNAPSHOT",
+            "original-ui-snapshot": "UI_SNAPSHOT",
+            "ui-changed-snapshot": "UI_SNAPSHOT",
+        }
         for artifact_id, value in values.items():
             (staging / f"{artifact_id}.json").write_text(
                 json.dumps(value, indent=2) + "\n", encoding="utf-8"
@@ -363,7 +370,7 @@ def valid_cad_request(repository_root: Path, valid_request):
                 "artifact_id": artifact_id,
                 "source_path": f"{artifact_id}.json",
                 "public_path": f"cad/{artifact_id}.json",
-                "kind": "JSON",
+                "kind": artifact_kinds[artifact_id],
                 "validation_role": "fixture CAD evidence",
                 "retention_role": "STANDARD",
             }
@@ -440,7 +447,7 @@ def valid_cad_request_file(repository_root: Path, valid_cad_request) -> Path:
             "artifact_id": "case-b-comparison",
             "source_path": "case-b-comparison.json",
             "public_path": "cad/case-b-comparison.json",
-            "kind": "JSON",
+            "kind": "COMPARISON_JSON",
             "validation_role": "fixture CAD geometry mutation evidence",
             "retention_role": "FAILURE",
         }

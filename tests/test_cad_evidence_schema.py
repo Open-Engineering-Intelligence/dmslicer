@@ -105,3 +105,18 @@ def test_cad_evidence_schema_rejects_sha_as_geometry_predicate():
     with pytest.raises(jsonschema.ValidationError):
         validator.validate(invalid_manifest)
 
+
+def test_cad_evidence_schema_accepts_policy_consumed_artifact_envelopes(
+    valid_cad_request, repository_root: Path
+) -> None:
+    schema = _load_schema()
+    validator = jsonschema.Draft202012Validator(schema)
+    request = valid_cad_request()
+    staging_root = repository_root / request["source"]["staging_root"]
+
+    for artifact in request["source"]["allowlist"]:
+        value = json.loads(
+            (staging_root / artifact["source_path"]).read_text(encoding="utf-8")
+        )
+        validator.validate(value)
+

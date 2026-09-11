@@ -9,8 +9,23 @@
   ],
   "properties": {
     "schema_version": {
-      "type": "integer",
-      "minimum": 1
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "const": "1.0.0"
+        }
+      ]
+    },
+    "artifact_type": {
+      "enum": [
+        "geometry_semantic_snapshot",
+        "topology_snapshot",
+        "ui_state_snapshot",
+        "geometry_comparison"
+      ]
     },
     "goal_id": {
       "type": "string",
@@ -33,6 +48,241 @@
       "$ref": "#/$defs/geometry_comparison"
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "geometry_semantic_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "length_unit",
+          "semantic_binding",
+          "shape"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "length_unit": {"const": "mm"},
+          "semantic_binding": {
+            "type": "object",
+            "required": ["component_role", "interface_role", "allowed_transform"],
+            "properties": {
+              "component_role": {"const": "fixture_body"},
+              "interface_role": {"const": "through_hole_wall"},
+              "allowed_transform": {"const": "IDENTITY"}
+            }
+          },
+          "shape": {
+            "type": "object",
+            "required": [
+              "solid_count",
+              "shell_count",
+              "face_count",
+              "edge_count",
+              "vertex_count",
+              "area",
+              "volume",
+              "bounding_box",
+              "valid",
+              "closed"
+            ],
+            "properties": {
+              "solid_count": {"$ref": "#/$defs/count_measurement"},
+              "shell_count": {"$ref": "#/$defs/count_measurement"},
+              "face_count": {"$ref": "#/$defs/count_measurement"},
+              "edge_count": {"$ref": "#/$defs/count_measurement"},
+              "vertex_count": {"$ref": "#/$defs/count_measurement"},
+              "area": {"$ref": "#/$defs/continuous_measurement"},
+              "volume": {"$ref": "#/$defs/continuous_measurement"},
+              "bounding_box": {
+                "type": "object",
+                "required": ["x_min", "y_min", "z_min", "x_max", "y_max", "z_max"],
+                "properties": {
+                  "x_min": {"$ref": "#/$defs/continuous_measurement"},
+                  "y_min": {"$ref": "#/$defs/continuous_measurement"},
+                  "z_min": {"$ref": "#/$defs/continuous_measurement"},
+                  "x_max": {"$ref": "#/$defs/continuous_measurement"},
+                  "y_max": {"$ref": "#/$defs/continuous_measurement"},
+                  "z_max": {"$ref": "#/$defs/continuous_measurement"}
+                }
+              },
+              "valid": {"type": "boolean"},
+              "closed": {"type": "boolean"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "topology_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "topology"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "topology": {
+            "type": "object",
+            "required": [
+              "solid_count",
+              "shell_count",
+              "face_count",
+              "edge_count",
+              "vertex_count",
+              "connected_solid_count",
+              "valid",
+              "closed",
+              "through_hole",
+              "manifold"
+            ],
+            "properties": {
+              "solid_count": {"$ref": "#/$defs/count_measurement"},
+              "shell_count": {"$ref": "#/$defs/count_measurement"},
+              "face_count": {"$ref": "#/$defs/count_measurement"},
+              "edge_count": {"$ref": "#/$defs/count_measurement"},
+              "vertex_count": {"$ref": "#/$defs/count_measurement"},
+              "connected_solid_count": {"$ref": "#/$defs/count_measurement"},
+              "valid": {"type": "boolean"},
+              "closed": {"type": "boolean"},
+              "through_hole": {"type": "object"},
+              "manifold": {"type": "object"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "ui_state_snapshot"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "artifact_role",
+          "source_artifact_id",
+          "object_role",
+          "state"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "artifact_role": {"enum": ["OPENING", "CLOSING"]},
+          "object_role": {"const": "fixture_body"},
+          "state": {
+            "type": "object",
+            "required": ["visibility", "shape_color", "transparency", "display_mode", "camera"],
+            "properties": {
+              "visibility": {"$ref": "#/$defs/ui_value"},
+              "shape_color": {"$ref": "#/$defs/ui_value"},
+              "transparency": {"$ref": "#/$defs/ui_value"},
+              "display_mode": {"$ref": "#/$defs/ui_value"},
+              "camera": {"$ref": "#/$defs/ui_value"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_type": {"const": "geometry_comparison"}
+        },
+        "required": ["artifact_type"]
+      },
+      "then": {
+        "required": [
+          "schema_version",
+          "artifact_type",
+          "case_id",
+          "comparison_role",
+          "status",
+          "method",
+          "sha256_role",
+          "tolerances",
+          "measurements",
+          "checks",
+          "failed_checks",
+          "reasons",
+          "geometry_decision_inputs"
+        ],
+        "properties": {
+          "schema_version": {"const": "1.0.0"},
+          "comparison_role": {
+            "enum": ["UI_ONLY_MUTATION", "GEOMETRY_MUTATION", "SERIALIZATION_REOPEN"]
+          },
+          "status": {
+            "enum": ["GEOMETRY_EQUIVALENT", "GEOMETRY_DIFFERENT", "GEOMETRIC_EQUIVALENCE_NOT_PROVEN"]
+          },
+          "method": {"enum": ["BREP_BOOLEAN_AND_MEASUREMENTS", "NOT_EVALUATED"]},
+          "sha256_role": {"const": "file_and_copy_integrity_only_not_geometry_equivalence"},
+          "tolerances": {
+            "type": "array",
+            "minItems": 3,
+            "items": {"$ref": "#/$defs/tolerance"}
+          },
+          "measurements": {
+            "type": "object",
+            "required": [
+              "area_delta",
+              "volume_delta",
+              "max_bounding_box_delta",
+              "minimum_distance",
+              "first_minus_second_volume",
+              "second_minus_first_volume"
+            ],
+            "properties": {
+              "area_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
+              "volume_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
+              "max_bounding_box_delta": {"$ref": "#/$defs/measurement_or_unavailable"},
+              "minimum_distance": {"$ref": "#/$defs/measurement_or_unavailable"},
+              "first_minus_second_volume": {"$ref": "#/$defs/measurement_or_unavailable"},
+              "second_minus_first_volume": {"$ref": "#/$defs/measurement_or_unavailable"}
+            }
+          },
+          "checks": {
+            "type": "object",
+            "required": [
+              "valid_closed_single_solids",
+              "topology_counts",
+              "area_delta",
+              "volume_delta",
+              "bounding_box",
+              "first_minus_second",
+              "second_minus_first"
+            ]
+          },
+          "failed_checks": {"type": "array", "uniqueItems": true},
+          "reasons": {"type": "array"},
+          "geometry_decision_inputs": {
+            "const": ["topology", "area", "volume", "bounding_box", "bidirectional_boolean_cut"]
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "unit_code": {
       "type": "string",
@@ -72,6 +322,50 @@
         }
       },
       "additionalProperties": true
+    },
+    "count_measurement": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "integer", "minimum": 0},
+        "unit": {"const": "count"}
+      },
+      "additionalProperties": false
+    },
+    "unavailable": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"enum": ["UNKNOWN", "UNSUPPORTED", "NOT_PROVEN"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "ui_value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["status", "value"],
+          "properties": {"status": {"const": "SUPPORTED"}}
+        },
+        {"$ref": "#/$defs/unavailable"}
+      ]
+    },
+    "tolerance": {
+      "type": "object",
+      "required": ["name", "value", "unit", "role", "source"],
+      "properties": {
+        "name": {"enum": ["linear", "area", "volume"]},
+        "value": {"type": "number", "minimum": 0},
+        "unit": {"enum": ["mm", "mm2", "mm3"]},
+        "role": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "measurement_or_unavailable": {
+      "oneOf": [
+        {"$ref": "#/$defs/continuous_measurement"},
+        {"$ref": "#/$defs/unavailable"}
+      ]
     },
     "geometry_snapshot": {
       "type": "object",

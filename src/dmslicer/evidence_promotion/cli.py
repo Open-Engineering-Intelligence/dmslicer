@@ -8,7 +8,6 @@ from pathlib import Path
 import sys
 from typing import Sequence
 
-from .cad_evidence import generate_demo, write_demo_promotion_request
 from .models import LOCAL_PACKAGE_CREATED, read_json
 from .policy import validate_request
 from .promotion import promote
@@ -50,11 +49,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         if not relative.parts or relative.parts[0].lower() not in {"outputs", "work"}:
             return _input_error("DEMO_OUTPUT_ROOT_INVALID")
         try:
+            from .cad_evidence import generate_demo, write_demo_promotion_request
+
             result = generate_demo(output_root)
             request_path = write_demo_promotion_request(
                 output_root, repository_root, result
             )
-        except (OSError, RuntimeError):
+        except (ImportError, OSError, RuntimeError):
             return _input_error("DEMO_EXECUTION_FAILED")
         result["promotion_request"] = request_path.relative_to(repository_root).as_posix()
         _emit(result)

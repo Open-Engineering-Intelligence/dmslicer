@@ -22,9 +22,9 @@ jobs:
           python -m pip install -e .
           python -m pip install pytest==8.4.2
       - name: Run pure-Python evidence tests
-        run: python -m pytest -q -m "not freecad"
+        run: python -m pytest -q
       - name: Protect frozen research contract
         shell: bash
         run: |
-          git fetch --no-tags origin feat/cylindrical-interface-repairability
-          git diff --exit-code origin/feat/cylindrical-interface-repairability -- docs/research_v2
+          git fetch --no-tags origin main
+          git diff --exit-code origin/main -- docs/research_v2
