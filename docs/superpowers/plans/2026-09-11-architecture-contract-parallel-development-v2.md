@@ -17,6 +17,7 @@
 - Do not make P2 promotion a prerequisite for G1 or G2. P2 is invoked only by the separately authorized I1 run.
 - A region geometry reference is `authoritative CAD artifact + stable locator`. Multiple regions may reference the same STEP/BREP/FCStd artifact. A separate `REGION_BREP` is required only when the shared artifact and locator cannot recover the region.
 - A derived patch or partition gets its own BREP only when no existing authoritative CAD artifact plus stable locator can recover it. Do not generate binaries merely to fill a schema.
+- `STEP_FACE` and `CAD_OBJECT` locators must come from existing stable provenance, an importer-visible persistent label, or an equally stable named CAD object path. `Face3`, `Shape17`, traversal/list indexes, Python object identity, and runtime handles are forbidden locator values. If no stable locator exists, fail closed or publish the minimum necessary derived artifact.
 - Stable identity is limited to deterministic IDs for E0-E4 entities and current consumers. Do not implement generic subshape correspondence, cross-export matching, best-fit registration, or inferred before/after matching.
 - `PLANE` and `CYLINDER` are native. `OTHER` is representable but every unregistered consumer strategy fails closed.
 - Capability-dependent fields are omitted when inapplicable. Reject placeholder strings (`N/A`, `UNKNOWN` used as filler), dummy parents, empty parameter objects, and zero-valued tolerance records created only for schema completion.
@@ -44,7 +45,7 @@ Every authoritative entity geometry reference has this minimum shape:
 }
 ```
 
-Allowed locator schemes for v0.1 are intentionally finite: `STEP_OCCURRENCE`, `STEP_FACE`, `BREP_ROOT`, and `CAD_OBJECT`. They locate an entity inside one declared artifact; they do not claim correspondence between different exports.
+Allowed locator schemes for v0.1 are intentionally finite: `STEP_OCCURRENCE`, `STEP_FACE`, `BREP_ROOT`, and `CAD_OBJECT`. They locate an entity inside one declared artifact; they do not claim correspondence between different exports. `STEP_FACE` and `CAD_OBJECT` accept only stable provenance/persistent-label values; topology ordinals such as `Face3`, generated labels such as `Shape17`, list positions, Python identities, and runtime handles are invalid. `BREP_ROOT` means the root entity of a dedicated BREP and does not accept a numbered subshape suffix.
 
 The release-version rule is:
 
@@ -84,6 +85,73 @@ After G1, these lanes may run in separate branches/worktrees without shared file
 - Evidence Track: may prepare I1 allowlists and review templates, but promotion execution is not part of G2.
 
 Task 12 is the G2 join. Task 13 is not on that join path.
+
+### Required branch/worktree execution topology
+
+No two implementation windows may modify the same branch or worktree.
+
+1. After this plan commit is reviewed, create one isolated foundation worktree and branch from that exact approved plan commit:
+
+```powershell
+$approvedPlanSha = git rev-parse plan/architecture-contract-parallel-development-v2
+git worktree add -b feat/geometry-contract-v0.1-foundation `
+  D:\Agent\worktrees\dmslicer-geometry-contract-foundation `
+  $approvedPlanSha
+```
+
+2. Execute Tasks 1-6 sequentially only on `feat/geometry-contract-v0.1-foundation`. After the reviewed G1 gate commit, capture the immutable full commit ID:
+
+```powershell
+$g1Sha = git -C D:\Agent\worktrees\dmslicer-geometry-contract-foundation rev-parse HEAD
+```
+
+Record that exact value as `G1_SHA` in the G1 handoff. Do not move the foundation branch while the lane branches are being created.
+
+3. Only after G1 review passes, create every lane directly from the same `G1_SHA`, each in its own worktree:
+
+```powershell
+git worktree add -b feat/geometry-contract-e0 `
+  D:\Agent\worktrees\dmslicer-geometry-contract-e0 $g1Sha
+git worktree add -b feat/geometry-contract-e1-i1 `
+  D:\Agent\worktrees\dmslicer-geometry-contract-e1-i1 $g1Sha
+git worktree add -b feat/geometry-contract-e2-e3 `
+  D:\Agent\worktrees\dmslicer-geometry-contract-e2-e3 $g1Sha
+git worktree add -b feat/geometry-contract-e4 `
+  D:\Agent\worktrees\dmslicer-geometry-contract-e4 $g1Sha
+```
+
+The branch/task ownership is exact:
+
+| Branch | Worktree | Tasks |
+|---|---|---|
+| `feat/geometry-contract-e0` | `D:\Agent\worktrees\dmslicer-geometry-contract-e0` | Task 7 |
+| `feat/geometry-contract-e1-i1` | `D:\Agent\worktrees\dmslicer-geometry-contract-e1-i1` | Task 8, then I1a in Task 13 |
+| `feat/geometry-contract-e2-e3` | `D:\Agent\worktrees\dmslicer-geometry-contract-e2-e3` | Tasks 9-10 sequentially |
+| `feat/geometry-contract-e4` | `D:\Agent\worktrees\dmslicer-geometry-contract-e4` | Task 11 |
+
+4. Record the exact reviewed Geometry commit from each lane. For `feat/geometry-contract-e1-i1`, record the Task 8 E1 commit before Task 13 I1a advances that branch; I1a is not part of the G2 join:
+
+```powershell
+$e0Sha = git rev-parse feat/geometry-contract-e0
+$e1Sha = git rev-parse feat/geometry-contract-e1-i1
+$e2e3Sha = git rev-parse feat/geometry-contract-e2-e3
+$e4Sha = git rev-parse feat/geometry-contract-e4
+```
+
+Capture each variable only when that exact lane commit has passed review. Store the full SHA in the lane review record; do not later substitute a moved branch tip.
+
+5. Create an independent G2 integration branch/worktree from the same `G1_SHA`, then normally merge only those exact reviewed lane commits:
+
+```powershell
+git worktree add -b feat/geometry-contract-v0.1-g2 `
+  D:\Agent\worktrees\dmslicer-geometry-contract-g2 $g1Sha
+git -C D:\Agent\worktrees\dmslicer-geometry-contract-g2 merge --no-ff $e0Sha -m "merge: integrate reviewed E0 lane"
+git -C D:\Agent\worktrees\dmslicer-geometry-contract-g2 merge --no-ff $e1Sha -m "merge: integrate reviewed E1 lane"
+git -C D:\Agent\worktrees\dmslicer-geometry-contract-g2 merge --no-ff $e2e3Sha -m "merge: integrate reviewed E2 E3 lane"
+git -C D:\Agent\worktrees\dmslicer-geometry-contract-g2 merge --no-ff $e4Sha -m "merge: integrate reviewed E4 lane"
+```
+
+Run Task 12 only on `feat/geometry-contract-v0.1-g2`. If a required Geometry lane is not approved, do not merge it and do not claim G2. The Task 13 I1a commit is deliberately absent from this merge set and remains independent. Do not rebase, force-push, reset, rewrite history, or use a shared worktree to work around conflicts. Resolve integration conflicts only on the G2 branch and send the resolution through review.
 
 ---
 
@@ -132,7 +200,10 @@ def schema_errors(value: Mapping[str, Any], *, schema_name: str) -> tuple[Schema
     validator = Draft202012Validator(load_schema(schema_name))
     return tuple(
         SchemaIssue("SCHEMA_INVALID", ".".join(map(str, error.absolute_path)) or "$", error.message)
-        for error in sorted(validator.iter_errors(value), key=lambda error: list(error.absolute_path))
+        for error in sorted(
+            validator.iter_errors(value),
+            key=lambda error: tuple(str(component) for component in error.absolute_path),
+        )
     )
 ```
 
@@ -178,6 +249,7 @@ DUPLICATE_ID
 UNRESOLVED_REFERENCE
 UNRESOLVED_ARTIFACT
 NON_PORTABLE_ARTIFACT_URI
+UNSTABLE_LOCATOR
 INVALID_INTERFACE_CONFIRMATION
 MEMBERSHIP_MISMATCH
 CAPABILITY_FIELD_MISSING
@@ -188,6 +260,7 @@ IDENTITY_MISMATCH
 ```
 
 - [ ] Write failing tests for duplicate IDs, an interface attached to a non-confirmed or non-2D relation, inconsistent interface/component/patch membership, missing planar/cylinder parameters, forbidden cross-family parameters, unresolved artifact IDs/URIs, Windows/absolute/parent-traversal paths, invalid semantic activation, placeholder data, and an incorrect deterministic ID.
+- [ ] Add locator rejection tests for `Face3`, `Shape17`, numeric/list-index locators, `id(python_object)`-style values, and runtime-handle strings under `STEP_FACE`/`CAD_OBJECT`. Add positive tests using the existing stable provenance IDs and persistent labels. Expected issue for every unstable case: `UNSTABLE_LOCATOR`.
 - [ ] Add the explicit shared-artifact test: three regions may all point to the same tracked STEP artifact when each has a distinct valid `STEP_OCCURRENCE` locator. Assert that validation does not demand three `REGION_BREP` artifacts.
 - [ ] Add the identity-boundary test: reordering regions, relations, interfaces, components, patches, boundaries, partitions, bindings, artifacts, or provenance references does not change `snapshot_id`; changing a semantic member such as patch area does change it. Do not test or implement cross-document correspondence.
 - [ ] Run `py -3.12 -m pytest tests/geometry_contract/test_semantic_validation.py tests/geometry_contract/test_contract_identity.py -q` and confirm the expected failures.
@@ -344,7 +417,7 @@ py -3.12 -m pytest `
 ```
 
 - [ ] Confirm PASS and capture the exact command, Python/jsonschema/pytest versions, exit code, commit, and timestamp in the implementation handoff. This is a software contract result, not a P2 promotion package or scientific rerun.
-- [ ] Run `py -3.12 -m pytest -q` to detect regressions in the existing non-FreeCAD suite.
+- [ ] Run `py -3.12 -m pytest -q -m "not freecad"` for the repository-level G1 regression. Do not run or require FreeCAD-marked tests for G1.
 - [ ] Commit: `git add tests/geometry_contract/test_g1_gate.py && git commit -m "test: establish geometry contract G1 gate"`
 - [ ] Stop for G1 review. Do not begin parallel lanes until the G1 fixture IDs, field meanings, issue codes, and consumer reason codes are accepted.
 
@@ -402,6 +475,7 @@ def snapshot_from_p07(
 - [ ] Reuse the shared source STEP for both regions. Require a derived BREP reference only for a common/remaining entity that lacks a recoverable locator.
 - [ ] Run unit and marked conformance tests; confirm the G1 Slicer/UI mocks still pass unchanged against the runtime-projected Snapshot.
 - [ ] Commit: `git add src/dmslicer/geometry_contract/adapters/partial_overlap_06b.py tests/geometry_contract/test_partial_overlap_06b_adapter.py && git commit -m "feat: project P07 into geometry snapshot"`
+- [ ] After Task 8 review passes, record the exact full commit as `E1_SHA` before Task 13 advances `feat/geometry-contract-e1-i1`. G2 merges this reviewed SHA, not the later I1a branch tip.
 
 ## Task 9: Add the E2 / 06C P10 adapter (post-G1 Geometry lane C, stage 1)
 
@@ -506,7 +580,7 @@ No P2 package or promotion status is inspected
 - [ ] Run `py -3.12 -m pytest tests/geometry_contract/test_g2_gate.py -q` and confirm failure while the default publisher version is rc1.
 - [ ] Change the publication default constant to `0.1.0`; do not delete rc1 schema compatibility or rewrite literal rc1 examples.
 - [ ] Run the complete G1 suite plus E0-E4 unit/conformance tests and `test_g2_gate.py`. Run FreeCAD-marked adapter tests on the recorded FreeCAD/OCCT host.
-- [ ] Run `py -3.12 -m pytest -q` for repository regression coverage.
+- [ ] On the recorded FreeCAD/OCCT host, run `py -3.12 -m pytest -q` as the full repository regression, including FreeCAD-marked tests. This complete run belongs to G2, not G1.
 - [ ] Record G2 command, versions, commit, exit code, and timestamp as ordinary Goal evidence. Do not create or require a P2 promotion package.
 - [ ] Commit: `git add src/dmslicer/geometry_contract/schema.py tests/geometry_contract/test_g2_gate.py && git commit -m "feat: freeze geometry snapshot v0.1.0 compatibility"`
 - [ ] Stop for G2 review. Any new required core field or changed semantic meaning after this point requires a separately reviewed `0.2.0` design.
@@ -525,15 +599,25 @@ This task has two checkpoints. I1a may proceed after Task 8 and in parallel with
 **Concrete flow:**
 
 ```python
+DecisionFn = Callable[[Mapping[str, Any], Path], Mapping[str, Any]]
+ViewFn = Callable[
+    [Mapping[str, Any], Mapping[str, Any] | None, Path],
+    Mapping[str, Any],
+]
+
 def run_i1_p07(
     repository_root: Path,
     output_root: Path,
     *,
     run_id: str,
     implementation_commit: str,
+    decision_fn: DecisionFn,
+    view_fn: ViewFn,
 ) -> dict[str, Any]:
-    """P07 runner -> Snapshot -> SlicerDecision -> Viewer projection -> P2 request."""
+    """P07 -> Snapshot -> injected consumers -> validated P2 request."""
 ```
+
+`run_i1_p07.py` is production code and must not import `tests`, `tests.contract_consumers`, `slicer_mock`, or `ui_mock`. I1a tests may inject those test callables directly when exercising the harness contract. I1b supplies real production `decision_fn` and `view_fn` implementations only after those boundaries exist and have passed their own review. The injected functions return public contract/view mappings; the harness does not inspect their private implementations.
 
 The staged allowlist is individual files only:
 
@@ -553,24 +637,26 @@ CAD/STEP/BREP/FCStd files are included only when the P07 integration claim actua
 
 ### I1a - harness preparation
 
-- [ ] Write an integration test with the existing P07 runner stubbed by an accepted-result fixture. Assert reference continuity: P07 source artifact -> Snapshot ID -> Decision input/selection IDs -> Viewer selected IDs -> P2 allowlist artifact IDs.
+- [ ] Write a harness-contract test with the existing P07 runner stubbed by an accepted-result fixture and explicit injected `decision_fn` / `view_fn` callables. Assert reference continuity: P07 source artifact -> Snapshot ID -> Decision input/selection IDs -> Viewer selected IDs -> P2 allowlist artifact IDs.
+- [ ] Add a source/import-boundary test proving `scripts/architecture_contract/run_i1_p07.py` contains no import from `tests`, `tests.contract_consumers`, `slicer_mock`, or `ui_mock`.
 - [ ] Assert the harness records software validation, scientific P07 validation, human review, preservation, and publication as separate result domains.
 - [ ] Assert a failed Geometry run writes failure evidence but publishes no Snapshot; a failed Viewer/evidence stage cannot rewrite G1/G2 status.
+- [ ] Monkeypatch `dmslicer.evidence_promotion.promotion.promote` to raise immediately and prove every I1a test still passes without calling it.
 - [ ] Run `py -3.12 -m pytest tests/geometry_contract/test_i1_p07_integration.py -q` and confirm failure before the harness exists.
-- [ ] Implement the concrete P07 harness using `run_partial_overlap_case`, `snapshot_from_p07`, the accepted Slicer consumer boundary, and the accepted Viewer projection. Write with existing `dmslicer.evidence.write_json`.
-- [ ] Build a P2 `promotion_request.json` that references the staged files, then call existing `dmslicer.evidence_promotion` policy/promotion APIs. Do not copy P2 schema fields into GeometrySnapshot or SlicerDecision.
-- [ ] Make dry-run/test mode stop after request validation; it must not install a stable package.
+- [ ] Implement the concrete P07 harness using `run_partial_overlap_case`, `snapshot_from_p07`, and only the injected consumer callables. Write staged JSON with existing `dmslicer.evidence.write_json`.
+- [ ] Build a P2 `promotion_request.json` that references the staged files, validate it with existing `validate_request()`, and resolve its explicit allowlist with `resolve_allowlisted_files()`. Do not import or call `promote()` anywhere in the I1a harness, and do not copy P2 schema fields into GeometrySnapshot or SlicerDecision.
+- [ ] Make I1a unconditionally validation-only: return the request, policy report, and resolved allowlist summary without installing, copying, or creating anything under the stable `evidence/` destination.
 - [ ] Run the stubbed integration test and confirm PASS.
 - [ ] Commit: `git add scripts/architecture_contract/run_i1_p07.py tests/geometry_contract/test_i1_p07_integration.py && git commit -m "feat: prepare P07 I1 integration harness"`
 
 ### I1b - separately authorized representative run
 
-- [ ] Verify the selected Viewer is a concrete boundary compatible with the G1 UI projection. If only the mock exists, report I1 as not yet established; do not relabel a unit mock as production Viewer evidence.
+- [ ] Verify both selected consumers are concrete production Slicer/Viewer boundaries compatible with the G1 mocks. If either real boundary is absent, report I1 as not yet established; do not import, wrap, or relabel a test mock as production evidence.
 - [ ] Run the existing P07 Goal once in a fresh `outputs/architecture-contract-i1/<run_id>/` staging directory on a recorded FreeCAD/OCCT host.
-- [ ] Run Snapshot validation, SlicerDecision validation, Viewer reference checks, and pytest/JUnit capture. Confirm every ID/reference resolves without array-position fallback.
+- [ ] Pass the reviewed production `decision_fn` and `view_fn` explicitly to the I1 harness. Run Snapshot validation, SlicerDecision validation, Viewer reference checks, and pytest/JUnit capture. Confirm every ID/reference resolves without array-position fallback.
 - [ ] Complete `HUMAN_REVIEW.md` and `VIEW_INDEX.md` for the representative artifacts; keep UI/display findings separate from geometry claims.
 - [ ] Validate the explicit P2 allowlist and promotion request. Preserve any rejection/failure package rather than overwriting it.
-- [ ] When authorized, invoke the existing P2 local promotion path and verify immutable destination, manifest schema, copy recount, byte-integrity labeling, and preservation/publication statuses.
+- [ ] Only under the separate I1b authorization, invoke the existing P2 local `promote()` path outside the I1a harness and verify immutable destination, manifest schema, copy recount, byte-integrity labeling, and preservation/publication statuses.
 - [ ] Report I1 independently as PASS or FAIL. A FAIL blocks only the representative integration-evidence claim; it does not alter G1 or G2.
 - [ ] Commit only small allowlisted manifests/review notes if the Evidence Goal authorizes Git storage. Do not add all of `outputs/`, large CAD artifacts, or historical evidence wholesale.
 
@@ -578,7 +664,7 @@ CAD/STEP/BREP/FCStd files are included only when the P07 integration claim actua
 
 - [ ] Run `git diff --check`.
 - [ ] Run the exact G1 suite and confirm it remains FreeCAD-free.
-- [ ] If claiming G2, run all E0-E4 adapter/example tests, including the marked FreeCAD conformance tests, plus the entire G1 suite and repository regression suite.
+- [ ] If claiming G2, run all E0-E4 adapter/example tests, including the marked FreeCAD conformance tests, plus the entire G1 suite and `py -3.12 -m pytest -q` on the recorded FreeCAD/OCCT host.
 - [ ] If claiming I1, inspect the generated P2 manifest and copy inventory and report its custody status exactly; do not say “fully preserved” unless the P2 conditions actually establish it.
 - [ ] Search for forbidden coupling and placeholders:
 
