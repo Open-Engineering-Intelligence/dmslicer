@@ -35,7 +35,7 @@ const WorkspaceAnnotations = (() => {
   function quantities(v,basis){
    if(typeof v==='number')require(Number.isFinite(v)&&basis&&['unit','source','evidence'].every(k=>typeof basis[k]==='string'&&basis[k].trim()),'Numeric properties require finite value, unit, source and evidence');
    else if(Array.isArray(v))v.forEach(x=>quantities(x,basis));
-   else if(object(v))for(const [k,x] of Object.entries(v))quantities(x,k==='value'?v:null);
+   else if(object(v)){const range=Number.isFinite(v.min)&&Number.isFinite(v.max)&&v.min<=v.max&&['unit','source','evidence'].every(k=>typeof v[k]==='string'&&v[k].trim());for(const [k,x] of Object.entries(v))quantities(x,k==='value'?v:(range&&['min','max'].includes(k)?{unit:v.unit,source:v.source,evidence:v.evidence}:null));}
   }quantities(m.properties,null);
  }
  function validateLibrary(l){
@@ -119,6 +119,8 @@ const WorkspaceAnnotations = (() => {
   validateMaterial(material);
   return copy(material);
  }
+ function exportLibrary(l,libraryId){validateLibrary(l);require(typeof libraryId==='string'&&/^[a-zA-Z][a-zA-Z0-9._-]{0,79}$/.test(libraryId),'Invalid library_id');return {schema_version:'dmslicer.material-library-file.v1',library_id:libraryId,materials:copy(l.materials),exported_at:now()}}
+ function importLibrary(text){require(typeof text==='string'&&text.length<=4*1024*1024,'Library limit: 4 MiB');const f=JSON.parse(text);require(object(f)&&f.schema_version==='dmslicer.material-library-file.v1'&&typeof f.library_id==='string'&&Array.isArray(f.materials)&&typeof f.exported_at==='string'&&Number.isFinite(Date.parse(f.exported_at)),'Invalid material library file');const l={schema:'dmslicer.material-library.v1',version:0,materials:f.materials,history:[]};validateLibrary(l);return l}
  function color(w,ref){const o=w?.objects.find(o=>o.entity_ref===ref);return o?.display_override||w?.material_library.materials.find(m=>m.id===o?.material_id)?.color||'#8ca3b3'}
  function restore(c,text){
   require(typeof text==='string'&&text.length<=4*1024*1024,'Annotation limit: 4 MiB');const value=JSON.parse(text);
@@ -145,6 +147,6 @@ const WorkspaceAnnotations = (() => {
   }
   return {schema:'dmslicer.gradient-connection-policy.v1',source_ref:a,target_ref:b,gradient_groups:[left.gradient_group_id,right.gradient_group_id],geometry_evidence:copy(geometry||null),allowed,activated:false,reason};
  }
- return {create,geometryRole,types,library,validateLibrary,putMaterial,materialDraft,decide,applyAssignment,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
+ return {create,geometryRole,types,library,validateLibrary,putMaterial,materialDraft,exportLibrary,importLibrary,decide,applyAssignment,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
 })();
 if(typeof module!=='undefined')module.exports=WorkspaceAnnotations;

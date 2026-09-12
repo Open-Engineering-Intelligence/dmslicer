@@ -93,3 +93,12 @@ test('material draft is an independent copy for non-destructive edit',()=>{
  assert.deepEqual(draft,original);draft.name='Changed only in dialog draft';draft.color='#000000';draft.properties={composition:[{material_id:'ABS',fraction:1}]};
  assert.equal(original.name,'PLA');assert.equal(original.color,'#6daba3');assert.deepEqual(original.properties,{});
 });
+test('material library file export and invalid import are validated without overwrite',()=>{
+ const w=W.create(fixture()),before=JSON.stringify(w),file=W.exportLibrary(w.material_library,'library-test');
+ assert.equal(file.schema_version,'dmslicer.material-library-file.v1');assert.equal(file.library_id,'library-test');assert.equal(file.materials.length,4);assert(file.exported_at);
+ const invalid={...file,materials:[...file.materials,{...file.materials[0]}]};assert.throws(()=>W.importLibrary(JSON.stringify(invalid)),/Duplicate/i);assert.equal(JSON.stringify(w),before);
+});
+test('printing recommendations keep single values and ranges separate with explicit example status',()=>{
+ const w=W.create(fixture());W.putMaterial(w,{...material(),id:'print-a',properties:{nozzle_temperature:{value:210,unit:'°C',source:'EXAMPLE_UNVERIFIED',evidence:'EXAMPLE_UNVERIFIED'},bed_temperature:{min:50,max:60,unit:'°C',source:'EXAMPLE_UNVERIFIED',evidence:'EXAMPLE_UNVERIFIED'}}});
+ assert.equal(w.material_library.materials.at(-1).properties.nozzle_temperature.value,210);assert.equal(w.material_library.materials.at(-1).properties.bed_temperature.max,60);
+});
