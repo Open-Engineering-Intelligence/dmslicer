@@ -50,7 +50,11 @@ def render_catalog(value, *, import_enabled=False):
     payload = json.dumps(value, ensure_ascii=True, allow_nan=False).replace('<', '\\u003c')
     template = Path(__file__).with_name('geometry_import_viewer.html').read_text(encoding='utf-8')
     layout = Path(__file__).with_name('viewer_layout.js').read_text(encoding='utf-8')
-    return template.replace('__LAYOUT_CODE__', layout).replace('__CATALOG_JSON__', payload).replace('__IMPORT_ENABLED__', 'true' if import_enabled else 'false')
+    annotations = Path(__file__).with_name('workspace_annotations.js').read_text(encoding='utf-8')
+    material_ui = Path(__file__).with_name('material_workspace.js').read_text(encoding='utf-8')
+    return (template.replace('__LAYOUT_CODE__', layout).replace('__ANNOTATION_CODE__', annotations)
+            .replace('__MATERIAL_CODE__', material_ui).replace('__CATALOG_JSON__', payload)
+            .replace('__IMPORT_ENABLED__', 'true' if import_enabled else 'false'))
 
 
 def case01_entry(directory: Path, root: Path):

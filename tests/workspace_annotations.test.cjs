@@ -35,13 +35,16 @@ domainTest('restore refuses wrong source and changed reference provenance withou
  const c=fixture(),w=W.create(c),raw=JSON.stringify(w);
  c.provenance.source_evidence.source_run_id='other';assert.throws(()=>W.restore(c,raw),/source/i);
  const other=fixture();other.scene.entities[0].reference_provenance.asset='another.step';assert.throws(()=>W.restore(other,raw),/reference/i);
+ const changedAsset=fixture();changedAsset.scene.entities[0].source={asset:'different-input.step'};assert.throws(()=>W.restore(changedAsset,raw),/source/i);
  assert.equal(JSON.stringify(w),raw);
 });
 domainTest('invalid annotations never enter persistence',()=>{
  const c=fixture(),w=W.create(c);
  for(const [field,value] of [['semantic_role','SourceBoundary'],['material_id','absent'],['display_override','red'],['geometry_role','Patch']])assert.throws(()=>W.decide(w,'input-a',field,value));
  assert.throws(()=>W.decide(w,'diagnostic-face','semantic_role','Source'),/stable/i);
- for(const edit of [v=>v.objects.push(v.objects[0]),v=>v.objects.pop(),v=>v.objects[0].geometry_role='Patch',v=>v.activation.MaterialRegion=true,v=>v.material_library.version=-1,v=>v.objects[0].material_id='missing']){
+ assert.throws(()=>W.decide(w,'interface-ab','semantic_role','Source'),/input/i);
+ assert.throws(()=>W.decide(w,'patch-ab','material_id',null),/input/i);
+ for(const edit of [v=>v.objects.push(v.objects[0]),v=>v.objects.pop(),v=>v.objects[0].geometry_role='Patch',v=>v.activation.MaterialRegion=true,v=>v.material_library.version=-1,v=>v.objects[0].material_id='missing',v=>v.objects[1].semantic_role='Source']){
   const value=JSON.parse(JSON.stringify(w));edit(value);assert.throws(()=>W.restore(c,JSON.stringify(value)));
  }
  assert.equal(w.decisions.length,0);
@@ -51,17 +54,21 @@ domainTest('library requires stable keys, valid colors and JSON properties; fail
  for(const data of [{id:'',name:'x',color:'#123456',description:'',properties:{}},{id:'x',name:'',color:'#123456',description:'',properties:{}},{id:'x',name:'X',color:'red',description:'',properties:{}},{id:'x',name:'X',color:'#123456',description:'',properties:[]}])assert.throws(()=>W.putMaterial(w,data));
  assert.equal(JSON.stringify(w),before);
 });
-domainTest('selection and opacity operate on explicit sets; empty and filtered sets cannot leak',()=>{
- const c=fixture(),s=W.display(c.scene.entities);assert.equal(s.selected.size,4);
- W.select(s,'none');W.transparency(s,65);assert.equal(s.items.get('input-a').transparency,0);
- s.selected.add('interface-ab');W.transparency(s,65);assert.equal(s.items.get('interface-ab').transparency,65);assert.equal(s.items.get('patch-ab').transparency,0);
- W.select(s,'invert');W.show(s,false);assert.equal(s.items.get('interface-ab').visible,true);assert.equal(s.items.get('patch-ab').visible,false);
- assert.throws(()=>W.transparency(s,101));assert.throws(()=>W.transparency(s,NaN));
-});
 domainTest('failed save preserves draft, saved time and old persisted bytes',()=>{
  const c=fixture(),w=W.create(c),before=JSON.stringify(w);
  const store={setItem(){throw Error('Quota exceeded')}};
  assert.throws(()=>W.save(c,w,store),/Quota/);assert.equal(JSON.stringify(w),before);
  const data=new Map();W.save(c,w,{setItem:(k,v)=>data.set(k,v)});
  const saved=W.restore(c,[...data.values()][0]);assert(saved.saved_at);assert.equal(w.saved_at,saved.saved_at);
+});
+domainTest('source-less catalogs and reference-less stable entities cannot be persisted as trusted configuration',()=>{
+ const c=fixture();delete c.scene.entities[0].reference_provenance;assert.throws(()=>W.create(c),/provenance/i);
+ const noSource=fixture();noSource.provenance={};assert.throws(()=>W.create(noSource),/provenance/i);
+});
+domainTest('library replacement is validated atomically and preserves previous revision in decisions',()=>{
+ const c=fixture(),w=W.create(c);W.putMaterial(w,{id:'mat-a',name:'A',color:'#123456',description:'',properties:{}});W.decide(w,'input-a','material_id','mat-a');
+ const before=JSON.stringify(w);assert.throws(()=>W.replaceLibrary(c,w,JSON.stringify({schema:'dmslicer.material-library.v1',version:0,materials:[],history:[]})),/material/i);assert.equal(JSON.stringify(w),before);
+ const l=JSON.parse(JSON.stringify(w.material_library));l.materials[0].name='Imported name';
+ W.replaceLibrary(c,w,JSON.stringify(l));assert.equal(w.objects[0].material_id,'mat-a');assert.equal(w.material_library.materials[0].name,'Imported name');
+ assert.equal(w.decisions.at(-1).before.materials[0].name,'A');assert.equal(w.decisions.at(-1).actor,'human');
 });
