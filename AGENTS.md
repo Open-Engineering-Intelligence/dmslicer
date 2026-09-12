@@ -16,6 +16,10 @@ contracts, architecture MVPs, and their migration or governance records. Use
 `00-01`, `00-02`, and so on for independent architecture tracks; use a suffix
 such as `00-08A` only for ordered subtasks within one track. Do not assign
 ordinary geometry experiments or UI implementation to the `00-*` series.
+Use `CHAT-01`, `CHAT-02`, and so on for persistent coordination or voice
+conversation windows. A `CHAT-*` task routes work, records decisions, and
+coordinates other searchable tasks; it must not silently become the sole
+implementation or evidence location for their Goals.
 Do not mechanically extend historical 07/08 numbers with letters or invent a
 new research phase from a UI feature. Use descriptive domains such as Geometry,
 Workbench, Materials, Semantics, or Evidence when no approved stage code exists.

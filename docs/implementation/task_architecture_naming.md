@@ -25,6 +25,13 @@ current canonical map is:
 Superseded planning-only entries use a traceable suffix such as `00-03P` and
 may be archived after their canonical task is identified.
 
+Persistent coordination and voice entry points use a separate `CHAT-*` series.
+`DM-Slicer｜CHAT-01 项目协调对话窗口` replaces the former
+`DM-Slicer｜08E 几何案例显示工作台` title after its implementation duties
+moved to `09A`. The conversation remains available for traceability, while
+geometry-viewer implementation and evidence belong to the searchable `09A`
+task.
+
 | Previous title | Current title | Goal ID |
 | --- | --- | --- |
 | DM-Slicer｜08J 材料与语义配置工作区 | DM-Slicer｜09B 材料与语义配置工作区 | WORKBENCH-MATERIAL-SEMANTIC-UI-01 |
