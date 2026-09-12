@@ -25,9 +25,13 @@ for path in args.packages:
     assert local == remote
     entry = remote['cases'][0]
     entities = entry['scene']['entities']
-    assert sum(e.get('scene_role') == 'input' for e in entities) == 2
-    assert any(e.get('scene_role') == 'common_interface' for e in entities)
-    assert any(e.get('scene_role') == 'fused_result' and not e['default_visible'] for e in entities)
+    assert sum(e.get('scene_role') == 'input' for e in entities) == (3 if path.stem == 'CASE01' else 2)
+    assert sum(e.get('scene_role') == 'common_interface' for e in entities) == (2 if path.stem == 'CASE01' else 1)
+    if path.stem == 'CASE01':
+        assert not any(e.get('scene_role') == 'fused_result' for e in entities)
+        assert entry['provenance']['role_states']['fused_result'] == 'NOT_PRODUCED_IN_SUPPLIED_EVIDENCE'
+    else:
+        assert any(e.get('scene_role') == 'fused_result' and not e['default_visible'] for e in entities)
     html = render_catalog(remote)
     assert 'id="model-file"' not in html and 'id="rebuild"' not in html
     (args.output / (path.stem + '.html')).write_text(html, encoding='utf-8')

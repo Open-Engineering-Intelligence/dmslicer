@@ -8,8 +8,11 @@
 
 - `evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer`
 - `evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer`
+- `evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer`
 
 两包都来源于 08C 的已有当前复跑结果。本次只采样这些结果的显示网格，不重新计算接触或融合。它们不是 U02 的替代证据；U02 由独立的 08F 任务准备，采用同一导入合约即可接入。
+
+CASE01 单独复用 `case01-brep-display-20260912-006` 的现成显示网格、稳定引用和分析 JSON，不执行任何 CAD 调用。包含 A/G/B 三个对象和 A-G/G-B 两个公共补丁。本证据没有融合产物，融合组标为“本证据未产生”。可用 `python -m dmslicer.prepare_case01_package --output NEW_OUTPUT` 重现打包步骤。
 
 默认显示两个输入几何对象和公共接口补丁；校正对象、剩余分区和融合结果可按组或逐项切换。C02 公共补丁来自已计算的校正后结果，不能据其显示位置推断原始输入已精确贴合。对照时启用校正组并隐藏原始输入组。融合结果默认隐藏，避免挡住输入；显示设置不改变计算事实。
 
