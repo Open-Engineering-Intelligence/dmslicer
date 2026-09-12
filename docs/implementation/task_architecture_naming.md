@@ -8,6 +8,23 @@ Research phases remain those in the frozen research contract: interface
 detection, volumetric field, and slice-plane sampling. This record does not
 modify that contract or claim any phase gate passed.
 
+Project-foundation architecture uses the hierarchical `00-*` series. The
+current canonical map is:
+
+| Code | Responsibility |
+| --- | --- |
+| 00-01 | G1 geometry contract foundation |
+| 00-02 | SlicerDecision MVP |
+| 00-03 | GeometrySnapshot Viewer MVP |
+| 00-04 | 07A to GeometrySnapshot adapter bridge |
+| 00-05 | MVP experiment matrix and parallel interface planning |
+| 00-06 | workflow map and backend migration manual |
+| 00-07 | architecture governance freeze and parallel-development enablement |
+| 00-08A..D | ordered P2-MVP evidence-infrastructure subtasks |
+
+Superseded planning-only entries use a traceable suffix such as `00-03P` and
+may be archived after their canonical task is identified.
+
 | Previous title | Current title | Goal ID |
 | --- | --- | --- |
 | DM-Slicer｜08J 材料与语义配置工作区 | DM-Slicer｜09B 材料与语义配置工作区 | WORKBENCH-MATERIAL-SEMANTIC-UI-01 |
