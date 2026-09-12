@@ -1,0 +1,259 @@
+{
+  "analysis_input": "reimported_step_actual_brep",
+  "candidate_pair_count": 1,
+  "candidates": [
+    {
+      "angular_span_rad": 6.283185307179586,
+      "axial_interval_mm": [
+        -5.0,
+        35.0
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "axis_point_mm": [
+        0.0,
+        0.0,
+        -5.0
+      ],
+      "circle_end_boundary_count": 2,
+      "face_area_mm2": 5026.548245743669,
+      "full_period": true,
+      "material_side_confirmed": true,
+      "occurrence": "Side_1_Bore",
+      "orientation_radial_dot": 1.0,
+      "provenance": "reimported_step_actual_brep",
+      "radius_mm": 20.0,
+      "role_evidence": "SHAFT_CONVEX",
+      "run_local_face_label": "Face1",
+      "supported": true,
+      "surface_family": "Cylinder",
+      "uv_bounds": [
+        0.0,
+        6.283185307179586,
+        0.0,
+        40.0
+      ]
+    },
+    {
+      "angular_span_rad": 6.283185307179586,
+      "axial_interval_mm": [
+        -5.0,
+        35.0
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "axis_point_mm": [
+        0.0,
+        0.0,
+        -10.0
+      ],
+      "circle_end_boundary_count": 2,
+      "face_area_mm2": 2513.2741228718346,
+      "full_period": true,
+      "material_side_confirmed": true,
+      "occurrence": "Side_1_Bore",
+      "orientation_radial_dot": -1.0,
+      "provenance": "reimported_step_actual_brep",
+      "radius_mm": 10.0,
+      "role_evidence": "BORE_CONCAVE",
+      "run_local_face_label": "Face4",
+      "supported": true,
+      "surface_family": "Cylinder",
+      "uv_bounds": [
+        0.0,
+        6.283185307179586,
+        5.0,
+        45.0
+      ]
+    },
+    {
+      "angular_span_rad": 6.283185307179586,
+      "axial_interval_mm": [
+        0.0,
+        30.000000000000085
+      ],
+      "axis_direction": [
+        0.0009999998333333417,
+        0.0,
+        0.9999995000000417
+      ],
+      "axis_point_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "circle_end_boundary_count": 2,
+      "face_area_mm2": 1884.9555921538815,
+      "full_period": true,
+      "material_side_confirmed": true,
+      "occurrence": "Side_2_Shaft",
+      "orientation_radial_dot": 1.0000000000000002,
+      "provenance": "reimported_step_actual_brep",
+      "radius_mm": 10.0,
+      "role_evidence": "SHAFT_CONVEX",
+      "run_local_face_label": "Face1",
+      "supported": true,
+      "surface_family": "Cylinder",
+      "uv_bounds": [
+        0.0,
+        6.283185307179586,
+        0.0,
+        30.000000000000085
+      ]
+    }
+  ],
+  "classification": {
+    "classification": "ANGULAR_AXIS_MISALIGNMENT",
+    "error_components": [
+      "ANGULAR"
+    ]
+  },
+  "debug": {
+    "reopened": true,
+    "required_groups": [
+      "00_Input",
+      "01_Originals",
+      "02_Selected_Interface",
+      "03_Precommit_Preview",
+      "04_Corrected_Assembly",
+      "05_Common_Patches",
+      "06_Remaining",
+      "09_Fused_Result",
+      "10_Rejection_Evidence"
+    ],
+    "semantic_objects": []
+  },
+  "input_step_sha256": "7e26c64a8d6016db7aaf033c93c4b49760853557f0bccd0a4eeb2b743fc795d1",
+  "motion": {
+    "executed_translation_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "execution_count": 0,
+    "motion_authorized": false,
+    "proposed_translation_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation_executed": false
+  },
+  "numeric_rules": {
+    "angular_epsilon_rad": 1e-07,
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "material_probe_offset_mm": 1e-05,
+    "periodic_epsilon_rad": 1e-06,
+    "radius_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "policy": {
+    "allow_motion": false,
+    "allow_pose_interference_resolution": false,
+    "max_translation_mm": 0.1,
+    "policy_valid": true,
+    "schema_version": 1,
+    "tauE_mm": 0.1
+  },
+  "pre_geometry": {
+    "actual_common_area_mm2": 0.0,
+    "material_common_volume_mm3": 8.99764500863239,
+    "minimum_surface_distance_mm": 0.0
+  },
+  "pre_measurement": {
+    "axial_overlap_mm": 29.999985000001338,
+    "axis_angle_rad": 0.0009999999999921686,
+    "axis_offset_mm": 0.0,
+    "axis_offset_vector_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bore_radius_mm": 10.0,
+    "radial_clearance_mm": 0.0,
+    "shaft_radius_mm": 10.0
+  },
+  "repairability": "UNSUPPORTED_BY_07A_TRANSLATION_ONLY",
+  "scenario_id": "C05",
+  "schema_version": 1,
+  "selected_candidates": {
+    "Side_1": {
+      "angular_span_rad": 6.283185307179586,
+      "axial_interval_mm": [
+        -5.0,
+        35.0
+      ],
+      "axis_direction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "axis_point_mm": [
+        0.0,
+        0.0,
+        -10.0
+      ],
+      "circle_end_boundary_count": 2,
+      "face_area_mm2": 2513.2741228718346,
+      "full_period": true,
+      "material_side_confirmed": true,
+      "occurrence": "Side_1_Bore",
+      "orientation_radial_dot": -1.0,
+      "provenance": "reimported_step_actual_brep",
+      "radius_mm": 10.0,
+      "role_evidence": "BORE_CONCAVE",
+      "run_local_face_label": "Face4",
+      "supported": true,
+      "surface_family": "Cylinder",
+      "uv_bounds": [
+        0.0,
+        6.283185307179586,
+        5.0,
+        45.0
+      ]
+    },
+    "Side_2": {
+      "angular_span_rad": 6.283185307179586,
+      "axial_interval_mm": [
+        0.0,
+        30.000000000000085
+      ],
+      "axis_direction": [
+        0.0009999998333333417,
+        0.0,
+        0.9999995000000417
+      ],
+      "axis_point_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "circle_end_boundary_count": 2,
+      "face_area_mm2": 1884.9555921538815,
+      "full_period": true,
+      "material_side_confirmed": true,
+      "occurrence": "Side_2_Shaft",
+      "orientation_radial_dot": 1.0000000000000002,
+      "provenance": "reimported_step_actual_brep",
+      "radius_mm": 10.0,
+      "role_evidence": "SHAFT_CONVEX",
+      "run_local_face_label": "Face1",
+      "supported": true,
+      "surface_family": "Cylinder",
+      "uv_bounds": [
+        0.0,
+        6.283185307179586,
+        0.0,
+        30.000000000000085
+      ]
+    }
+  },
+  "status": "UNSUPPORTED_BY_07A_TRANSLATION_ONLY"
+}

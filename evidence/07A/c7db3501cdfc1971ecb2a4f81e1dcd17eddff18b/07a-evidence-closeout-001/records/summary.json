@@ -1,0 +1,85 @@
+{
+  "cases": {
+    "AMBIGUOUS": {
+      "classification": "UNSUPPORTED_AMBIGUOUS_CYLINDRICAL_INTERFACE",
+      "status": "UNSUPPORTED_AMBIGUOUS_CYLINDRICAL_INTERFACE",
+      "validation": "PASS"
+    },
+    "C01": {
+      "classification": "EXACT_CYLINDRICAL_CONTACT",
+      "status": "NO_CORRECTION_REQUIRED",
+      "validation": "PASS"
+    },
+    "C02": {
+      "classification": "AXIS_TRANSLATIONAL_MISALIGNMENT",
+      "status": "CORRECTED_AND_FUSED",
+      "validation": "PASS"
+    },
+    "C03": {
+      "classification": "DIMENSIONAL_RADIAL_CLEARANCE",
+      "status": "RIGID_POSITION_CORRECTION_NOT_APPLICABLE",
+      "validation": "PASS"
+    },
+    "C04": {
+      "classification": "DIMENSIONAL_RADIAL_INTERFERENCE",
+      "status": "RIGID_POSITION_CORRECTION_NOT_APPLICABLE",
+      "validation": "PASS"
+    },
+    "C05": {
+      "classification": "ANGULAR_AXIS_MISALIGNMENT",
+      "status": "UNSUPPORTED_BY_07A_TRANSLATION_ONLY",
+      "validation": "PASS"
+    },
+    "ROTATED_C02": {
+      "classification": "AXIS_TRANSLATIONAL_MISALIGNMENT",
+      "status": "CORRECTED_AND_FUSED",
+      "validation": "PASS"
+    }
+  },
+  "repeatability": {
+    "AMBIGUOUS": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "C01": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "C02": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "C03": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "C04": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "C05": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    },
+    "ROTATED_C02": {
+      "comparison": "tolerance_aware_actual_geometry_and_provenance",
+      "failures": [],
+      "schema_version": 1,
+      "status": "PASS"
+    }
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}
