@@ -4,6 +4,16 @@
 
 This is a research-first repository. Every change must preserve the distinction between research hypotheses, geometric evidence, semantic decisions, and implemented behavior.
 
+## Codex task naming and traceability
+
+All new Codex tasks for this repository must use the title format
+`DM-Slicer｜<workstream> <concise Chinese subject>`.
+
+Use the next established workstream identifier when one exists, and include
+the Goal ID in the opening task prompt and stable evidence manifest. Do not
+start background repository work without a separately searchable task title,
+an explicit Goal ID, Scope, Acceptance Criteria, and Stop Conditions.
+
 ## Geometry and semantics
 
 1. Never treat a derived display mesh as geometry truth.
