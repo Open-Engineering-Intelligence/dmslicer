@@ -50,6 +50,11 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert "depth" in html
     assert "shade" in html
     assert "facetEdges" in html
+    assert "filter" in html
+    assert "Regions" in html
+    assert "Interfaces" in html
+    assert "Patches" in html
+    assert "All" in html and "None" in html
 
 
 def test_generated_case01_display_javascript_parses(tmp_path: Path) -> None:

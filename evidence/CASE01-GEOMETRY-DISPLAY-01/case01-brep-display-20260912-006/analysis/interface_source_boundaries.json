@@ -1,0 +1,41 @@
+{
+  "interface_source_boundaries": [
+    {
+      "boundary_role": "SOURCE_A",
+      "boundary_value_placeholder": 0.0,
+      "condition_kind": "DIRICHLET_SCALAR",
+      "gradient_domain_id": "gradient-domain:v1:b6106cf271355a944b2d418fd866717452e289a17827125f504c2a525073da63",
+      "gradient_domain_region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "interface_patch_id": "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
+      "provenance_linkage": {
+        "patch_provenance_id": "provenance:v1:92c8ee220e1a6bc43df433f16331a9aee67e7a75dfa52fb49b8251bdf333a30b",
+        "selection_operation": "SELECT_SOURCE_BOUNDARY"
+      },
+      "selection": {
+        "basis": "explicit benchmark semantic role + confirmed 2D patch",
+        "mode": "AUTO"
+      },
+      "source_boundary_id": "source-boundary:v1:62e5061acd8d69e7f0cee50081e799b5903f51de29c1518c582760ec57e3ee63",
+      "source_material_region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653"
+    },
+    {
+      "boundary_role": "SOURCE_B",
+      "boundary_value_placeholder": 1.0,
+      "condition_kind": "DIRICHLET_SCALAR",
+      "gradient_domain_id": "gradient-domain:v1:b6106cf271355a944b2d418fd866717452e289a17827125f504c2a525073da63",
+      "gradient_domain_region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "interface_patch_id": "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
+      "provenance_linkage": {
+        "patch_provenance_id": "provenance:v1:490551bd20e371552f5fb9fe66abfbec8b55dfdd9b9f63de2576f3a8676c8097",
+        "selection_operation": "SELECT_SOURCE_BOUNDARY"
+      },
+      "selection": {
+        "basis": "explicit benchmark semantic role + confirmed 2D patch",
+        "mode": "AUTO"
+      },
+      "source_boundary_id": "source-boundary:v1:b18a372d54186b5211a705dd77c77e21d27cd0dc2860499bb7f9f425eedfc178",
+      "source_material_region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+    }
+  ],
+  "semantic_digest": "sha256:a9c38aed8b02279940213dd7c9cc1589327bb8d0364eaf18e0ffbbb6d11b84e9"
+}
