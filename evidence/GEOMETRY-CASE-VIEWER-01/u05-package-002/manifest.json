@@ -1,0 +1,123 @@
+{
+  "schema": "dmslicer.result-package.v1",
+  "case": {
+    "id": "U05",
+    "label": "U05 \u5706\u67f1\u63a5\u53e3\u7ed3\u679c"
+  },
+  "provenance": {
+    "source_run_id": "u05-current-rerun-20260912-001",
+    "source_goal_id": "DM-Slicer\uff5c08C \u5706\u67f1\u63a5\u53e3\u6848\u4f8b\u77e9\u9635",
+    "source_implementation_commit": null,
+    "source_evidence_state": "CURRENT_RERUN_PASS",
+    "evidence_confidence": "L",
+    "geometry_validation": "NOT_RERUN_BY_PACKAGING",
+    "semantic_analysis": "NO_MATERIAL_REGION_BINDING \u2014 \u672c\u5305\u672a\u58f0\u660e\u6750\u6599\u533a\u57df\u7ed1\u5b9a",
+    "identity_status": "RUN_LOCAL_DIAGNOSTIC",
+    "human_review": "PENDING",
+    "versions": {
+      "freecad": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+      "occt": "7.8.1"
+    },
+    "display_linear_deflection_mm": 0.25,
+    "display_boundary_deflection_mm": 0.25,
+    "source_manifest": "results/manifest.json"
+  },
+  "display": "display/catalog.json",
+  "assets": [
+    {
+      "path": "geometry/input.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "997617210b687c4616b7c03560c72460d6308ff58a4a6b372671705996b6906a"
+    },
+    {
+      "path": "results/operation.json",
+      "role": "operation",
+      "required": true,
+      "sha256": "b7eaca9c49001bc346e05cf598a12f61212cd95902afb7e86b1b6e0607642bb0"
+    },
+    {
+      "path": "results/validation.json",
+      "role": "validation",
+      "required": true,
+      "sha256": "6be974753a6241326af05fcd5f594d6226d057d5983fce9634e97bfb599a90ce"
+    },
+    {
+      "path": "results/manifest.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "9fb3bbf39d28e66a02246fcee6545f38472a4516bff6c0fb0421446c7459aa42"
+    },
+    {
+      "path": "geometry/fused.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "e7dc2856c55ffda1c5ea94e6f75719b825b9f00f095ec3d616f8473164e0535a"
+    },
+    {
+      "path": "kernel_brep/common_1.brep",
+      "role": "current_kernel_brep",
+      "required": false,
+      "sha256": "26aa0376e871fa0a0baad2aad7b9e15ebf40f5885db2fa35d6bb1a8deb6f1a57"
+    },
+    {
+      "path": "geometry/patches/common_1.step",
+      "role": "authoritative_geometry",
+      "required": false,
+      "sha256": "14f2adf5944fb8ebb422bdbb47fdc3eef8bfbe3300a329bc87fbea9d656b9b29"
+    },
+    {
+      "path": "kernel_brep/side_1_remaining_1.brep",
+      "role": "current_kernel_brep",
+      "required": false,
+      "sha256": "22c3d8da93a88e7310344ea8db3f75712fedd1dae63f426043af041694bd1481"
+    },
+    {
+      "path": "geometry/patches/side_1_remaining_1.step",
+      "role": "authoritative_geometry",
+      "required": false,
+      "sha256": "56e3e7e565d8e20370e009c5a70258fe2a5698a7af22c0953c2ed9784f773dd1"
+    },
+    {
+      "path": "display/catalog.json",
+      "role": "display_cache",
+      "required": false,
+      "sha256": "1db6cf4aa9a430ecdb8b3360f79a37a0cae3e9c454a1baced3a52959d27d917e"
+    }
+  ],
+  "tiers": {
+    "core": "STEP + computation/validation JSON + manifest",
+    "optional": "current-kernel BREP, FCStd human review, rebuildable display cache"
+  },
+  "created_utc": "2026-09-12T11:23:52.519839+00:00",
+  "scene_sources": [
+    {
+      "asset": "geometry/input.step",
+      "label": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61",
+      "kind": "MODEL",
+      "scene_role": "input",
+      "split_objects": true
+    },
+    {
+      "asset": "geometry/fused.step",
+      "label": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+      "kind": "MODEL",
+      "scene_role": "fused_result",
+      "visible": false
+    },
+    {
+      "asset": "kernel_brep/common_1.brep",
+      "label": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / common_1",
+      "kind": "PATCH",
+      "scene_role": "common_interface",
+      "visible": true
+    },
+    {
+      "asset": "kernel_brep/side_1_remaining_1.brep",
+      "label": "\u5269\u4f59\u5206\u533a / side_1_remaining_1",
+      "kind": "PATCH",
+      "scene_role": "remaining",
+      "visible": false
+    }
+  ]
+}

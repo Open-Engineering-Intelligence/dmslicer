@@ -1,0 +1,112 @@
+{
+  "goal_id": "GEOMETRY-CASE-VIEWER-01",
+  "run_id": "catalog-002",
+  "branch": "codex/geometry-case-viewer-01",
+  "implementation_commit": "3e7ff8a68b8388cdced59def9e52499a4a7fea95",
+  "policy_commit": null,
+  "parent_baseline": "890a341957bdf07e77cdaddfd409e976ea6f96b7",
+  "evidence_identity": "GEOMETRY-CASE-VIEWER-01+3e7ff8a68b8388cdced59def9e52499a4a7fea95+catalog-002",
+  "scope": [
+    "Manual import of one portable .dmslicer package",
+    "Read saved computation and display data; no CAD execution in viewer",
+    "C02, U05 and saved CASE01 package adapters"
+  ],
+  "acceptance_criteria": [
+    "Same HTTP importer accepts all three real packages",
+    "Inputs/common/remaining/fused roles remain separate",
+    "Missing cache enters reduced read-only results mode",
+    "Explicit identity and source evidence status",
+    "Local tests and artifact checks pass; human review remains pending"
+  ],
+  "stop_conditions": [
+    "No new Boolean or contact computation",
+    "No U02 duplication; 08F owns that sample",
+    "No push, merge, release or frozen research edits"
+  ],
+  "inputs": [
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-002/CASE01.dmslicer",
+      "input_sha256": "33aa70755b9370abcaa4884bddefb538fb071e47358f4da0cf1c9f91945cf280",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    },
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-004/C02.dmslicer",
+      "input_sha256": "f72409564574340b0bb73e3b3b7a29ec8e18ba280fae7b21aaf4f99cf7e8f4df",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    },
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-004/U05.dmslicer",
+      "input_sha256": "a24de08f4583317c7aa09b7bc9f78d0bfcbcab7f18269ba0d3f730ab592e237a",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    }
+  ],
+  "versions": {
+    "freecad": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+    "occt": "7.8.1",
+    "python": "3.12.0",
+    "pytest": "pytest 8.4.2",
+    "node": "v24.18.0"
+  },
+  "commands": [
+    {
+      "command": "py -3.12 -m pytest tests/test_geometry_case_viewer.py tests/test_result_package.py tests/test_geometry_import.py tests/test_case01_result_package.py tests/test_result_labels.py -q --junitxml=evidence/GEOMETRY-CASE-VIEWER-01/catalog-001/labeled-tests.junit.xml",
+      "exit_code": 0,
+      "result": "19 PASS"
+    },
+    {
+      "command": "py -3.12 scripts/verify_geometry_packages.py --url http://127.0.0.1:56810 --output evidence/GEOMETRY-CASE-VIEWER-01/final-inspection-003 evidence/GEOMETRY-CASE-VIEWER-01/c02-package-004/C02.dmslicer evidence/GEOMETRY-CASE-VIEWER-01/u05-package-004/U05.dmslicer evidence/GEOMETRY-CASE-VIEWER-01/case01-package-002/CASE01.dmslicer",
+      "exit_code": 0,
+      "result": "Three real package imports plus cache-free core import PASS"
+    }
+  ],
+  "execution_timestamp": "2026-09-12T11:39:26.374567+00:00",
+  "tolerances": [
+    {
+      "role": "display_linear_deflection",
+      "value": 0.25,
+      "unit": "mm"
+    },
+    {
+      "role": "display_boundary_deflection",
+      "value": 0.25,
+      "unit": "mm"
+    }
+  ],
+  "JUnit": "catalog-001/labeled-tests.junit.xml",
+  "validator": "final-inspection-003/checks.json",
+  "STEP_BREP_FCStd": "See each package manifest; FCStd omitted by default",
+  "VIEW_INDEX": "VIEW_INDEX.md",
+  "HUMAN_REVIEW": "HUMAN_REVIEW.md",
+  "reviewer_finding": "Label test confirms original entity refs and mesh arrays retained; actual HTTP responses contain Chinese role labels. Full user visual acceptance pending.",
+  "failure_commit": null,
+  "fix_commit": "3e7ff8a68b8388cdced59def9e52499a4a7fea95",
+  "case01_fix_commit": "86c41b646da95439985b667fab83d99b03ce61c3",
+  "known_mismatch_or_failure_mode": [
+    "See FAILURES.md",
+    "Canvas painter transparency sorting can misorder intersecting surfaces",
+    "Boundary polylines are display samples, not loop topology certification",
+    "Source report status is preserved, never promoted to this-run scientific validation"
+  ],
+  "actual_geometry_validation_criteria": {
+    "status": "NOT_PERFORMED_BY_PACKAGING_OR_VIEWER",
+    "reason": "No geometry equivalence or Boolean correctness claim; saved source validation JSON remains source evidence"
+  },
+  "results": {
+    "pytest": "PASS",
+    "byte_integrity": "PASS",
+    "scientific_experiment": "NOT_RERUN",
+    "human_visual": "PENDING"
+  },
+  "evidence_confidence": "L",
+  "recoverable_copies": {
+    "verified_independent_copies": 1,
+    "fully_preserved": false,
+    "note": "Stable local paths only; generated package/HTML/JUnit kept outside Git. No remote action authorized."
+  },
+  "parent_run": "catalog-001",
+  "user_feedback": {
+    "confidence": "CHAT",
+    "source_task": "01a094ec-b868-7701-aeb1-4c206d02af89",
+    "observation": "User reportedly imported an earlier cylindrical package, saw outer/inner cylinders and B-rep interface, and used transparency; requested clearer labels. Latest label revision not yet manually accepted."
+  }
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer",
+    "http_import": "PASS",
+    "entity_count": 6,
+    "entities": [
+      {
+        "name": "\u6821\u6b63\u51e0\u4f55 / Export07A / object 1",
+        "role": "corrected",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u6821\u6b63\u51e0\u4f55 / Export07A / object 2",
+        "role": "corrected",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / Export07A / object 1",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / Export07A / object 2",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+        "role": "fused_result",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1508
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / actual_common",
+        "role": "common_interface",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      }
+    ],
+    "geometry_validation": "NOT_PERFORMED",
+    "human_visual_review": "PENDING"
+  },
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/final-inspection-001/C02-portable-core.dmslicer",
+    "http_import": "PASS",
+    "display_state": "NO_CACHE_REDUCED_MODE",
+    "freecad_artifacts": "ABSENT"
+  },
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer",
+    "http_import": "PASS",
+    "entity_count": 5,
+    "entities": [
+      {
+        "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / CylinderFit04BGenerator / object 1",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / CylinderFit04BGenerator / object 2",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+        "role": "fused_result",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1004
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / common_1",
+        "role": "common_interface",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      },
+      {
+        "name": "\u5269\u4f59\u5206\u533a / side_1_remaining_1",
+        "role": "remaining",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      }
+    ],
+    "geometry_validation": "NOT_PERFORMED",
+    "human_visual_review": "PENDING"
+  }
+]

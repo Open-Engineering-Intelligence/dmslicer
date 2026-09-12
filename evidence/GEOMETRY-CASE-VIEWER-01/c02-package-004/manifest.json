@@ -1,0 +1,117 @@
+{
+  "schema": "dmslicer.result-package.v1",
+  "case": {
+    "id": "C02",
+    "label": "C02 \u5706\u67f1\u6821\u6b63\u7ed3\u679c"
+  },
+  "provenance": {
+    "source_run_id": "c02-current-rerun-20260912-001",
+    "source_goal_id": "DM-Slicer\uff5c08C \u5706\u67f1\u63a5\u53e3\u6848\u4f8b\u77e9\u9635",
+    "source_implementation_commit": null,
+    "source_evidence_state": "CURRENT_RERUN_PASS",
+    "evidence_confidence": "L",
+    "geometry_validation": "NOT_RERUN_BY_PACKAGING",
+    "semantic_analysis": "NO_MATERIAL_REGION_BINDING \u2014 \u672c\u5305\u672a\u58f0\u660e\u6750\u6599\u533a\u57df\u7ed1\u5b9a",
+    "identity_status": "RUN_LOCAL_DIAGNOSTIC",
+    "human_review": "PENDING",
+    "versions": {
+      "freecad": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+      "occt": "7.8.1"
+    },
+    "display_linear_deflection_mm": 0.25,
+    "display_boundary_deflection_mm": 0.25,
+    "source_manifest": "results/manifest.json"
+  },
+  "display": "display/catalog.json",
+  "assets": [
+    {
+      "path": "geometry/input.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "cc3b0ce6189a0bd7cd9e7ed5b591deafdd97c22499fd0a8dc19d438fd5e4d15d"
+    },
+    {
+      "path": "results/operation.json",
+      "role": "operation",
+      "required": true,
+      "sha256": "427625b2f4d9bdb17fd95154c5ac2ff087ffb60e92abe161abe158332c374899"
+    },
+    {
+      "path": "results/validation.json",
+      "role": "validation",
+      "required": true,
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0"
+    },
+    {
+      "path": "results/manifest.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "dc3b6ad0ade6fed6647313c589c4bae8f3805a141c8ed05487c345ebd32631e0"
+    },
+    {
+      "path": "geometry/corrected_assembly.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "47fae8a64dd329bfc5b831cb1480872fcc78b6c302bd85396a007587af997179"
+    },
+    {
+      "path": "geometry/fused.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "8255546a9a0b20b374a3c7c3cfa4b8ccf587093927bf36bc160c1712b0764c35"
+    },
+    {
+      "path": "kernel_brep/actual_common.brep",
+      "role": "current_kernel_brep",
+      "required": false,
+      "sha256": "a65be0034b38879e1c92da4b10d1ccd63bd175cdaa36be73bb33daf28189f1ba"
+    },
+    {
+      "path": "display/catalog.json",
+      "role": "display_cache",
+      "required": false,
+      "sha256": "f6ac4875fa0f7c9be410057f523f45e911e3847d8bea45de759346c6d70c6737"
+    }
+  ],
+  "tiers": {
+    "core": "STEP + computation/validation JSON + manifest",
+    "optional": "current-kernel BREP, FCStd human review, rebuildable display cache"
+  },
+  "created_utc": "2026-09-12T11:25:43.604447+00:00",
+  "scene_sources": [
+    {
+      "asset": "geometry/corrected_assembly.step",
+      "label": "\u6821\u6b63\u51e0\u4f55",
+      "kind": "MODEL",
+      "scene_role": "corrected",
+      "split_objects": true,
+      "visible": false
+    },
+    {
+      "asset": "geometry/input.step",
+      "label": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61",
+      "kind": "MODEL",
+      "scene_role": "input",
+      "split_objects": true
+    },
+    {
+      "asset": "geometry/fused.step",
+      "label": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+      "kind": "MODEL",
+      "scene_role": "fused_result",
+      "visible": false
+    },
+    {
+      "asset": "kernel_brep/actual_common.brep",
+      "label": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / actual_common",
+      "kind": "PATCH",
+      "scene_role": "common_interface",
+      "visible": true
+    }
+  ],
+  "presentation_revision": {
+    "scope": "LABELS_ONLY",
+    "geometry_change": "NONE",
+    "source_package": "C02.dmslicer"
+  }
+}

@@ -1,0 +1,131 @@
+[
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-004/C02.dmslicer",
+    "http_import": "PASS",
+    "entity_count": 6,
+    "entities": [
+      {
+        "name": "\u6821\u6b63\u540e\u8f93\u5165 1\uff1a\u5916\u5706\u67f1\u58f3",
+        "role": "corrected",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u6821\u6b63\u540e\u8f93\u5165 2\uff1a\u5185\u5706\u67f1\u82af",
+        "role": "corrected",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u8f93\u5165 1\uff1a\u5916\u5706\u67f1\u58f3",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u8f93\u5165 2\uff1a\u5185\u5706\u67f1\u82af",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u878d\u5408\u7ed3\u679c",
+        "role": "fused_result",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1508
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01",
+        "role": "common_interface",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      }
+    ],
+    "geometry_validation": "NOT_PERFORMED",
+    "human_visual_review": "PENDING"
+  },
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/final-inspection-003/C02-portable-core.dmslicer",
+    "http_import": "PASS",
+    "display_state": "NO_CACHE_REDUCED_MODE",
+    "freecad_artifacts": "ABSENT"
+  },
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-004/U05.dmslicer",
+    "http_import": "PASS",
+    "entity_count": 5,
+    "entities": [
+      {
+        "name": "\u8f93\u5165 1\uff1a\u5916\u5706\u67f1\u58f3",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1008
+      },
+      {
+        "name": "\u8f93\u5165 2\uff1a\u5185\u5706\u67f1\u82af",
+        "role": "input",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 500
+      },
+      {
+        "name": "\u878d\u5408\u7ed3\u679c",
+        "role": "fused_result",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 1004
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01",
+        "role": "common_interface",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      },
+      {
+        "name": "\u5269\u4f59\u5206\u533a\uff1a\u5916\u5706\u67f1\u58f3",
+        "role": "remaining",
+        "identity": "RUN_LOCAL_DIAGNOSTIC",
+        "triangles": 252
+      }
+    ],
+    "geometry_validation": "NOT_PERFORMED",
+    "human_visual_review": "PENDING"
+  },
+  {
+    "package": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-002/CASE01.dmslicer",
+    "http_import": "PASS",
+    "entity_count": 5,
+    "entities": [
+      {
+        "name": "\u8f93\u5165 A\uff1a\u65b9\u5757 A",
+        "role": "input",
+        "identity": "STABLE_REFERENCE",
+        "triangles": 12
+      },
+      {
+        "name": "\u8f93\u5165 G\uff1a\u65b9\u5757 G",
+        "role": "input",
+        "identity": "STABLE_REFERENCE",
+        "triangles": 12
+      },
+      {
+        "name": "\u8f93\u5165 B\uff1a\u65b9\u5757 B",
+        "role": "input",
+        "identity": "STABLE_REFERENCE",
+        "triangles": 12
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01\uff1aA\u2013G",
+        "role": "common_interface",
+        "identity": "STABLE_REFERENCE",
+        "triangles": 2
+      },
+      {
+        "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01\uff1aG\u2013B",
+        "role": "common_interface",
+        "identity": "STABLE_REFERENCE",
+        "triangles": 2
+      }
+    ],
+    "geometry_validation": "NOT_PERFORMED",
+    "human_visual_review": "PENDING"
+  }
+]

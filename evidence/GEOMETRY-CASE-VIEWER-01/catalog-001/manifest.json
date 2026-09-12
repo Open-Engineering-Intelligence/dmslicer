@@ -1,0 +1,106 @@
+{
+  "goal_id": "GEOMETRY-CASE-VIEWER-01",
+  "run_id": "catalog-001",
+  "branch": "codex/geometry-case-viewer-01",
+  "implementation_commit": "86c41b646da95439985b667fab83d99b03ce61c3",
+  "policy_commit": null,
+  "parent_baseline": "890a341957bdf07e77cdaddfd409e976ea6f96b7",
+  "evidence_identity": "GEOMETRY-CASE-VIEWER-01+86c41b646da95439985b667fab83d99b03ce61c3+catalog-001",
+  "scope": [
+    "Manual import of one portable .dmslicer package",
+    "Read saved computation and display data; no CAD execution in viewer",
+    "C02, U05 and saved CASE01 package adapters"
+  ],
+  "acceptance_criteria": [
+    "Same HTTP importer accepts all three real packages",
+    "Inputs/common/remaining/fused roles remain separate",
+    "Missing cache enters reduced read-only results mode",
+    "Explicit identity and source evidence status",
+    "Local tests and artifact checks pass; human review remains pending"
+  ],
+  "stop_conditions": [
+    "No new Boolean or contact computation",
+    "No U02 duplication; 08F owns that sample",
+    "No push, merge, release or frozen research edits"
+  ],
+  "inputs": [
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer",
+      "input_sha256": "8d0815362450360ad4145ce884137f13266d5b747660376e81e0d9a06c67ff49",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    },
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer",
+      "input_sha256": "4bd93b7d5a2aede944ed857fce748949d1e183d1a1970e2f5b543485eb104997",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    },
+    {
+      "input_fixture": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer",
+      "input_sha256": "1e27c288baf3d1635592385990815b850de34cf2770b36f1e1931cc931c3c5b8",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    }
+  ],
+  "versions": {
+    "freecad": "1.1.1.20260414 (Git shallow).Unknown.2026/04/14 22:09:59.(HEAD detached at 0108fd4b4).0108fd4b4850cc46e625b60e53cea7a7bbe69f8d",
+    "occt": "7.8.1",
+    "python": "3.12.0",
+    "pytest": "pytest 8.4.2",
+    "node": "v24.18.0"
+  },
+  "commands": [
+    {
+      "command": "py -3.12 -m pytest tests/test_geometry_case_viewer.py tests/test_result_package.py tests/test_geometry_import.py tests/test_case01_result_package.py -q --junitxml=evidence/GEOMETRY-CASE-VIEWER-01/catalog-001/three-case-tests.junit.xml",
+      "exit_code": 0,
+      "result": "18 PASS"
+    },
+    {
+      "command": "py -3.12 scripts/verify_geometry_packages.py --url http://127.0.0.1:56810 --output evidence/GEOMETRY-CASE-VIEWER-01/final-inspection-002 <C02.dmslicer> <U05.dmslicer> <CASE01.dmslicer>",
+      "exit_code": 0,
+      "result": "Three real package imports plus cache-free core import PASS"
+    }
+  ],
+  "execution_timestamp": "2026-09-12T11:35:20.612226+00:00",
+  "tolerances": [
+    {
+      "role": "display_linear_deflection",
+      "value": 0.25,
+      "unit": "mm"
+    },
+    {
+      "role": "display_boundary_deflection",
+      "value": 0.25,
+      "unit": "mm"
+    }
+  ],
+  "JUnit": "catalog-001/three-case-tests.junit.xml",
+  "validator": "final-inspection-002/checks.json",
+  "STEP_BREP_FCStd": "See each package manifest; FCStd omitted by default",
+  "VIEW_INDEX": "VIEW_INDEX.md",
+  "HUMAN_REVIEW": "HUMAN_REVIEW.md",
+  "reviewer_finding": "Automated artifact review verified distinct inputs and explicit absent CASE01 fusion. User visual review pending.",
+  "failure_commit": null,
+  "fix_commit": "1853979",
+  "case01_fix_commit": "86c41b646da95439985b667fab83d99b03ce61c3",
+  "known_mismatch_or_failure_mode": [
+    "See FAILURES.md",
+    "Canvas painter transparency sorting can misorder intersecting surfaces",
+    "Boundary polylines are display samples, not loop topology certification",
+    "Source report status is preserved, never promoted to this-run scientific validation"
+  ],
+  "actual_geometry_validation_criteria": {
+    "status": "NOT_PERFORMED_BY_PACKAGING_OR_VIEWER",
+    "reason": "No geometry equivalence or Boolean correctness claim; saved source validation JSON remains source evidence"
+  },
+  "results": {
+    "pytest": "PASS",
+    "byte_integrity": "PASS",
+    "scientific_experiment": "NOT_RERUN",
+    "human_visual": "PENDING"
+  },
+  "evidence_confidence": "L",
+  "recoverable_copies": {
+    "verified_independent_copies": 1,
+    "fully_preserved": false,
+    "note": "Stable local paths only; generated package/HTML/JUnit kept outside Git. No remote action authorized."
+  }
+}

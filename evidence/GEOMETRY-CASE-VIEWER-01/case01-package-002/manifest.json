@@ -1,0 +1,105 @@
+{
+  "schema": "dmslicer.result-package.v1",
+  "case": {
+    "id": "CASE01",
+    "label": "CASE01 \u00b7 A\u2013G\u2013B \u4e09\u5bf9\u8c61 / \u4e24\u516c\u5171\u63a5\u53e3"
+  },
+  "provenance": {
+    "confidence": "L",
+    "manifest": "results/display_manifest.json",
+    "geometry_validation": "SAVED_SOURCE_REPORT_ONLY_NOT_RERUN",
+    "human_review": "PENDING",
+    "semantic_analysis": "A/G/B \u4e3a\u5df2\u4fdd\u5b58\u6765\u6e90\u6807\u7b7e\uff1b\u672c\u6b21\u6253\u5305\u4e0d\u6fc0\u6d3b\u6750\u6599\u8bed\u4e49",
+    "role_states": {
+      "fused_result": "NOT_PRODUCED_IN_SUPPLIED_EVIDENCE",
+      "remaining": "NOT_SUPPLIED"
+    },
+    "source_run_id": "case01-brep-display-20260912-006"
+  },
+  "display": "display/catalog.json",
+  "assets": [
+    {
+      "path": "geometry/input.step",
+      "role": "authoritative_geometry",
+      "required": true,
+      "sha256": "089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae"
+    },
+    {
+      "path": "results/geometry_snapshot.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "ba26654baa748b975bad33525b0bdbb2353484e8e4d5d7a9cd44b17829162800"
+    },
+    {
+      "path": "results/display_manifest.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "62b29cd4a101e7fc105d8786cd3f6f16dcded7cc8002789654a575e0fdb4d707"
+    },
+    {
+      "path": "results/analysis/manifest.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "1150a0bfe0535a5088d0ddf81c88daa511292e92e02d4e5dc4e5e9e7950458f9"
+    },
+    {
+      "path": "results/analysis/regions.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "ff1833d2df7f6b75ef825cd3d6b4d259a5e5f21120e394eff0c527c7151b6570"
+    },
+    {
+      "path": "results/analysis/relations.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "5f3b64a0241bc2a49de21bd240b52fb4ae1918fdad147aabd2f5dd14c772e994"
+    },
+    {
+      "path": "results/analysis/interface_patches.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "14627f66233cdc516f3739a8b76bca0d88de40554fd7fd504b540bb572cde453"
+    },
+    {
+      "path": "results/analysis/interface_source_boundaries.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "11a6249b88297421b71c1785ba380e7506b8d5e85015adebb971fdfed2026c94"
+    },
+    {
+      "path": "results/analysis/geometry.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "9a27ddd9f4a87b523e928ff84e4f0b705b6d4b2a88e3326fd71f97f009a30b17"
+    },
+    {
+      "path": "results/analysis/provenance.json",
+      "role": "source_manifest",
+      "required": true,
+      "sha256": "22bb8ec50177a4f4a3a6fe72942e917ee382c570eae08c1c1823607e03062d93"
+    },
+    {
+      "path": "results/validation.json",
+      "role": "validation",
+      "required": true,
+      "sha256": "9dde992f20f6201626a680b123034b4ec66a6062caa7106f70a9335a82aeae6e"
+    },
+    {
+      "path": "results/operation.json",
+      "role": "operation",
+      "required": true,
+      "sha256": "ce33522b1b00d34b5f72175e09d1206464cab0c51ac770524b81d7742d509bcb"
+    },
+    {
+      "path": "display/catalog.json",
+      "role": "display_cache",
+      "required": false,
+      "sha256": "43e0dfa6b2e11a605be8f0b33de5cdcc2ac1987be452708e7a9d2d95913d0a54"
+    }
+  ],
+  "presentation_revision": {
+    "scope": "LABELS_ONLY",
+    "geometry_change": "NONE",
+    "source_package": "CASE01.dmslicer"
+  }
+}

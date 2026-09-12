@@ -1,0 +1,62 @@
+{
+  "C02.dmslicer": [
+    {
+      "name": "\u6821\u6b63\u51e0\u4f55 / Export07A",
+      "role": "corrected",
+      "visible": false,
+      "triangles": 1508,
+      "boundary_polylines": 15
+    },
+    {
+      "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / Export07A",
+      "role": "input",
+      "visible": true,
+      "triangles": 1508,
+      "boundary_polylines": 15
+    },
+    {
+      "name": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+      "role": "fused_result",
+      "visible": false,
+      "triangles": 1508,
+      "boundary_polylines": 15
+    },
+    {
+      "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / actual_common",
+      "role": "common_interface",
+      "visible": true,
+      "triangles": 252,
+      "boundary_polylines": 3
+    }
+  ],
+  "U05.dmslicer": [
+    {
+      "name": "\u5bfc\u5165\u51e0\u4f55\u5bf9\u8c61 / CylinderFit04BGenerator",
+      "role": "input",
+      "visible": true,
+      "triangles": 1508,
+      "boundary_polylines": 15
+    },
+    {
+      "name": "\u878d\u5408\u7ed3\u679c / Saved fused result",
+      "role": "fused_result",
+      "visible": false,
+      "triangles": 1004,
+      "boundary_polylines": 10
+    },
+    {
+      "name": "\u516c\u5171\u63a5\u53e3\u8865\u4e01 / common_1",
+      "role": "common_interface",
+      "visible": true,
+      "triangles": 252,
+      "boundary_polylines": 3
+    },
+    {
+      "name": "\u5269\u4f59\u5206\u533a / side_1_remaining_1",
+      "role": "remaining",
+      "visible": false,
+      "triangles": 252,
+      "boundary_polylines": 3
+    }
+  ]
+}

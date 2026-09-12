@@ -1,0 +1,5 @@
+# Local artifact custody: never bulk-publish packages or generated display output.
+*.dmslicer
+*.html
+*.xml
+**/display-extraction/
