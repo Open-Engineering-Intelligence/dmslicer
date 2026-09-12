@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a material-library and object semantic-assignment workflow to the 56810 DM-Slicer workbench while retaining its existing `.dmslicer` geometry viewer.
+**Goal:** Build and validate the 09B material-library and object semantic-assignment prototype while keeping the 56810 DM-Slicer workbench unchanged.
 
-**Architecture:** Reuse `workspace_annotations.js` as the domain model. Refactor the 09B controller into an explicit object-selection table and two dialogs, then mount that controller as the peer Material and semantics page in the 56810 shell. The geometry page remains the sole owner of package import, canvas, camera, picking, and geometry evidence.
+**Architecture:** Reuse `workspace_annotations.js` as the domain model. Refactor the 09B controller into an explicit object-selection table and two dialogs inside its own review surface. Treat 56810 only as a protected interaction reference; integration into 56810 is outside this plan.
 
 **Tech Stack:** Static HTML/CSS/JavaScript, CommonJS-compatible domain module, Python package server, Node test runner, browser acceptance script.
 
@@ -16,6 +16,7 @@
 - Do not copy or depend on PyVista or the reference application's renderer.
 - STEP/B-rep remains geometry authority and display mesh remains display-only.
 - Preserve the protected 56810 baseline branch `codex/09a-56810-stable-baseline`.
+- Do not modify the 56810 source, service, or 09A branch in this plan.
 - Do not modify `docs/research_v2/`, push, merge, release, or publish.
 - Only stable input object references may receive persistent annotation.
 
@@ -192,64 +193,65 @@ git add src/dmslicer/material_workspace.js src/dmslicer/geometry_import_viewer.h
 git commit -m "feat(09b): move material editing into dialog"
 ```
 
-### Task 4: Integrate the peer page into the protected 56810 workbench
+### Task 4: Verify the standalone 09B review surface
 
 **Files:**
-- Modify: `src/dmslicer/geometry_import_viewer.html`
-- Add or modify: `src/dmslicer/material_workspace.js`
-- Add or modify: `src/dmslicer/workspace_annotations.js`
-- Modify: `tests/test_unified_workbench.py`
-- Modify: `tests/geometry_view_ui_browser.cjs`
 - Modify: `tests/material_workspace_browser.cjs`
+- Modify: `docs/implementation/workbench_material_semantics.md`
+- Modify: `evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/VIEW_INDEX.md`
 
 **Interfaces:**
-- Consumes: active `current` case, `entities`, `selected`, `WorkspaceAnnotations`, and the Task 2/3 UI controller.
-- Produces: peer pages `geometry` and `materials`, a shared dirty-state guard, and a single 56810 user entry point.
+- Consumes: the Task 2/3 09B controller and `.dmslicer` sample cases with stable object references.
+- Produces: a reviewable 09B preview and evidence showing that 56810 was not modified.
 
-- [ ] **Step 1: Add failing integration checks**
+- [ ] **Step 1: Add failing review-surface checks**
 
-```python
-def test_material_page_reuses_geometry_context(viewer_html):
-    assert 'data-page="geometry"' in viewer_html
-    assert 'data-page="materials"' in viewer_html
-    assert viewer_html.count('id="scene"') == 1
-    assert '.AMF' not in viewer_html
-    assert 'PyVista' not in viewer_html
+```js
+assert.equal(await page.locator('canvas#scene').count(),0);
+assert.equal(await page.getByText(/AMF|PyVista/).count(),0);
+assert(await page.getByRole('button',{name:'编辑材料与语义'}).isVisible());
+assert(await page.getByRole('button',{name:'添加材料'}).isVisible());
+assert.equal(await page.getByLabel('Process').count(),0);
 ```
 
-Browser checks must open a sample, select a geometry object, switch pages, verify the same case/object appears in the object table, switch back, and verify camera/visibility state is unchanged.
+The browser check opens a sample, selects one and multiple stable input objects,
+uses both dialogs, and verifies that invalid drafts do not mutate saved state.
+It must also verify that Edit is non-destructive, completed objects remain
+editable, reset preserves the active case, the material swatch opens a color
+control, and composition state never inherits a previous property value.
 
-- [ ] **Step 2: Run integration checks and confirm RED**
+- [ ] **Step 2: Run the review checks and confirm RED**
 
-Run: `py -3.12 -m pytest tests/test_unified_workbench.py -q`
+Run: `node tests/material_workspace_browser.cjs`
 
-Run: `node tests/geometry_view_ui_browser.cjs`
+- [ ] **Step 3: Complete the 09B review layout**
 
-- [ ] **Step 3: Add the shared shell and peer-page lifecycle**
+Use the reference application's useful hierarchy—object selection, an explicit
+edit action, and a separate material library—without reproducing its code or
+renderer. Keep the object table and material library independently usable.
 
-Add top-level page controls for Geometry and Material and semantics. `openCase(c)` prepares annotation context once. Page switching only changes visibility/focus and never calls `openCase`, `fit`, or package fetch. Keep one `canvas#scene` in the geometry page.
+- [ ] **Step 4: Prove the 56810 baseline remains untouched**
 
-- [ ] **Step 4: Apply material preview colors as display-only inputs**
-
-Where a geometry entity has an annotation, call `WorkspaceAnnotations.color(annotation, entity_ref)` for preview fill. Do not write color into package data, geometry evidence, or persistent geometry identity.
+Compare the 56810 viewer entry point with
+`codex/09a-56810-stable-baseline` and record the result. Any difference created
+by this Goal is a failure and must be reverted without moving the baseline.
 
 - [ ] **Step 5: Run the full focused regression**
 
 Run: `node --test tests/workspace_annotations.test.cjs`
 
-Run: `py -3.12 -m pytest tests/test_geometry_case_viewer.py tests/test_result_package.py tests/test_geometry_import.py tests/test_case01_result_package.py tests/test_result_labels.py tests/test_unified_workbench.py -q`
-
-Run: `node tests/geometry_view_ui_browser.cjs`
-
 Run: `node tests/material_workspace_browser.cjs`
 
-Expected: all checks PASS; browser inspection confirms one geometry canvas and two peer pages.
+Expected: all 09B checks PASS; browser inspection confirms the two dialogs and
+no copied geometry viewer.
 
 - [ ] **Step 6: Record evidence and commit**
 
-Update the 09A/09B review index with commands, exit codes, screenshots, failure and fix commits, and the protected baseline. Keep geometry validation results separate from UI and browser results.
+Update the 09B review index with commands, exit codes, screenshots, failure and
+fix commits, and the protected 56810 comparison. Keep geometry validation
+results separate from UI and browser results.
 
 ```powershell
 git add src/dmslicer tests docs/implementation evidence
-git commit -m "feat(workbench): integrate material semantics workflow"
+git commit -m "feat(09b): complete material semantics review surface"
 ```

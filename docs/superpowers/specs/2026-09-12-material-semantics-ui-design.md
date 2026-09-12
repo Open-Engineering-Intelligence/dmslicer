@@ -3,33 +3,44 @@
 ## Purpose
 
 Bring the useful interaction structure of the local slicer reference into the
-DM-Slicer workbench without copying its AMF import path, PyVista renderer, or
-implementation. The workbench continues to use `.dmslicer` result packages
-and the proven 56810 geometry viewer.
+09B material-and-semantics prototype without copying its AMF import path,
+PyVista renderer, or implementation. The prototype continues to use
+`.dmslicer` result packages. The proven 56810 geometry viewer is a protected
+reference and remains unchanged.
 
 ## Boundaries
 
-- The geometry page remains the only page with a 3D canvas.
+- The 56810 service, page, and protected baseline are not modified by this Goal.
 - STEP/B-rep remains geometry authority; displayed mesh remains display-only.
 - Material and semantic choices are explicit workspace annotations. They do
   not create geometry relations or activate a volumetric field.
 - The reference application's code, AMF assumptions, and rendering stack are
   outside scope.
 
-## Pages and shared context
+## Prototype pages and context
 
-The workbench has two peer pages under one shared shell:
+The 09B prototype provides the following material workflow:
 
-1. **Geometry** keeps the current 56810 import, scene, camera, visibility,
-   hit-selection, and evidence experience.
-2. **Material and semantics** is a full page without a geometry canvas. It
-   receives the active case id and stable object references from the shared
-   workbench context, then reads and writes only annotation state.
+1. **Object assignments** lists stable input objects and opens the material and
+   semantics dialog for an explicit selection.
+2. **Material library** lists definitions and opens the material-property
+   dialog for add or edit.
 
-Changing page does not reload the result package, discard the selected object,
-or silently drop an unsaved annotation draft.
+The prototype may borrow spacing, hierarchy, and interaction ideas from 56810,
+but it must not embed, copy wholesale, or replace 56810. A later integration
+decision requires a separate user-reviewed Goal after this prototype is shown.
 
 ## Material library
+
+The library is the stable list of material definitions. It exposes an
+**Add material** action. Add and Edit open the same dialog; Edit starts from a
+copy and never removes the original record before a validated replacement is
+accepted. Closing or cancelling the dialog leaves the library unchanged.
+
+Color is a first-class material field with a visible, clickable swatch in both
+the library row and the dialog. It is not represented as a generic property.
+Composition uses its own structured editor and state, so changing the selected
+property cannot reuse a prior color or numeric value as composition input.
 
 The library is a table of named material records. It has a primary **Add
 material** action. Add and edit open the same material-property dialog, with
@@ -82,12 +93,36 @@ override may be set in the dialog, but it must not change the material record.
 ## Verification
 
 - Existing 56810 geometry controls, rendering, camera, Fit, boundaries, and
-  evidence drawer keep their behavior.
+  evidence drawer remain untouched.
 - Material-library add/edit/restore are covered by unit and browser checks.
 - Object dialog is checked for Source, Gradient, Isolator, Unassigned, one
   object, and multiple objects.
-- Browser review confirms no second geometry canvas, no AMF import route, and
-  no copied PyVista component.
+- Browser review confirms 09B has no copied 56810 page, no AMF import route,
+  and no copied PyVista component.
 - Every saved annotation includes case id, stable object references, material
   library version, explicit semantic decision, and display override when one
   exists.
+
+## Reference interaction audit
+
+The local Streamlit reference was exercised before implementation. Its useful
+layout is the object list plus a contextual editor and a separate material
+library. The following behaviors are defects and must not be copied:
+
+- Edit removes a material from the library before the user saves the edited
+  copy.
+- Initialize can discard the loaded-model session when all objects are
+  selected; the 09B reset action changes annotation drafts only.
+- Completed objects disappear from the Process selector and cannot be edited
+  again without reinitialization; 09B keeps every stable object editable.
+- Apply and Save are not clearly separated; 09B uses Apply for an atomic draft
+  update and Save for persistence of the complete configuration.
+- Color is hidden inside the generic property selector and object ID swatches
+  are not interactive.
+- Switching from color to composition can leak the previous color value into
+  the composition editor.
+
+The 09B object list is therefore the selection and navigation surface. It does
+not add a second Process selector. Reset affects only selected assignments and
+must retain the active case and geometry state; Show remains a display-only
+operation.
