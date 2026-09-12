@@ -43,6 +43,10 @@ phase.
 
 - Use a fast model with low reasoning for renaming, routing, status checks,
   mechanical edits, and simple evidence indexing.
+- Default to Codex Spark for a narrowly scoped code-only fix, including syntax
+  repair, a localized regression, and its targeted tests. Escalate only when
+  the fix exposes an architecture decision, semantic-contract ambiguity,
+  geometry-truth conflict, or unresolved multi-file integration risk.
 - Use a balanced coding model with medium reasoning for ordinary UI work,
   bounded implementation, refactoring, and routine tests.
 - Use a reliable agentic coding model with medium or high reasoning for
