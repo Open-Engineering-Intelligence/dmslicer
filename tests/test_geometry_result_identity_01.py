@@ -65,6 +65,8 @@ def _prepared_repository(tmp_path: Path) -> tuple[Path, Path, Path]:
     patches.mkdir(parents=True)
     for name in ("common.brep", "side_1_remaining.brep", "side_2_remaining.brep"):
         (patches / name).write_text(name, encoding="utf-8")
+    for name in ("corrected_assembly.step", "fused.step"):
+        (operation_root / name).write_text(name, encoding="utf-8")
     return repository, source, operation_root
 
 
@@ -73,6 +75,10 @@ def test_p07_bindings_publish_existing_entity_ids_to_explicit_result_artifacts(t
     operation = _operation()
     repository, source_root, operation_root = _prepared_repository(tmp_path)
     snapshot = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    operation["artifacts"] = {
+        "corrected_assembly_step": str(operation_root / "corrected_assembly.step"),
+        "fused_step": str(operation_root / "fused.step"),
+    }
 
     validate_result_bindings(operation, publication_map, source_root, operation_root)
     published = publish_identity_bound_snapshot(
@@ -109,6 +115,11 @@ def test_p07_bindings_publish_existing_entity_ids_to_explicit_result_artifacts(t
     assert manifest["parent_baseline"] == "289567dbaaf3f89809dbbd82d71bf190a3aa7a13"
     assert manifest["command"] == "test publication"
     assert manifest["geometry_snapshot"] == "geometry_snapshot.json"
+    published_operation = json.loads((repository / "evidence" / "GEOMETRY-RESULT-IDENTITY-01" / "p07-test" / "operation.json").read_text(encoding="utf-8"))
+    assert published_operation["artifacts"] == {
+        "corrected_assembly_step": "artifacts/corrected_assembly.step",
+        "fused_step": "artifacts/fused.step",
+    }
 
 
 def test_binding_validation_rejects_unknown_entity_duplicate_result_and_missing_brep(tmp_path: Path) -> None:

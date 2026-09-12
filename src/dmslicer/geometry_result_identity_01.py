@@ -97,6 +97,32 @@ def _snapshot_entity_ids(snapshot: Mapping[str, Any]) -> set[str]:
     return ids
 
 
+def _copy_operation_artifacts(operation: Mapping[str, Any], operation_root: Path, artifacts_dir: Path) -> dict[str, Any]:
+    published = deepcopy(dict(operation))
+    artifacts = published.get("artifacts")
+    if not isinstance(artifacts, dict):
+        return published
+    root = Path(operation_root).resolve()
+    for key in ("corrected_assembly_step", "fused_step"):
+        raw_path = artifacts.get(key)
+        if not isinstance(raw_path, str):
+            continue
+        source = Path(raw_path)
+        if not source.is_absolute():
+            source = root / _safe_relative(raw_path)
+        source = source.resolve()
+        try:
+            source.relative_to(root)
+        except ValueError as error:
+            raise ValueError(f"operation artifact escapes operation root: {key}") from error
+        if not source.is_file():
+            raise ValueError(f"missing operation artifact: {key}")
+        destination = artifacts_dir / source.name
+        shutil.copyfile(source, destination)
+        artifacts[key] = (Path("artifacts") / source.name).as_posix()
+    return published
+
+
 def publish_identity_bound_snapshot(
     snapshot: Mapping[str, Any],
     operation: Mapping[str, Any],
@@ -121,6 +147,7 @@ def publish_identity_bound_snapshot(
     repository_root = Path(repository_root)
     artifacts_dir = evidence_root / "artifacts"
     artifacts_dir.mkdir(parents=True, exist_ok=True)
+    published_operation = _copy_operation_artifacts(operation, operation_root, artifacts_dir)
     binding_by_entity = {row["entity_id"]: row["result_ref"] for row in entity_rows}
     output_artifacts: dict[str, str] = {}
     for result_ref, binding in result_rows.items():
@@ -160,7 +187,7 @@ def publish_identity_bound_snapshot(
         }
     )
     published["snapshot_id"] = snapshot_id(published)
-    write_json(evidence_root / "operation.json", dict(operation))
+    write_json(evidence_root / "operation.json", published_operation)
     write_json(
         evidence_root / "identity_bindings.json",
         {
