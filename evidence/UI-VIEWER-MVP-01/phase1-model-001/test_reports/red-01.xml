@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="44" skipped="0" tests="44" time="1.766" timestamp="2026-09-12T08:54:34.087749+08:00" hostname="DESKTOP-05SBA87"><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[planar_full-geometry-counts0]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[planar_partial-geometry-counts1]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[planar_multipatch-geometry-counts2]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[ambiguous_relation-negative-counts3]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[missing_semantic_binding-negative-counts4]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_valid_contract_entities_are_preserved[unsupported_family-negative-counts5]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:49: in test_valid_contract_entities_are_preserved
+    view = build(load(name, group))
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_disjoint_confirmation_and_semantic_roles_are_not_reinterpreted" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:60: in test_disjoint_confirmation_and_semantic_roles_are_not_reinterpreted
+    view = build(load("planar_full"))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_common_remaining_and_equal_area_components_stay_separate" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:73: in test_common_remaining_and_equal_area_components_stay_separate
+    partial = build(load("planar_partial"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_invalid_snapshot_retains_diagnostics_but_no_authoritative_entities" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:86: in test_invalid_snapshot_retains_diagnostics_but_no_authoritative_entities
+    view = build(load("unresolved_artifact", "negative"))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_explicit_invalid_optional_collection_is_not_treated_as_absent[value0-EMPTY]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:100: in test_explicit_invalid_optional_collection_is_not_treated_as_absent
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_explicit_invalid_optional_collection_is_not_treated_as_absent[value1-INVALID_TYPE]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:100: in test_explicit_invalid_optional_collection_is_not_treated_as_absent
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_snapshot_is_a_diagnostic_model[snapshot0]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:108: in test_malformed_snapshot_is_a_diagnostic_model
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_snapshot_is_a_diagnostic_model[None]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:108: in test_malformed_snapshot_is_a_diagnostic_model
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_snapshot_is_a_diagnostic_model[snapshot2]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:108: in test_malformed_snapshot_is_a_diagnostic_model
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_snapshot_is_a_diagnostic_model[not a snapshot]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:108: in test_malformed_snapshot_is_a_diagnostic_model
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_decided_overlay_copies_all_selection_facts_without_modifying_snapshot" time="0.010"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:118: in test_decided_overlay_copies_all_selection_facts_without_modifying_snapshot
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_non_decided_outcomes_never_produce_selection[ambiguous_relation-REJECTED-AMBIGUOUS_INTERFACE]" time="0.005"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:144: in test_non_decided_outcomes_never_produce_selection
+    view = build(snapshot, decide(snapshot, ROOT))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_non_decided_outcomes_never_produce_selection[missing_semantic_binding-REJECTED-MISSING_SEMANTIC_BINDING]" time="0.006"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:144: in test_non_decided_outcomes_never_produce_selection
+    view = build(snapshot, decide(snapshot, ROOT))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_non_decided_outcomes_never_produce_selection[unsupported_family-UNSUPPORTED-UNSUPPORTED_GEOMETRY_FAMILY]" time="0.006"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:144: in test_non_decided_outcomes_never_produce_selection
+    view = build(snapshot, decide(snapshot, ROOT))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_non_decided_outcomes_never_produce_selection[unresolved_artifact-FAILED-INVALID_SNAPSHOT]" time="0.004"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:144: in test_non_decided_outcomes_never_produce_selection
+    view = build(snapshot, decide(snapshot, ROOT))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_invalid_snapshot_failure_without_references_remains_a_valid_decision" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:153: in test_invalid_snapshot_failure_without_references_remains_a_valid_decision
+    view = build({}, decision)
+           ^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_multipatch_mock_mismatch_is_preserved_and_overlay_is_disabled" time="0.007"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:164: in test_multipatch_mock_mismatch_is_preserved_and_overlay_is_disabled
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_decision_does_not_damage_snapshot[decision0]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:176: in test_malformed_decision_does_not_damage_snapshot
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_decision_does_not_damage_snapshot[decision1]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:176: in test_malformed_decision_does_not_damage_snapshot
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_malformed_decision_does_not_damage_snapshot[bad]" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:176: in test_malformed_decision_does_not_damage_snapshot
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[input_snapshot_id-snapshot:v0.1:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff-SNAPSHOT_MISMATCH]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[selected_interface_id-interface:missing-UNRESOLVED_REFERENCE]" time="0.007"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[selected_patch_ids-value2-UNRESOLVED_REFERENCE]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[target_region_id-region:missing-UNRESOLVED_REFERENCE]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[provenance_reference-provenance:missing-UNRESOLVED_REFERENCE]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_approved_overlay_reference_checks_disable_only_overlay[expected_partition_refs-value5-UNRESOLVED_REFERENCE]" time="0.009"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:194: in test_approved_overlay_reference_checks_disable_only_overlay
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules[decision_id-decision:v0.1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:212: in test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules[local_frame_ref-frame:producer-local]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:212: in test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules[strategy_kind-CYLINDRICAL_INTERFACE_PARTITION]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:212: in test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules[partition_direction-value3]" time="0.008"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:212: in test_viewer_does_not_invent_identity_frame_strategy_or_direction_rules
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_model_preserves_untrusted_strings_as_data_and_never_contains_hrefs" time="0.001"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:224: in test_model_preserves_untrusted_strings_as_data_and_never_contains_hrefs
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_collection_reordering_is_deterministic_but_vectors_keep_their_order" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:242: in test_collection_reordering_is_deterministic_but_vectors_keep_their_order
+    first, second = build(snapshot), build(changed)
+                    ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_provenance_resolution_is_separate_from_snapshot_validity[docs/missing.txt-MISSING]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:260: in test_provenance_resolution_is_separate_from_snapshot_validity
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_provenance_resolution_is_separate_from_snapshot_validity[javascript:alert(1)-UNSAFE]" time="0.003"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:260: in test_provenance_resolution_is_separate_from_snapshot_validity
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_provenance_resolution_is_separate_from_snapshot_validity[docs/%2e%2e/secret-UNSAFE]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:260: in test_provenance_resolution_is_separate_from_snapshot_validity
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_provenance_resolution_is_separate_from_snapshot_validity[docs\\file.txt-UNSAFE]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:260: in test_provenance_resolution_is_separate_from_snapshot_validity
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views[../outside.txt]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:271: in test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views[C:/outside.txt]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:271: in test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase><testcase classname="tests.viewer.test_model" name="test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views[//server/share/file.txt]" time="0.002"><failure message="Failed: ViewerModel is not implemented">tests\viewer\test_model.py:29: in build
+    module = importlib.import_module("dmslicer.viewer.model")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1304: in _find_and_load_unlocked
+    ???
+&lt;frozen importlib._bootstrap&gt;:488: in _call_with_frames_removed
+    ???
+&lt;frozen importlib._bootstrap&gt;:1381: in _gcd_import
+    ???
+&lt;frozen importlib._bootstrap&gt;:1354: in _find_and_load
+    ???
+&lt;frozen importlib._bootstrap&gt;:1318: in _find_and_load_unlocked
+    ???
+E   ModuleNotFoundError: No module named 'dmslicer.viewer'
+
+During handling of the above exception, another exception occurred:
+tests\viewer\test_model.py:271: in test_schema_invalid_provenance_path_cannot_publish_entity_or_link_views
+    view = build(snapshot)
+           ^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:32: in build
+    pytest.fail("ViewerModel is not implemented")
+E   Failed: ViewerModel is not implemented</failure></testcase></testsuite></testsuites>

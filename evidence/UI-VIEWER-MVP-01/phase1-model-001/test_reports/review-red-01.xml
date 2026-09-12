@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.597" timestamp="2026-09-12T09:02:38.418922+08:00" hostname="DESKTOP-05SBA87"><testcase classname="tests.viewer.test_model" name="test_invalid_artifact_path_exception_becomes_diagnostics" time="0.021"><failure message="ValueError: stat: embedded null character in path">tests\viewer\test_model.py:103: in test_invalid_artifact_path_exception_becomes_diagnostics
+    view = build(snapshot, decision)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\viewer\test_model.py:37: in build
+    return module.build_viewer_model(snapshot, decision, repository_root=root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\dmslicer\viewer\model.py:217: in build_viewer_model
+    for i in validate_geometry_snapshot(snapshot, root)]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\dmslicer\geometry_contract\validation.py:334: in validate_geometry_snapshot
+    _validate_artifacts(indexes, Path(repository_root), issues)
+src\dmslicer\geometry_contract\validation.py:134: in _validate_artifacts
+    path = _portable_artifact_path(repository_root, uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\dmslicer\geometry_contract\validation.py:74: in _portable_artifact_path
+    candidate = (root / Path(*pure.parts)).resolve()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1251: in resolve
+    p.stat()
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:841: in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: stat: embedded null character in path</failure></testcase></testsuite></testsuites>

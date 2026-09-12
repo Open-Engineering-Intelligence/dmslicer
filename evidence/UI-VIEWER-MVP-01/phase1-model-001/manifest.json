@@ -1,0 +1,208 @@
+{
+  "goal_id": "UI-VIEWER-MVP-01",
+  "run_id": "phase1-model-001",
+  "checkpoint": "PHASE_1_AWAITING_HUMAN_REVIEW",
+  "branch": "feat/ui-viewer-mvp-01",
+  "implementation_commit": "3a536b2e1c9e56653d0ac3a317947f79aec200b9",
+  "policy_commit": "1ca211ccf78e31d05920d1769957b63bb5e20782",
+  "parent_baseline": "1ca211ccf78e31d05920d1769957b63bb5e20782",
+  "merge_base": "1ca211ccf78e31d05920d1769957b63bb5e20782",
+  "scope": "ViewerModel and tests only; no HTML, renderer, CLI, search, filters, or stage framework",
+  "acceptance_criteria": [
+    "Public Snapshot validation gates authoritative entities",
+    "Independent Decision schema and approved overlay-reference checks",
+    "Immutable input and deterministic projection",
+    "No CAD content reads or prohibited imports",
+    "Frozen contracts and canonical JSON unchanged"
+  ],
+  "stop_conditions": [
+    "Stop after Phase 1 model checkpoint",
+    "Wait for human review before renderer or HTML"
+  ],
+  "input_fixtures": [
+    {
+      "path": "contract_examples/v0.1/geometry/planar_full.json",
+      "sha256": "fc5275cc7c1be80faff380951b831a17e18ba5933c12f3beda85492ce967d674",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/geometry/planar_multipatch.json",
+      "sha256": "396d502e12a7fbec38c3809d80a8b8e20f635b0989d3cb5dd56eb1384b8ad239",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/geometry/planar_partial.json",
+      "sha256": "f5242776b811337fb6eadeb48cf46931b2561f6e67dd6b17c3fb399cda6a579b",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/ambiguous_relation.json",
+      "sha256": "1f73b56ef69718712a5937e6130e59af1c3e24194655174c81017f146ac87fe3",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/missing_semantic_binding.json",
+      "sha256": "e72014bd5ed772ae327024462934f73faf50b6da0b04e95c5039b12cb9022cb6",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/unresolved_artifact.json",
+      "sha256": "1266765fc4d22aad4af1d355e230455397665d73a8c893ac625eddaabe42dc49",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/unsupported_family.json",
+      "sha256": "3d74f9761a0a861320b5803dee073732c60a26f3b3649eec0eddb3c4dc1d7784",
+      "hash_semantics": "byte_integrity_only"
+    }
+  ],
+  "environment": {
+    "Python": "3.12.0",
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "FreeCAD": "NOT_USED",
+    "OCCT": "NOT_USED"
+  },
+  "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1; py -B -m pytest -p no:cacheprovider tests/viewer/test_model.py tests/geometry_contract tests/contract_consumers -q --tb=short --junitxml=outputs/ui-viewer-phase1/regression-03.xml",
+  "exit_code": 0,
+  "execution_timestamp": "2026-09-12T09:02:58.405390+08:00",
+  "execution_timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-09-12T01:04:54.670143+00:00",
+  "tolerances": {
+    "status": "NOT_APPLICABLE_NO_GEOMETRY_CALCULATIONS",
+    "value": null,
+    "unit": null
+  },
+  "results": {
+    "pytest": {
+      "status": "PASS",
+      "passed": 102,
+      "new_model_tests": 55,
+      "frozen_regression_tests": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scientific_experiment": "NOT_RUN",
+    "geometry_equivalence": "NOT_EVALUATED",
+    "html_browser": "NOT_IMPLEMENTED"
+  },
+  "uris": {
+    "JUnit": "test_reports/regression-03.xml",
+    "validator": "case_summary.json",
+    "STEP": null,
+    "BREP": null,
+    "FCStd": null,
+    "VIEW_INDEX": "CHECKPOINT.md",
+    "HUMAN_REVIEW": "CHECKPOINT.md"
+  },
+  "reviewer_finding": {
+    "severity": "P2",
+    "finding": "Public validator path exceptions escaped diagnostic model",
+    "resolution": "Caught expected path/filesystem failures as UNAVAILABLE / VALIDATION_UNAVAILABLE without authoritative entities",
+    "review_status": "FIX_CONFIRMED_NO_FURTHER_FINDINGS",
+    "failure_commit": null,
+    "failure_commit_note": "Reproduced before first source commit; retained review-red-01.xml",
+    "fix_commit": "3a536b2e1c9e56653d0ac3a317947f79aec200b9"
+  },
+  "known_mismatch_or_failure_modes": [
+    "Frozen multipatch mock emits DECIDED with empty expected_partition_refs, invalid by unchanged schema; overlay disabled",
+    "Frozen mock direction aliases Snapshot normal; test fixture now deep-copies before mutation",
+    "Link resolution is a local filesystem observation; later renderer must recheck containment and existence"
+  ],
+  "actual_geometry_validation_criteria": "NONE: public JSON contract validation and reference checks only; no geometry evaluation",
+  "evidence_confidence": "L",
+  "test_runs": [
+    {
+      "junit": "test_reports/red-01.xml",
+      "tests": 44,
+      "failures": 44,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp_local": "2026-09-12T08:54:34.087749+08:00",
+      "exit_code": 1
+    },
+    {
+      "junit": "test_reports/regression-01.xml",
+      "tests": 101,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 1,
+      "timestamp_local": "2026-09-12T08:58:05.238522+08:00",
+      "exit_code": 1
+    },
+    {
+      "junit": "test_reports/regression-02.xml",
+      "tests": 101,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp_local": "2026-09-12T08:59:04.286355+08:00",
+      "exit_code": 0
+    },
+    {
+      "junit": "test_reports/review-red-01.xml",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp_local": "2026-09-12T09:02:38.418922+08:00",
+      "exit_code": 1
+    },
+    {
+      "junit": "test_reports/regression-03.xml",
+      "tests": 102,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp_local": "2026-09-12T09:02:58.405390+08:00",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "case_summary.json",
+      "sha256": "56fff3e11ce53401a7b6251af99b8e6aadacaae9e17e95848718b4acdf047166",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "CHECKPOINT.md",
+      "sha256": "3f34db8c48b33c890733cee9814ab4d8db764edfc5c76145412a5e275a5de167",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/red-01.xml",
+      "sha256": "0051e8dfa4fbe5e69502feb3b3d2619db5deb3092bf6c8761e9f52a74b8d58f4",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/regression-01.xml",
+      "sha256": "8190f2d8ab18b495ad58cc8f2b5cc3ade9f0f2e8a0b8b85d1d1fdf9d43301ea0",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/regression-02.xml",
+      "sha256": "39f7aab046ba9832eaa9ce61ac30ce5261bd8effed1f4e4bdf1d864ad0a7dce5",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/regression-03.xml",
+      "sha256": "4874081a656d2cac0855976f4218e721cb92b666d2b5d929a0ef697e3af1aabb",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/review-red-01.xml",
+      "sha256": "ef71f9a91b1c0af2699db851ad7460473922da8aaf6a4853c42f4bdfbc87bc64",
+      "hash_semantics": "byte_integrity_only"
+    }
+  ],
+  "copy_locations": [
+    "D:/Agent/worktrees/dmslicer-ui-viewer-mvp-01/evidence/UI-VIEWER-MVP-01/phase1-model-001",
+    "D:/Agent/evidence-backups/dmslicer/UI-VIEWER-MVP-01/phase1-model-001"
+  ],
+  "preservation": "LOCAL_CHECKPOINT_ONLY_NOT_OFF_HOST_PRESERVATION",
+  "portability_note": "Raw JUnit retains original source/staging paths for failure provenance. No publication performed.",
+  "external_actions": {
+    "pushed": false,
+    "published": false
+  }
+}

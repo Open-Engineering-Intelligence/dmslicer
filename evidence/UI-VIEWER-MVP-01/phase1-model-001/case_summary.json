@@ -1,0 +1,429 @@
+{
+  "goal_id": "UI-VIEWER-MVP-01",
+  "run_id": "phase1-model-001",
+  "scope": "ViewerModel checkpoint only; no HTML or slicing execution",
+  "cases": [
+    {
+      "input": "contract_examples/v0.1/geometry/planar_full.json",
+      "snapshot_id": "snapshot:v0.1:15882f8c1db08ff09f2db655f96341f5c07d74472bed28994e266b2b6ee3923c",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "COMPATIBLE",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 3,
+        "relations": 3,
+        "interfaces": 2,
+        "patches": 2,
+        "interface_components": 2,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "PRESENT",
+        "patches": "PRESENT",
+        "interface_components": "PRESENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "PRESENT",
+        "source_documents": "PRESENT",
+        "tolerances": "PRESENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "REJECTED",
+      "supplied_mock_decision_reason": "MISSING_SEMANTIC_BINDING",
+      "overlay": {
+        "state": "DISABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:8edebe8e5e53889e175fe1a8b4a4a1f0633d65f5f880e7424b72a31ea9e9bde0",
+        "input_snapshot_id": "snapshot:v0.1:15882f8c1db08ff09f2db655f96341f5c07d74472bed28994e266b2b6ee3923c",
+        "status": "REJECTED",
+        "reason_code": "MISSING_SEMANTIC_BINDING",
+        "provenance_reference": "provenance:e0",
+        "disabled_reason": "NOT_DECIDED"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/geometry/planar_multipatch.json",
+      "snapshot_id": "snapshot:v0.1:137b775b0807089bd0c079f9ea660e1e389130a3fbfd1046d03f204e3ab77053",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "INVALID",
+          "issues": [
+            {
+              "code": "SCHEMA_INVALID",
+              "path": "expected_partition_refs",
+              "message": "[] should be non-empty"
+            }
+          ]
+        },
+        "overlay": {
+          "status": "NOT_EVALUATED",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 2,
+        "relations": 1,
+        "interfaces": 1,
+        "patches": 2,
+        "interface_components": 2,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "PRESENT",
+        "patches": "PRESENT",
+        "interface_components": "PRESENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "PRESENT",
+        "source_documents": "PRESENT",
+        "tolerances": "PRESENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "DECIDED",
+      "supplied_mock_decision_reason": "NONE",
+      "overlay": {
+        "state": "DISABLED",
+        "disabled_reason": "INVALID_DECISION"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/geometry/planar_partial.json",
+      "snapshot_id": "snapshot:v0.1:622c99042ab2f8f9fbae2425c130beb27d62ea62457ea3e6c49240952064de8b",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "COMPATIBLE",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 2,
+        "relations": 1,
+        "interfaces": 1,
+        "patches": 1,
+        "interface_components": 1,
+        "boundaries": 0,
+        "surface_partitions": 3
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "PRESENT",
+        "patches": "PRESENT",
+        "interface_components": "PRESENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "PRESENT",
+        "semantic_bindings": "PRESENT",
+        "source_documents": "PRESENT",
+        "tolerances": "PRESENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "DECIDED",
+      "supplied_mock_decision_reason": "NONE",
+      "overlay": {
+        "state": "ENABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:63625841b4a99403ec98a206dbd3c36363accab2167005038ceae05fb801c5a0",
+        "input_snapshot_id": "snapshot:v0.1:622c99042ab2f8f9fbae2425c130beb27d62ea62457ea3e6c49240952064de8b",
+        "status": "DECIDED",
+        "reason_code": "NONE",
+        "provenance_reference": "provenance:e1",
+        "selection": {
+          "selected_interface_id": "interface:v0.1:1fdfa07fbf817bebd7774caea599c3c428f593990ac22c9afeffb526afcb7536",
+          "selected_patch_ids": [
+            "patch:e1-common"
+          ],
+          "target_region_id": "region:e1-side-1",
+          "strategy_kind": "PLANAR_INTERFACE_PARTITION",
+          "local_frame_ref": "frame:model",
+          "partition_direction": [
+            0,
+            0,
+            1
+          ],
+          "partition_operation": "SPLIT_COMMON_AND_REMAINING",
+          "expected_partition_refs": [
+            "partition:v0.1:27f32a0dbe49477c236caaed6f9adf6907a34de3553a3e6c478b8ad2118b0421",
+            "partition:v0.1:577e8c1b352a5c5dc8293e98fcd98a19d254f52832745aa8a1aacaeb50e7adcc",
+            "partition:v0.1:90333b6845c2be8f430414638167c61b9368b76a3ecc0d2c832ef281df2275e0"
+          ]
+        },
+        "execution_state": "NOT_EXECUTED"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/negative/ambiguous_relation.json",
+      "snapshot_id": "snapshot:v0.1:5ea8d0d770bcf15b2b6a653ca1dcb96c5b07e609f94dcf526e0b82bc422e5917",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "COMPATIBLE",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 2,
+        "relations": 1,
+        "interfaces": 0,
+        "patches": 0,
+        "interface_components": 0,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "ABSENT",
+        "patches": "ABSENT",
+        "interface_components": "ABSENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "ABSENT",
+        "source_documents": "PRESENT",
+        "tolerances": "ABSENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "REJECTED",
+      "supplied_mock_decision_reason": "AMBIGUOUS_INTERFACE",
+      "overlay": {
+        "state": "DISABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:a0084b79cd70e63223d2e7761fcad040a8af13e52f74920bdc8c562df18aaccd",
+        "input_snapshot_id": "snapshot:v0.1:5ea8d0d770bcf15b2b6a653ca1dcb96c5b07e609f94dcf526e0b82bc422e5917",
+        "status": "REJECTED",
+        "reason_code": "AMBIGUOUS_INTERFACE",
+        "provenance_reference": "provenance:negative",
+        "disabled_reason": "NOT_DECIDED"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/negative/missing_semantic_binding.json",
+      "snapshot_id": "snapshot:v0.1:1a19256e58b793e2afd415b0cc06e7d1b275c9c08748d51aa4665949306e6937",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "COMPATIBLE",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 2,
+        "relations": 1,
+        "interfaces": 1,
+        "patches": 1,
+        "interface_components": 1,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "PRESENT",
+        "patches": "PRESENT",
+        "interface_components": "PRESENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "ABSENT",
+        "source_documents": "PRESENT",
+        "tolerances": "ABSENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "REJECTED",
+      "supplied_mock_decision_reason": "MISSING_SEMANTIC_BINDING",
+      "overlay": {
+        "state": "DISABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:6aa08101f35d72d01df7dd94a4e000c64f6bc78da013cf48cb533ef296584a20",
+        "input_snapshot_id": "snapshot:v0.1:1a19256e58b793e2afd415b0cc06e7d1b275c9c08748d51aa4665949306e6937",
+        "status": "REJECTED",
+        "reason_code": "MISSING_SEMANTIC_BINDING",
+        "provenance_reference": "provenance:negative",
+        "disabled_reason": "NOT_DECIDED"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/negative/unresolved_artifact.json",
+      "snapshot_id": "snapshot:v0.1:3957cae110139765aefa15d2eb8ee91d18e6b165fd7f3436b4173ea20c22081e",
+      "validation": {
+        "snapshot": {
+          "status": "INVALID",
+          "issues": [
+            {
+              "code": "UNRESOLVED_ARTIFACT",
+              "path": "artifact_references.artifact:negative-step.uri",
+              "message": "artifact does not exist: outputs/missing/source.step"
+            }
+          ]
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "NOT_EVALUATED",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 0,
+        "relations": 0,
+        "interfaces": 0,
+        "patches": 0,
+        "interface_components": 0,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "EMPTY",
+        "interfaces": "ABSENT",
+        "patches": "ABSENT",
+        "interface_components": "ABSENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "ABSENT",
+        "source_documents": "PRESENT",
+        "tolerances": "ABSENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "FAILED",
+      "supplied_mock_decision_reason": "INVALID_SNAPSHOT",
+      "overlay": {
+        "state": "DISABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:106a061170f5508ae0565ab65802f7ef32d1f04b94049f8d432f93ded1bf657a",
+        "input_snapshot_id": "snapshot:v0.1:3957cae110139765aefa15d2eb8ee91d18e6b165fd7f3436b4173ea20c22081e",
+        "status": "FAILED",
+        "reason_code": "INVALID_SNAPSHOT",
+        "provenance_reference": "provenance:negative",
+        "disabled_reason": "INVALID_SNAPSHOT"
+      }
+    },
+    {
+      "input": "contract_examples/v0.1/negative/unsupported_family.json",
+      "snapshot_id": "snapshot:v0.1:d9d3dc0d62b590ac3352f55f74d73bc7b80c42655e8e4daf84c9abc124970414",
+      "validation": {
+        "snapshot": {
+          "status": "VALID",
+          "issues": []
+        },
+        "decision": {
+          "status": "VALID",
+          "issues": []
+        },
+        "overlay": {
+          "status": "COMPATIBLE",
+          "issues": []
+        }
+      },
+      "counts": {
+        "regions": 2,
+        "relations": 1,
+        "interfaces": 1,
+        "patches": 1,
+        "interface_components": 1,
+        "boundaries": 0,
+        "surface_partitions": 0
+      },
+      "collection_presence": {
+        "regions": "PRESENT",
+        "relations": "PRESENT",
+        "interfaces": "PRESENT",
+        "patches": "PRESENT",
+        "interface_components": "PRESENT",
+        "boundaries": "ABSENT",
+        "surface_partitions": "ABSENT",
+        "semantic_bindings": "PRESENT",
+        "source_documents": "PRESENT",
+        "tolerances": "ABSENT",
+        "artifact_references": "PRESENT",
+        "provenance_references": "PRESENT",
+        "parent_snapshot_ids": "ABSENT"
+      },
+      "supplied_mock_decision_status": "UNSUPPORTED",
+      "supplied_mock_decision_reason": "UNSUPPORTED_GEOMETRY_FAMILY",
+      "overlay": {
+        "state": "DISABLED",
+        "contract": {
+          "name": "dmslicer.slicer-decision",
+          "version": "0.1-rc1"
+        },
+        "decision_id": "decision:v0.1:19bb69c927ec4fd4c3acbb9f73cc918cf7c47b58a1535d6e89a621386a7e2694",
+        "input_snapshot_id": "snapshot:v0.1:d9d3dc0d62b590ac3352f55f74d73bc7b80c42655e8e4daf84c9abc124970414",
+        "status": "UNSUPPORTED",
+        "reason_code": "UNSUPPORTED_GEOMETRY_FAMILY",
+        "provenance_reference": "provenance:negative",
+        "disabled_reason": "NOT_DECIDED"
+      }
+    }
+  ]
+}
