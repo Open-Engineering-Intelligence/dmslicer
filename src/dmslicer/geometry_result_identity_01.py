@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from datetime import datetime, timezone
+from importlib.metadata import version
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping
 import shutil
+import sys
 
-from .evidence import read_json, write_json
+from .evidence import read_json, sha256_file, write_json
 from .geometry_contract.ids import snapshot_id
 
 
@@ -104,6 +107,9 @@ def publish_identity_bound_snapshot(
     repository_root: Path,
     evidence_root: Path,
     implementation_commit: str,
+    parent_baseline: str,
+    branch: str,
+    command: str,
 ) -> dict[str, Any]:
     validate_result_bindings(operation, publication_map, source_root, operation_root)
     entity_rows = publication_map["entity_bindings"]
@@ -169,8 +175,19 @@ def publish_identity_bound_snapshot(
         {
             "goal_id": "GEOMETRY-RESULT-IDENTITY-01",
             "run_id": evidence_root.name,
+            "branch": branch,
             "implementation_commit": implementation_commit,
+            "parent_baseline": parent_baseline,
             "fixture": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step",
+            "input_sha256": sha256_file(source_root / "inputs.step"),
+            "command": command,
+            "exit_code": 0,
+            "execution_timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "python_version": sys.version,
+            "pytest_version": version("pytest"),
+            "freecad_version": operation.get("execution_environment", {}).get("freecad_version"),
+            "occt_version": operation.get("execution_environment", {}).get("occt_version"),
+            "tolerances": operation.get("numeric_rules"),
             "operation": "operation.json",
             "identity_bindings": "identity_bindings.json",
             "geometry_snapshot": "geometry_snapshot.json",

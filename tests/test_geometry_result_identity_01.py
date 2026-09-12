@@ -84,6 +84,9 @@ def test_p07_bindings_publish_existing_entity_ids_to_explicit_result_artifacts(t
         repository_root=repository,
         evidence_root=repository / "evidence" / "GEOMETRY-RESULT-IDENTITY-01" / "p07-test",
         implementation_commit="289567dbaaf3f89809dbbd82d71bf190a3aa7a13",
+        parent_baseline="289567dbaaf3f89809dbbd82d71bf190a3aa7a13",
+        branch="test/geometry-result-identity",
+        command="test publication",
     )
 
     assert {row["entity_id"] for row in publication_map["entity_bindings"]} == {
@@ -103,6 +106,8 @@ def test_p07_bindings_publish_existing_entity_ids_to_explicit_result_artifacts(t
     manifest = json.loads((repository / "evidence" / "GEOMETRY-RESULT-IDENTITY-01" / "p07-test" / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["goal_id"] == "GEOMETRY-RESULT-IDENTITY-01"
     assert manifest["implementation_commit"] == "289567dbaaf3f89809dbbd82d71bf190a3aa7a13"
+    assert manifest["parent_baseline"] == "289567dbaaf3f89809dbbd82d71bf190a3aa7a13"
+    assert manifest["command"] == "test publication"
     assert manifest["geometry_snapshot"] == "geometry_snapshot.json"
 
 

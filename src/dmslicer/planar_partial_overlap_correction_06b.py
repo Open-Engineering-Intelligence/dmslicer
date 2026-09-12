@@ -231,6 +231,7 @@ def run_partial_overlap_case(fixture_root: Path, scenario_id: str, output_root: 
         validate_result_bindings(operation, publication_map, case, staged)
     operation["input_step_sha256"] = sha256_file(step)
     operation["policy"] = policy
+    operation["numeric_rules"] = RULES
     operation["validator_version"] = "06B"
     operation["validator_source_commit"] = _source_commit()
     validation = validate_partial_overlap_evidence(operation, expected)

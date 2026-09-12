@@ -317,7 +317,7 @@ def _analyze(request):
             "tangential_projection_relation_post_mm": [float(corrected.CenterOfMass.x - first.CenterOfMass.x), float(corrected.CenterOfMass.y - first.CenterOfMass.y)],
             "tangential_projection_relation_preserved": abs(second.CenterOfMass.x - corrected.CenterOfMass.x) <= 1e-7 and abs(second.CenterOfMass.y - corrected.CenterOfMass.y) <= 1e-7,
         }
-        operation = {"schema_version": 1, "scenario_id": request["scenario_id"], "status": status, "pre_measurement": pre, "decision": decision, "prospective_interface": {"common_area_mm2": float(prospective["common_area_mm2"]), "kind": "PRECOMMIT_GEOMETRY_CHECK", "executed": False}, "pose_invariants": pose, "partition": {}, "fuse": {"executed": False}, "provenance": {"roles": {"Side_1": "Side_1", "Side_2": "Side_2"}, "carrier_faces": pre["carrier_faces"], "operation_kind": "direct_BRep_face_common_and_face_cut"}}
+        operation = {"schema_version": 1, "scenario_id": request["scenario_id"], "status": status, "pre_measurement": pre, "decision": decision, "prospective_interface": {"common_area_mm2": float(prospective["common_area_mm2"]), "kind": "PRECOMMIT_GEOMETRY_CHECK", "executed": False}, "pose_invariants": pose, "partition": {}, "fuse": {"executed": False}, "provenance": {"roles": {"Side_1": "Side_1", "Side_2": "Side_2"}, "carrier_faces": pre["carrier_faces"], "operation_kind": "direct_BRep_face_common_and_face_cut"}, "execution_environment": {"freecad_version": list(FreeCAD.Version()), "occt_version": getattr(Part, "OCC_VERSION", None)}}
         if status == "CORRECTED_PARTIAL_INTERFACE_FUSED":
             post, f1, f2 = _measure(first, corrected, request.get("traversal_order") == "reverse")
             partition = _patch_data(f1, f2, epsilon)
