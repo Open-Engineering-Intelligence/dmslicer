@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "sample": "case01",
+      "entities": 5,
+      "comparison_panels": 5,
+      "modes": "PASS",
+      "selection": "PASS",
+      "visibility_preserved": "PASS"
+    },
+    {
+      "sample": "c02",
+      "entities": 6,
+      "comparison_panels": 6,
+      "modes": "PASS",
+      "selection": "PASS",
+      "visibility_preserved": "PASS"
+    },
+    {
+      "sample": "u05",
+      "entities": 5,
+      "comparison_panels": 5,
+      "modes": "PASS",
+      "selection": "PASS",
+      "visibility_preserved": "PASS"
+    },
+    {
+      "sample": "s04",
+      "entities": 5,
+      "comparison_panels": 5,
+      "modes": "PASS",
+      "selection": "PASS",
+      "visibility_preserved": "PASS"
+    },
+    {
+      "sample": "pmulti",
+      "entities": 6,
+      "comparison_panels": 6,
+      "modes": "PASS",
+      "selection": "PASS",
+      "visibility_preserved": "PASS"
+    }
+  ],
+  "examples": "PASS",
+  "runtime_errors": [],
+  "human_visual_review": "PENDING"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "Port": 56811,
+    "ProcessId": 46052,
+    "Command": "C:\\Users\\ufo00\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -u -m dmslicer.geometry_import --serve --port 56811"
+  },
+  {
+    "Port": 56810,
+    "ProcessId": 45372,
+    "Command": "C:\\Users\\ufo00\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -u -m dmslicer.geometry_import --serve --port 56810"
+  },
+  {
+    "Port": 8877,
+    "ProcessId": 41120,
+    "Command": "C:\\Users\\ufo00\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m dmslicer.package_viewer --sample evidence/08F-S04/s04-package-002/S04_full_sphere_upper_shell.dmslicer --port 8877"
+  },
+  {
+    "Port": 8874,
+    "ProcessId": 19372,
+    "Command": "C:\\Users\\ufo00\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m http.server 8874 --bind 127.0.0.1 --directory evidence/GEOMETRY-COVERAGE-MATRIX-01"
+  },
+  {
+    "Port": 8873,
+    "ProcessId": 32404,
+    "Command": "C:\\Users\\ufo00\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m http.server 8873 --bind 127.0.0.1 --directory evidence/GEOMETRY-COVERAGE-MATRIX-01/p-multi-002"
+  }
+]

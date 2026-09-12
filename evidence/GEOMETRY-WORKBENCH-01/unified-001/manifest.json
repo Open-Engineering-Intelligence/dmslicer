@@ -1,0 +1,147 @@
+{
+  "goal_id": "GEOMETRY-WORKBENCH-01",
+  "run_id": "unified-001",
+  "branch": "codex/geometry-case-viewer-01",
+  "implementation_commit": "f5b3f48dc9e8de7eeffdd8235f3bad8907e86016",
+  "policy_commit": null,
+  "parent_baseline": "a3eef4cb2912373382d533ddea6b9d45cbaa8aae",
+  "evidence_identity": "GEOMETRY-WORKBENCH-01+f5b3f48dc9e8de7eeffdd8235f3bad8907e86016+unified-001",
+  "scope": [
+    "One package-only entry; overlay/comparison/evidence modes",
+    "Preserve verified display controls and explicit geometry/provenance boundaries",
+    "Retire duplicate viewing services only after live browser acceptance"
+  ],
+  "acceptance_criteria": [
+    "Five existing packages load through one reader",
+    "All five/six comparison panels remain visible",
+    "Mode changes preserve visibility and selection",
+    "Live homepage and sample entry work",
+    "Launcher reuses existing process",
+    "Only port 56810 remains among the five inspected ports"
+  ],
+  "stop_conditions": [
+    "No CAD or scientific experiment rerun",
+    "No geometry/semantic edits or historical evidence migration",
+    "No push/merge/release"
+  ],
+  "source_review": [
+    {
+      "source": "08E current viewer",
+      "retained": "safe package reader, Chinese labels, source trace, threaded service timeout fix"
+    },
+    {
+      "source": "08F package viewer at 22f6",
+      "retained": "comparison_slot presentation convention, operation explanation, sample convenience",
+      "implementation": "small layout function in current renderer; no source-tree copy"
+    },
+    {
+      "source": "coverage matrix at 073a",
+      "retained": "six-panel P-MULTI package and source evidence",
+      "removed": "duplicate static directory servers"
+    }
+  ],
+  "inputs": [
+    {
+      "key": "case01",
+      "label": "\u65b9\u5757\uff1aA\u2013G\u2013B",
+      "path": "samples/case01.dmslicer",
+      "source": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-002/CASE01.dmslicer",
+      "sha256": "33aa70755b9370abcaa4884bddefb538fb071e47358f4da0cf1c9f91945cf280",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "c02",
+      "label": "\u5706\u67f1\uff1a\u504f\u79fb\u6821\u6b63",
+      "path": "samples/c02.dmslicer",
+      "source": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-004/C02.dmslicer",
+      "sha256": "f72409564574340b0bb73e3b3b7a29ec8e18ba280fae7b21aaf4f99cf7e8f4df",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "u05",
+      "label": "\u5706\u67f1\uff1a\u90e8\u5206\u63a5\u53e3",
+      "path": "samples/u05.dmslicer",
+      "source": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-004/U05.dmslicer",
+      "sha256": "a24de08f4583317c7aa09b7bc9f78d0bfcbcab7f18269ba0d3f730ab592e237a",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "s04",
+      "label": "\u7403\u9762\uff1a\u5b8c\u6574\u7403\u4e0e\u4e0a\u534a\u7403\u58f3",
+      "path": "samples/s04.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/22f6/dmslicer/evidence/08F-S04/s04-package-002/S04_full_sphere_upper_shell.dmslicer",
+      "sha256": "309916b933863cb67b5b2bddc5f0ef0e148385199db59fc53303ed9326927748",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "pmulti",
+      "label": "\u5e73\u9762\uff1a\u4e00\u5bf9\u591a\u516c\u5171\u8865\u4e01",
+      "path": "samples/pmulti.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/073a/dmslicer/evidence/GEOMETRY-COVERAGE-MATRIX-01/p-multi-package-003/P-MULTI.dmslicer",
+      "sha256": "0dee7186170c9a1fc3bdb81b3a602565ee407e4ab2bf97e07c42d21538365654",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    }
+  ],
+  "environment": {
+    "python": "3.12.0",
+    "pytest": "8.4.2",
+    "node": "v24.18.0",
+    "FreeCAD": "NOT_INVOKED",
+    "OCCT": "NOT_INVOKED"
+  },
+  "commands": [
+    {
+      "command": "py -3.12 -m pytest tests/test_geometry_case_viewer.py tests/test_result_package.py tests/test_geometry_import.py tests/test_case01_result_package.py tests/test_result_labels.py tests/test_unified_workbench.py -q --junitxml=evidence/GEOMETRY-WORKBENCH-01/unified-001/final-tests.junit.xml",
+      "exit_code": 0,
+      "result": "22 PASS"
+    },
+    {
+      "command": "DMS_WORKBENCH_URL=http://127.0.0.1:56810/ DMS_BROWSER_RUN=browser-live node tests/unified_workbench_browser.cjs",
+      "exit_code": 0,
+      "result": "Five packages, three modes, selection, visibility, narrow layout and samples PASS"
+    },
+    {
+      "command": "start_geometry_viewer.ps1 -NoBrowser, twice checked with listener PID",
+      "exit_code": 0,
+      "result": "existing process reused"
+    }
+  ],
+  "execution_timestamp": "2026-09-12T12:22:28.661532+00:00",
+  "tolerances": [],
+  "tolerance_note": "No geometry tolerance applied; meshes and their recorded display deflections unchanged",
+  "JUnit": "final-tests.junit.xml",
+  "validator": "browser-live/checks.json",
+  "STEP_BREP_FCStd": "Inside allowlisted copied source packages; no assets recomputed",
+  "VIEW_INDEX": "VIEW_INDEX.md",
+  "HUMAN_REVIEW": "HUMAN_REVIEW.md",
+  "failure_commit": "a3eef4cb2912373382d533ddea6b9d45cbaa8aae",
+  "fix_commit": "f5b3f48dc9e8de7eeffdd8235f3bad8907e86016",
+  "reviewer_finding": "Automated live-browser checks passed and six-panel desktop/narrow screenshots reviewed by agent. User visual acceptance remains pending.",
+  "known_mismatch_or_failure_mode": [
+    "Canvas transparency sorting is approximate; boundaries overlay through surfaces",
+    "Historical standalone directory URLs no longer listen; original files remain intact",
+    "No new geometry validator or scientific experiment PASS claim"
+  ],
+  "actual_geometry_validation_criteria": "NOT_APPLICABLE: input package bytes preserved; this change is display/service organization only",
+  "results": {
+    "software_tests": "PASS",
+    "package_byte_integrity": "PASS",
+    "scientific_experiment": "NOT_RERUN",
+    "human_visual_review": "PENDING"
+  },
+  "evidence_confidence": "L",
+  "live_health": {
+    "app": "dmslicer-geometry-workbench",
+    "version": 1
+  },
+  "custody": {
+    "sample_copies": "Original plus allowlisted copy verified byte-for-byte",
+    "independent_disaster_recovery": "NOT_ESTABLISHED",
+    "remote_actions": "NONE"
+  }
+}
