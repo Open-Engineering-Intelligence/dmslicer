@@ -1,7 +1,8 @@
 # 09B review index
 
 - Latest scope and schema semantics: ../scope-002/SEMANTIC_TYPES_V2.md
-- Implementation and 09A handoff: ../../../docs/implementation/workbench_material_semantics.md (repository docs/implementation/workbench_material_semantics.md)
+- Final 09A handoff contract: ../../../docs/implementation/material_semantic_tab_contract.md
+- 09B field/reference note: ../../../docs/implementation/workbench_material_semantics.md
 - Final run identity/provenance: manifest.json
 - Browser checks: browser-live-001/checks.json
 - Semantic types / G1 and G2: browser-live-001/semantic-types-groups.png
@@ -21,4 +22,4 @@
 - Failure timeline: FAILURES.md
 - Explicit custody allowlist and two-copy verification: copy-plan.json / custody-verification.json
 
-Large/local assets are intentionally not Git-tracked. Their second verified copy is recorded in custody-verification.json. Preview startup command is in docs/implementation/workbench_material_semantics.md. Existing port 56810 is untouched.
+Large/local assets are intentionally not Git-tracked. Their second verified copy is recorded in custody-verification.json. 56811 is historical development/regression preview only; final geometry UI is the 09A 56810 workbench.

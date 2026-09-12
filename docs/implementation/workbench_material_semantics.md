@@ -1,6 +1,6 @@
 # 09B 材料与语义配置工作区
 
-Goal: `WORKBENCH-MATERIAL-SEMANTIC-UI-01`。当前任务标题：DM-Slicer｜09B 材料与语义配置工作区。基于 `91e4d98` 的现有工作台扩展材料/配置页，不承担 09A 的几何控件重设计。设计修订和早期失败在本 Goal 的 `evidence/` 下保留，最终验收以 `scope-002/SEMANTIC_TYPES_V2.md` 为准。
+Goal: `WORKBENCH-MATERIAL-SEMANTIC-UI-01`。当前任务标题：DM-Slicer｜09B 材料与语义配置工作区。09B 仅提供可嵌入的材料与语义 Tab；最终几何显示始终由 09A 的 56810 工作台承载。09B 不拥有独立几何查看器。设计修订和早期失败在本 Goal 的 `evidence/` 下保留，最终验收以 `scope-002/SEMANTIC_TYPES_V2.md` 和 `material_semantic_tab_contract.md` 为准。
 
 ## 使用
 
@@ -31,7 +31,7 @@ Gradient 类型转换会清除直接材料赋值，并在 decisions 中保留旧
 
 ## 09A 数据交接
 
-`workspace_annotations.js` 为纯数据模块；Node 可 `require`。09A 读取经 `restore(case, json)` 验证的配置，用 `color(workspace, entity_ref)` 查询显示色。不得反向修改 B-rep、STEP 或显示网格来表达语义。源码内嵌到旧查看页只为本地预览，未改几何选择/透明度/证据布局。
+`workspace_annotations.js` 为纯数据模块；Node 可 `require`。09A 读取经 `restore(case, json)` 验证的配置，用 `color(workspace, entity_ref)` 查询显示色。不得反向修改 B-rep、STEP 或显示网格来表达语义。当前 `material_workspace.js` 是开发期 Tab 控制器参考实现；09A 应依照 [材料与语义 Tab 集成契约](material_semantic_tab_contract.md) 重新接入自己的 Tab 生命周期，不复用或复制几何渲染代码。
 
 `connectionPolicy(workspace, a_ref, b_ref, geometry_relation)` 返回机器可读资格判断。几何关系由上游提供 `relation_ref`、`region_refs`、`status=CONFIRMED`、`allows_connection=true`，09B 不用接触画面、颜色或相近位置补齐它。相同 group_id 且几何明确允许才返回 allowed=true；不同组始终返回 DIFFERENT_GRADIENT_GROUP。原 geometry_evidence 保留，activated 始终 false。该纯策略不验证几何来源真实性，调用方必须从受信的上游验证结果取得关系。
 
@@ -39,11 +39,11 @@ Gradient 类型转换会清除直接材料赋值，并在 decisions 中保留旧
 
 当前真实包中 CASE01 具备稳定引用，可配置三个输入对象。C02/U05/S04/P-MULTI 只有 RUN_LOCAL_DIAGNOSTIC 引用，显示仍可用，持久领域配置禁用。这不是自动生成稳定身份的授权。
 
-几何显示和保存的科学事实沿用原结果包，未重跑 CAD。Node 领域规则、Python 查看器回归、浏览器交互、包字节完整性和人工视觉验收分别记录。主入口 56810 未替换；09B 预览在独立 56811，便于与 09A 分支隔离评审。
+几何显示和保存的科学事实沿用原结果包，未重跑 CAD。Node 领域规则、Python 查看器回归、浏览器交互、包字节完整性和人工视觉验收分别记录。主入口是 56810；09B 的 56811 仅用于开发和回归预览，不能作为最终入口或交付的几何查看器。
 
-本 Goal 自包含样例索引准备完成后，可在该 worktree 运行：
+开发/回归预览可在该 worktree 临时运行：
 
 ```powershell
 $env:PYTHONPATH = 'src'
-py -3.12 -m dmslicer.geometry_import --serve --port 56811 --samples evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples.json
+py -3.12 -m dmslicer.material_semantic_preview --port 56811 --samples evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples.json
 ```

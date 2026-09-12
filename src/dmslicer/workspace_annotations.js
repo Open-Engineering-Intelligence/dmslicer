@@ -115,6 +115,10 @@ const WorkspaceAnnotations = (() => {
   if(old)Object.assign(old,value);else l.materials.push(value);
   l.version++;w.material_library_version=l.version;
  }
+ function materialDraft(material){
+  validateMaterial(material);
+  return copy(material);
+ }
  function color(w,ref){const o=w?.objects.find(o=>o.entity_ref===ref);return o?.display_override||w?.material_library.materials.find(m=>m.id===o?.material_id)?.color||'#8ca3b3'}
  function restore(c,text){
   require(typeof text==='string'&&text.length<=4*1024*1024,'Annotation limit: 4 MiB');const value=JSON.parse(text);
@@ -141,6 +145,6 @@ const WorkspaceAnnotations = (() => {
   }
   return {schema:'dmslicer.gradient-connection-policy.v1',source_ref:a,target_ref:b,gradient_groups:[left.gradient_group_id,right.gradient_group_id],geometry_evidence:copy(geometry||null),allowed,activated:false,reason};
  }
- return {create,geometryRole,types,library,validateLibrary,putMaterial,decide,applyAssignment,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
+ return {create,geometryRole,types,library,validateLibrary,putMaterial,materialDraft,decide,applyAssignment,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
 })();
 if(typeof module!=='undefined')module.exports=WorkspaceAnnotations;

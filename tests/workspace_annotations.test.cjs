@@ -88,3 +88,8 @@ test('Gradient assignment clears material for every selected input',()=>{
  W.applyAssignment(w,['input-a','input-b'],{semantic_type:'Gradient',gradient_group_id:'G2',material_id:null});
  assert.deepEqual(w.objects.slice(0,2).map(o=>[o.semantic_type,o.material_id,o.gradient_group_id]),[['Gradient',null,'G2'],['Gradient',null,'G2']]);
 });
+test('material draft is an independent copy for non-destructive edit',()=>{
+ const w=W.create(fixture()),original=w.material_library.materials[0],draft=W.materialDraft(original);
+ assert.deepEqual(draft,original);draft.name='Changed only in dialog draft';draft.color='#000000';draft.properties={composition:[{material_id:'ABS',fraction:1}]};
+ assert.equal(original.name,'PLA');assert.equal(original.color,'#6daba3');assert.deepEqual(original.properties,{});
+});
