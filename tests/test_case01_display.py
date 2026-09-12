@@ -32,3 +32,8 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert "<canvas" in html
     assert "Selection traceability" in html
     assert "checkbox" in html
+    assert "pointerdown" in html
+    assert "wheel" in html
+    assert "hitTest" in html
+    assert "A / SOURCE" in html
+    assert "A-G common face" in html

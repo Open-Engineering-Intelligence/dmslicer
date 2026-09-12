@@ -1,0 +1,20 @@
+{
+  "display_scene": "display_scene.json",
+  "browser_validation": "browser_validation.md",
+  "entity_refs": [
+    "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
+    "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
+    "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+    "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+    "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+  ],
+  "geometry_snapshot": "geometry_snapshot.json",
+  "goal_id": "CASE01-GEOMETRY-DISPLAY-01",
+  "input_artifact": "benchmarks/interface_case01/case01.step",
+  "limitations": [
+    "CASE01 axis-aligned planar patch parameter projection only"
+  ],
+  "mesh_authority": "DISPLAY_ONLY",
+  "mesh_source": "BREP_TESSELLATION",
+  "viewer": "case01_3d.html"
+}
