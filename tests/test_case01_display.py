@@ -26,6 +26,14 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert all(len(entity["mesh"]["positions"]) >= 3 for entity in scene["entities"])
     assert all(len(entity["mesh"]["positions"]) == 8 for entity in scene["entities"] if entity["entity_kind"] == "REGION")
     assert all(len(entity["mesh"]["triangles"]) == 12 for entity in scene["entities"] if entity["entity_kind"] == "REGION")
+    for entity in scene["entities"]:
+        if entity["entity_kind"] == "REGION":
+            edges: dict[tuple[int, int], int] = {}
+            for triangle in entity["mesh"]["triangles"]:
+                for first, second in zip(triangle, triangle[1:] + triangle[:1]):
+                    key = tuple(sorted((first, second)))
+                    edges[key] = edges.get(key, 0) + 1
+            assert set(edges.values()) == {2}, "real Region tessellation is a closed surface"
     assert all(len(entity["mesh"]["triangles"]) >= 2 for entity in scene["entities"])
     assert all(entity["entity_ref"] in bundle["entity_index"] for entity in scene["entities"])
     html = (tmp_path / "bundle" / "case01_3d.html").read_text(encoding="utf-8")
@@ -37,3 +45,5 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert "hitTest" in html
     assert "A / SOURCE" in html
     assert "A-G common face" in html
+    assert "depth" in html
+    assert "ctx.stroke" not in html
