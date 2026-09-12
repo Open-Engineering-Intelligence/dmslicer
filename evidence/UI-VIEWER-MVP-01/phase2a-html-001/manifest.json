@@ -1,0 +1,198 @@
+{
+  "goal_id": "UI-VIEWER-MVP-01",
+  "run_id": "phase2a-html-001",
+  "checkpoint": "PHASE_2A_AWAITING_VISUAL_REVIEW",
+  "branch": "feat/ui-viewer-mvp-01",
+  "implementation_commit": "9b571d0d6573368f7bf41d557320c600f6e21232",
+  "policy_commit": "1ca211ccf78e31d05920d1769957b63bb5e20782",
+  "parent_baseline": "5a54423fd7033161304b413648d7e8f0e492f0ef",
+  "fixed_baseline": "1ca211ccf78e31d05920d1769957b63bb5e20782",
+  "scope": "ViewerModel to self-contained static HTML only",
+  "stop_conditions": [
+    "Four reviewable pages generated",
+    "Wait for human visual review before CLI or packaging"
+  ],
+  "phase1_model_changes": [],
+  "input_fixtures": [
+    {
+      "path": "contract_examples/v0.1/geometry/planar_full.json",
+      "sha256": "fc5275cc7c1be80faff380951b831a17e18ba5933c12f3beda85492ce967d674",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/geometry/planar_multipatch.json",
+      "sha256": "396d502e12a7fbec38c3809d80a8b8e20f635b0989d3cb5dd56eb1384b8ad239",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/geometry/planar_partial.json",
+      "sha256": "f5242776b811337fb6eadeb48cf46931b2561f6e67dd6b17c3fb399cda6a579b",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/ambiguous_relation.json",
+      "sha256": "1f73b56ef69718712a5937e6130e59af1c3e24194655174c81017f146ac87fe3",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/missing_semantic_binding.json",
+      "sha256": "e72014bd5ed772ae327024462934f73faf50b6da0b04e95c5039b12cb9022cb6",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/unresolved_artifact.json",
+      "sha256": "1266765fc4d22aad4af1d355e230455397665d73a8c893ac625eddaabe42dc49",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "contract_examples/v0.1/negative/unsupported_family.json",
+      "sha256": "3d74f9761a0a861320b5803dee073732c60a26f3b3649eec0eddb3c4dc1d7784",
+      "hash_semantics": "byte_integrity_only"
+    }
+  ],
+  "environment": {
+    "Python": "3.12.0",
+    "pytest": "8.4.2",
+    "jsonschema": "4.26.0",
+    "Playwright": "1.62.1",
+    "Chromium": "151.0.7922.34",
+    "viewport": {
+      "width": 1360,
+      "height": 900
+    },
+    "FreeCAD": "NOT_USED",
+    "OCCT": "NOT_USED"
+  },
+  "command": "py -B -m pytest -p no:cacheprovider tests/viewer/test_render.py tests/viewer/test_model.py tests/geometry_contract tests/contract_consumers -q --tb=short --junitxml=outputs/ui-viewer-phase2a/regression-02.xml",
+  "command_environment": {
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1",
+    "DMSLICER_TEST_NODE": "existing bundled Node executable",
+    "NODE_PATH": "existing bundled node_modules containing playwright"
+  },
+  "exit_code": 0,
+  "execution_timestamp": "2026-09-12T09:27:33.789573+08:00",
+  "execution_timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-09-12T01:30:51.695193+00:00",
+  "tolerances": {
+    "status": "NOT_APPLICABLE_NO_GEOMETRY_CALCULATIONS",
+    "value": null,
+    "unit": null
+  },
+  "results": {
+    "pytest": {
+      "passed": 127,
+      "renderer": 25,
+      "model": 55,
+      "frozen": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    "browser": {
+      "offline": true,
+      "external_resource_requests": 0,
+      "console_or_page_errors": 0,
+      "navigation": "PASS",
+      "hostile_script_payload": "PASS",
+      "unicode_id_round_trip": "PASS",
+      "visual_inspection": "FOUR_FIRST_SCREENS_AND_PARTIAL_PATCH_DETAIL_REVIEWED"
+    },
+    "scientific_experiment": "NOT_RUN",
+    "geometry_equivalence": "NOT_EVALUATED"
+  },
+  "uris": {
+    "JUnit": "test_reports/regression-02.xml",
+    "validator": "embedded unchanged ViewerModel validation in pages/*.html",
+    "STEP": null,
+    "BREP": null,
+    "FCStd": null,
+    "VIEW_INDEX": "VIEW_INDEX.md",
+    "HUMAN_REVIEW": [
+      "pages/planar_full.html",
+      "pages/planar_partial.html",
+      "pages/planar_multipatch.html",
+      "pages/ambiguous_relation.html"
+    ]
+  },
+  "reviewer_finding": {
+    "severity": "P2",
+    "finding": "Accepted lone-surrogate ID caused URIError during browser initialization",
+    "status": "FIX_CONFIRMED_NO_FURTHER_FINDINGS",
+    "failure_commit": null,
+    "failure_evidence": "failure/surrogate-id-before-fix.html",
+    "fix_commit": "9b571d0d6573368f7bf41d557320c600f6e21232"
+  },
+  "known_mismatch_or_failure_modes": [
+    "Frozen multipatch Decision remains invalid; valid Snapshot is fully navigable",
+    "URIs shown as plain text with saved resolution; current filesystem existence is not checked by renderer",
+    "Raw failure reports retain original local/staging paths",
+    "CLI and package-data configuration deliberately deferred"
+  ],
+  "actual_geometry_validation_criteria": "NONE: viewer consumes validated contract facts, no CAD evaluation",
+  "evidence_confidence": "L",
+  "artifacts": [
+    {
+      "path": "failure/surrogate-id-before-fix.html",
+      "sha256": "befb082671930d694d1976ad5de7f4377f16d13255379a5572cb6a512db8bf5a",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "pages/ambiguous_relation.html",
+      "sha256": "a51030e6220430161fa37269738d7faf6012b73b4d3f0dc5d16c7feb121ac029",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "pages/planar_full.html",
+      "sha256": "ac07b1046128fbe646dd27b2699419751ea81c708f2960df9502e0e5fc80c533",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "pages/planar_multipatch.html",
+      "sha256": "6c439eb08ef8c56288f37e65bc44d0cafd7314dfb299ee6b1e2fc447fce40c71",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "pages/planar_partial.html",
+      "sha256": "ee7d4a33812b0bb2e915f8e72579c2987dc8d5c97266ee2624876a775761f4d9",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/red-01.xml",
+      "sha256": "248008cb12db138810664d17e19e0d9d4ae03be3816106bbc36f9f4f1864b807",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/regression-02.xml",
+      "sha256": "e5c38d40af62e9ad9f733c12df74f9e43c18180e6382ca3fb81855270f462b56",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/render-01.xml",
+      "sha256": "82de40cc0f6402d0f4a21211ccb7d8d90edcaf6941a6fe28e6956783b056a48d",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/render-02.xml",
+      "sha256": "f0fc25bd855313de4fc299a9037b76275e4d97a48e5e65046207407bca6d9ed1",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "test_reports/review-red-01.xml",
+      "sha256": "61a7fc5e51dbd6c87ec558dbf9bae7caebdd0c9b85cfb390f7e80012b8335d0f",
+      "hash_semantics": "byte_integrity_only"
+    },
+    {
+      "path": "VIEW_INDEX.md",
+      "sha256": "1c895797298fdc96fc4136e72177b8416a4afb6d582fb3391db2022181f247b3",
+      "hash_semantics": "byte_integrity_only"
+    }
+  ],
+  "copy_locations": [
+    "D:/Agent/worktrees/dmslicer-ui-viewer-mvp-01/evidence/UI-VIEWER-MVP-01/phase2a-html-001",
+    "D:/Agent/evidence-backups/dmslicer/UI-VIEWER-MVP-01/phase2a-html-001"
+  ],
+  "preservation": "LOCAL_CHECKPOINT_ONLY_NOT_OFF_HOST_PRESERVATION",
+  "external_actions": {
+    "pushed": false,
+    "published": false
+  }
+}

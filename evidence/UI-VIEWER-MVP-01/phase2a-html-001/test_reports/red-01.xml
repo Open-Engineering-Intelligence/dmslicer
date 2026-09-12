@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="7" time="0.393" timestamp="2026-09-12T09:18:15.734578+08:00" hostname="DESKTOP-05SBA87"><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_full-geometry]" time="0.020"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_partial-geometry]" time="0.016"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_multipatch-geometry]" time="0.015"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[ambiguous_relation-negative]" time="0.009"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[unresolved_artifact-negative]" time="0.008"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_html_is_deterministic_without_mutating_model_or_adding_local_paths" time="0.017"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase><testcase classname="tests.viewer.test_render" name="test_hostile_payload_stays_json_data_not_executable_script" time="0.016"><failure message="Failed: HTML renderer is not implemented">E   ModuleNotFoundError: No module named 'dmslicer.viewer.render'
+
+During handling of the above exception, another exception occurred:
+E   Failed: HTML renderer is not implemented</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="9.582" timestamp="2026-09-12T09:26:46.089632+08:00" hostname="DESKTOP-05SBA87"><testcase classname="tests.viewer.test_render" name="test_json_identifier_with_lone_surrogate_does_not_abort_navigation" time="8.885"><error message="failed on setup with &quot;AssertionError: page.waitForFunction: Timeout 5000ms exceeded.&#10;      at C:\Users\ufo00\AppData\Local\Temp\pytest-of-ufo00\pytest-2104\viewer-render0\check.cjs:18:16 {&#10;    log: [],&#10;    name: 'TimeoutError'&#10;  }&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['C:\\Users\\ufo00\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node...Local\\Temp\\pytest-of-ufo00\\pytest-2104\\viewer-render0\\check.cjs:18:16 {\n  log: [],\n  name: 'TimeoutError'\n}\n&quot;).returncode&quot;">tests\viewer\test_render.py:197: in browser_results
+    assert result.returncode == 0, result.stderr
+E   AssertionError: page.waitForFunction: Timeout 5000ms exceeded.
+E         at C:\Users\ufo00\AppData\Local\Temp\pytest-of-ufo00\pytest-2104\viewer-render0\check.cjs:18:16 {
+E       log: [],
+E       name: 'TimeoutError'
+E     }
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['C:\\Users\\ufo00\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node...Local\\Temp\\pytest-of-ufo00\\pytest-2104\\viewer-render0\\check.cjs:18:16 {\n  log: [],\n  name: 'TimeoutError'\n}\n").returncode</error></testcase></testsuite></testsuites>

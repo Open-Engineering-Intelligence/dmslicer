@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>DM-Slicer Geometry Snapshot Viewer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#202b36;font:14px/1.5 system-ui,sans-serif;height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr)}
+header{background:#fff;border-bottom:1px solid #bbc4ce;padding:14px 22px}h1{font-size:21px;margin:0 0 6px}h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0 0 8px}p{margin:6px 0}
+.banner{font-weight:700;letter-spacing:.06em;color:#31475d;background:#e9eef4;border-left:4px solid #526c85;padding:7px 12px;margin-bottom:9px}
+.muted{color:#536170;font-size:12px}.mono,code{font-family:ui-monospace,Consolas,monospace;overflow-wrap:anywhere}code{font-size:12px}.layout{display:grid;grid-template-columns:310px minmax(0,1fr);min-height:0}
+nav{background:#fff;border-right:1px solid #cbd2d9;overflow:auto;padding:16px}nav section{margin:16px 0}nav ul{padding:0;list-style:none;margin:6px 0}nav li{border-top:1px solid #edf0f3;padding:6px 0}nav a{font-size:11px}nav h3{margin-bottom:4px}nav .selection-mark{display:block;width:fit-content}
+main{padding:20px 26px;overflow:auto;min-width:0}section.panel{background:#fff;border:1px solid #d4dbe2;border-radius:4px;padding:16px;margin:0 0 16px}.status-line{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.badge{display:inline-block;font-size:12px;font-weight:600;border:1px solid #aebac6;border-radius:3px;padding:1px 6px;background:#f2f5f7;margin:2px 4px 2px 0}.ok{color:#225438;background:#edf6f0;border-color:#9bbca8}.warning{color:#764a0c;background:#fff7e8;border-color:#d9b776}.error{color:#852e2c;background:#fdf0ef;border-color:#d4a19d}
+a{color:#235a87;text-underline-offset:2px;overflow-wrap:anywhere}a:focus-visible,button:focus-visible{outline:3px solid #8bb4db;outline-offset:2px}a[aria-current="page"]{font-weight:700;background:#e9f1f8}.selection-mark{background:#eaf2fb;border:1px solid #85a8ce;color:#234f7b;border-radius:3px;padding:1px 5px;margin:3px 4px;font-size:11px;font-weight:700}.entity-link{font-family:ui-monospace,Consolas,monospace;font-size:12px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #e1e6ec;padding:8px;overflow-wrap:anywhere}th{font-weight:600;background:#f7f9fb}table.fields>tbody>tr>th{width:185px}.fields table{font-size:12px}ul.values{margin:0;padding-left:18px}.membership{border-left:2px solid #d9e0e7;padding-left:12px;margin:12px 0}.diagnostic{border-left:3px solid #bc8c43;padding:8px 12px;margin:8px 0;background:#fff8ee}.empty{font-style:italic;color:#566473}.counts{display:flex;gap:14px;flex-wrap:wrap}.counts span{border-bottom:2px solid #cbd7e1;padding-bottom:3px}[hidden]{display:none!important}
+#partition-summary{table-layout:fixed}#partition-summary th:nth-child(1){width:13%}#partition-summary th:nth-child(2){width:12%}#partition-summary th:nth-child(3){width:40%}#partition-summary td:nth-child(1) .badge,#partition-summary td:nth-child(2){white-space:nowrap}
+#relation-summary{table-layout:fixed}#relation-summary th:nth-child(1){width:40%}#relation-summary th:nth-child(2){width:24%}#relation-summary th:nth-child(3){width:16%}#relation-summary th,#relation-summary .badge{white-space:nowrap}
+</style>
+</head>
+<body>
+<header>
+  <div class="banner">CONTRACT TOPOLOGY / NON-GEOMETRIC VIEW</div>
+  <h1>DM-Slicer Geometry Snapshot Viewer</h1>
+  <div id="header-status" class="status-line"></div>
+  <div id="header-metadata" class="muted"></div>
+</header>
+<div class="layout">
+  <nav aria-label="Contract entity navigation"><a href="#overview">Overview &amp; diagnostics</a><div id="entity-navigation"></div></nav>
+  <main id="main-content">
+    <section id="validation-panel" class="panel" aria-label="Validation diagnostics"></section>
+    <section id="entity-detail" class="panel" hidden tabindex="-1"></section>
+    <div id="overview"></div>
+    <section id="decision-panel" class="panel" aria-label="Decision overlay"></section>
+  </main>
+</div>
+<noscript>This local viewer needs JavaScript enabled to display its embedded contract data. No network connection is needed.</noscript>
+<script id="viewer-model" type="application/json">{"artifact_links":[{"artifact_id":"artifact:e2-step","kind":"STEP","resolution":"RESOLVED","uri":"benchmarks/planar_multipatch_interface_correction_06c/P10/inputs.step"}],"boundaries":[],"collection_presence":{"artifact_references":"PRESENT","boundaries":"ABSENT","interface_components":"PRESENT","interfaces":"PRESENT","parent_snapshot_ids":"ABSENT","patches":"PRESENT","provenance_references":"PRESENT","regions":"PRESENT","relations":"PRESENT","semantic_bindings":"PRESENT","source_documents":"PRESENT","surface_partitions":"ABSENT","tolerances":"PRESENT"},"decision_overlay":{"disabled_reason":"INVALID_DECISION","state":"DISABLED"},"interface_components":[{"component_id":"component:v0.1:0ec4d4ff3275e402aac7e86e6a31b8f8f879a8c07d6acd925dd28ed4fc0c7c19","interface_ref":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec","patch_refs":["patch:e2-one"]},{"component_id":"component:v0.1:1ca496f9b5c4fa05349845c14ceba85a9528d8f43ef89b5fddd7312771f99722","interface_ref":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec","patch_refs":["patch:e2-two"]}],"interfaces":[{"interface_id":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec","patch_refs":["patch:e2-one","patch:e2-two"],"region_refs":["region:e2-side-1","region:e2-side-2"],"relation_ref":"relation:v0.1:f571dea3817ea7fafa243c17f8097cc458614ab50611ba9723acae1512071bb7"}],"metadata":{"contract":{"name":"dmslicer.geometry-snapshot","version":"0.1-rc1"},"model_frame":{"axes":{"x":[1,0,0],"y":[0,1,0],"z":[0,0,1]},"frame_id":"frame:model","length_unit":"mm","origin":[0,0,0]},"snapshot_id":"snapshot:v0.1:137b775b0807089bd0c079f9ea660e1e389130a3fbfd1046d03f204e3ab77053","source_documents":[{"artifact_ref":"artifact:e2-step","internal_length_unit":"mm","source_document_id":"document:e2-p10","source_length_unit":"mm"}],"tolerances":[{"role":"patch_area_acceptance","source":"06C","tolerance_id":"tolerance:e2-area","unit":"mm2","value":1e-08}],"view_kind":"CONTRACT TOPOLOGY / NON-GEOMETRIC VIEW"},"patches":[{"area":{"unit":"mm2","value":192},"component_ref":"component:v0.1:0ec4d4ff3275e402aac7e86e6a31b8f8f879a8c07d6acd925dd28ed4fc0c7c19","family":"PLANE","frame_ref":"frame:model","geometry_ref":{"artifact_ref":"artifact:e2-step","locator":{"provenance_ref":"provenance:e2","scheme":"STEP_FACE","value":"face:v1:e2-one"}},"interface_ref":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec","patch_id":"patch:e2-one","planar_parameters":{"origin":[0,0,0],"tangent_u":[1,0,0],"tangent_v":[0,1,0],"unit_normal":[0,0,1]}},{"area":{"unit":"mm2","value":192},"component_ref":"component:v0.1:1ca496f9b5c4fa05349845c14ceba85a9528d8f43ef89b5fddd7312771f99722","family":"PLANE","frame_ref":"frame:model","geometry_ref":{"artifact_ref":"artifact:e2-step","locator":{"provenance_ref":"provenance:e2","scheme":"STEP_FACE","value":"face:v1:e2-two"}},"interface_ref":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec","patch_id":"patch:e2-two","planar_parameters":{"origin":[0,0,0],"tangent_u":[1,0,0],"tangent_v":[0,1,0],"unit_normal":[0,0,1]}}],"provenance_links":[{"evidence_uri":"docs/implementation/06c_planar_multipatch_interface_correction.md","fixture_uri":"benchmarks/planar_multipatch_interface_correction_06c/P10/inputs.step","goal_id":"06C-P10","implementation_commit":"58ec93a67d8214c69bc92d5710c60d91aa1fe30c","provenance_id":"provenance:e2","resolution":{"evidence_uri":"RESOLVED","fixture_uri":"RESOLVED"}}],"regions":[{"frame_ref":"frame:model","geometry_ref":{"artifact_ref":"artifact:e2-step","locator":{"scheme":"STEP_OCCURRENCE","value":"P10/Side_1"}},"region_id":"region:e2-side-1","source_document_id":"document:e2-p10","validity_state":"VALID"},{"frame_ref":"frame:model","geometry_ref":{"artifact_ref":"artifact:e2-step","locator":{"scheme":"STEP_OCCURRENCE","value":"P10/Side_2"}},"region_id":"region:e2-side-2","source_document_id":"document:e2-p10","validity_state":"VALID"}],"relations":[{"confirmation":"CONFIRMED","intersection_dimension":2,"region_refs":["region:e2-side-1","region:e2-side-2"],"relation_id":"relation:v0.1:f571dea3817ea7fafa243c17f8097cc458614ab50611ba9723acae1512071bb7","taxonomy":"PARTIAL_FACE_OVERLAP","tolerance_refs":["tolerance:e2-area"]}],"semantic_bindings":[{"activation":"ACTIVE","binding_id":"binding:e2-interface","semantic_role":"INTERFACE_SOURCE_BOUNDARY","subject_ref":"interface:v0.1:c62e7fb24a7a80d6273f453cfc9cf8837b5149f25082088e72ff2b63063d34ec"},{"activation":"ACTIVE","binding_id":"binding:e2-target","semantic_role":"TARGET_REGION","subject_ref":"region:e2-side-1"}],"surface_partitions":[],"validation":{"decision":{"issues":[{"code":"SCHEMA_INVALID","message":"[] should be non-empty","path":"expected_partition_refs"}],"status":"INVALID"},"overlay":{"issues":[],"status":"NOT_EVALUATED"},"snapshot":{"issues":[],"status":"VALID"}}}</script>
+<script id="viewer-code">
+"use strict";
+(() => {
+  const model = JSON.parse(document.getElementById("viewer-model").textContent);
+  const valid = model.validation.snapshot.status === "VALID";
+  const groups = [
+    ["regions","Regions","region_id"], ["relations","Relations","relation_id"],
+    ["interfaces","Interfaces","interface_id"], ["interface_components","Components","component_id"],
+    ["patches","Patches","patch_id"], ["boundaries","Boundaries","boundary_id"],
+    ["surface_partitions","Surface Partitions","partition_id"], ["semantic_bindings","Semantic Bindings","binding_id"]
+  ];
+  const referenceKeys = new Set(["region_refs","relation_ref","interface_ref","component_ref","patch_refs","patch_ref","source_face_refs","subject_ref","artifact_ref","provenance_ref","frame_ref","source_document_id","tolerance_refs","parent_snapshot_ids","selected_interface_id","selected_patch_ids","target_region_id","local_frame_ref","expected_partition_refs","provenance_reference","input_snapshot_id"]);
+  const entities = new Map(), backlinks = new Map(), selected = new Map();
+  const get = id => document.getElementById(id);
+  function el(tag, text, cls) {
+    const node = document.createElement(tag);
+    if (text !== undefined) node.textContent = String(text);
+    if (cls) node.className = cls;
+    return node;
+  }
+  function badge(value) {
+    const cls = ["VALID","CONFIRMED","ENABLED","ACTIVE"].includes(value) ? "ok" :
+      ["INVALID","UNAVAILABLE","FAILED"].includes(value) ? "error" :
+      ["AMBIGUOUS","REJECTED","UNSUPPORTED","DISABLED"].includes(value) ? "warning" : "";
+    return el("span",value,"badge " + cls);
+  }
+  function register(records, idKey, title) {
+    for (const record of records || []) entities.set(record[idKey],{record,title,id:record[idKey]});
+  }
+  if (valid) {
+    for (const [key,title,idKey] of groups) register(model[key],idKey,title);
+    register(model.metadata.source_documents,"source_document_id","Source Document");
+    register(model.metadata.tolerances,"tolerance_id","Tolerance");
+    register(model.artifact_links,"artifact_id","Artifact");
+    register(model.provenance_links,"provenance_id","Provenance");
+    if (model.metadata.model_frame) register([model.metadata.model_frame],"frame_id","Model Frame");
+  }
+  const overlay = model.decision_overlay;
+  if (valid && overlay.state === "ENABLED" && overlay.selection) {
+    const mark = (id,text) => {if (entities.has(id)) selected.set(id,text);};
+    mark(overlay.selection.selected_interface_id,"Selected interface");
+    for (const id of overlay.selection.selected_patch_ids) mark(id,"Selected patch");
+    mark(overlay.selection.target_region_id,"Target region");
+  }
+  function link(id) {
+    if (!entities.has(id)) return el("code",id);
+    const span = el("span");
+    const a = el("a",id,"entity-link");
+    // JSON string encoding preserves even lone UTF-16 surrogates allowed by
+    // the contract's identifier syntax; never normalize or replace an ID.
+    a.href = "#entity/" + encodeURIComponent(JSON.stringify(id));
+    a.dataset.entityId = id;
+    span.append(a);
+    if (selected.has(id)) span.append(el("span",selected.get(id),"selection-mark"));
+    return span;
+  }
+  function valueNode(value,key) {
+    if (Array.isArray(value)) {
+      if (!value.length) return el("code","[]");
+      if (value.every(v => typeof v === "number")) return el("code",JSON.stringify(value));
+      const list = el("ul",undefined,"values");
+      for (const item of value) {const li=el("li"); li.append(valueNode(item,key)); list.append(li);}
+      return list;
+    }
+    if (value !== null && typeof value === "object") return fields(value);
+    if (typeof value === "string" && referenceKeys.has(key)) return link(value);
+    return el("code",value === null ? "null" : value);
+  }
+  function fields(record) {
+    const table = el("table",undefined,"fields"), body=el("tbody");
+    for (const [key,value] of Object.entries(record)) {
+      const row=el("tr"), heading=el("th",key), cell=el("td");
+      heading.scope="row"; cell.append(valueNode(value,key)); row.append(heading,cell); body.append(row);
+    }
+    table.append(body); return table;
+  }
+  function sourceSummary(ref) {
+    const box=el("div"); box.append(link(ref.artifact_ref));
+    box.append(el("div",ref.locator.scheme + ": " + ref.locator.value,"mono"));
+    if(ref.locator.provenance_ref) box.append(link(ref.locator.provenance_ref));
+    return box;
+  }
+  function scanReferences(value,key,source) {
+    if (Array.isArray(value)) {for (const item of value) scanReferences(item,key,source);}
+    else if (value !== null && typeof value === "object") {for (const [k,v] of Object.entries(value)) scanReferences(v,k,source);}
+    else if (referenceKeys.has(key) && entities.has(value) && value !== source) {
+      if (!backlinks.has(value)) backlinks.set(value,new Set());
+      backlinks.get(value).add(source);
+    }
+  }
+  for (const entity of entities.values()) scanReferences(entity.record,"",entity.id);
+  function panel(parent,title) {
+    const section=el("section",undefined,"panel"); section.append(el("h2",title)); parent.append(section); return section;
+  }
+  function table(parent,headers,rows,id) {
+    const wrap=el("div",undefined,"table-wrap"), t=el("table"), head=el("thead"), hr=el("tr"), body=el("tbody");
+    if(id) t.id=id;
+    for(const title of headers) {const th=el("th",title); th.scope="col"; hr.append(th);}
+    head.append(hr);
+    for(const cells of rows) {const row=el("tr"); for(const content of cells) {const cell=el("td"); cell.append(content instanceof Node ? content : document.createTextNode(String(content))); row.append(cell);} body.append(row);}
+    t.append(head,body); wrap.append(t); parent.append(wrap); return t;
+  }
+  const hs=get("header-status");
+  hs.append(el("span","Snapshot"),badge(model.validation.snapshot.status));
+  hs.append(el("span","Decision"),badge(overlay.status || model.validation.decision.status));
+  hs.append(el("span","Decision schema"),badge(model.validation.decision.status));
+  hs.append(el("span","Overlay"),badge(overlay.state));
+  const hm=get("header-metadata"), metadata=model.metadata;
+  if(metadata.contract) hm.append(el("p",metadata.contract.name + " / " + metadata.contract.version));
+  if(metadata.snapshot_id) hm.append(el("p",metadata.snapshot_id,"mono"));
+  if(metadata.label) hm.append(el("p",metadata.label));
+  const vp=get("validation-panel"); vp.append(el("h2","Validation diagnostics"));
+  vp.append(el("p","Contract validation only. CAD geometry and slicing execution are not evaluated.","muted"));
+  const validationStates=el("div",undefined,"status-line"); vp.append(validationStates);
+  for(const [name,result] of Object.entries(model.validation)) {
+    const line=el("span"); line.append(el("strong",name + ": "),badge(result.status)); validationStates.append(line);
+    for(const issue of result.issues) {const box=el("div",undefined,"diagnostic"); box.append(el("strong",issue.code),el("p",issue.path,"mono"),el("p",issue.message)); vp.append(box);}
+  }
+  const dp=get("decision-panel"); dp.append(el("h2","SlicerDecision overlay"));
+  for(const field of ["state","status","reason_code","disabled_reason"]) if(field in overlay) {const line=el("p"); line.append(el("strong",field + ": "),badge(overlay[field])); dp.append(line);}
+  if(overlay.decision_id) dp.append(el("p",overlay.decision_id,"mono"));
+  if(valid && overlay.state === "ENABLED" && overlay.selection) {
+    dp.append(el("p","Expected / NOT_EXECUTED — expected partition references are decision expectations, not evidence of slicing.","muted"));
+    dp.append(fields(overlay.selection));
+    if(overlay.provenance_reference) {const line=el("p","provenance_reference: "); line.append(link(overlay.provenance_reference)); dp.append(line);}
+  }
+  const navigation=get("entity-navigation"), overview=get("overview");
+  if(!valid) {
+    navigation.append(el("p","Authoritative entity navigation unavailable.","empty"));
+    overview.append(el("p","Snapshot validation did not succeed. Only diagnostics are shown.","empty"));
+  } else {
+    const summary=panel(overview,"Contract overview");
+    summary.append(el("p","Membership and references below are declared contract topology. Layout does not represent CAD position.","muted"));
+    const counts=el("div",undefined,"counts"); summary.append(counts);
+    for(const [key,title,idKey] of groups) {
+      const records=model[key] || [], state=model.collection_presence[key];
+      const section=el("section");
+      section.append(el("h3",state === "ABSENT" ? title + " — ABSENT" : title + " (" + records.length + ")"));
+      if(state === "ABSENT") section.append(el("p","Not supplied by the contract.","empty"));
+      else if(!records.length) section.append(el("p","EMPTY — explicitly supplied.","empty"));
+      const list=el("ul");
+      for(const record of records) {const li=el("li"); li.append(link(record[idKey])); if(record.role) li.append(el("div",record.role,"muted")); list.append(li);}
+      section.append(list); navigation.append(section);
+      counts.append(el("span",title + ": " + (state === "ABSENT" ? "ABSENT" : records.length)));
+    }
+    const partitions=panel(overview,"Surface partitions — declared coverage");
+    if(model.collection_presence.surface_partitions === "ABSENT") partitions.append(el("p","Surface Partitions — ABSENT. No partitions have been generated by this viewer.","empty"));
+    else table(partitions,["Role","Area","Partition ID","Source locator"],model.surface_partitions.map(p=>[badge(p.role),p.area ? p.area.value + " " + p.area.unit : "Not supplied",link(p.partition_id),sourceSummary(p.source_geometry_ref)]),"partition-summary");
+    const relations=panel(overview,"Relations");
+    table(relations,["Relation / regions","Taxonomy","Confirmation","Reading"],model.relations.map(r=>{
+      const refs=el("div"); refs.append(link(r.relation_id),valueNode(r.region_refs,"region_refs"));
+      return [refs,badge(r.taxonomy),badge(r.confirmation),r.taxonomy === "DISJOINT" && r.confirmation === "CONFIRMED" ? "Confirmed to be disjoint" : "Taxonomy and confirmation are separate contract facts"];
+    }),"relation-summary");
+    const interfaces=panel(overview,"Interfaces — declared membership");
+    if(!model.interfaces.length) interfaces.append(el("p","No interfaces supplied.","empty"));
+    for(const item of model.interfaces) {
+      const box=el("div",undefined,"membership"); box.append(link(item.interface_id));
+      const regions=el("p","Regions: "); regions.append(valueNode(item.region_refs,"region_refs")); box.append(regions);
+      for(const component of model.interface_components.filter(c=>c.interface_ref === item.interface_id)) {
+        const block=el("div",undefined,"membership"); block.append(el("strong","Component: "),link(component.component_id));
+        const patches=el("p","Patches: "); patches.append(valueNode(component.patch_refs,"patch_refs")); block.append(patches); box.append(block);
+      }
+      interfaces.append(box);
+    }
+    const bindings=panel(overview,"Semantic bindings — supplied activation");
+    if(!model.semantic_bindings.length) bindings.append(el("p","Semantic bindings not supplied.","empty"));
+    else table(bindings,["Binding","Subject","Role","Activation"],model.semantic_bindings.map(b=>[link(b.binding_id),link(b.subject_ref),b.semantic_role,badge(b.activation)]));
+    const artifacts=panel(overview,"Artifact / provenance references");
+    artifacts.append(el("p","URIs are plain text. Resolution is the saved model observation; current existence has not been rechecked by this page.","muted"));
+    table(artifacts,["Artifact","Kind","URI","Saved resolution"],model.artifact_links.map(a=>[link(a.artifact_id),a.kind,el("code",a.uri),a.resolution]));
+    for(const p of model.provenance_links) {const box=el("div",undefined,"membership"); box.append(link(p.provenance_id),fields(p)); artifacts.append(box);}
+    const meta=panel(overview,"Contract metadata"); meta.append(fields(metadata));
+  }
+  function navigate() {
+    let id;
+    try {if(location.hash.startsWith("#entity/")) id=JSON.parse(decodeURIComponent(location.hash.slice(8)));} catch (_) {id=undefined;}
+    const entity=valid ? entities.get(id) : undefined, detail=get("entity-detail");
+    for(const a of navigation.querySelectorAll("a[data-entity-id]")) {
+      if(a.dataset.entityId === id && entity) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    }
+    overview.hidden=!!entity; detail.hidden=!entity; dp.hidden=!!entity;
+    if(entity) {
+      detail.replaceChildren(); detail.append(el("h2",entity.title + " — entity detail"),el("p",entity.id,"mono"));
+      if(selected.has(id)) detail.append(el("span",selected.get(id),"selection-mark"));
+      detail.append(fields(entity.record));
+      const reverse=el("section",undefined,"backreferences"); reverse.append(el("h3","Referenced by — declared references"));
+      const refs=Array.from(backlinks.get(id) || []).sort();
+      if(!refs.length) reverse.append(el("p","No incoming references supplied.","empty"));
+      for(const source of refs) {const p=el("p"); p.append(link(source)); reverse.append(p);}
+      detail.append(reverse); detail.dataset.entityId=id; detail.focus({preventScroll:true});
+    }
+    get("main-content").scrollTop=0;
+  }
+  window.addEventListener("hashchange",navigate);
+  navigate();
+  document.documentElement.dataset.ready="true";
+})();
+</script>
+</body>
+</html>

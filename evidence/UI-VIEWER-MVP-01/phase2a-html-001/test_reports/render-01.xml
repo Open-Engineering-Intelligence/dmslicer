@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="17" failures="0" skipped="0" tests="24" time="5.353" timestamp="2026-09-12T09:21:11.949424+08:00" hostname="DESKTOP-05SBA87"><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_full-geometry]" time="0.021" /><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_partial-geometry]" time="0.017" /><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[planar_multipatch-geometry]" time="0.016" /><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[ambiguous_relation-negative]" time="0.011" /><testcase classname="tests.viewer.test_render" name="test_document_contains_exact_model_and_only_self_contained_resources[unresolved_artifact-negative]" time="0.011" /><testcase classname="tests.viewer.test_render" name="test_html_is_deterministic_without_mutating_model_or_adding_local_paths" time="0.017" /><testcase classname="tests.viewer.test_render" name="test_hostile_payload_stays_json_data_not_executable_script" time="0.017" /><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[full]" time="4.447"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[partial]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[multi]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[ambiguous]" time="0.000"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[invalid]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[unavailable]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[no_decision]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_browser_pages_have_identity_banner_and_no_runtime_or_network_errors[hostile]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_full_page_separates_taxonomy_and_confirmation" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_partial_page_shows_three_distinct_partitions_and_decision_selection" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_multipatch_preserves_separate_entities_absence_and_invalid_decision" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_ambiguous_relation_is_visible_without_interface" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_invalid_snapshot_has_diagnostics_without_authoritative_navigation[invalid-UNRESOLVED_ARTIFACT]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_invalid_snapshot_has_diagnostics_without_authoritative_navigation[unavailable-VALIDATION_UNAVAILABLE]" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_cross_references_navigate_both_directions" time="0.000"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_hostile_strings_render_as_text_and_saved_resolved_status_creates_no_link" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase><testcase classname="tests.viewer.test_render" name="test_optional_decision_can_be_absent" time="0.001"><error message="failed on setup with &quot;TypeError: the JSON object must be str, bytes or bytearray, not NoneType&quot;">tests\viewer\test_render.py:185: in browser_results
+    return json.loads(result.stdout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\ufo00\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py:339: in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+E   TypeError: the JSON object must be str, bytes or bytearray, not NoneType</error></testcase></testsuite></testsuites>
