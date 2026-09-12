@@ -1,0 +1,36 @@
+✔ annotation API is available before state consumers are wired (1.1685ms)
+✔ defaults derive geometry only; names and colors never activate semantic entities (2.8166ms)
+✔ explicit role, material and override are independent through material edits and roundtrip (1.516ms)
+✔ restore refuses wrong source and changed reference provenance without mutating current state (1.3452ms)
+✖ invalid annotations never enter persistence (1.3115ms)
+✔ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.6095ms)
+✔ selection and opacity operate on explicit sets; empty and filtered sets cannot leak (0.5823ms)
+✔ failed save preserves draft, saved time and old persisted bytes (0.9667ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.4858
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ invalid annotations never enter persistence (1.3115ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:44:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /input/i,
+    operator: 'throws',
+    diff: 'simple'
+  }

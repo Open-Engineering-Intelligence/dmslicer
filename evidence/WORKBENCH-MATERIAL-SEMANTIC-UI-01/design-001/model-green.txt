@@ -1,0 +1,16 @@
+✔ annotation API is available before state consumers are wired (2.2217ms)
+✔ defaults derive geometry only; names and colors never activate semantic entities (10.3097ms)
+✔ explicit role, material and override are independent through material edits and roundtrip (3.0118ms)
+✔ restore refuses wrong source and changed reference provenance without mutating current state (2.0444ms)
+✔ invalid annotations never enter persistence (1.3178ms)
+✔ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.357ms)
+✔ selection and opacity operate on explicit sets; empty and filtered sets cannot leak (0.5867ms)
+✔ failed save preserves draft, saved time and old persisted bytes (1.129ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.6589

@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "page identity; existing geometry and evidence remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "material add returns to source row without assignment; role material color independent",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit save and portable export preserve fields and decisions",
+      "status": "PASS"
+    }
+  ],
+  "errors": [
+    "Pattern attribute value [a-zA-Z][a-zA-Z0-9._-]{0,79} is not a valid regular expression: Uncaught SyntaxError: Invalid regular expression: /[a-zA-Z][a-zA-Z0-9._-]{0,79}/v: Invalid character in character class"
+  ],
+  "failure": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#annotation-status').filter({ hasText: '导入失败' }) to be visible\u001b[22m\n",
+  "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#annotation-status').filter({ hasText: '导入失败' }) to be visible\u001b[22m\n\n    at C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:53:154\n    at async check (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:12:32)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:46:3"
+}

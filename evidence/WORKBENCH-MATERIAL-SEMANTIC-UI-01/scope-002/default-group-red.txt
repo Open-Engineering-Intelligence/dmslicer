@@ -1,0 +1,35 @@
+✔ v2 defaults do not infer semantic types from source names; four presets contain no physical values (4.2336ms)
+✔ Source requires existing material when persisting, while incomplete draft is editable (2.8116ms)
+✖ Gradient cannot hold material; switching records cleared assignment and keeps display override separate (1.4354ms)
+✔ same group requires confirmed connection; different groups preserve geometry contact but block semantics (0.7217ms)
+✔ Isolator identity is object scoped, material requirement remains undecided and self links are rejected (1.0086ms)
+✔ material color follows edits except explicit override, never changes semantic type (1.7164ms)
+✔ all numeric properties require unit, source and traceable basis; invalid edits are atomic (0.6609ms)
+✔ v1 and forged annotations are explicitly rejected; current state stays intact (1.8481ms)
+✔ source context, asset and provenance must match exactly, not a geometry equivalence test (0.8609ms)
+✔ save validates first; storage failure preserves old bytes, draft and saved timestamp (1.0604ms)
+✔ library replacement retains assignments and former revision; orphan material references rejected atomically (0.9498ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.9279
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:23:1
+✖ Gradient cannot hold material; switching records cleared assignment and keeps display override separate (1.4354ms)
+  Error: Gradient group must be G, G1, G2, ...
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at validate (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:68:103)
+      at Object.restore (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:102:118)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:29:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

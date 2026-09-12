@@ -1,0 +1,157 @@
+✖ v2 defaults do not infer semantic types from source names; four presets contain no physical values (5.0667ms)
+✖ Source requires existing material when persisting, while incomplete draft is editable (0.469ms)
+✖ Gradient cannot hold material; switching records cleared assignment and keeps display override separate (0.319ms)
+✖ same group requires confirmed connection; different groups preserve geometry contact but block semantics (1.3573ms)
+✖ Isolator identity is object scoped, material requirement remains undecided and self links are rejected (0.3368ms)
+✖ material color follows edits except explicit override, never changes semantic type (0.7297ms)
+✖ all numeric properties require unit, source and traceable basis; invalid edits are atomic (0.6438ms)
+✖ v1 and forged annotations are explicitly rejected; current state stays intact (0.6936ms)
+✔ source context, asset and provenance must match exactly, not a geometry equivalence test (1.0338ms)
+✖ save validates first; storage failure preserves old bytes, draft and saved timestamp (0.8524ms)
+✔ library replacement retains assignments and former revision; orphan material references rejected atomically (0.9445ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 2
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 179.0491
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:11:1
+✖ v2 defaults do not infer semantic types from source names; four presets contain no physical values (5.0667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'dmslicer.workspace-annotation.v1'
+  - 'dmslicer.workspace-annotation.v2'
+                                    ^
+  
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:12:66)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'dmslicer.workspace-annotation.v1',
+    expected: 'dmslicer.workspace-annotation.v2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\workspace_annotations.test.cjs:18:1
+✖ Source requires existing material when persisting, while incomplete draft is editable (0.469ms)
+  Error: Geometry role is read only
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:63:3)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:19:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests\workspace_annotations.test.cjs:23:1
+✖ Gradient cannot hold material; switching records cleared assignment and keeps display override separate (0.319ms)
+  Error: Unknown material
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:65:28)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:24:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:31:1
+✖ same group requires confirmed connection; different groups preserve geometry contact but block semantics (1.3573ms)
+  Error: Geometry role is read only
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:63:3)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:32:32)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:41:1
+✖ Isolator identity is object scoped, material requirement remains undecided and self links are rejected (0.3368ms)
+  Error: Unknown material
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:65:28)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:42:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:49:1
+✖ material color follows edits except explicit override, never changes semantic type (0.7297ms)
+  Error: Geometry role is read only
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:63:3)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:50:108)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:54:1
+✖ all numeric properties require unit, source and traceable basis; invalid edits are atomic (0.6438ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:56:196)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\workspace_annotations.test.cjs:59:1
+✖ v1 and forged annotations are explicitly rejected; current state stays intact (0.6936ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:60:141)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /v1.*ambiguous/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\workspace_annotations.test.cjs:70:1
+✖ save validates first; storage failure preserves old bytes, draft and saved timestamp (0.8524ms)
+  Error: Geometry role is read only
+      at require (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:5:50)
+      at Object.decide (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:63:3)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:73:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

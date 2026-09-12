@@ -1,0 +1,153 @@
+{
+  "goal_id": "WORKBENCH-MATERIAL-SEMANTIC-UI-01",
+  "run_id": "final-001",
+  "implementation_commit": "f1d988768db31e726eeeb99e98d12eea86b80c0a",
+  "status": "PASS",
+  "recoverable_local_copies": 2,
+  "verified_file_count": 202,
+  "hash_semantics": "BYTE_INTEGRITY_ONLY",
+  "geometry_equivalence": "NOT_ASSESSED",
+  "failure_artifacts_preserved": [
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-red-001/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-002/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-red-010/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red-behaviors.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v2-red.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/default-group-red.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/affected-regression-002.xml",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/manifest-generation-failure.txt"
+  ],
+  "mirror": "C:\\Users\\ufo00\\.codex\\evidence-custody\\WORKBENCH-MATERIAL-SEMANTIC-UI-01\\f1d988768db31e726eeeb99e98d12eea86b80c0a\\final-001",
+  "path_scan": {
+    "local_paths_in_diagnostics": [
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-red-001/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-002/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-red-010/checks.json",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/baseline.xml",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red-behaviors.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/model.junit.xml",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/regression.xml",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/affected-regression-002.xml",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/asset-provenance-red.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/default-group-red.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/input-boundary-red.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/library-model-red.txt",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/regression-001.xml",
+      "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v2-red.txt"
+    ],
+    "potential_private_keys": "NONE_DETECTED",
+    "disposition": "Local custody only; no external publication"
+  },
+  "duplication_scan": {
+    "identical_payload_groups": [
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/annotations.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/color-preview.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/color-preview.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/geometry.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/geometry.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/library-narrow.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/narrow.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/save-failure.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/library-narrow.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/annotations.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/annotations.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/library-narrow.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/library-narrow.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/save-failure.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/save-failure.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/semantic-types-groups.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/semantic-types-groups.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/semantic-types-groups.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/semantic-types-groups.png",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/semantic-types-groups.png"
+      ],
+      [
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/checks.json",
+        "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/checks.json"
+      ]
+    ],
+    "disposition": "Explicit allowlist only; repeated historical failure and verification artifacts retained"
+  },
+  "independent_disaster_recovery": "NOT_ESTABLISHED"
+}

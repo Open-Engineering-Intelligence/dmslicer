@@ -1,0 +1,49 @@
+✔ annotation API is available before state consumers are wired (1.5722ms)
+✔ defaults derive geometry only; names and colors never activate semantic entities (4.8269ms)
+✔ explicit role, material and override are independent through material edits and roundtrip (3.0319ms)
+✔ restore refuses wrong source and changed reference provenance without mutating current state (3.282ms)
+✔ invalid annotations never enter persistence (2.6174ms)
+✔ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.6212ms)
+✔ failed save preserves draft, saved time and old persisted bytes (2.3243ms)
+✖ library replacement is validated atomically and preserves previous revision in decisions (1.9262ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 335.6822
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ library replacement is validated atomically and preserves previous revision in decisions (1.9262ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /material/i. Input:
+  
+  'TypeError: W.replaceLibrary is not a function'
+  
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:40)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: W.replaceLibrary is not a function
+        at C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:53
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:40)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1325:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+        at Test.postRun (node:internal/test_runner/test:1465:19)
+        at Test.run (node:internal/test_runner/test:1390:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:911:7),
+    expected: /material/i,
+    operator: 'throws',
+    diff: 'simple'
+  }

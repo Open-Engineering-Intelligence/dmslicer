@@ -1,0 +1,133 @@
+{
+  "schema": "dmslicer.material-library.v1",
+  "version": 2,
+  "materials": [
+    {
+      "id": "PLA",
+      "name": "PLA",
+      "category": "预置聚合物",
+      "color": "#6daba3",
+      "description": "用户指定的常用材料名称；颜色为显示设计值，未提供物性数据。",
+      "properties": {},
+      "provenance": {
+        "kind": "UI_PRESET",
+        "basis": "User requested PLA, ABS, PETG, TPO; no physical values supplied"
+      }
+    },
+    {
+      "id": "ABS",
+      "name": "ABS",
+      "category": "预置聚合物",
+      "color": "#dcaa6c",
+      "description": "用户指定的常用材料名称；颜色为显示设计值，未提供物性数据。",
+      "properties": {},
+      "provenance": {
+        "kind": "UI_PRESET",
+        "basis": "User requested PLA, ABS, PETG, TPO; no physical values supplied"
+      }
+    },
+    {
+      "id": "PETG",
+      "name": "PETG",
+      "category": "预置聚合物",
+      "color": "#709abe",
+      "description": "用户指定的常用材料名称；颜色为显示设计值，未提供物性数据。",
+      "properties": {},
+      "provenance": {
+        "kind": "UI_PRESET",
+        "basis": "User requested PLA, ABS, PETG, TPO; no physical values supplied"
+      }
+    },
+    {
+      "id": "TPO",
+      "name": "TPO",
+      "category": "预置聚合物",
+      "color": "#b898bb",
+      "description": "用户指定的常用材料名称；颜色为显示设计值，未提供物性数据。",
+      "properties": {},
+      "provenance": {
+        "kind": "UI_PRESET",
+        "basis": "User requested PLA, ABS, PETG, TPO; no physical values supplied"
+      }
+    },
+    {
+      "id": "test-polymer",
+      "name": "聚合物 A（编辑）",
+      "category": "自定义",
+      "color": "#336699",
+      "description": "修订说明",
+      "properties": {
+        "density": {
+          "value": 1.3,
+          "unit": "g/cm3",
+          "source": "QA synthetic fixture",
+          "evidence": "TEST ONLY; no physical material claim"
+        }
+      },
+      "updated_at": "2026-09-12T13:41:42.786Z"
+    }
+  ],
+  "history": [
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:41:38.653Z",
+      "material_id": "test-polymer",
+      "before": null,
+      "after": {
+        "id": "test-polymer",
+        "name": "Source 红材料",
+        "category": "自定义",
+        "color": "#112233",
+        "description": "人工测试材料",
+        "properties": {
+          "density": {
+            "value": 1.2,
+            "unit": "g/cm3",
+            "source": "QA synthetic fixture",
+            "evidence": "TEST ONLY; no physical material claim"
+          }
+        },
+        "updated_at": "2026-09-12T13:41:38.653Z"
+      },
+      "version": 1
+    },
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:41:42.786Z",
+      "material_id": "test-polymer",
+      "before": {
+        "id": "test-polymer",
+        "name": "Source 红材料",
+        "category": "自定义",
+        "color": "#112233",
+        "description": "人工测试材料",
+        "properties": {
+          "density": {
+            "value": 1.2,
+            "unit": "g/cm3",
+            "source": "QA synthetic fixture",
+            "evidence": "TEST ONLY; no physical material claim"
+          }
+        },
+        "updated_at": "2026-09-12T13:41:38.653Z"
+      },
+      "after": {
+        "id": "test-polymer",
+        "name": "聚合物 A（编辑）",
+        "category": "自定义",
+        "color": "#336699",
+        "description": "修订说明",
+        "properties": {
+          "density": {
+            "value": 1.3,
+            "unit": "g/cm3",
+            "source": "QA synthetic fixture",
+            "evidence": "TEST ONLY; no physical material claim"
+          }
+        },
+        "updated_at": "2026-09-12T13:41:42.786Z"
+      },
+      "version": 2
+    }
+  ]
+}

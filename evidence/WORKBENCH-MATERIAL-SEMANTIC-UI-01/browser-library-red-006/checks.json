@@ -1,0 +1,28 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "page identity; existing geometry and evidence remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "material add returns to source row without assignment; role material color independent",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit save and portable export preserve fields and decisions",
+      "status": "PASS"
+    },
+    {
+      "name": "save failure retains draft and recovery; imported data source checked",
+      "status": "PASS"
+    },
+    {
+      "name": "five source packages and narrow layout remain readable",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert((await page.locator('#library-status').textContent()).includes('已存在'))\n",
+  "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert((await page.locator('#library-status').textContent()).includes('已存在'))\n\n    at C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:72:4\n    at async check (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:12:32)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:63:3"
+}

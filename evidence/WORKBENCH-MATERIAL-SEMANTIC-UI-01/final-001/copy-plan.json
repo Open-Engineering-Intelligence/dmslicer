@@ -1,0 +1,1036 @@
+{
+  "goal_id": "WORKBENCH-MATERIAL-SEMANTIC-UI-01",
+  "run_id": "final-001",
+  "implementation_commit": "f1d988768db31e726eeeb99e98d12eea86b80c0a",
+  "hash_semantics": "BYTE_INTEGRITY_ONLY",
+  "selection_policy": "Explicit file list frozen for this Goal; all named failure runs preserved, five baseline samples, three restored regression fixtures, and directly related source/tests/docs only. No outputs/ directory glob.",
+  "failure_artifacts": [
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-red-001/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-002/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-red-010/checks.json",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red-behaviors.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v2-red.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/default-group-red.txt",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/affected-regression-002.xml",
+    "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/manifest-generation-failure.txt"
+  ],
+  "files": [
+    {
+      "path": "docs/implementation/workbench_material_semantics.md",
+      "sha256": "2a57a5482a63fee186fb2cbd5c8bb0b941ef45a21c98e24b02cf9b9e9f1e99b2",
+      "bytes": 5050
+    },
+    {
+      "path": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer",
+      "sha256": "4bd93b7d5a2aede944ed857fce748949d1e183d1a1970e2f5b543485eb104997",
+      "bytes": 59472
+    },
+    {
+      "path": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer",
+      "sha256": "8d0815362450360ad4145ce884137f13266d5b747660376e81e0d9a06c67ff49",
+      "bytes": 27039
+    },
+    {
+      "path": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer",
+      "sha256": "1e27c288baf3d1635592385990815b850de34cf2770b36f1e1931cc931c3c5b8",
+      "bytes": 42404
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/.gitignore",
+      "sha256": "5edbbf4451321b6f3324251ee71dd7982b3a6e3179e6d64933ab3e74a737c194",
+      "bytes": 111
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/annotations-final.png",
+      "sha256": "01cefc4cf738c72aef7fd2eb221d5d949655bd628cdb42e01f9705b5d6fa7ea2",
+      "bytes": 96423
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/annotations-mobile.png",
+      "sha256": "2b9ec430ed3b74a3bea27babd0223b197e29ef0f70d99fa76f0238ff1cee95ef",
+      "bytes": 52598
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/checks.json",
+      "sha256": "37bcfa8345c1f67113d48be1ba2244d274b6e7354dd3ca4aec7479f27d4b9654",
+      "bytes": 1152
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/invalid-library.json",
+      "sha256": "f8f845a67a6f9d2181cd619fda1b9afc6d0afc989cc05fb1f05ccaddc30bfa12",
+      "bytes": 887
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/library-narrow.png",
+      "sha256": "43d79189cf82fb5865ae01fdb7458f25e4f3fa1d66a3c7e785e89630fd22848f",
+      "bytes": 57070
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/materials.json",
+      "sha256": "0ed35fe680ff3ccc6b2ebc566f12b432c899eb038bef6b9def829010b63343ce",
+      "bytes": 1710
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-008/workspace.annotation.json",
+      "sha256": "2d04675f7f8c461827210645e76e427e532af6e7de85928d5eb23966ba664085",
+      "bytes": 7470
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/checks.json",
+      "sha256": "6dbdab2c769ad11a4e659cfcd5a737ac118ac943f93ed4606114025ef7754428",
+      "bytes": 1354
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/failure.png",
+      "sha256": "dfabd8228bedf6bb5dbb29a04a8f555168d52dc2fc67c8c1b2a81719be20c251",
+      "bytes": 53592
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/library-narrow.png",
+      "sha256": "5dde4381bcbab054daac28fa035c6a49ef603834d1373368cd179ae59c3a3b18",
+      "bytes": 54230
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-006/workspace.annotation.json",
+      "sha256": "b1d730f5b7bf31593705b4f6c0c49a2b6f58eb968fdd74bdba6881d445583c23",
+      "bytes": 5697
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/checks.json",
+      "sha256": "7863f0fc6379974af1a74981f704bbf65a22dd3932051d624a1f2bcfe9a133f5",
+      "bytes": 1435
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/failure.png",
+      "sha256": "71c9681eebec0b4505637fc1979b7ef3c5c47ae9b65dcf56f44e060fe3ef775c",
+      "bytes": 55427
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/library-narrow.png",
+      "sha256": "5dde4381bcbab054daac28fa035c6a49ef603834d1373368cd179ae59c3a3b18",
+      "bytes": 54230
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/materials.json",
+      "sha256": "dac7226190df888529a05db9b2f439cd661963ddec41e868cb24cce066783190",
+      "bytes": 1710
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-library-red-007/workspace.annotation.json",
+      "sha256": "5cfed11f3dfaa190d4ffdf2fe29f3a5046a63c98a78b0192ba8bfc53d945da1d",
+      "bytes": 5697
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/annotations-final.png",
+      "sha256": "904307c9fd919350e5f7398ed9f3c3586ee51640a8d71bfb8594e04dcb14c5d0",
+      "bytes": 96273
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/annotations-mobile.png",
+      "sha256": "30e1d4eef072dc7332a0341e980e90c8528c2611ff09182414602617d9d2c43a",
+      "bytes": 52461
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/checks.json",
+      "sha256": "cc3023a6e0046de53f095539770e9a3f5baad8fdeee31f31f0b9fd6060024a6c",
+      "bytes": 1802
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/failure.png",
+      "sha256": "7461b3ee6a8e86a146dbabb6c6671a3b8f5cd2bab695376dc93eb4bf09b0a7d6",
+      "bytes": 94279
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/invalid-library.json",
+      "sha256": "b85990ea0e606c042ea80a62bfef6039e627ac08624ff0c252cec7e5807c4d18",
+      "bytes": 887
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/library-narrow.png",
+      "sha256": "43d79189cf82fb5865ae01fdb7458f25e4f3fa1d66a3c7e785e89630fd22848f",
+      "bytes": 57070
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/materials.json",
+      "sha256": "7384a924d2b2aa09b4d6df905673db7d014ca944a9405692c8ff8c690bdad4c6",
+      "bytes": 1710
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-provenance-red-009/workspace.annotation.json",
+      "sha256": "30a85dee66026b10de19a9381c6a218393e856597db11f3dcfa5a6df864f01b2",
+      "bytes": 7470
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/annotations-final.png",
+      "sha256": "3321406bf02620a7db0bec7291fccc098993ce2a072aaeea2346fc69c09ea9ae",
+      "bytes": 96937
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/annotations-mobile.png",
+      "sha256": "cb972e6f464813426e4045d47720427b799aa9e1d7c143e0c634fbeb9e2c5fc8",
+      "bytes": 54273
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/annotations.png",
+      "sha256": "0d85dc33126ba1d3f8af007549d57b946256545d0ea4d3c7e4791f7966ed3dba",
+      "bytes": 93797
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/checks.json",
+      "sha256": "4d04fca713c2afc1e2424166f41d19e8985705b048a2eb77704bb9f41a29a648",
+      "bytes": 1912
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/failure.png",
+      "sha256": "2e5e23941e8793660e5520fb69a2113d7f92ddf0ed7b7dad767156d8f8888953",
+      "bytes": 99775
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/invalid-library.json",
+      "sha256": "5a57c19eb2e8c977f5940cebb3503d6069b0b5931dd06eaa6db14afe9f3331a1",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/isolators.annotation.json",
+      "sha256": "f8bf8e90782df4e041758e989474e8e5cbfe04eeda309b21c5e5e2ed572f85f7",
+      "bytes": 28132
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/legacy-v1.json",
+      "sha256": "b37ab2cc9b49d215231395a46db4b1c59e5ef66129dbaa1c5137dc0257c02e17",
+      "bytes": 20226
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/library-narrow.png",
+      "sha256": "49513d192f233a4286d8f469e64abf11c9e25dfdeba8013f18136c286a977d26",
+      "bytes": 63886
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/materials.json",
+      "sha256": "67249d5d9652afd291877aa292dfcf904403dda001b32e2bf1b0f76793c50d02",
+      "bytes": 3858
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/save-failure.png",
+      "sha256": "bced7ce563c2b0448681dced211f3451cdad63a1dcc62bc584178e6ec97ede95",
+      "bytes": 101015
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/semantic-types-groups.png",
+      "sha256": "11de86eefd2b4b55ef014585b49826b12da6b427e238c4008738d0df7a2e3c73",
+      "bytes": 108984
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/typed-groups.annotation.json",
+      "sha256": "10c8a2139fecf0a673cf53ca2c42c4c4887e70121a433e04779542d8982fc93d",
+      "bytes": 24792
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-race-red-013/workspace.annotation.json",
+      "sha256": "c50b9f7ccb7094fa374708b05bef13fef55b8edc2d31e38e63a69d7d346a1f72",
+      "bytes": 10030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-red-001/checks.json",
+      "sha256": "1021b4cd4bb54ec83a508d4d4cb066cf7090bd9ff7e557fc9a265c843da1c5c7",
+      "bytes": 584
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-red-001/failure.png",
+      "sha256": "cda34b5b29d733357f77258ac28866ffc268a591132a0320efb62cb6b6465adb",
+      "bytes": 183540
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/annotations-final.png",
+      "sha256": "465ce7928da102d0c6bd6d4087dbce50587c8c68c0c8be255dfbd4a14c3951ad",
+      "bytes": 96955
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/annotations-mobile.png",
+      "sha256": "dac122793e2e324c6660df14ea9ef897d7e655189cac64ab337ae4ba9d69ceed",
+      "bytes": 54297
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/annotations.png",
+      "sha256": "0d85dc33126ba1d3f8af007549d57b946256545d0ea4d3c7e4791f7966ed3dba",
+      "bytes": 93797
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/checks.json",
+      "sha256": "9b16c693486e457c20c762aa6e8a469ce08c2e69c1a3bf7b63551539588b02f3",
+      "bytes": 1823
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/invalid-library.json",
+      "sha256": "e7fb7a5bb15d528d1be3e6e60f93d5471ae235dce2356a94c7a6e166ed4c1ef3",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/isolators.annotation.json",
+      "sha256": "bb4badf244b46c85c587e8b8ff2b879bc1ce5088db67fdac2123d7282a25bbc5",
+      "bytes": 28132
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/legacy-v1.json",
+      "sha256": "037067a1be346c1b312ebde6397a5e03a4dfec956431c13a6e1519a155571b53",
+      "bytes": 20226
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/library-narrow.png",
+      "sha256": "49513d192f233a4286d8f469e64abf11c9e25dfdeba8013f18136c286a977d26",
+      "bytes": 63886
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/materials.json",
+      "sha256": "9c1518d638e8bade04a324793e2ad4d32c75841433b501747c64cd5f1b28e77c",
+      "bytes": 3858
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/save-failure.png",
+      "sha256": "bced7ce563c2b0448681dced211f3451cdad63a1dcc62bc584178e6ec97ede95",
+      "bytes": 101015
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/semantic-types-groups.png",
+      "sha256": "11de86eefd2b4b55ef014585b49826b12da6b427e238c4008738d0df7a2e3c73",
+      "bytes": 108984
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/typed-groups.annotation.json",
+      "sha256": "d14ce7e4f254f13b52edcdeff80193ece141e351ca6c9d5185af6c05e091d002",
+      "bytes": 24792
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-014/workspace.annotation.json",
+      "sha256": "2839bf5fb692d14d38da2169ed5e7245e7d3ef3efc17823dbac82b63daf9f881",
+      "bytes": 10030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/annotations-final.png",
+      "sha256": "0f22c4422babdc7b7fc8f0030e35ee3eadb6eddba8ccccdf3b47d8eed5e826eb",
+      "bytes": 96838
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/annotations-mobile.png",
+      "sha256": "d8035a5e7c5e0304e66ddcae9c8006be3181169b4a3de50948a3dd37aa34639a",
+      "bytes": 54187
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/annotations.png",
+      "sha256": "0d85dc33126ba1d3f8af007549d57b946256545d0ea4d3c7e4791f7966ed3dba",
+      "bytes": 93797
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/checks.json",
+      "sha256": "107b49ca74c10fad604d05870df7849ade36b67c1a329f3f5cf0da06a94b64ed",
+      "bytes": 1787
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/failure.png",
+      "sha256": "88910cc2d2c13d7d5604ebaf7beb9b844827794bc33e0bc8cffe3351f1a63a7a",
+      "bytes": 98489
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/invalid-library.json",
+      "sha256": "8e03516b34866cdc83c8391f7d49a046884ba5a6e7d794bdd98133ae89c93707",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/isolators.annotation.json",
+      "sha256": "6a6fd6d4a8fb640ae7adc8182d466dcb8a81a01c23ec7fb20d08c8a166c8d6a2",
+      "bytes": 28132
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/legacy-v1.json",
+      "sha256": "97b70691c2e7226b9d1bc5c02ffa735ed71217070b620ba291bb71d4627c148e",
+      "bytes": 20226
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/library-narrow.png",
+      "sha256": "49513d192f233a4286d8f469e64abf11c9e25dfdeba8013f18136c286a977d26",
+      "bytes": 63886
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/materials.json",
+      "sha256": "0271373769b984a533a1b9d7b0523fbd6fd848ec0862984849059663db338431",
+      "bytes": 3858
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/save-failure.png",
+      "sha256": "bced7ce563c2b0448681dced211f3451cdad63a1dcc62bc584178e6ec97ede95",
+      "bytes": 101015
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/semantic-types-groups.png",
+      "sha256": "11de86eefd2b4b55ef014585b49826b12da6b427e238c4008738d0df7a2e3c73",
+      "bytes": 108984
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/typed-groups.annotation.json",
+      "sha256": "90353013a01bf1d6b3e6c6b30fd26402ce5972a3f504add62cb6021331fc55fd",
+      "bytes": 24792
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-review-red-012/workspace.annotation.json",
+      "sha256": "ec4c5c9ee97da19e161682a4c39c74e77fb3e99d0c1145949645ba32c7a884c7",
+      "bytes": 10030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-002/checks.json",
+      "sha256": "65e54ffca2ecdfa21307bf974ac90f0919be1afaf5041204cb34e35ae8bd83a9",
+      "bytes": 359
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-002/failure.png",
+      "sha256": "0b43ba81e0f00a0fc4a9c6eab24246063b0f2e998f8f6cc5bf8cce0f9e461468",
+      "bytes": 62746
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/checks.json",
+      "sha256": "28726c0f24cb1bf95fa4b19f00525592f0b5d0732011cc69cfcddbce758b01a3",
+      "bytes": 946
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/failure.png",
+      "sha256": "d0f342638ee4eb0a18c69eb99421b81ff16536bfafa400d9088839d32c502b3c",
+      "bytes": 96653
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-003/geometry.png",
+      "sha256": "207e61b93911ca9d0a1935ef3728814688a7131c3f5909203b10fe1ad17e49d1",
+      "bytes": 165290
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/checks.json",
+      "sha256": "21fad4784c50a80e4e752ca2a6050fdc5e4680548f49006c4069e5c2181f12c2",
+      "bytes": 1368
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/failure.png",
+      "sha256": "1cbc4184a23bbc5db218d93e752066157b816a481d44911b9bbb7157144a4560",
+      "bytes": 94923
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-004/workspace.annotation.json",
+      "sha256": "02caf276bd1eff3a5b62ca7c3bbc76fe0b9ef11f0aa2756b4f8630dc684823d0",
+      "bytes": 5697
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/annotations.png",
+      "sha256": "d23c12b104aebed47e3f54bc6edb43c1835317cf9c59ab560e0f32430760df3e",
+      "bytes": 93477
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/checks.json",
+      "sha256": "730e7e853e68be903b7ae42379bfa49634342fcc851cab0c7d35fbddd96880aa",
+      "bytes": 880
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/library-narrow.png",
+      "sha256": "5dde4381bcbab054daac28fa035c6a49ef603834d1373368cd179ae59c3a3b18",
+      "bytes": 54230
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/save-failure.png",
+      "sha256": "2db4e668b76af426477e6d8be8e28f4cefe82040a0f0d3c6d08bd8a1ce669b36",
+      "bytes": 95829
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-scope-005/workspace.annotation.json",
+      "sha256": "e8f505fe2294cc9733629857653282c124ffacd116805ec823c05dbb4519d8aa",
+      "bytes": 5697
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/annotations-final.png",
+      "sha256": "ce0f02db9fdc6c17be50be980c2be149a57c96522e9cb5ccad589704115e904f",
+      "bytes": 96917
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/annotations-mobile.png",
+      "sha256": "6ac713a029653488593d81a57743d491de9cefd9f70b2e10fcca172e295452bb",
+      "bytes": 54262
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/annotations.png",
+      "sha256": "0d85dc33126ba1d3f8af007549d57b946256545d0ea4d3c7e4791f7966ed3dba",
+      "bytes": 93797
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/checks.json",
+      "sha256": "1041da1258eae4fdee0bf56e9c62685e7c96d53c46f2370637a6eb80d77cdf84",
+      "bytes": 1461
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/invalid-library.json",
+      "sha256": "637d5b2941af9c0fa7989b1851d25ada2efbccfb7393375aa66599516d4f54c5",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/isolators.annotation.json",
+      "sha256": "7aea45e931a7e280248b1bf7f9c938552939cbe12ca36a1742201151804a2b98",
+      "bytes": 28132
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/legacy-v1.json",
+      "sha256": "5e2b17570bbd8f5b1439530e92b14a1070b56681f6c412430668787e32685423",
+      "bytes": 20226
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/library-narrow.png",
+      "sha256": "49513d192f233a4286d8f469e64abf11c9e25dfdeba8013f18136c286a977d26",
+      "bytes": 63886
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/materials.json",
+      "sha256": "f68ecae1b95d9d8f8d0e7b732367f945f8ba257859010a12a265689cda1f9aea",
+      "bytes": 3858
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/save-failure.png",
+      "sha256": "bced7ce563c2b0448681dced211f3451cdad63a1dcc62bc584178e6ec97ede95",
+      "bytes": 101015
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/semantic-types-groups.png",
+      "sha256": "11de86eefd2b4b55ef014585b49826b12da6b427e238c4008738d0df7a2e3c73",
+      "bytes": 108984
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/typed-groups.annotation.json",
+      "sha256": "0de085f75fb29750eb47a6db01e572267f520eecb4594cf575b4f7e255da04ca",
+      "bytes": 24792
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-011/workspace.annotation.json",
+      "sha256": "a3fa9b5c499929cea6bcb13884307820fe6ab2773cdab68f9ec6ea45f1199155",
+      "bytes": 10030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-red-010/checks.json",
+      "sha256": "e61920a18658652e5c41bfc9169f7c438eff0fe8c07bf4a85e769fdea64aeae1",
+      "bytes": 695
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/browser-v2-red-010/failure.png",
+      "sha256": "857b86ff3242ea44738fc78100636f7d7cfe4712162114a73786f55e0d845ea2",
+      "bytes": 63030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/DESIGN.md",
+      "sha256": "986269e8caaaed848e3357f0d7418e115d9b23dd9435bce7240e1ad6bb10fab6",
+      "bytes": 5359
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/PLAN.md",
+      "sha256": "7ef597df135d81cd0effbc22da1c9ca71717820dc90b9350741264524c54e736",
+      "bytes": 2515
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/baseline.xml",
+      "sha256": "abcba546a8164512c987caf8b01dc804a993e9ca6199b50164ed83ec076389b3",
+      "bytes": 2710
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-green.txt",
+      "sha256": "0ef388f8c2332d271063980eea35a853edaed7db61482c40c5ebee20c977752b",
+      "bytes": 853
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red-behaviors.txt",
+      "sha256": "83bb1fdd9786d8668538e4556b978081a8bf160994180daa8d8d2c5b771c88ab",
+      "bytes": 6621
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/model-red.txt",
+      "sha256": "5bebfcc732907fb4a24beea3ca9712565cade850466bf102e505bcf572c69bc7",
+      "bytes": 1745
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/design-001/prototype.html",
+      "sha256": "c65a91bc6d6b8d6e393322c6cbb1807cee84ac69f79a3a5522642001451fa08e",
+      "bytes": 3246
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/FAILURES.md",
+      "sha256": "5db7d3cfafda66671e95505f87a7ff5e1b09a539c2248f31451d2894095e6887",
+      "bytes": 3013
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/HUMAN_REVIEW.md",
+      "sha256": "5f02fe53944e9806b3a435160e2ac41214fe0454fefff579ba95528d40364ea0",
+      "bytes": 2345
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/VIEW_INDEX.md",
+      "sha256": "6d65a924da430e7a3aa05c2d802032d30f1a66cb6fd0ecda9778d83b8fe85816",
+      "bytes": 1573
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/annotations-final.png",
+      "sha256": "846818ea1395dff8377ad2f4c2502e823ac672e4524f411c51e9c2885fe20f41",
+      "bytes": 96991
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/annotations-mobile.png",
+      "sha256": "0d3571b2da104c361052e4ba3b7b219543f79b8dafe4541efc208e314cb0ca5d",
+      "bytes": 54326
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/annotations.png",
+      "sha256": "0d85dc33126ba1d3f8af007549d57b946256545d0ea4d3c7e4791f7966ed3dba",
+      "bytes": 93797
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/checks.json",
+      "sha256": "9b16c693486e457c20c762aa6e8a469ce08c2e69c1a3bf7b63551539588b02f3",
+      "bytes": 1823
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/color-preview.png",
+      "sha256": "80367ec90744382837d0f04fee85e9917ab2d15a1a3e53aab1cd5ff5acf34cc1",
+      "bytes": 96325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/geometry.png",
+      "sha256": "04b41d4db16ae66813bbb7b5188c35ae6518175d24e91761f5b33a9bbaba9e69",
+      "bytes": 95045
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/invalid-library.json",
+      "sha256": "de638c47aabcec682370c3e514205a5fdacd4007d23c454cb19f380637fd54f0",
+      "bytes": 1205
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/isolators.annotation.json",
+      "sha256": "6fd8ca89b49e46a258cd0caad78cb85e2e5fede389e04a789de0bd66a84d4b46",
+      "bytes": 28132
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/legacy-v1.json",
+      "sha256": "1f8be1b1f1efa0a81d075cd9e8e6fb54c9a85f6561bc560a6f975a7becc426ac",
+      "bytes": 20226
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/library-narrow.png",
+      "sha256": "49513d192f233a4286d8f469e64abf11c9e25dfdeba8013f18136c286a977d26",
+      "bytes": 63886
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/materials.json",
+      "sha256": "9ee4b66d14ecc05436d71cf8dda975b6a3c0baa95be4e65c8f6389c07c927983",
+      "bytes": 3858
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/narrow.png",
+      "sha256": "2925bd0cbc878fa5bd03b068cc72181184260e752cd804b1beb0d5507eba747f",
+      "bytes": 74749
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/save-failure.png",
+      "sha256": "bced7ce563c2b0448681dced211f3451cdad63a1dcc62bc584178e6ec97ede95",
+      "bytes": 101015
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/semantic-types-groups.png",
+      "sha256": "11de86eefd2b4b55ef014585b49826b12da6b427e238c4008738d0df7a2e3c73",
+      "bytes": 108984
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/typed-groups.annotation.json",
+      "sha256": "c440dfadc009990f3e2bb70d35ac6a288ddde2ad55e6a2caa7145720c18a79a7",
+      "bytes": 24792
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/browser-live-001/workspace.annotation.json",
+      "sha256": "5f38547fd02fb58accd229e1b85189ef08599eaedcf468f3d04faa78751e27e1",
+      "bytes": 10030
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/build_manifest.py",
+      "sha256": "5d37324e2852b93f1a0435d07f7a70ec504310474336166ea4073f6f969c2602",
+      "bytes": 6684
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/custody-script-checks.json",
+      "sha256": "3ff4ac86665b169a901ecbac983ff9f1b5cfbad67e7e27040cddf55fe844dbd5",
+      "bytes": 445
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/manifest-generation-failure.txt",
+      "sha256": "594a6c84f813565bf648c7e1e42779df8a2a14929875f8767ad6ac8a95e30059",
+      "bytes": 229
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/manifest.json",
+      "sha256": "072c5e763c22e51ce576576a5484e13ac24ddfb373cd2f73b8e34a82273c1b7f",
+      "bytes": 11580
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/model-tests.txt",
+      "sha256": "dfde45972b112d1d38d3dbdd134d58a0a03f97a364944992e821efa17469ad78",
+      "bytes": 1309
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/model.junit.xml",
+      "sha256": "9d91652d53bf240f0c97193feecd91c006a85a014652b3e38474091dfb88b596",
+      "bytes": 2832
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/policy-decisions.json",
+      "sha256": "07b8831988c8c220062f53e647ea45b9f457af29d366a00402b446546eb6d2d9",
+      "bytes": 2059
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/regression.xml",
+      "sha256": "20cffc999b8cfa12ec1abb29f9bbdcf92fbef4574d9ad44698a994b5906a48bb",
+      "bytes": 3010
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/restored-regression-fixtures.json",
+      "sha256": "513cc845e8e396cf0846e632561646386b05c04e3b37c8c19bc6061cdbc34b71",
+      "bytes": 1377
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples.json",
+      "sha256": "8c677747b9f20fdff6e6638f5b851ff4f9c8c77f4d8e7fa4e203d53e20ebb236",
+      "bytes": 1985
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/c02.dmslicer",
+      "sha256": "f72409564574340b0bb73e3b3b7a29ec8e18ba280fae7b21aaf4f99cf7e8f4df",
+      "bytes": 60095
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/case01.dmslicer",
+      "sha256": "33aa70755b9370abcaa4884bddefb538fb071e47358f4da0cf1c9f91945cf280",
+      "bytes": 27234
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/pmulti.dmslicer",
+      "sha256": "0dee7186170c9a1fc3bdb81b3a602565ee407e4ab2bf97e07c42d21538365654",
+      "bytes": 35069
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/s04.dmslicer",
+      "sha256": "309916b933863cb67b5b2bddc5f0ef0e148385199db59fc53303ed9326927748",
+      "bytes": 487807
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/u05.dmslicer",
+      "sha256": "a24de08f4583317c7aa09b7bc9f78d0bfcbcab7f18269ba0d3f730ab592e237a",
+      "bytes": 42899
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/SCOPE.md",
+      "sha256": "548d998e6bbcc86e79a3320e45a46b5224d2b38bd6cec300de886fee5c4d874a",
+      "bytes": 3936
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/SEMANTIC_TYPES_V2.md",
+      "sha256": "2c86038979409ac9e0bc888555855253b99bdb5bfaa1f3e30620d8b597d83c68",
+      "bytes": 2785
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/TAGS_CLARIFICATION.md",
+      "sha256": "db242fcf810b855647dd6c56c3b2497b1d6b1fdd4a4ab937067c61ccfa800e88",
+      "bytes": 2328
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/affected-regression-002.xml",
+      "sha256": "0f403edb4d0934807970634e35a4c5995ee08ace8ae4d5d1cdcbe840e458f333",
+      "bytes": 5147
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/asset-provenance-red.txt",
+      "sha256": "232cb6b2c4f98941017693e9f0be951d4c9bde391c1ed6728e90a8957bafe264",
+      "bytes": 3742
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/default-group-red.txt",
+      "sha256": "b4cc8b2ea2bbeab74c53a3f607b99d4bf4428e0b89bc1b20818fdec2b01ccada",
+      "bytes": 2440
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/input-boundary-red.txt",
+      "sha256": "fbe0c1c6134bee8d56ab6a23864bfd4aa6a683a52bf3a8346bf88a63568138ad",
+      "bytes": 1737
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/library-model-red.txt",
+      "sha256": "53444d24804a2bd4514eed7741d40e4163d8dbc43120589c36f75b9dfacf9880",
+      "bytes": 2655
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/pre-scope-browser.cjs",
+      "sha256": "f6da0b94e9d57c5a27d64cf7c115a8b3e604160308e0b108e4ebf2379c41315b",
+      "bytes": 10006
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/pre-scope-state-model.js.txt",
+      "sha256": "de415c744bfeb60291adac40940fc1e0c3362ed5a6fc28533c8ca4103da67881",
+      "bytes": 7781
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/pre-scope-ui.html.txt",
+      "sha256": "18a18b5018bd67db169de6223430ff3cec4ebd535263c15515e97065ae93a834",
+      "bytes": 26301
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/pre-scope-ui.patch",
+      "sha256": "e68d8103583682c45a2695925c7c5105195af8d85df63a3dd5dfcd6520eb755e",
+      "bytes": 35230
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/regression-001.xml",
+      "sha256": "013775c4beedc37dc9bc29e3f437b5f6cd56043b11b87a615bbafe7e68462d52",
+      "bytes": 2710
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v1-browser-tests.cjs.txt",
+      "sha256": "03a22f84af5ada71f41278f3ca6d463bfa5cdb773299d0ed117d777de343716b",
+      "bytes": 13605
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v1-model-tests.cjs.txt",
+      "sha256": "fefc4ede89dade20489373b83059d243f72033049218f7f3d0add0934b573740",
+      "bytes": 6673
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v2-green.txt",
+      "sha256": "325417f9f17ff62575c65da27ffc402e760e25944aefb59accb2c80d4de7fa8d",
+      "bytes": 1325
+    },
+    {
+      "path": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/scope-002/v2-red.txt",
+      "sha256": "87ca3286f273c8f2108f4581ed7dfa33a157f745a552ed7ef1999c80f52954e5",
+      "bytes": 9842
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "a920aae792f12725fc68971bd9d8dd6b9a2c1e8747c2653df5002dca610b6ecd",
+      "bytes": 679
+    },
+    {
+      "path": "scripts/evidence_preservation/preserve_09b_local.py",
+      "sha256": "9a1571c1f90890c3ea9d7951ac4fda84fab7d14f05bf20d0141585b8ae36943f",
+      "bytes": 5135
+    },
+    {
+      "path": "src/dmslicer/geometry_case_viewer.py",
+      "sha256": "b69e19623963a383dcbc75c7f48c8033138e52a6e6933c57b210d7d110202728",
+      "bytes": 4447
+    },
+    {
+      "path": "src/dmslicer/geometry_import_viewer.html",
+      "sha256": "e6f37d0ba7584122836569c5f15664650a1f4891b48b31068de2e662487ff3bf",
+      "bytes": 23533
+    },
+    {
+      "path": "src/dmslicer/material_workspace.js",
+      "sha256": "f1115a211489c47c006bd83824cb6337f1dec2db05f3d4135b0ce1c5f81115c7",
+      "bytes": 13741
+    },
+    {
+      "path": "src/dmslicer/viewer_layout.js",
+      "sha256": "591fcca589ea2b1feeab8fd47c577e461a90b6c4f76d63a60a639d3db598d8f4",
+      "bytes": 1073
+    },
+    {
+      "path": "src/dmslicer/workspace_annotations.js",
+      "sha256": "4b2b18f10641bd532f40b33e5353c15b36b010bf0b673265428893d82e54a9a4",
+      "bytes": 12715
+    },
+    {
+      "path": "tests/material_workspace_browser.cjs",
+      "sha256": "11daf3958d5f96b751713cd66c5c46256eee85b25a9be64d17d6410941268507",
+      "bytes": 19744
+    },
+    {
+      "path": "tests/workspace_annotations.test.cjs",
+      "sha256": "0b2722e42f565eceb05696a30ee92d9b785bd102cc532ab8302c95bcda6a6d7d",
+      "bytes": 10564
+    }
+  ]
+}

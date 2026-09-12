@@ -1,0 +1,26 @@
+[
+  {
+    "path": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer",
+    "source_branch": "codex/geometry-case-viewer-01",
+    "source_path": "evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer",
+    "sha256": "4bd93b7d5a2aede944ed857fce748949d1e183d1a1970e2f5b543485eb104997",
+    "hash_semantics": "BYTE_INTEGRITY_ONLY",
+    "purpose": "Restore exact omitted local fixture for existing regression; no CAD operation"
+  },
+  {
+    "path": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer",
+    "source_branch": "codex/geometry-case-viewer-01",
+    "source_path": "evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer",
+    "sha256": "1e27c288baf3d1635592385990815b850de34cf2770b36f1e1931cc931c3c5b8",
+    "hash_semantics": "BYTE_INTEGRITY_ONLY",
+    "purpose": "Restore exact omitted local fixture for existing regression; no CAD operation"
+  },
+  {
+    "path": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer",
+    "source_branch": "codex/geometry-case-viewer-01",
+    "source_path": "evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer",
+    "sha256": "8d0815362450360ad4145ce884137f13266d5b747660376e81e0d9a06c67ff49",
+    "hash_semantics": "BYTE_INTEGRITY_ONLY",
+    "purpose": "Restore exact omitted local fixture for existing regression; no CAD operation"
+  }
+]

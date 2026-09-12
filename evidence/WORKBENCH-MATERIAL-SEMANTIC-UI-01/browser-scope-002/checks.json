@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "checks": [],
+  "errors": [
+    "ReferenceError: __ANNOTATION_CODE__ is not defined"
+  ],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "stack": "page.waitForFunction: Timeout 30000ms exceeded.\n    at C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:16:35"
+}

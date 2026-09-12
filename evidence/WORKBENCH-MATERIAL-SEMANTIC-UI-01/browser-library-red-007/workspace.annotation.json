@@ -1,0 +1,166 @@
+{
+  "schema": "dmslicer.workspace-annotation.v1",
+  "source": {
+    "case_id": "CASE01",
+    "provenance": {
+      "confidence": "L",
+      "manifest": "results/display_manifest.json",
+      "geometry_validation": "SAVED_SOURCE_REPORT_ONLY_NOT_RERUN",
+      "human_review": "PENDING",
+      "semantic_analysis": "A/G/B 为已保存来源标签；本次打包不激活材料语义",
+      "role_states": {
+        "fused_result": "NOT_PRODUCED_IN_SUPPLIED_EVIDENCE",
+        "remaining": "NOT_SUPPLIED"
+      },
+      "source_run_id": "case01-brep-display-20260912-006"
+    },
+    "package_case": {
+      "id": "CASE01",
+      "label": "CASE01 · A–G–B 三对象 / 两公共接口"
+    }
+  },
+  "created_at": "2026-09-12T13:21:52.925Z",
+  "saved_at": "2026-09-12T13:21:53.882Z",
+  "material_library": {
+    "schema": "dmslicer.material-library.v1",
+    "version": 1,
+    "materials": [
+      {
+        "id": "test-polymer",
+        "name": "Source 红材料",
+        "color": "#112233",
+        "description": "人工测试材料",
+        "properties": {
+          "density": {
+            "value": 1.2,
+            "unit": "g/cm3"
+          }
+        },
+        "updated_at": "2026-09-12T13:21:53.500Z"
+      }
+    ],
+    "history": [
+      {
+        "actor": "human",
+        "at": "2026-09-12T13:21:53.500Z",
+        "material_id": "test-polymer",
+        "before": null,
+        "after": {
+          "id": "test-polymer",
+          "name": "Source 红材料",
+          "color": "#112233",
+          "description": "人工测试材料",
+          "properties": {
+            "density": {
+              "value": 1.2,
+              "unit": "g/cm3"
+            }
+          },
+          "updated_at": "2026-09-12T13:21:53.500Z"
+        },
+        "version": 1
+      }
+    ]
+  },
+  "material_library_version": 1,
+  "activation": {
+    "MaterialRegion": false,
+    "InterfaceSourceBoundary": false,
+    "volumetric_field": false
+  },
+  "decisions": [
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:21:53.526Z",
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "field": "material_id",
+      "before": null,
+      "after": "test-polymer",
+      "material_library_version": 1
+    },
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:21:53.545Z",
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "field": "semantic_role",
+      "before": "Unassigned",
+      "after": "Gradient",
+      "material_library_version": 1
+    },
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:21:53.582Z",
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "field": "display_override",
+      "before": null,
+      "after": "#112233",
+      "material_library_version": 1
+    },
+    {
+      "actor": "human",
+      "at": "2026-09-12T13:21:53.625Z",
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "field": "display_override",
+      "before": "#112233",
+      "after": "#ff0000",
+      "material_library_version": 1
+    }
+  ],
+  "objects": [
+    {
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "reference_provenance": {
+        "snapshot_asset": "results/geometry_snapshot.json",
+        "source_manifest": "results/display_manifest.json"
+      },
+      "geometry_role": "Input",
+      "semantic_role": "Gradient",
+      "material_id": "test-polymer",
+      "display_override": "#ff0000"
+    },
+    {
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "reference_provenance": {
+        "snapshot_asset": "results/geometry_snapshot.json",
+        "source_manifest": "results/display_manifest.json"
+      },
+      "geometry_role": "Input",
+      "semantic_role": "Unassigned",
+      "material_id": null,
+      "display_override": null
+    },
+    {
+      "entity_ref": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69",
+      "reference_provenance": {
+        "snapshot_asset": "results/geometry_snapshot.json",
+        "source_manifest": "results/display_manifest.json"
+      },
+      "geometry_role": "Input",
+      "semantic_role": "Unassigned",
+      "material_id": null,
+      "display_override": null
+    },
+    {
+      "entity_ref": "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
+      "reference_provenance": {
+        "snapshot_asset": "results/geometry_snapshot.json",
+        "source_manifest": "results/display_manifest.json"
+      },
+      "geometry_role": "Patch",
+      "semantic_role": "Unassigned",
+      "material_id": null,
+      "display_override": null
+    },
+    {
+      "entity_ref": "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
+      "reference_provenance": {
+        "snapshot_asset": "results/geometry_snapshot.json",
+        "source_manifest": "results/display_manifest.json"
+      },
+      "geometry_role": "Patch",
+      "semantic_role": "Unassigned",
+      "material_id": null,
+      "display_override": null
+    }
+  ]
+}

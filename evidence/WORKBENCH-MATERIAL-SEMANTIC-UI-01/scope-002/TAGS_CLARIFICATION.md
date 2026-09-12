@@ -1,0 +1,11 @@
+# 09B material / semantic tag clarification (supersedes conflicting earlier scope)
+
+User adds four required presets: PLA, ABS, PETG, TPO. Seed names, editable category and design-choice display colors only, with empty physical properties. Numeric property values must include unit, source and traceable evidence reference. No values are invented. Material editing means add/edit/save/restore library records only.
+
+Gradient is a semantic label, never a material-library entry or material parameter form. Workspace starts with a generated default G label; user may add explicit custom G1, G2 etc. Selecting the Gradient role generates a G assignment if absent; explicit tag controls can clear/change it independently from material. No relation, field or source boundary is created. G/G1/G2 live in a semantic-tag namespace, not the material ID namespace.
+
+Isolator labels belong to one stable input object. Effective identity is (workspace source context, owner_entity_ref, label); same visible label on two objects never merges identities. Selecting Isolated region generates an object-owned Isolator label if absent; label checkbox may independently remove it. All relation generation is inactive; import validation explicitly rejects self-relations and rejects unsupported nonempty relations.
+
+Contract review: docs/research_v2/02_domain_model.md §5 defines ISOLATE as preserving own diagnostics while creating no active grading relation to other regions. It is an orthogonal ParticipationPolicy, not a material subclass. Per-object inactive labels are compatible with that boundary but do not implement or activate ParticipationPolicy. This task does not alter the contract. The older fixture's material_key=Gradient in 04_fixture_and_ground_truth_spec.md remains historical frozen input; it is not imported into the new material library. No scientific or Phase II claim.
+
+Additional acceptance: four presets contain no physical numbers; numeric metadata missing units/source/evidence is rejected atomically; material/category edit and recovery; default G and custom G1/G2 assignments; same-name Isolator labels have distinct owners; self-link rejection; material/gradient/isolator separation survives save/export/import; forms contain no gradient parameters. Test failures and pre-clarification artifacts remain preserved.

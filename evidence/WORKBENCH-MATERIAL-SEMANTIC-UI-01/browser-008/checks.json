@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:56811/",
+  "viewports": [
+    [
+      1500,
+      1000
+    ],
+    [
+      760,
+      1050
+    ]
+  ],
+  "browser": "Playwright Chrome; Browser plugin not available",
+  "checks": [
+    {
+      "name": "page identity; existing geometry and evidence remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "material add returns to source row without assignment; role material color independent",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit save and portable export preserve fields and decisions",
+      "status": "PASS"
+    },
+    {
+      "name": "save failure retains draft and recovery; imported data source checked",
+      "status": "PASS"
+    },
+    {
+      "name": "five source packages and narrow layout remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "library edits retain key and assignments; duplicate add rejected; keyboard tabs reachable",
+      "status": "PASS"
+    },
+    {
+      "name": "standalone library export/import validates before replacing domain snapshot",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "human_review": "PENDING"
+}

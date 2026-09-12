@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "checks": [],
+  "errors": [],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 6\n",
+  "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 6\n\n    at C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:21:11\n    at async check (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:12:32)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:18:3"
+}

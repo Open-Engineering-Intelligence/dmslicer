@@ -1,0 +1,68 @@
+✔ annotation API is available before state consumers are wired (1.341ms)
+✔ defaults derive geometry only; names and colors never activate semantic entities (2.7373ms)
+✔ explicit role, material and override are independent through material edits and roundtrip (2.3598ms)
+✖ restore refuses wrong source and changed reference provenance without mutating current state (1.7008ms)
+✔ invalid annotations never enter persistence (1.1899ms)
+✔ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.4311ms)
+✔ failed save preserves draft, saved time and old persisted bytes (0.7765ms)
+✖ source-less catalogs and reference-less stable entities cannot be persisted as trusted configuration (0.4761ms)
+✔ library replacement is validated atomically and preserves previous revision in decisions (0.8136ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 7
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 147.1434
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ restore refuses wrong source and changed reference provenance without mutating current state (1.7008ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:38:107)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /source/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ source-less catalogs and reference-less stable entities cannot be persisted as trusted configuration (0.4761ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /provenance/i. Input:
+  
+  'SyntaxError: "undefined" is not valid JSON'
+  
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:75)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: SyntaxError: "undefined" is not valid JSON
+        at JSON.parse (<anonymous>)
+        at copy (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:3:25)
+        at C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:24:26
+        at Array.map (<anonymous>)
+        at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:23:79)
+        at C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:88
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:65:75)
+        at Test.runInAsyncScope (node:async_hooks:227:14),
+    expected: /provenance/i,
+    operator: 'throws',
+    diff: 'simple'
+  }

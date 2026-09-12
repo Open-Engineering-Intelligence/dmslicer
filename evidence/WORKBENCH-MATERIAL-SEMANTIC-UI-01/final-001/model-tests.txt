@@ -1,0 +1,19 @@
+✔ v2 defaults do not infer semantic types from source names; four presets contain no physical values (3.8198ms)
+✔ Source requires existing material when persisting, while incomplete draft is editable (2.9799ms)
+✔ Gradient cannot hold material; switching records cleared assignment and keeps display override separate (1.3963ms)
+✔ same group requires confirmed connection; different groups preserve geometry contact but block semantics (0.6455ms)
+✔ Isolator identity is object scoped, material requirement remains undecided and self links are rejected (0.8727ms)
+✔ material color follows edits except explicit override, never changes semantic type (1.3693ms)
+✔ all numeric properties require unit, source and traceable basis; invalid edits are atomic (0.5051ms)
+✔ v1 and forged annotations are explicitly rejected; current state stays intact (1.6778ms)
+✔ source context, asset and provenance must match exactly, not a geometry equivalence test (0.771ms)
+✔ save validates first; storage failure preserves old bytes, draft and saved timestamp (0.9465ms)
+✔ library replacement retains assignments and former revision; orphan material references rejected atomically (0.8635ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.0375

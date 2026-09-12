@@ -1,0 +1,73 @@
+{
+  "purpose": "Synthetic unit-policy evidence, no CAD validation claim",
+  "decisions": [
+    {
+      "schema": "dmslicer.gradient-connection-policy.v1",
+      "source_ref": "policy-input-a",
+      "target_ref": "policy-input-b",
+      "gradient_groups": [
+        "G",
+        "G"
+      ],
+      "geometry_evidence": {
+        "relation_ref": "synthetic-confirmed-relation",
+        "region_refs": [
+          "policy-input-a",
+          "policy-input-b"
+        ],
+        "status": "CONFIRMED",
+        "allows_connection": true,
+        "premise": "SYNTHETIC_TEST_ONLY_NOT_AN_ACTUAL_GEOMETRY_RESULT"
+      },
+      "allowed": true,
+      "activated": false,
+      "reason": "SAME_GROUP_CONFIRMED_GEOMETRY"
+    },
+    {
+      "schema": "dmslicer.gradient-connection-policy.v1",
+      "source_ref": "policy-input-a",
+      "target_ref": "policy-input-b",
+      "gradient_groups": [
+        "G",
+        "G1"
+      ],
+      "geometry_evidence": {
+        "relation_ref": "synthetic-confirmed-relation",
+        "region_refs": [
+          "policy-input-a",
+          "policy-input-b"
+        ],
+        "status": "CONFIRMED",
+        "allows_connection": true,
+        "premise": "SYNTHETIC_TEST_ONLY_NOT_AN_ACTUAL_GEOMETRY_RESULT"
+      },
+      "allowed": false,
+      "activated": false,
+      "reason": "DIFFERENT_GRADIENT_GROUP"
+    },
+    {
+      "schema": "dmslicer.gradient-connection-policy.v1",
+      "source_ref": "policy-input-a",
+      "target_ref": "policy-input-b",
+      "gradient_groups": [
+        "G1",
+        "G1"
+      ],
+      "geometry_evidence": {
+        "relation_ref": "synthetic-confirmed-relation",
+        "region_refs": [
+          "policy-input-a",
+          "policy-input-b"
+        ],
+        "status": "CANDIDATE",
+        "allows_connection": true,
+        "premise": "SYNTHETIC_TEST_ONLY_NOT_AN_ACTUAL_GEOMETRY_RESULT"
+      },
+      "allowed": false,
+      "activated": false,
+      "reason": "GEOMETRY_CONNECTION_NOT_CONFIRMED"
+    }
+  ],
+  "self_connection": "Self connection is forbidden",
+  "active_relations": []
+}

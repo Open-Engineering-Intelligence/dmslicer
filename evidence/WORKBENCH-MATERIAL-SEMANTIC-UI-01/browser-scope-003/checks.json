@@ -1,0 +1,12 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "page identity; existing geometry and evidence remain readable",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "failure": "TimeoutError: locator.isDisabled: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.annotation-row').filter({ hasText: 'Interface · Geometry role' }).locator('.semantic-role')\u001b[22m\n",
+  "stack": "locator.isDisabled: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.annotation-row').filter({ hasText: 'Interface · Geometry role' }).locator('.semantic-role')\u001b[22m\n\n    at C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:27:171\n    at async check (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:12:32)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:25:3"
+}

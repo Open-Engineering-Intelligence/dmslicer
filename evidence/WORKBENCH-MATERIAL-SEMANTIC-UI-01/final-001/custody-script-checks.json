@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "source byte mismatch rejected before copying",
+      "status": "PASS"
+    },
+    {
+      "check": "two copies plus failures and immutable verification",
+      "status": "PASS"
+    },
+    {
+      "check": "conflicting destination rejected without overwrite",
+      "status": "PASS"
+    },
+    {
+      "check": "path escape rejected",
+      "status": "PASS"
+    }
+  ]
+}

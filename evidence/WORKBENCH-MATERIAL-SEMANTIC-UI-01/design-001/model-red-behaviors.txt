@@ -1,0 +1,101 @@
+✔ annotation API is available before state consumers are wired (1.3079ms)
+✖ defaults derive geometry only; names and colors never activate semantic entities (0.7592ms)
+✖ explicit role, material and override are independent through material edits and roundtrip (0.4529ms)
+✖ restore refuses wrong source and changed reference provenance without mutating current state (0.2665ms)
+✖ invalid annotations never enter persistence (0.3285ms)
+✖ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.2154ms)
+✖ selection and opacity operate on explicit sets; empty and filtered sets cannot leak (0.3103ms)
+✖ failed save preserves draft, saved time and old persisted bytes (0.3082ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 1
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.4279
+
+✖ failing tests:
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ defaults derive geometry only; names and colors never activate semantic entities (0.7592ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:15:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ explicit role, material and override are independent through material edits and roundtrip (0.4529ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:22:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ restore refuses wrong source and changed reference provenance without mutating current state (0.2665ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:35:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ invalid annotations never enter persistence (0.3285ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:41:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ library requires stable keys, valid colors and JSON properties; failed edits are atomic (0.2154ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:50:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ selection and opacity operate on explicit sets; empty and filtered sets cannot leak (0.3103ms)
+  TypeError: W.display is not a function
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:55:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)
+
+test at tests\workspace_annotations.test.cjs:13:29
+✖ failed save preserves draft, saved time and old persisted bytes (0.3082ms)
+  Error: Workspace annotations not implemented
+      at Object.create (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\src\dmslicer\workspace_annotations.js:2:46)
+      at TestContext.<anonymous> (C:\Users\ufo00\.codex\worktrees\843a\dmslicer\tests\workspace_annotations.test.cjs:62:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

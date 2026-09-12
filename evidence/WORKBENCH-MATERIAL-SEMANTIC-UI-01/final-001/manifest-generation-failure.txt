@@ -1,0 +1,1 @@
+Manifest generation attempt 001 failed before writing manifest: Windows default GBK decoding of UTF-8 browser JSON raised UnicodeDecodeError. Fix: every JSON/text read uses explicit encoding=utf-8. No evidence file overwritten.

@@ -1,0 +1,36 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "page identity; existing geometry and evidence remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "material add returns to source row without assignment; role material color independent",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit save and portable export preserve fields and decisions",
+      "status": "PASS"
+    },
+    {
+      "name": "save failure retains draft and recovery; imported data source checked",
+      "status": "PASS"
+    },
+    {
+      "name": "five source packages and narrow layout remain readable",
+      "status": "PASS"
+    },
+    {
+      "name": "library edits retain key and assignments; duplicate add rejected; keyboard tabs reachable",
+      "status": "PASS"
+    },
+    {
+      "name": "standalone library export/import validates before replacing domain snapshot",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "failure": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status').filter({ hasText: '已打开 方块：A–G–B.dmslicer' }) to be visible\u001b[22m\n",
+  "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status').filter({ hasText: '已打开 方块：A–G–B.dmslicer' }) to be visible\u001b[22m\n\n    at sample (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:14:347)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:92:82\n    at async check (C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:12:32)\n    at async C:\\Users\\ufo00\\.codex\\worktrees\\843a\\dmslicer\\tests\\material_workspace_browser.cjs:90:3"
+}
