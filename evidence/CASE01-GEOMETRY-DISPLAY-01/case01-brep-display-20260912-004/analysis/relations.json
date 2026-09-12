@@ -1,0 +1,252 @@
+{
+  "candidates": [
+    {
+      "bounds_gap_mm": 0.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:7137bb9437517eccd5ade40af16858e07fb354ff256e7cc009eeecd32cf808af",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature001"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601"
+      ],
+      "semantic_pair": [
+        "A",
+        "G"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "bounds_gap_mm": 10.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:be671d6c6c1af06d8765826766f3aa8a648463639d7c7c5ece23287ae3abaf01",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "semantic_pair": [
+        "A",
+        "B"
+      ],
+      "status": "FILTERED_OUT"
+    },
+    {
+      "bounds_gap_mm": 0.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:9704945788123e8c199618ff52727d5d9eac6bdb9e71775667f70b3cb5c9ce94",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature001",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "semantic_pair": [
+        "G",
+        "B"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "relations": [
+    {
+      "confirmed": true,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "evidence": {
+        "face_common_count": 1,
+        "method": "face_common_brep",
+        "minimum_distance_mm": 0.0,
+        "section": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": 10.0,
+            "xmin": 10.0,
+            "ymax": 20.0,
+            "ymin": 0.0,
+            "zmax": 20.0,
+            "zmin": 0.0
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 4,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        },
+        "solid_common": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": -1.7976931348623157e+308,
+            "xmin": 1.7976931348623157e+308,
+            "ymax": -1.7976931348623157e+308,
+            "ymin": 1.7976931348623157e+308,
+            "zmax": -1.7976931348623157e+308,
+            "zmin": 1.7976931348623157e+308
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 0,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        }
+      },
+      "intersection_dimension": 2,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature001"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601"
+      ],
+      "relation_id": "relation:v1:21acaafd3b3c6ff9f389f357b5060941d9faf2976cc67378e0e77290334d0968",
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "A",
+        "G"
+      ]
+    },
+    {
+      "confirmed": true,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "evidence": {
+        "face_common_count": 1,
+        "method": "face_common_brep",
+        "minimum_distance_mm": 0.0,
+        "section": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": 20.0,
+            "xmin": 20.0,
+            "ymax": 20.0,
+            "ymin": 0.0,
+            "zmax": 20.0,
+            "zmin": 0.0
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 4,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        },
+        "solid_common": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": -1.7976931348623157e+308,
+            "xmin": 1.7976931348623157e+308,
+            "ymax": -1.7976931348623157e+308,
+            "ymin": 1.7976931348623157e+308,
+            "zmax": -1.7976931348623157e+308,
+            "zmin": 1.7976931348623157e+308
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 0,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        }
+      },
+      "intersection_dimension": 2,
+      "occurrence_pair": [
+        "Part__Feature001",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "relation_id": "relation:v1:a1435c1565e543b6739f85e0c09d900d8e250dd0f57a6841f61b3647db5b8e99",
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "G",
+        "B"
+      ]
+    },
+    {
+      "confirmed": true,
+      "coverage_a": null,
+      "coverage_b": null,
+      "evidence": {
+        "face_common_count": 0,
+        "method": "solid_common_section_distance_brep",
+        "minimum_distance_mm": 10.0,
+        "section": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": -1.7976931348623157e+308,
+            "xmin": 1.7976931348623157e+308,
+            "ymax": -1.7976931348623157e+308,
+            "ymin": 1.7976931348623157e+308,
+            "zmax": -1.7976931348623157e+308,
+            "zmin": 1.7976931348623157e+308
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 0,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        },
+        "solid_common": {
+          "area_mm2": 0.0,
+          "bounding_box_mm": {
+            "xmax": -1.7976931348623157e+308,
+            "xmin": 1.7976931348623157e+308,
+            "ymax": -1.7976931348623157e+308,
+            "ymin": 1.7976931348623157e+308,
+            "zmax": -1.7976931348623157e+308,
+            "zmin": 1.7976931348623157e+308
+          },
+          "center_of_mass_mm": null,
+          "edge_count": 0,
+          "face_count": 0,
+          "is_valid": true,
+          "shape_type": "Compound",
+          "shell_closed": true,
+          "solid_count": 0,
+          "volume_mm3": 0.0
+        }
+      },
+      "intersection_dimension": null,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "relation_id": "relation:v1:c18dc526ef5f19f20c2714dfa327c417e96aa60de1bd607600aaee50c3a0940d",
+      "relation_type": "DISJOINT",
+      "semantic_pair": [
+        "A",
+        "B"
+      ]
+    }
+  ]
+}

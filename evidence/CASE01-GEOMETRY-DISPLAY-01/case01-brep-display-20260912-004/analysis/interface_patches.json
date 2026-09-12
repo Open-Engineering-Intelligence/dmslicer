@@ -1,0 +1,102 @@
+{
+  "interface_patches": [
+    {
+      "area_mm2": 400.0,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "extraction_method": "face_common_brep",
+      "geometry": {
+        "area_mm2": 399.99999999999994,
+        "bounding_box_mm": {
+          "xmax": 20.0,
+          "xmin": 20.0,
+          "ymax": 20.0,
+          "ymin": 0.0,
+          "zmax": 20.0,
+          "zmin": 0.0
+        },
+        "center_of_mass_mm": [
+          20.0,
+          10.0,
+          10.0
+        ],
+        "edge_count": 4,
+        "surface_type": "Part::GeomPlane",
+        "wire_count": 1
+      },
+      "geometry_fingerprint": "facegeo:v1:780413f6a821cdd68ae085617b2995ca931bec4a948e798fa28adc94423e56fa",
+      "intersection_dimension": 2,
+      "patch_id": "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
+      "provenance_id": "provenance:v1:490551bd20e371552f5fb9fe66abfbec8b55dfdd9b9f63de2576f3a8676c8097",
+      "provenance_method": "DIRECT_BREP_FACE_COMMON",
+      "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
+      "region_a_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "region_b_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69",
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "G",
+        "B"
+      ],
+      "source_face_a_id": "face:v1:6f479ae3a41bba42a9e4c2f2ead8f9a70d8071ed3ebecb4cc3ca9a3f591b744b",
+      "source_face_b_id": "face:v1:a149cadab219ceceff25eb8cab23d2f9c3f517cb25d18a7dcd305f89462aaa66",
+      "tolerance": {
+        "angular_same_domain_tolerance_rad": 1e-06,
+        "area_epsilon_mm2": 1e-08,
+        "area_unit": "mm2",
+        "candidate_tolerance_mm": 0.05,
+        "length_unit": "mm",
+        "near_miss_max_gap_mm": 0.05,
+        "nominal_fuzzy_value_mm": 0.0
+      }
+    },
+    {
+      "area_mm2": 400.0,
+      "coverage_a": 1.0,
+      "coverage_b": 1.0,
+      "extraction_method": "face_common_brep",
+      "geometry": {
+        "area_mm2": 399.99999999999994,
+        "bounding_box_mm": {
+          "xmax": 10.0,
+          "xmin": 10.0,
+          "ymax": 20.0,
+          "ymin": 0.0,
+          "zmax": 20.0,
+          "zmin": 0.0
+        },
+        "center_of_mass_mm": [
+          10.0,
+          10.0,
+          10.0
+        ],
+        "edge_count": 4,
+        "surface_type": "Part::GeomPlane",
+        "wire_count": 1
+      },
+      "geometry_fingerprint": "facegeo:v1:6c724ad600e6443a8bd180cede2abfc59f1d73580022306bc67aa095f7627e68",
+      "intersection_dimension": 2,
+      "patch_id": "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
+      "provenance_id": "provenance:v1:92c8ee220e1a6bc43df433f16331a9aee67e7a75dfa52fb49b8251bdf333a30b",
+      "provenance_method": "DIRECT_BREP_FACE_COMMON",
+      "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
+      "region_a_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "region_b_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "A",
+        "G"
+      ],
+      "source_face_a_id": "face:v1:cc9f2e4760e23ff6d076dfc9b80cc6fc226878b3cad028835ec6c6334e705289",
+      "source_face_b_id": "face:v1:e05fdb9e52ef78d6581b16b517f2152699c9ad5543fb10895e518b477fcec338",
+      "tolerance": {
+        "angular_same_domain_tolerance_rad": 1e-06,
+        "area_epsilon_mm2": 1e-08,
+        "area_unit": "mm2",
+        "candidate_tolerance_mm": 0.05,
+        "length_unit": "mm",
+        "near_miss_max_gap_mm": 0.05,
+        "nominal_fuzzy_value_mm": 0.0
+      }
+    }
+  ]
+}

@@ -46,4 +46,5 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert "A / SOURCE" in html
     assert "A-G common face" in html
     assert "depth" in html
-    assert "ctx.stroke" not in html
+    assert "shade" in html
+    assert "facetEdges" in html
