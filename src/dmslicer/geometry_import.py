@@ -1,6 +1,6 @@
 """User-triggered loopback import helper; run with --serve. No batch analysis."""
 import argparse
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer as HTTPServer
 import json
 import os
 from pathlib import Path
@@ -45,6 +45,10 @@ def tessellate(sources, output):
 
 def handler_for(root):
     class Handler(BaseHTTPRequestHandler):
+        # Browsers may preconnect without sending headers. Such a socket must
+        # neither monopolize the service nor hold an idle worker indefinitely.
+        timeout = 15
+
         def reply(self, status, body, mime='application/json'):
             data = body.encode('utf-8') if isinstance(body, str) else body
             self.send_response(status)

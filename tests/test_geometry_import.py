@@ -1,13 +1,13 @@
-from http.server import HTTPServer
 import json
 from pathlib import Path
+import socket
 import threading
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import pytest
 
-from dmslicer.geometry_import import handler_for, tessellate
+from dmslicer.geometry_import import HTTPServer, handler_for, tessellate
 from test_result_package import package
 
 
@@ -40,6 +40,21 @@ def test_cross_origin_import_and_unknown_paths_are_rejected(server):
     assert error.value.code == 403
     with pytest.raises(HTTPError) as error: urlopen(server + '/source.step')
     assert error.value.code == 404
+
+
+def test_idle_browser_connection_cannot_block_homepage_or_package(server):
+    port = int(server.rsplit(':', 1)[1])
+    # A preconnected/unfinished browser request used to occupy the only worker.
+    idle = socket.create_connection(('127.0.0.1', port))
+    try:
+        idle.sendall(b'GET / HTTP/1.1\r\n')
+        with urlopen(server, timeout=1) as response:
+            assert response.status == 200
+        request = Request(server + '/package', data=package(), headers={'Content-Type': 'application/octet-stream'})
+        with urlopen(request, timeout=1) as response:
+            assert json.load(response)['cases']
+    finally:
+        idle.close()
 
 
 @pytest.mark.freecad
