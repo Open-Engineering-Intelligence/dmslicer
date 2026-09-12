@@ -11,6 +11,7 @@ from pathlib import Path
 from .geometry_import import tessellate
 from .geometry_case_viewer import render_catalog
 from .result_package import write_package, read_package
+from .result_labels import apply_sample_labels
 
 
 def prepare(run, input_step, output, case_id, label, include_review=False):
@@ -58,6 +59,7 @@ def prepare(run, input_step, output, case_id, label, include_review=False):
                   'versions': extracted['versions'], 'display_linear_deflection_mm': 0.25, 'display_boundary_deflection_mm': 0.25,
                   'source_manifest': 'results/manifest.json'}
     catalog = {'schema': 'dmslicer.display-catalog.v1', 'cases': [{'case_id': case_id, 'label': label, 'provenance': provenance, 'scene': extracted['scene']}]}
+    apply_sample_labels(catalog['cases'][0])
     assets['display/catalog.json'] = json.dumps(catalog, ensure_ascii=True).encode('utf-8')
     entries.append({'path': 'display/catalog.json', 'role': 'display_cache', 'required': False})
     manifest = {'schema': 'dmslicer.result-package.v1', 'case': {'id': case_id, 'label': label},

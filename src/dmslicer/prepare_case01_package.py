@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .geometry_case_viewer import case01_entry, render_catalog
 from .result_package import read_package, write_package
+from .result_labels import apply_sample_labels
 
 
 def prepare(root, output):
@@ -40,6 +41,7 @@ def prepare(root, output):
                  'source_digest_note': 'Any historical validation digest is preserved as source data, not used as geometric equivalence evidence'}
     add('results/operation.json', json.dumps(operation).encode(), 'operation')
     catalog = {'schema': 'dmslicer.display-catalog.v1', 'cases': [entry]}
+    apply_sample_labels(entry)
     add('display/catalog.json', json.dumps(catalog).encode(), 'display_cache', False)
     output.mkdir(parents=True, exist_ok=False)
     path = output / 'CASE01.dmslicer'

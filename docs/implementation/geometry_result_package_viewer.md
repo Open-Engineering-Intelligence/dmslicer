@@ -6,9 +6,9 @@
 
 ## 当前样包
 
-- `evidence/GEOMETRY-CASE-VIEWER-01/c02-package-003/C02.dmslicer`
-- `evidence/GEOMETRY-CASE-VIEWER-01/u05-package-003/U05.dmslicer`
-- `evidence/GEOMETRY-CASE-VIEWER-01/case01-package-001/CASE01.dmslicer`
+- `evidence/GEOMETRY-CASE-VIEWER-01/c02-package-004/C02.dmslicer`
+- `evidence/GEOMETRY-CASE-VIEWER-01/u05-package-004/U05.dmslicer`
+- `evidence/GEOMETRY-CASE-VIEWER-01/case01-package-002/CASE01.dmslicer`
 
 两包都来源于 08C 的已有当前复跑结果。本次只采样这些结果的显示网格，不重新计算接触或融合。它们不是 U02 的替代证据；U02 由独立的 08F 任务准备，采用同一导入合约即可接入。
 
@@ -66,3 +66,5 @@ STEP + manifest + 已计算的 operation/validation JSON 是生产者的核心�
 本地测试覆盖包解析、缺缓存降级、恶意路径、字节损坏、JS 语法、自包含 JSON 转义、HTTP 包导入不调用 CAD，以及实际 C02 STEP 的两对象显示采样。未完成浏览器人工视觉验收。
 
 用户需实际确认：单文件导入成功、输入各自显隐、公共面与剩余分区可辨认、融合结果单独显示、选择追溯、拖动与缩放、透明度及内面着色、边界线与圆柱/球面的可读性。渲染是小型 Canvas painter，半透明排序和相交面的遮挡可能有误差；边界线为明确标注的穿透叠加。它不是 CAD 几何检查器。
+
+当前样包面板采用中文输入/公共接口/校正/融合标签。原始 FreeCAD 产品名和 run-local locator 仅在折叠的“来源/诊断”中显示；标签更换不改几何或已有引用。
