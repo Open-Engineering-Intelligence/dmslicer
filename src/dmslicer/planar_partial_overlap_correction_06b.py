@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from .evidence import read_json, sha256_file, write_json
+from .geometry_result_identity_01 import load_publication_map, validate_result_bindings
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -219,7 +220,15 @@ def run_partial_overlap_case(fixture_root: Path, scenario_id: str, output_root: 
     policy, expected = read_json(policy_path), read_json(expected_path)
     output_root.mkdir(parents=True, exist_ok=True)
     staged = Path(tempfile.mkdtemp(prefix=f".{scenario_id}-06b-", dir=output_root))
-    operation = _run_freecad({"action": "analyze", "scenario_id": scenario_id, "step_path": str(step), "policy": policy, "rules": RULES, "output_dir": str(staged), "create_view": create_view, "traversal_order": traversal_order})["operation"]
+    request = {"action": "analyze", "scenario_id": scenario_id, "step_path": str(step), "policy": policy, "rules": RULES, "output_dir": str(staged), "create_view": create_view, "traversal_order": traversal_order}
+    publication_path = case / "result_identity_publication.json"
+    publication_map = None
+    if publication_path.is_file():
+        publication_map = load_publication_map(publication_path)
+        request["result_binding_specs"] = publication_map["backend_results"]
+    operation = _run_freecad(request)["operation"]
+    if publication_map is not None:
+        validate_result_bindings(operation, publication_map, case, staged)
     operation["input_step_sha256"] = sha256_file(step)
     operation["policy"] = policy
     operation["validator_version"] = "06B"

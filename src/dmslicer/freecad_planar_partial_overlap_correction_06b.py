@@ -150,6 +150,52 @@ def _export_assembly(output, first, second, fused):
         FreeCAD.closeDocument(doc.Name)
 
 
+def _result_bindings(specifications, partition):
+    """Bind known operation roles to exported artifacts without Snapshot IDs."""
+    if specifications is None:
+        return []
+    if not isinstance(specifications, list):
+        raise ValueError("result binding specifications must be a list")
+    actual = {
+        "result:source-region:side-1": {
+            "result_ref": "result:source-region:side-1",
+            "role": "INPUT_REGION",
+            "source_role": "Side_1",
+            "artifact": {"kind": "STEP", "uri": "inputs.step"},
+        },
+        "result:source-region:side-2": {
+            "result_ref": "result:source-region:side-2",
+            "role": "INPUT_REGION",
+            "source_role": "Side_2",
+            "artifact": {"kind": "STEP", "uri": "inputs.step"},
+        },
+        "result:partition:common": {
+            "result_ref": "result:partition:common",
+            "role": "COMMON",
+            "artifact": {"kind": "BREP", "uri": partition["common_brep"]},
+        },
+        "result:partition:remaining-side-1": {
+            "result_ref": "result:partition:remaining-side-1",
+            "role": "REMAINING",
+            "source_role": "Side_1",
+            "artifact": {"kind": "BREP", "uri": partition["Side_1_remaining_brep"]},
+        },
+        "result:partition:remaining-side-2": {
+            "result_ref": "result:partition:remaining-side-2",
+            "role": "REMAINING",
+            "source_role": "Side_2",
+            "artifact": {"kind": "BREP", "uri": partition["Side_2_remaining_brep"]},
+        },
+    }
+    requested = {item.get("result_ref") for item in specifications if isinstance(item, dict)}
+    if len(requested) != len(specifications) or requested != set(actual):
+        raise ValueError("result binding specifications do not match P07 operation roles")
+    bindings = [actual[item["result_ref"]] for item in specifications]
+    if any(binding["artifact"]["uri"] is None for binding in bindings):
+        raise ValueError("cannot bind absent result artifact")
+    return bindings
+
+
 def _reimport_assembly(path, reverse):
     doc = FreeCAD.newDocument("PartialOverlap06BReimport")
     try:
@@ -284,6 +330,7 @@ def _analyze(request):
             partition["common_brep"] = _export_shape(doc, output, "common", partition["common_shape"])
             operation["post_measurement"] = post
             operation["partition"] = {key: value for key, value in partition.items() if key not in {"common_shape", "common_patches", "remaining_shapes"}}
+            operation["result_bindings"] = _result_bindings(request.get("result_binding_specs"), partition)
             operation["fuse"] = {"executed": True, "solid_count": len(fused.Solids), "valid": bool(fused.isValid()), "closed": bool(_closed(fused)), "volume_conservation_error_mm3": float(abs(fused.Volume - (first.Volume + corrected.Volume - material_common.Volume))), "boundary_overlap_area_mm2": float(boundary)}
             operation["artifacts"] = _export_assembly(output, first, corrected, fused)
             operation["reimport"] = {"corrected_assembly": _reimport_assembly(operation["artifacts"]["corrected_assembly_step"], request.get("traversal_order") == "reverse")}

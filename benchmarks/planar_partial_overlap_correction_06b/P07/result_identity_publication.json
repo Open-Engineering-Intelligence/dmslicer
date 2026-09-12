@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "scenario_id": "P07",
+  "source_snapshot": "contract_examples/v0.1/geometry/planar_partial.json",
+  "backend_results": [
+    {
+      "result_ref": "result:source-region:side-1",
+      "role": "INPUT_REGION",
+      "source_role": "Side_1",
+      "artifact": {"kind": "STEP", "uri": "inputs.step"}
+    },
+    {
+      "result_ref": "result:source-region:side-2",
+      "role": "INPUT_REGION",
+      "source_role": "Side_2",
+      "artifact": {"kind": "STEP", "uri": "inputs.step"}
+    },
+    {
+      "result_ref": "result:partition:common",
+      "role": "COMMON",
+      "artifact": {"kind": "BREP", "uri": "patches/common.brep"}
+    },
+    {
+      "result_ref": "result:partition:remaining-side-1",
+      "role": "REMAINING",
+      "source_role": "Side_1",
+      "artifact": {"kind": "BREP", "uri": "patches/side_1_remaining.brep"}
+    },
+    {
+      "result_ref": "result:partition:remaining-side-2",
+      "role": "REMAINING",
+      "source_role": "Side_2",
+      "artifact": {"kind": "BREP", "uri": "patches/side_2_remaining.brep"}
+    }
+  ],
+  "entity_bindings": [
+    {"entity_id": "region:e1-side-1", "result_ref": "result:source-region:side-1"},
+    {"entity_id": "region:e1-side-2", "result_ref": "result:source-region:side-2"},
+    {"entity_id": "partition:v0.1:577e8c1b352a5c5dc8293e98fcd98a19d254f52832745aa8a1aacaeb50e7adcc", "result_ref": "result:partition:common"},
+    {"entity_id": "partition:v0.1:90333b6845c2be8f430414638167c61b9368b76a3ecc0d2c832ef281df2275e0", "result_ref": "result:partition:remaining-side-1"},
+    {"entity_id": "partition:v0.1:27f32a0dbe49477c236caaed6f9adf6907a34de3553a3e6c478b8ad2118b0421", "result_ref": "result:partition:remaining-side-2"}
+  ]
+}
