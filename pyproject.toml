@@ -13,6 +13,7 @@ dependencies = ["jsonschema>=4.23"]
 where = ["src"]
 
 [tool.setuptools.package-data]
+"dmslicer" = ["geometry_import_viewer.html"]
 "dmslicer.geometry_contract.schemas" = ["*.json"]
 
 [tool.pytest.ini_options]
