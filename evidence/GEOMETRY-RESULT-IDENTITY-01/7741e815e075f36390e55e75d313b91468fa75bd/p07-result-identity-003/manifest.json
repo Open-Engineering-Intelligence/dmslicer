@@ -1,0 +1,34 @@
+{
+  "branch": "feat/geometry-result-identity-01",
+  "command": "run_partial_overlap_case(P07) + publish_identity_bound_snapshot",
+  "execution_timestamp_utc": "2026-09-12T03:04:05.637427+00:00",
+  "exit_code": 0,
+  "fixture": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step",
+  "freecad_version": [
+    "1",
+    "1",
+    "1",
+    "20260414 (Git shallow)",
+    "Unknown",
+    "2026/04/14 22:09:59",
+    "(HEAD detached at 0108fd4b4)",
+    "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+  ],
+  "geometry_snapshot": "geometry_snapshot.json",
+  "goal_id": "GEOMETRY-RESULT-IDENTITY-01",
+  "identity_bindings": "identity_bindings.json",
+  "implementation_commit": "7741e815e075f36390e55e75d313b91468fa75bd",
+  "input_sha256": "b9cee858852934a3faaa92b95fdc67ac951a6665a64efce2d9a78d58383d6d8e",
+  "occt_version": "7.8.1",
+  "operation": "operation.json",
+  "parent_baseline": "289567dbaaf3f89809dbbd82d71bf190a3aa7a13",
+  "pytest_version": "8.4.2",
+  "python_version": "3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]",
+  "run_id": "p07-result-identity-003",
+  "status": "PASS",
+  "tolerances": {
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  }
+}

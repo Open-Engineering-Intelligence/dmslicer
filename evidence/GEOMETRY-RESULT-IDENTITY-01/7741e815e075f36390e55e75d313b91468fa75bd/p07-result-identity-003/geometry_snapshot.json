@@ -1,0 +1,289 @@
+{
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:e1-step",
+      "kind": "STEP",
+      "uri": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step"
+    },
+    {
+      "artifact_id": "artifact:p07-result-partition-common",
+      "kind": "BREP",
+      "uri": "evidence/GEOMETRY-RESULT-IDENTITY-01/7741e815e075f36390e55e75d313b91468fa75bd/p07-result-identity-003/artifacts/common.brep"
+    },
+    {
+      "artifact_id": "artifact:p07-result-partition-remaining-side-1",
+      "kind": "BREP",
+      "uri": "evidence/GEOMETRY-RESULT-IDENTITY-01/7741e815e075f36390e55e75d313b91468fa75bd/p07-result-identity-003/artifacts/side_1_remaining.brep"
+    },
+    {
+      "artifact_id": "artifact:p07-result-partition-remaining-side-2",
+      "kind": "BREP",
+      "uri": "evidence/GEOMETRY-RESULT-IDENTITY-01/7741e815e075f36390e55e75d313b91468fa75bd/p07-result-identity-003/artifacts/side_2_remaining.brep"
+    }
+  ],
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1-rc1"
+  },
+  "interface_components": [
+    {
+      "component_id": "component:v0.1:fa352169ad9b797054d15e53cffdae7241e5fa5a8579a2839774ebe52a7105af",
+      "interface_ref": "interface:v0.1:1fdfa07fbf817bebd7774caea599c3c428f593990ac22c9afeffb526afcb7536",
+      "patch_refs": [
+        "patch:e1-common"
+      ]
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "interface:v0.1:1fdfa07fbf817bebd7774caea599c3c428f593990ac22c9afeffb526afcb7536",
+      "patch_refs": [
+        "patch:e1-common"
+      ],
+      "region_refs": [
+        "region:e1-side-1",
+        "region:e1-side-2"
+      ],
+      "relation_ref": "relation:v0.1:cb54184812b7aa723392f502edc5e59729c47a2f4866a648459c42befc0f7cdc"
+    }
+  ],
+  "model_frame": {
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    },
+    "frame_id": "frame:model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ]
+  },
+  "parent_snapshot_ids": [
+    "snapshot:v0.1:622c99042ab2f8f9fbae2425c130beb27d62ea62457ea3e6c49240952064de8b"
+  ],
+  "patches": [
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 480
+      },
+      "component_ref": "component:v0.1:fa352169ad9b797054d15e53cffdae7241e5fa5a8579a2839774ebe52a7105af",
+      "family": "PLANE",
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "provenance_ref": "provenance:e1",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e1-common-source"
+        }
+      },
+      "interface_ref": "interface:v0.1:1fdfa07fbf817bebd7774caea599c3c428f593990ac22c9afeffb526afcb7536",
+      "patch_id": "patch:e1-common",
+      "planar_parameters": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "tangent_u": [
+          1,
+          0,
+          0
+        ],
+        "tangent_v": [
+          0,
+          1,
+          0
+        ],
+        "unit_normal": [
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "provenance_references": [
+    {
+      "evidence_uri": "docs/implementation/06b_planar_partial_overlap_correction.md",
+      "fixture_uri": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step",
+      "goal_id": "06B-P07",
+      "implementation_commit": "c23cc83a4c60620a8210e9aad01fb7adc1c72bde",
+      "provenance_id": "provenance:e1"
+    },
+    {
+      "evidence_uri": "evidence/GEOMETRY-RESULT-IDENTITY-01/7741e815e075f36390e55e75d313b91468fa75bd/p07-result-identity-003/operation.json",
+      "fixture_uri": "benchmarks/planar_partial_overlap_correction_06b/P07/inputs.step",
+      "goal_id": "GEOMETRY-RESULT-IDENTITY-01",
+      "implementation_commit": "7741e815e075f36390e55e75d313b91468fa75bd",
+      "provenance_id": "provenance:p07-result-identity-01"
+    }
+  ],
+  "regions": [
+    {
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "P07/Side_1"
+        }
+      },
+      "region_id": "region:e1-side-1",
+      "source_document_id": "document:e1-p07",
+      "validity_state": "VALID"
+    },
+    {
+      "frame_ref": "frame:model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "P07/Side_2"
+        }
+      },
+      "region_id": "region:e1-side-2",
+      "source_document_id": "document:e1-p07",
+      "validity_state": "VALID"
+    }
+  ],
+  "relations": [
+    {
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2,
+      "region_refs": [
+        "region:e1-side-1",
+        "region:e1-side-2"
+      ],
+      "relation_id": "relation:v0.1:cb54184812b7aa723392f502edc5e59729c47a2f4866a648459c42befc0f7cdc",
+      "taxonomy": "PARTIAL_FACE_OVERLAP",
+      "tolerance_refs": [
+        "tolerance:e1-area"
+      ]
+    }
+  ],
+  "semantic_bindings": [
+    {
+      "activation": "ACTIVE",
+      "binding_id": "binding:e1-target",
+      "semantic_role": "TARGET_REGION",
+      "subject_ref": "region:e1-side-1"
+    },
+    {
+      "activation": "ACTIVE",
+      "binding_id": "binding:e1-interface",
+      "semantic_role": "INTERFACE_SOURCE_BOUNDARY",
+      "subject_ref": "interface:v0.1:1fdfa07fbf817bebd7774caea599c3c428f593990ac22c9afeffb526afcb7536"
+    }
+  ],
+  "snapshot_id": "snapshot:v0.1:f603798e99a153535870ec4ae5742922fc9657a58d38a0a2d37bfedc548e31f8",
+  "source_documents": [
+    {
+      "artifact_ref": "artifact:e1-step",
+      "internal_length_unit": "mm",
+      "source_document_id": "document:e1-p07",
+      "source_length_unit": "mm"
+    }
+  ],
+  "surface_partitions": [
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 480
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:p07-result-partition-common",
+        "locator": {
+          "scheme": "BREP_ROOT",
+          "value": "$"
+        }
+      },
+      "partition_id": "partition:v0.1:577e8c1b352a5c5dc8293e98fcd98a19d254f52832745aa8a1aacaeb50e7adcc",
+      "patch_refs": [
+        "patch:e1-common"
+      ],
+      "role": "COMMON",
+      "source_geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "provenance_ref": "provenance:e1",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e1-common-source"
+        }
+      }
+    },
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 320
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:p07-result-partition-remaining-side-1",
+        "locator": {
+          "scheme": "BREP_ROOT",
+          "value": "$"
+        }
+      },
+      "partition_id": "partition:v0.1:90333b6845c2be8f430414638167c61b9368b76a3ecc0d2c832ef281df2275e0",
+      "patch_refs": [],
+      "role": "REMAINING",
+      "source_geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "provenance_ref": "provenance:e1",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e1-side-1"
+        }
+      }
+    },
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 320
+      },
+      "geometry_ref": {
+        "artifact_ref": "artifact:p07-result-partition-remaining-side-2",
+        "locator": {
+          "scheme": "BREP_ROOT",
+          "value": "$"
+        }
+      },
+      "partition_id": "partition:v0.1:27f32a0dbe49477c236caaed6f9adf6907a34de3553a3e6c478b8ad2118b0421",
+      "patch_refs": [],
+      "role": "REMAINING",
+      "source_geometry_ref": {
+        "artifact_ref": "artifact:e1-step",
+        "locator": {
+          "provenance_ref": "provenance:e1",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:e1-side-2"
+        }
+      }
+    }
+  ],
+  "tolerances": [
+    {
+      "role": "partition_area_acceptance",
+      "source": "06B",
+      "tolerance_id": "tolerance:e1-area",
+      "unit": "mm2",
+      "value": 1e-08
+    }
+  ]
+}

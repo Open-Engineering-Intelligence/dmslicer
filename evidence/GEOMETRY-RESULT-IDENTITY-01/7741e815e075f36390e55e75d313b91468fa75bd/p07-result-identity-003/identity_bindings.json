@@ -1,0 +1,26 @@
+{
+  "entity_bindings": [
+    {
+      "entity_id": "region:e1-side-1",
+      "result_ref": "result:source-region:side-1"
+    },
+    {
+      "entity_id": "region:e1-side-2",
+      "result_ref": "result:source-region:side-2"
+    },
+    {
+      "entity_id": "partition:v0.1:577e8c1b352a5c5dc8293e98fcd98a19d254f52832745aa8a1aacaeb50e7adcc",
+      "result_ref": "result:partition:common"
+    },
+    {
+      "entity_id": "partition:v0.1:90333b6845c2be8f430414638167c61b9368b76a3ecc0d2c832ef281df2275e0",
+      "result_ref": "result:partition:remaining-side-1"
+    },
+    {
+      "entity_id": "partition:v0.1:27f32a0dbe49477c236caaed6f9adf6907a34de3553a3e6c478b8ad2118b0421",
+      "result_ref": "result:partition:remaining-side-2"
+    }
+  ],
+  "published_snapshot_id": "snapshot:v0.1:f603798e99a153535870ec4ae5742922fc9657a58d38a0a2d37bfedc548e31f8",
+  "source_snapshot_id": "snapshot:v0.1:622c99042ab2f8f9fbae2425c130beb27d62ea62457ea3e6c49240952064de8b"
+}
