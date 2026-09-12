@@ -1,0 +1,35 @@
+{
+  "goal_id": "DM-Slicer｜08B 当前环境07A圆柱复跑",
+  "run_id": "c01-current-rerun-20260912-001",
+  "evidence_confidence": "CURRENT_RERUN_PASS",
+  "branch": "feat/case01-geometry-display-01",
+  "implementation_commit": "4a3f103693d9d72febe70ebc827ed9e2b55c8832",
+  "parent_baseline": "811b45b857a9bfd4397dd6e66284aaea5cc70101",
+  "input_fixture": "benchmarks/cylindrical_interface_repair_07a/C01/inputs.step",
+  "input_sha256": "19bd3fa30cd9ee185449f4cb788cc2c1530d138e4e2a543dd1e82a879214d9ce",
+  "hash_semantics": "byte_integrity_only",
+  "command": "py -3.12 -c run_cylindrical_repair_case(C01, distinct evidence output)",
+  "freecad_version": "1.1.1 Revision 20260414 (Git shallow)",
+  "occt_version": "not independently captured by this rerun wrapper",
+  "python_version": "3.12.0",
+  "pytest_version": "8.4.2",
+  "numeric_rules": {
+    "linear_epsilon_mm": 1e-07,
+    "radius_epsilon_mm": 1e-07,
+    "area_epsilon_mm2": 1e-08,
+    "volume_epsilon_mm3": 1e-06,
+    "angular_epsilon_rad": 1e-07,
+    "material_probe_offset_mm": 1e-05
+  },
+  "validation": "validation.json",
+  "operation": "operation.json",
+  "actual_geometry_validation": [
+    "STEP re-import actual B-rep candidate extraction",
+    "full-period shaft/bore classification",
+    "axis/radius/clearance and minimum-distance measurement",
+    "common area and zero material-overlap check",
+    "debug FCStd reopen/group check"
+  ],
+  "result": "PASS: EXACT_CYLINDRICAL_CONTACT; NO_CORRECTION_REQUIRED",
+  "historical_scope_note": "This is one current C01 rerun. It does not replace or promote 07A historical custody evidence, and it makes no sphere claim."
+}
