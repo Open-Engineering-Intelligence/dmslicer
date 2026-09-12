@@ -1,0 +1,527 @@
+{
+  "artifact_count": 65,
+  "artifacts": [
+    {
+      "artifact_id": "ambiguous-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/AMBIGUOUS/expected_snapshot.json",
+      "sha256": "996d4bd04ffdb65bde93f78840a85c6a8d1a0c5d2f25de78481da4c32db18674",
+      "size_bytes": 458,
+      "source_logical_path": "work/07a-evidence-closeout-staging/AMBIGUOUS/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "ambiguous-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/AMBIGUOUS/operation_debug.FCStd",
+      "sha256": "5f6358e9a15c97fff11f9037095118b5731eb3e72b417ac061fde5d09bff1f9f",
+      "size_bytes": 8796,
+      "source_logical_path": "work/07a-evidence-closeout-staging/AMBIGUOUS/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "ambiguous-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/AMBIGUOUS/operation.json",
+      "sha256": "e5443f70df92a926e59ed6ccdab4c0fc445ffd9da4c0230486437452050db502",
+      "size_bytes": 5567,
+      "source_logical_path": "work/07a-evidence-closeout-staging/AMBIGUOUS/operation.json"
+    },
+    {
+      "artifact_id": "ambiguous-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/AMBIGUOUS/operation.json",
+      "sha256": "e5443f70df92a926e59ed6ccdab4c0fc445ffd9da4c0230486437452050db502",
+      "size_bytes": 5567,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/AMBIGUOUS/operation.json"
+    },
+    {
+      "artifact_id": "ambiguous-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/AMBIGUOUS/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/AMBIGUOUS/validation.json"
+    },
+    {
+      "artifact_id": "ambiguous-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/AMBIGUOUS/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/AMBIGUOUS/repeatability.json"
+    },
+    {
+      "artifact_id": "ambiguous-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/AMBIGUOUS/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/AMBIGUOUS/validation.json"
+    },
+    {
+      "artifact_id": "c01-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C01/expected_snapshot.json",
+      "sha256": "c5ede656adee2dab2fd39eea182613933a6e080e43a0f6ea4ae57da6f65d4419",
+      "size_bytes": 470,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C01/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "c01-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/C01/operation_debug.FCStd",
+      "sha256": "14bff51d90e0fbf9ffd7ba39b388f845e72f3e38ae9fed9316a0f2c7a3612ddf",
+      "size_bytes": 8620,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C01/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "c01-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C01/operation.json",
+      "sha256": "fadd15146857a40c1aa48bb4a70fe9eb47d24ae0d0b4c53653521a6f31ef25ab",
+      "size_bytes": 7061,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C01/operation.json"
+    },
+    {
+      "artifact_id": "c01-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C01/operation.json",
+      "sha256": "fadd15146857a40c1aa48bb4a70fe9eb47d24ae0d0b4c53653521a6f31ef25ab",
+      "size_bytes": 7061,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C01/operation.json"
+    },
+    {
+      "artifact_id": "c01-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C01/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C01/validation.json"
+    },
+    {
+      "artifact_id": "c01-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C01/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C01/repeatability.json"
+    },
+    {
+      "artifact_id": "c01-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C01/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C01/validation.json"
+    },
+    {
+      "artifact_id": "c02-actual-common",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/actual_common.brep",
+      "sha256": "a65be0034b38879e1c92da4b10d1ccd63bd175cdaa36be73bb33daf28189f1ba",
+      "size_bytes": 1976,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/actual_common.brep"
+    },
+    {
+      "artifact_id": "c02-corrected-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/corrected_assembly.step",
+      "sha256": "216efa251b1ba94729ea199460234056c532f86c3764f103041fb256ec1c6c7d",
+      "size_bytes": 10069,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/corrected_assembly.step"
+    },
+    {
+      "artifact_id": "c02-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/expected_snapshot.json",
+      "sha256": "cb6da25b1a64cb19485a768334f9b15f68634ded5cfa864d50bfaebe097b19c4",
+      "size_bytes": 474,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "c02-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/C02/operation_debug.FCStd",
+      "sha256": "9dd23b1f5113b97bb8e5efa2ad41f375d3059e223ea1382f5e32a1ae73fe3418",
+      "size_bytes": 14244,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "c02-fused-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/fused.step",
+      "sha256": "a0be0417d9753e8322c8310e6846efcf612c9bc1932a9c8456b77caa3c184122",
+      "size_bytes": 6830,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/fused.step"
+    },
+    {
+      "artifact_id": "c02-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/operation.json",
+      "sha256": "6aac58070c0afad7dbcd7888e80f738b152992b2287e3544c10b4dc9ab367843",
+      "size_bytes": 9175,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/operation.json"
+    },
+    {
+      "artifact_id": "c02-repeat-actual-common",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C02/actual_common.brep",
+      "sha256": "a65be0034b38879e1c92da4b10d1ccd63bd175cdaa36be73bb33daf28189f1ba",
+      "size_bytes": 1976,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C02/actual_common.brep"
+    },
+    {
+      "artifact_id": "c02-repeat-corrected-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C02/corrected_assembly.step",
+      "sha256": "c533561a82ae8c96f39c9e87c83785c08db67c77ca30303d7ff7a2918be673e6",
+      "size_bytes": 10069,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C02/corrected_assembly.step"
+    },
+    {
+      "artifact_id": "c02-repeat-fused-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C02/fused.step",
+      "sha256": "a2bea7f968591097acbfe903f424157f45c2b7074f076913215b0f07f8f0cedb",
+      "size_bytes": 6830,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C02/fused.step"
+    },
+    {
+      "artifact_id": "c02-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C02/operation.json",
+      "sha256": "1451f0507f128fee7c9dc34405f144e05d4104ffdaf7cdedfbf08b5bf310c2b8",
+      "size_bytes": 9175,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C02/operation.json"
+    },
+    {
+      "artifact_id": "c02-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C02/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C02/validation.json"
+    },
+    {
+      "artifact_id": "c02-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/repeatability.json"
+    },
+    {
+      "artifact_id": "c02-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C02/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C02/validation.json"
+    },
+    {
+      "artifact_id": "c03-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C03/expected_snapshot.json",
+      "sha256": "2c37110b7da16689f017449d77af073f906c2b084fb063b95aec6b78ca357401",
+      "size_bytes": 492,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C03/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "c03-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/C03/operation_debug.FCStd",
+      "sha256": "c764c8e450135bc20b8c03de5c3384be7f06ac09b26a50b49844728227e32a97",
+      "size_bytes": 6860,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C03/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "c03-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C03/operation.json",
+      "sha256": "b3de1c06e7f804faec2788db724e2d6283c1e27b909ca3910680660977ef19a3",
+      "size_bytes": 6575,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C03/operation.json"
+    },
+    {
+      "artifact_id": "c03-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C03/operation.json",
+      "sha256": "b3de1c06e7f804faec2788db724e2d6283c1e27b909ca3910680660977ef19a3",
+      "size_bytes": 6575,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C03/operation.json"
+    },
+    {
+      "artifact_id": "c03-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C03/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C03/validation.json"
+    },
+    {
+      "artifact_id": "c03-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C03/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C03/repeatability.json"
+    },
+    {
+      "artifact_id": "c03-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C03/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C03/validation.json"
+    },
+    {
+      "artifact_id": "c04-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C04/expected_snapshot.json",
+      "sha256": "35dfba741089e7a9e209764efd487fb698df8d4a72bce05e6924e9d2f90c6cfa",
+      "size_bytes": 496,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C04/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "c04-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/C04/operation_debug.FCStd",
+      "sha256": "4175fe9e283f1d08060ac1767cce1943f9d1276688684dc6c0ccba9626b6a3bf",
+      "size_bytes": 8170,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C04/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "c04-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C04/operation.json",
+      "sha256": "4442f131b52061ec85e3a4b83a1108d68e4e326cf2ff1f095756453c706488a6",
+      "size_bytes": 6591,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C04/operation.json"
+    },
+    {
+      "artifact_id": "c04-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C04/operation.json",
+      "sha256": "4442f131b52061ec85e3a4b83a1108d68e4e326cf2ff1f095756453c706488a6",
+      "size_bytes": 6591,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C04/operation.json"
+    },
+    {
+      "artifact_id": "c04-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C04/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C04/validation.json"
+    },
+    {
+      "artifact_id": "c04-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C04/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C04/repeatability.json"
+    },
+    {
+      "artifact_id": "c04-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C04/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C04/validation.json"
+    },
+    {
+      "artifact_id": "c05-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C05/expected_snapshot.json",
+      "sha256": "732abc9bc0bb730ed2c4ff405ba62ecd9c9aa617b77ffde45adb6e5fb3b57819",
+      "size_bytes": 511,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C05/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "c05-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/C05/operation_debug.FCStd",
+      "sha256": "c19f0906aef2bcce6546e2655edde504e9dc98095311b7df039cea214ed72f87",
+      "size_bytes": 8888,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C05/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "c05-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C05/operation.json",
+      "sha256": "cd2c653e8b606c12b0fe68985b9fc5d42ed1d63c1b5e92441a3aab59570dcfa9",
+      "size_bytes": 6428,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C05/operation.json"
+    },
+    {
+      "artifact_id": "c05-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C05/operation.json",
+      "sha256": "cd2c653e8b606c12b0fe68985b9fc5d42ed1d63c1b5e92441a3aab59570dcfa9",
+      "size_bytes": 6428,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C05/operation.json"
+    },
+    {
+      "artifact_id": "c05-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/C05/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/C05/validation.json"
+    },
+    {
+      "artifact_id": "c05-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C05/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C05/repeatability.json"
+    },
+    {
+      "artifact_id": "c05-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/C05/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/C05/validation.json"
+    },
+    {
+      "artifact_id": "closeout-status",
+      "copy_status": "BYTE_SAME",
+      "public_path": "records/CLOSEOUT_STATUS.json",
+      "sha256": "4b4a3384b86f4d79fc1367b39e6db688e9435fcd3b68c05dfc4053c40a311f77",
+      "size_bytes": 1378,
+      "source_logical_path": "work/07a-evidence-closeout-staging/CLOSEOUT_STATUS.json"
+    },
+    {
+      "artifact_id": "human-review-readme",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/HUMAN_REVIEW_README.md",
+      "sha256": "ab141bda9747cce3bcd4c360c42d8f0171a6790cbe2fcfb3bac931fc29b188bb",
+      "size_bytes": 121,
+      "source_logical_path": "work/07a-evidence-closeout-staging/HUMAN_REVIEW/README.md"
+    },
+    {
+      "artifact_id": "rotated-c02-actual-common",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/actual_common.brep",
+      "sha256": "949c46f1f1025deb664c445294cd7ef66880bdb3df184f1a1560518ff642ef5d",
+      "size_bytes": 2168,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/actual_common.brep"
+    },
+    {
+      "artifact_id": "rotated-c02-corrected-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/corrected_assembly.step",
+      "sha256": "10b0f9d53ea12999e3711b719691b50df429892460ccef4006d539265a78d2fa",
+      "size_bytes": 10196,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/corrected_assembly.step"
+    },
+    {
+      "artifact_id": "rotated-c02-expected",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/expected_snapshot.json",
+      "sha256": "08623b964de5635565a56ddb62eebe40491bb464d6851238d65817f7d7e45a74",
+      "size_bytes": 482,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/expected_snapshot.json"
+    },
+    {
+      "artifact_id": "rotated-c02-fcstd",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/ROTATED_C02/operation_debug.FCStd",
+      "sha256": "bf11b92616014f3947128a8af076514637f381024ce0df84c6bcb63d1f613ea4",
+      "size_bytes": 15735,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/operation_debug.FCStd"
+    },
+    {
+      "artifact_id": "rotated-c02-fused-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/fused.step",
+      "sha256": "09b35660104caff6efd1356916bc75ef1651cfabd42ef20a59326c38026a26f6",
+      "size_bytes": 7901,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/fused.step"
+    },
+    {
+      "artifact_id": "rotated-c02-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/operation.json",
+      "sha256": "28cb05ddd3614d13a5abe76d623927468ae6d8fbc7471a13b11fbf7f62e371de",
+      "size_bytes": 9966,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/operation.json"
+    },
+    {
+      "artifact_id": "rotated-c02-repeat-actual-common",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/ROTATED_C02/actual_common.brep",
+      "sha256": "949c46f1f1025deb664c445294cd7ef66880bdb3df184f1a1560518ff642ef5d",
+      "size_bytes": 2168,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/ROTATED_C02/actual_common.brep"
+    },
+    {
+      "artifact_id": "rotated-c02-repeat-corrected-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/ROTATED_C02/corrected_assembly.step",
+      "sha256": "f19f84f15791d74723a770239c94ed8b1cc7da05d213b51a9e357c2de1d60224",
+      "size_bytes": 10196,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/ROTATED_C02/corrected_assembly.step"
+    },
+    {
+      "artifact_id": "rotated-c02-repeat-fused-step",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/ROTATED_C02/fused.step",
+      "sha256": "80b272f79d3c1e1a879d36262919d2d5505edd746e4eb3758627cb3eb45b89a9",
+      "size_bytes": 7901,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/ROTATED_C02/fused.step"
+    },
+    {
+      "artifact_id": "rotated-c02-repeat-operation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/ROTATED_C02/operation.json",
+      "sha256": "bdf764bbfe9a41afabe1eb984a028fa3f0f82527a25eccc2a1f62c6368605ca8",
+      "size_bytes": 9966,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/ROTATED_C02/operation.json"
+    },
+    {
+      "artifact_id": "rotated-c02-repeat-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "repeatability/second_process/ROTATED_C02/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/repeatability/second_process/ROTATED_C02/validation.json"
+    },
+    {
+      "artifact_id": "rotated-c02-repeatability",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/repeatability.json",
+      "sha256": "e225f6605112f0050a1a39cc6fc30fa6f78c137ea379a0a6f77480a0c740e5d3",
+      "size_bytes": 136,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/repeatability.json"
+    },
+    {
+      "artifact_id": "rotated-c02-validation",
+      "copy_status": "BYTE_SAME",
+      "public_path": "scenarios/ROTATED_C02/validation.json",
+      "sha256": "9ee1301bfee959bc190536c4cae633ed327ca4f6da5378678b072cb3a2b718d0",
+      "size_bytes": 69,
+      "source_logical_path": "work/07a-evidence-closeout-staging/ROTATED_C02/validation.json"
+    },
+    {
+      "artifact_id": "summary",
+      "copy_status": "BYTE_SAME",
+      "public_path": "records/summary.json",
+      "sha256": "1ac97b45be0b991ae4f4024c449148b485aa572356d819d0cf826ef29a9aefcb",
+      "size_bytes": 2432,
+      "source_logical_path": "work/07a-evidence-closeout-staging/summary.json"
+    },
+    {
+      "artifact_id": "view-index",
+      "copy_status": "BYTE_SAME",
+      "public_path": "human-inspection/VIEW_INDEX.md",
+      "sha256": "889c00290409b7ef12baf429c41d53ca1f9cb8f1040a90950e3041d645562780",
+      "size_bytes": 1563,
+      "source_logical_path": "work/07a-evidence-closeout-staging/VIEW_INDEX.md"
+    }
+  ],
+  "schema_version": "2.0.0",
+  "sha256_role": "file_and_copy_integrity_only_not_geometry_equivalence"
+}

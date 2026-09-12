@@ -1,0 +1,17 @@
+{
+  "axis_offset_mm": 0.05,
+  "classification": "AXIS_TRANSLATIONAL_MISALIGNMENT",
+  "numeric_rules": {
+    "angular_epsilon_rad": 1e-07,
+    "area_epsilon_mm2": 1e-08,
+    "linear_epsilon_mm": 1e-07,
+    "material_probe_offset_mm": 1e-05,
+    "periodic_epsilon_rad": 1e-06,
+    "radius_epsilon_mm": 1e-07,
+    "volume_epsilon_mm3": 1e-06
+  },
+  "radial_clearance_mm": 0.0,
+  "scenario_id": "C02",
+  "schema_version": 1,
+  "status": "CORRECTED_AND_FUSED"
+}
