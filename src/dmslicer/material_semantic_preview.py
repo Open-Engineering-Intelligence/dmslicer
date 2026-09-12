@@ -8,7 +8,7 @@ from .result_package import MAX_UPLOAD, read_package
 def handler(samples):
     template=Path(__file__).with_name('material_semantic_preview.html').read_text(encoding='utf-8')
     annotation=Path(__file__).with_name('workspace_annotations.js').read_text(encoding='utf-8')
-    page=template.replace('__ANNOTATIONS__',annotation)+"<script>toggle=()=>{let g=$('assignment-type').value;if(g==='Gradient')$('assignment-material').value='';$('assignment-material').disabled=g==='Gradient';$('group-wrap').classList.toggle('hidden',g!=='Gradient')};$('assignment-type').onchange=toggle</script>"
+    page=template.replace('__ANNOTATIONS__',annotation)+"<script>toggle=()=>{let g=$('assignment-type').value;if(g==='Gradient')$('assignment-material').value='';$('assignment-material').disabled=g==='Gradient';$('group-wrap').classList.toggle('hidden',g!=='Gradient')};$('assignment-type').onchange=toggle;const recordedDraw=draw;draw=()=>{recordedDraw();$('preview-canvas').dataset.camera=az.toFixed(2)+','+el.toFixed(2)+','+zoom.toFixed(2)}</script>"
     class H(BaseHTTPRequestHandler):
         def reply(self,status,value,mime='application/json'):
             data=value.encode() if isinstance(value,str) else value;self.send_response(status);self.send_header('Content-Type',mime+'; charset=utf-8');self.send_header('Content-Length',str(len(data)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(data)
