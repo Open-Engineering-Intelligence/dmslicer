@@ -20,6 +20,29 @@ the Goal ID in the opening task prompt and stable evidence manifest. Do not
 start background repository work without a separately searchable task title,
 an explicit Goal ID, Scope, Acceptance Criteria, and Stop Conditions.
 
+## Codex model and reasoning selection
+
+Do not use the most capable model or highest reasoning effort as a project-wide
+default. Select both from the current work and reassess when the work changes
+phase.
+
+- Use a fast model with low reasoning for renaming, routing, status checks,
+  mechanical edits, and simple evidence indexing.
+- Use a balanced coding model with medium reasoning for ordinary UI work,
+  bounded implementation, refactoring, and routine tests.
+- Use a reliable agentic coding model with medium or high reasoning for
+  multi-file integration, debugging, packaging, and release preparation.
+- Reserve the strongest model with high or higher reasoning for ambiguous
+  architecture, research synthesis, B-rep/topology analysis, geometry-truth
+  validation, and difficult cross-contract decisions.
+
+Increase effort only when the task's uncertainty, failure evidence, or
+acceptance risk justifies it. Reduce effort after discovery or geometry analysis
+moves into routine implementation, packaging, or reporting. When creating or
+continuing a task, record the chosen model/effort rationale in the task prompt
+or evidence manifest when it materially affects reproducibility. Never reduce
+the validation criteria merely because a lower reasoning setting is used.
+
 ## Geometry and semantics
 
 1. Never treat a derived display mesh as geometry truth.
