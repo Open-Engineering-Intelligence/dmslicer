@@ -1,0 +1,292 @@
+{
+  "artifact_references": [
+    {
+      "artifact_id": "artifact:case01-step",
+      "kind": "STEP",
+      "uri": "benchmarks/interface_case01/case01.step"
+    }
+  ],
+  "contract": {
+    "name": "dmslicer.geometry-snapshot",
+    "version": "0.1.0"
+  },
+  "interface_components": [
+    {
+      "component_id": "component:v0.1:8b10abbf7e4c22582d9c1265ad1de94f6c0dc0cfe549edf3dd2f4dfc1cf891b4",
+      "interface_ref": "interface:v0.1:c2e61edaa4fe7ba3b45fcf20cdfb92a8150d557006b949dc62bcc65ddb33cebc",
+      "patch_refs": [
+        "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b"
+      ]
+    },
+    {
+      "component_id": "component:v0.1:935499a431b525d7f86cbbd45749b08051f6bb1efb7283d94e8194882d4c6ac6",
+      "interface_ref": "interface:v0.1:3ebd77ae7bd1f41c3c7cdfee5f61dd3ae163c8cabf79962c851103252430184f",
+      "patch_refs": [
+        "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108"
+      ]
+    }
+  ],
+  "interfaces": [
+    {
+      "interface_id": "interface:v0.1:c2e61edaa4fe7ba3b45fcf20cdfb92a8150d557006b949dc62bcc65ddb33cebc",
+      "patch_refs": [
+        "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b"
+      ],
+      "region_refs": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "relation_ref": "relation:v0.1:a3ef5d6ab967213ae7fe8a6b6846339cbd8a1af949ac0e101cebe318ab7932b0"
+    },
+    {
+      "interface_id": "interface:v0.1:3ebd77ae7bd1f41c3c7cdfee5f61dd3ae163c8cabf79962c851103252430184f",
+      "patch_refs": [
+        "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108"
+      ],
+      "region_refs": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601"
+      ],
+      "relation_ref": "relation:v0.1:0d765a044c228652da85018b63aa449a9bb259be4f8ecb8e13fef9247709121e"
+    }
+  ],
+  "model_frame": {
+    "axes": {
+      "x": [
+        1,
+        0,
+        0
+      ],
+      "y": [
+        0,
+        1,
+        0
+      ],
+      "z": [
+        0,
+        0,
+        1
+      ]
+    },
+    "frame_id": "frame:case01-model",
+    "length_unit": "mm",
+    "origin": [
+      0,
+      0,
+      0
+    ]
+  },
+  "patches": [
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 400.0
+      },
+      "component_ref": "component:v0.1:8b10abbf7e4c22582d9c1265ad1de94f6c0dc0cfe549edf3dd2f4dfc1cf891b4",
+      "family": "PLANE",
+      "frame_ref": "frame:case01-model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:case01-step",
+        "locator": {
+          "provenance_ref": "provenance:case01-direct-brep",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:6f479ae3a41bba42a9e4c2f2ead8f9a70d8071ed3ebecb4cc3ca9a3f591b744b"
+        }
+      },
+      "interface_ref": "interface:v0.1:c2e61edaa4fe7ba3b45fcf20cdfb92a8150d557006b949dc62bcc65ddb33cebc",
+      "patch_id": "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
+      "planar_parameters": {
+        "origin": [
+          20.0,
+          10.0,
+          10.0
+        ],
+        "tangent_u": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "tangent_v": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit_normal": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "source_face_refs": [
+        "face:v1:6f479ae3a41bba42a9e4c2f2ead8f9a70d8071ed3ebecb4cc3ca9a3f591b744b",
+        "face:v1:a149cadab219ceceff25eb8cab23d2f9c3f517cb25d18a7dcd305f89462aaa66"
+      ]
+    },
+    {
+      "area": {
+        "unit": "mm2",
+        "value": 400.0
+      },
+      "component_ref": "component:v0.1:935499a431b525d7f86cbbd45749b08051f6bb1efb7283d94e8194882d4c6ac6",
+      "family": "PLANE",
+      "frame_ref": "frame:case01-model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:case01-step",
+        "locator": {
+          "provenance_ref": "provenance:case01-direct-brep",
+          "scheme": "STEP_FACE",
+          "value": "face:v1:cc9f2e4760e23ff6d076dfc9b80cc6fc226878b3cad028835ec6c6334e705289"
+        }
+      },
+      "interface_ref": "interface:v0.1:3ebd77ae7bd1f41c3c7cdfee5f61dd3ae163c8cabf79962c851103252430184f",
+      "patch_id": "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
+      "planar_parameters": {
+        "origin": [
+          10.0,
+          10.0,
+          10.0
+        ],
+        "tangent_u": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "tangent_v": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unit_normal": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "source_face_refs": [
+        "face:v1:cc9f2e4760e23ff6d076dfc9b80cc6fc226878b3cad028835ec6c6334e705289",
+        "face:v1:e05fdb9e52ef78d6581b16b517f2152699c9ad5543fb10895e518b477fcec338"
+      ]
+    }
+  ],
+  "provenance_references": [
+    {
+      "evidence_uri": "docs/research_v2/03_interface_engine_design.md",
+      "fixture_uri": "benchmarks/interface_case01/case01.step",
+      "goal_id": "02C-CASE01",
+      "implementation_commit": "e6fc11523b04821939b863666c7c6050371fc1b2",
+      "provenance_id": "provenance:case01-direct-brep"
+    }
+  ],
+  "regions": [
+    {
+      "frame_ref": "frame:case01-model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:case01-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "Part__Feature"
+        }
+      },
+      "label": "A",
+      "region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+      "source_document_id": "stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+      "validity_state": "VALID"
+    },
+    {
+      "frame_ref": "frame:case01-model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:case01-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "Part__Feature001"
+        }
+      },
+      "label": "G",
+      "region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+      "source_document_id": "stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+      "validity_state": "VALID"
+    },
+    {
+      "frame_ref": "frame:case01-model",
+      "geometry_ref": {
+        "artifact_ref": "artifact:case01-step",
+        "locator": {
+          "scheme": "STEP_OCCURRENCE",
+          "value": "Part__Feature002"
+        }
+      },
+      "label": "B",
+      "region_id": "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69",
+      "source_document_id": "stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+      "validity_state": "VALID"
+    }
+  ],
+  "relations": [
+    {
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2,
+      "region_refs": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601"
+      ],
+      "relation_id": "relation:v0.1:0d765a044c228652da85018b63aa449a9bb259be4f8ecb8e13fef9247709121e",
+      "taxonomy": "FULL_FACE_OVERLAP",
+      "tolerance_refs": [
+        "tolerance:case01-contact",
+        "tolerance:case01-area"
+      ]
+    },
+    {
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": 2,
+      "region_refs": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "relation_id": "relation:v0.1:a3ef5d6ab967213ae7fe8a6b6846339cbd8a1af949ac0e101cebe318ab7932b0",
+      "taxonomy": "FULL_FACE_OVERLAP",
+      "tolerance_refs": [
+        "tolerance:case01-contact",
+        "tolerance:case01-area"
+      ]
+    },
+    {
+      "confirmation": "CONFIRMED",
+      "intersection_dimension": -1,
+      "region_refs": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "relation_id": "relation:v0.1:d16c09f1498cba7224b6618d0df0978f3f04a71683f4b67b9c4d1cc3b4b34c74",
+      "taxonomy": "DISJOINT",
+      "tolerance_refs": [
+        "tolerance:case01-contact"
+      ]
+    }
+  ],
+  "snapshot_id": "snapshot:v0.1:ee00eb447b673dbeab008b947449e989f9a489d9a79cba2104d6b65f6e7dd0be",
+  "source_documents": [
+    {
+      "artifact_ref": "artifact:case01-step",
+      "internal_length_unit": "mm",
+      "source_document_id": "stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+      "source_length_unit": "mm"
+    }
+  ],
+  "tolerances": [
+    {
+      "role": "contact_classification",
+      "source": "CASE01",
+      "tolerance_id": "tolerance:case01-contact",
+      "unit": "mm",
+      "value": 0.05
+    },
+    {
+      "role": "interface_area_acceptance",
+      "source": "CASE01",
+      "tolerance_id": "tolerance:case01-area",
+      "unit": "mm2",
+      "value": 1e-08
+    }
+  ]
+}

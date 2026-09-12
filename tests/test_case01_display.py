@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import shutil
+import subprocess
 
 from dmslicer.case01_display import build_case01_display_bundle
 from dmslicer.geometry_contract.validation import validate_geometry_snapshot
@@ -48,3 +50,14 @@ def test_case01_real_brep_display_bundle_has_authoritative_refs_and_derived_mesh
     assert "depth" in html
     assert "shade" in html
     assert "facetEdges" in html
+
+
+def test_generated_case01_display_javascript_parses(tmp_path: Path) -> None:
+    """A syntax error must not leave the canvas and dynamic controls blank."""
+    node = shutil.which("node")
+    assert node, "Node.js is required to syntax-check the self-contained display script"
+    build_case01_display_bundle(ROOT / "benchmarks/interface_case01/case01.step", tmp_path / "bundle", repository_root=ROOT)
+    html = (tmp_path / "bundle" / "case01_3d.html").read_text(encoding="utf-8")
+    script = html.split("<script>", 1)[1].rsplit("</script>", 1)[0]
+    completed = subprocess.run([node, "--check", "-"], input=script, text=True, capture_output=True, check=False)
+    assert completed.returncode == 0, completed.stderr
