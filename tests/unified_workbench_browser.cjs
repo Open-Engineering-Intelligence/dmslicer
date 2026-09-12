@@ -1,0 +1,50 @@
+// Automated interaction checks; screenshots are not user visual acceptance.
+const {chromium}=require('playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+(async()=>{
+ const url=process.env.DMS_WORKBENCH_URL,root=path.resolve(process.env.DMS_WORKBENCH_EVIDENCE),output=path.join(root,process.env.DMS_BROWSER_RUN||'browser-001');
+ fs.mkdirSync(output,{recursive:false});
+ const browser=await chromium.launch({headless:true,channel:'chrome'});
+ const page=await browser.newPage({viewport:{width:1500,height:1050}}),errors=[],results=[];
+ page.on('pageerror',e=>errors.push(String(e)));
+ page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+ await page.addInitScript(()=>{window.panelTitles=[];const fill=CanvasRenderingContext2D.prototype.fillText;CanvasRenderingContext2D.prototype.fillText=function(text,x,y,...rest){window.panelTitles.push({text,x,y,w:this.canvas.width,h:this.canvas.height});return fill.call(this,text,x,y,...rest)}});
+ await page.goto(url);
+ await page.waitForFunction(()=>document.documentElement.dataset.ready==='true');
+ assert.equal(await page.locator('#model-file').count(),0);
+ await page.locator('#samples option').nth(5).waitFor({state:'attached'});
+ for(const [key,count] of [['case01',5],['c02',6],['u05',5],['s04',5],['pmulti',6]]){
+  await page.locator('#package-file').setInputFiles(path.join(root,'samples',key+'.dmslicer'));
+  await page.locator('#status').filter({hasText:'已打开 '+key+'.dmslicer'}).waitFor();
+  assert.equal(await page.locator('#controls .entity').count(),count);
+  await page.locator('#mode').selectOption('comparison');
+  await page.waitForFunction(count=>document.querySelector('canvas').dataset.panelCount===String(count),count);
+  const last=await page.evaluate(()=>window.panelTitles.at(-1));
+  assert(last.y<last.h&&last.y>0&&last.x<last.w,'Last panel title must remain visible');
+  await page.screenshot({path:path.join(output,key+'-comparison.png')});
+  await page.locator('#controls .entity input').first().uncheck();
+  const state=await page.locator('#controls .entity input').first().isChecked();
+  assert.equal(state,false);
+  await page.locator('#mode').selectOption('overlay');
+  await page.waitForFunction(()=>document.querySelector('canvas').dataset.panelCount==='1');
+  assert.equal(await page.locator('#controls .entity input').first().isChecked(),false,'Mode must preserve display state');
+  await page.locator('#mode').selectOption('evidence');
+  assert.equal(await page.locator('#viewport').isVisible(),false);
+  assert((await page.locator('#facts').innerText()).length>20);
+  assert((await page.locator('#contents').innerText()).includes('PRESENT_BYTE_CHECKED'));
+  await page.locator('#mode').selectOption('comparison');
+  await page.locator('#controls .entity input').first().check();
+  await page.locator('#controls .entity button').first().click();
+  assert((await page.locator('#trace').textContent()).includes('entity_ref'));
+  results.push({sample:key,entities:count,comparison_panels:count,modes:'PASS',selection:'PASS',visibility_preserved:'PASS'});
+ }
+ await page.setViewportSize({width:760,height:1050});
+ await page.screenshot({path:path.join(output,'pmulti-narrow.png')});
+ await page.locator('#samples').selectOption('s04');
+ await page.locator('#status').filter({hasText:'已打开 球面'}).waitFor();
+ assert.equal(await page.locator('#controls .entity').count(),5);
+ assert.deepEqual(errors,[]);
+ fs.writeFileSync(path.join(output,'checks.json'),JSON.stringify({status:'PASS',results,examples:'PASS',runtime_errors:errors,human_visual_review:'PENDING'},null,2));
+ await browser.close();
+ console.log('PASS: five packages, three modes, selection, visibility and example entry');
+})().catch(e=>{console.error(e);process.exit(1)});

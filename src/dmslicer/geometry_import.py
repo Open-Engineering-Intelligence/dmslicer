@@ -3,6 +3,7 @@ import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer as HTTPServer
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -43,7 +44,26 @@ def tessellate(sources, output):
     return data
 
 
-def handler_for(root):
+def load_samples(registry):
+    if not registry or not registry.is_file():
+        return {}
+    values = json.loads(registry.read_text(encoding='utf-8'))
+    samples = {}
+    for item in values['samples']:
+        key = item['key']
+        if not re.fullmatch(r'[a-zA-Z0-9_-]+', key) or key in samples:
+            raise ValueError('Invalid or duplicate sample key')
+        path = (registry.parent / item['path']).resolve()
+        path.relative_to(registry.parent.resolve())
+        if path.suffix != '.dmslicer' or path.stat().st_size > MAX_UPLOAD:
+            raise ValueError('Invalid sample package')
+        read_package(path.read_bytes())
+        samples[key] = {'label': item['label'], 'path': path}
+    return samples
+
+
+def handler_for(root, samples=None):
+    samples = samples or {}
     class Handler(BaseHTTPRequestHandler):
         # Browsers may preconnect without sending headers. Such a socket must
         # neither monopolize the service nor hold an idle worker indefinitely.
@@ -66,9 +86,17 @@ def handler_for(root):
         def do_GET(self):
             if not self.local_request():
                 return self.reply(403, '{"error":"Local origin required"}')
-            if self.path != '/':
-                return self.reply(404, '{}')
-            self.reply(200, render_catalog(EMPTY, import_enabled=True), 'text/html')
+            if self.path == '/':
+                return self.reply(200, render_catalog(EMPTY, import_enabled=True), 'text/html')
+            if self.path == '/health':
+                return self.reply(200, json.dumps({'app': 'dmslicer-geometry-workbench', 'version': 1}))
+            if self.path == '/favicon.ico':
+                return self.reply(204, b'')
+            if self.path == '/samples':
+                return self.reply(200, json.dumps([{'key': key, 'label': value['label']} for key, value in samples.items()]))
+            if self.path.startswith('/sample/') and self.path[len('/sample/'):] in samples:
+                return self.reply(200, samples[self.path[len('/sample/'):]]['path'].read_bytes(), 'application/octet-stream')
+            return self.reply(404, '{}')
 
         def do_POST(self):
             if not self.local_request() or self.headers.get('Content-Type') != 'application/octet-stream':
@@ -94,10 +122,11 @@ def handler_for(root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serve', action='store_true', required=True)
-    parser.add_argument('--port', type=int, default=0)
+    parser.add_argument('--port', type=int, default=56810)
+    parser.add_argument('--samples', type=Path, default=Path(__file__).resolve().parents[2] / 'evidence/GEOMETRY-WORKBENCH-01/unified-001/samples.json')
     parser.add_argument('--imports', type=Path, default=Path('evidence/GEOMETRY-MANUAL-IMPORT'))
     args = parser.parse_args()
-    server = HTTPServer(('127.0.0.1', args.port), handler_for(args.imports.resolve()))
+    server = HTTPServer(('127.0.0.1', args.port), handler_for(args.imports.resolve(), load_samples(args.samples)))
     print('DM-Slicer viewer: http://127.0.0.1:%d/ — Ctrl+C stops the local helper' % server.server_port, flush=True)
     try:
         server.serve_forever()

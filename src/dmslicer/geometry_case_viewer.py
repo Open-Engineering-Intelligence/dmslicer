@@ -48,7 +48,9 @@ def validate_catalog(value):
 def render_catalog(value, *, import_enabled=False):
     validate_catalog(value)
     payload = json.dumps(value, ensure_ascii=True, allow_nan=False).replace('<', '\\u003c')
-    return Path(__file__).with_name('geometry_import_viewer.html').read_text(encoding='utf-8').replace('__CATALOG_JSON__', payload).replace('__IMPORT_ENABLED__', 'true' if import_enabled else 'false')
+    template = Path(__file__).with_name('geometry_import_viewer.html').read_text(encoding='utf-8')
+    layout = Path(__file__).with_name('viewer_layout.js').read_text(encoding='utf-8')
+    return template.replace('__LAYOUT_CODE__', layout).replace('__CATALOG_JSON__', payload).replace('__IMPORT_ENABLED__', 'true' if import_enabled else 'false')
 
 
 def case01_entry(directory: Path, root: Path):

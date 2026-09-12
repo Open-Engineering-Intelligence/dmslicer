@@ -2,7 +2,7 @@
 
 当前唯一正常入口是选择 **一个 `.dmslicer` 文件**。不是选择文件夹，也不要求用户挑选散落的 STEP/JSON。当前平台不提供裸 STEP 导入、不重跑 Boolean、不在导入时启动 FreeCAD。
 
-在仓库根目录运行 `./start_geometry_viewer.ps1`，打开终端打印的本机 URL，点击 **导入 DM-Slicer 结果包**。本机端点只绑定 `127.0.0.1`；关闭终端或 Ctrl+C 停止。当前需要 Python 3.12 来读取 ZIP 包并提供页面；读取已保存显示缓存不需要 FreeCAD。浏览器 `file://` 下的 preview.html 是方便检查的离线快照，正常导入请使用上述入口。
+在仓库根目录运行 `./start_geometry_viewer.ps1`，会打开固定本机地址并复用已有后台工作台；点击 **导入 DM-Slicer 结果包**。本机端点只绑定 `127.0.0.1`，关闭浏览器不会停止后台进程。统一后的整体/对照/证据视图见 `unified_geometry_workbench.md`。当前需要 Python 3.12 来读取 ZIP 包并提供页面；读取已保存显示缓存不需要 FreeCAD。浏览器 `file://` 下的 preview.html 是方便检查的离线快照，正常导入请使用上述入口。
 
 ## 当前样包
 
