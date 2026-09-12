@@ -155,3 +155,7 @@ def test_successful_p07_operation_emits_all_five_backend_neutral_result_bindings
         P07,
         tmp_path / "runs" / "P07",
     )
+    assert result["operation"]["artifacts"] == {
+        "corrected_assembly_step": "corrected_assembly.step",
+        "fused_step": "fused.step",
+    }

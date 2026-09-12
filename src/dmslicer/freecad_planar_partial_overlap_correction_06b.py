@@ -145,7 +145,7 @@ def _export_assembly(output, first, second, fused):
         obj = doc.addObject("Part::Feature", "Fused_Result"); obj.Shape = fused
         fused_path = output / "fused.step"
         Import.export([obj], str(fused_path))
-        return {"corrected_assembly_step": str(assembly), "fused_step": str(fused_path)}
+        return {"corrected_assembly_step": assembly.name, "fused_step": fused_path.name}
     finally:
         FreeCAD.closeDocument(doc.Name)
 
@@ -333,7 +333,7 @@ def _analyze(request):
             operation["result_bindings"] = _result_bindings(request.get("result_binding_specs"), partition)
             operation["fuse"] = {"executed": True, "solid_count": len(fused.Solids), "valid": bool(fused.isValid()), "closed": bool(_closed(fused)), "volume_conservation_error_mm3": float(abs(fused.Volume - (first.Volume + corrected.Volume - material_common.Volume))), "boundary_overlap_area_mm2": float(boundary)}
             operation["artifacts"] = _export_assembly(output, first, corrected, fused)
-            operation["reimport"] = {"corrected_assembly": _reimport_assembly(operation["artifacts"]["corrected_assembly_step"], request.get("traversal_order") == "reverse")}
+            operation["reimport"] = {"corrected_assembly": _reimport_assembly(output / operation["artifacts"]["corrected_assembly_step"], request.get("traversal_order") == "reverse")}
             operation["view_reopen"] = _debug(output, status, first, second, corrected, partition, fused, operation)
         else:
             operation["view_reopen"] = _debug(output, status, first, second, preview, {"common_shape": Part.Shape(), "remaining_shapes": {"Side_1": [], "Side_2": []}, "remaining_empty": {"Side_1": True, "Side_2": True}}, Part.Shape(), operation)
