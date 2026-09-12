@@ -9,7 +9,13 @@ This is a research-first repository. Every change must preserve the distinction 
 All new Codex tasks for this repository must use the title format
 `DM-Slicer｜<workstream> <concise Chinese subject>`.
 
-Use the next established workstream identifier when one exists, and include
+Choose the workstream by architectural responsibility, not creation order.
+Research phase, architectural responsibility, and task identifier are distinct.
+Do not mechanically extend historical 07/08 numbers with letters or invent a
+new research phase from a UI feature. Use descriptive domains such as Geometry,
+Workbench, Materials, Semantics, or Evidence when no approved stage code exists.
+Keep established task codes for their original scope. When renaming, preserve
+the old title and unchanged Goal ID in a traceable change record. Include
 the Goal ID in the opening task prompt and stable evidence manifest. Do not
 start background repository work without a separately searchable task title,
 an explicit Goal ID, Scope, Acceptance Criteria, and Stop Conditions.
