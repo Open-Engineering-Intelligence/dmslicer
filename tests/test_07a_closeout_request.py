@@ -28,6 +28,7 @@ def test_request_preserves_principal_07a_evidence_without_promoting_missing_resu
     )
     assert {"c01-fcstd", "c02-fcstd", "c02-actual-common", "c02-corrected-step", "c02-fused-step"} <= artifact_ids
     assert {"c01-repeat-operation", "c02-repeat-operation", "rotated-c02-repeat-operation"} <= artifact_ids
+    assert "closeout-status" in artifact_ids
     assert request["results"]["scientific_experiment_result"] == {
         "status": "NOT_EVALUATED",
         "evidence_artifact_ids": [],

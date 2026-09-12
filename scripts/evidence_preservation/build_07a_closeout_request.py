@@ -63,6 +63,7 @@ def build_request(*, run_id: str, timestamp: str, python_version: str, pytest_ve
         _artifact("view-index", "VIEW_INDEX.md", "human-inspection/VIEW_INDEX.md", "VIEW_INDEX", "human inspection navigation"),
         _artifact("summary", "summary.json", "records/summary.json", "JSON", "historical scenario summary"),
         _artifact("human-review-readme", "HUMAN_REVIEW/README.md", "human-inspection/HUMAN_REVIEW_README.md", "HUMAN_REVIEW", "human inspection index"),
+        _artifact("closeout-status", "CLOSEOUT_STATUS.json", "records/CLOSEOUT_STATUS.json", "JSON", "07A custody closeout classification"),
     ]
     for scenario, retention_role in (("C01", "STANDARD"), ("C02", "STANDARD"), ("C03", "REJECTION"), ("C04", "REJECTION"), ("C05", "REJECTION"), ("AMBIGUOUS", "REJECTION"), ("ROTATED_C02", "STANDARD")):
         allowlist.extend(_scenario_artifacts(scenario, retention_role))
