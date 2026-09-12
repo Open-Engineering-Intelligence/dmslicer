@@ -36,6 +36,8 @@ const assert=require('node:assert/strict');
   await page.getByRole('dialog',{name:'材料属性'}).getByRole('button',{name:'取消'}).click();
   assert.equal(await page.getByRole('dialog',{name:'材料属性'}).isVisible(),false,'empty add dialog cancels without native validation');
   assert.equal(await page.locator('#library-list .library-row').count(),materialsBefore,'cancel keeps material library unchanged');
+  await page.locator('.object-select').first().check();
+  assert.equal(await page.locator('#reset').isEnabled(),true,'reset button enables after selection exists');
   const canvas=page.locator('#preview-canvas'),before=await canvas.getAttribute('data-camera');
   await canvas.hover();await page.mouse.wheel(0,-180);
   assert.notEqual(await canvas.getAttribute('data-camera'),before,'wheel changes preview camera state');
@@ -60,7 +62,12 @@ const assert=require('node:assert/strict');
   assert(await page.getByRole('dialog',{name:'编辑材料与语义'}).isVisible());
   assert.equal(await page.locator('#assignment-material').inputValue(),'');
   await page.getByRole('button',{name:'取消'}).click();
-  await page.getByRole('button',{name:'重置所选'}).click();
+  await page.locator('.object-select').first().check();
+  assert.equal(await page.locator('#reset').isEnabled(),true,'reset button enables before clear-assignment');
+  const caseInfoAfterAssignment=await page.locator('#package-info').textContent();
+  await page.getByRole('button',{name:'清除所选分配'}).click();
   await page.getByRole('button',{name:'确认重置'}).click();
- }finally{await browser.close();}
+  assert.equal(await page.locator('#preview-canvas').isVisible(),true,'model preview remains mounted after clear-assignment');
+  assert.equal(await page.locator('#package-info').textContent(),caseInfoAfterAssignment,'package info remains unchanged after clearing assignment');
+}finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});
