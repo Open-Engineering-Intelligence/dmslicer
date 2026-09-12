@@ -44,6 +44,102 @@
       "sha256": "0dee7186170c9a1fc3bdb81b3a602565ee407e4ab2bf97e07c42d21538365654",
       "hash_semantics": "BYTE_INTEGRITY_ONLY",
       "evidence_confidence": "L"
+    },
+    {
+      "key": "m01",
+      "label": "M01 \u5e73\u9762\uff1a\u516d\u8fb9\u5f62 G + \u4e09\u4e2a\u4e09\u89d2\u67f1",
+      "path": "samples/m01.dmslicer",
+      "source": "C:\\Users\\ufo00\\.codex\\worktrees\\cabc\\dmslicer\\evidence\\GEOMETRY-COVERAGE-MULTI-INPUT-01\\m01-003\\M01.dmslicer",
+      "sha256": "b26d89f9bf04b2a7cfab4d06b01a4adb48579ca708b0d14a72908b99f13d05de",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-MULTI-INPUT-01",
+      "run_id": "m01-003",
+      "implementation_commit": "52ce1f81ec89a068464a6c088269a1718988058c"
+    },
+    {
+      "key": "m02",
+      "label": "M02 \u5706\u67f1\uff1aG + \u4e09\u4e2a\u5206\u79bb\u6247\u533a",
+      "path": "samples/m02.dmslicer",
+      "source": "C:\\Users\\ufo00\\.codex\\worktrees\\cabc\\dmslicer\\evidence\\GEOMETRY-COVERAGE-MULTI-INPUT-01\\m02-002\\M02.dmslicer",
+      "sha256": "74d244d084de9b9c2c48c25427be3e772e89a64c8bc24095723f634085d3ac1f",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-MULTI-INPUT-01",
+      "run_id": "m02-002",
+      "implementation_commit": "ffe1b64ea99629bf038b48cf01d41568d1a3054e"
+    },
+    {
+      "key": "m03",
+      "label": "M03 \u7403\u9762\uff1aG + \u4e09\u4e2a\u5206\u79bb\u5916\u58f3\u5e3d",
+      "path": "samples/m03.dmslicer",
+      "source": "C:\\Users\\ufo00\\.codex\\worktrees\\cabc\\dmslicer\\evidence\\GEOMETRY-COVERAGE-MULTI-INPUT-01\\m03-004\\M03.dmslicer",
+      "sha256": "c45268b7fe2b9cc06389dcf92cd13ff65618a68b6ded160de396c20cba1ef851",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-MULTI-INPUT-01",
+      "run_id": "m03-004",
+      "implementation_commit": "2e53685d7e39163c5092fdcc1e8a0ca4e18280b4"
+    },
+    {
+      "key": "m04",
+      "label": "M04 \u7a7a\u95f4\uff1a\u56db\u9762\u4f53 G + \u56db\u90bb\u63a5\u4f53",
+      "path": "samples/m04.dmslicer",
+      "source": "C:\\Users\\ufo00\\.codex\\worktrees\\cabc\\dmslicer\\evidence\\GEOMETRY-COVERAGE-MULTI-INPUT-01\\m04-001\\M04.dmslicer",
+      "sha256": "1f141f5b71c4bd011b307a44c702a70d55fcd9966c699ef8639c7fa0706d4f99",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-MULTI-INPUT-01",
+      "run_id": "m04-001",
+      "implementation_commit": "2e53685d7e39163c5092fdcc1e8a0ca4e18280b4"
+    },
+    {
+      "key": "h01",
+      "label": "\u5706\u67f1\uff1a\u534a\u5468\u58f3\u4e0e\u5b8c\u6574\u82af",
+      "path": "samples/h01.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/6eb8/dmslicer/evidence/GEOMETRY-COVERAGE-CURVED-BASICS-01/cad-005/H01/H01.dmslicer",
+      "sha256": "2bb2368b4519792137a19a6d68440c1196538e08a0b0593964c56da1ac139255",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-CURVED-BASICS-01",
+      "run_id": "cad-005",
+      "implementation_commit": "cfa4467a108fa636b9b858638c45776e27197142"
+    },
+    {
+      "key": "s05",
+      "label": "\u7403\u9762\uff1a\u4e09\u5c42\u540c\u5fc3\u7403",
+      "path": "samples/s05.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/6eb8/dmslicer/evidence/GEOMETRY-COVERAGE-CURVED-BASICS-01/cad-005/S05/S05.dmslicer",
+      "sha256": "de7a4a35b71e4064f35192835026a8161524467807902ba94a8ac07b5a21a4be",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-CURVED-BASICS-01",
+      "run_id": "cad-005",
+      "implementation_commit": "cfa4467a108fa636b9b858638c45776e27197142"
+    },
+    {
+      "key": "s06",
+      "label": "\u7403\u9762\uff1a\u4e09\u8f93\u5165\u90e8\u5206\u8986\u76d6",
+      "path": "samples/s06.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/6eb8/dmslicer/evidence/GEOMETRY-COVERAGE-CURVED-BASICS-01/cad-005/S06/S06.dmslicer",
+      "sha256": "9331a18a8f0dafab7e25adb69729de9b4e1cd6063af96f000f2225d87e156892",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-CURVED-BASICS-01",
+      "run_id": "cad-005",
+      "implementation_commit": "cfa4467a108fa636b9b858638c45776e27197142"
+    },
+    {
+      "key": "c03",
+      "label": "\u5706\u67f1\uff1a\u4e00\u4e2a\u63a5\u53e3\u4e0e\u4e24\u4e2a\u5206\u79bb\u8865\u4e01",
+      "path": "samples/c03.dmslicer",
+      "source": "C:/Users/ufo00/.codex/worktrees/6eb8/dmslicer/evidence/GEOMETRY-COVERAGE-CURVED-BASICS-01/cad-005/C03/C03.dmslicer",
+      "sha256": "54a89a631cc896b6fade0d8b879ee5ec5e9feeab4a22c4257d18bd00d6b94e5c",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L",
+      "goal_id": "GEOMETRY-COVERAGE-CURVED-BASICS-01",
+      "run_id": "cad-005",
+      "implementation_commit": "cfa4467a108fa636b9b858638c45776e27197142"
     }
   ]
 }
