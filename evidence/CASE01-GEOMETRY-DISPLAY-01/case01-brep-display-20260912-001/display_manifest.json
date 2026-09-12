@@ -1,5 +1,10 @@
 {
   "display_scene": "display_scene.json",
+  "geometry_backend": "FreeCAD Part / OCCT",
+  "geometry_backend_version": {
+    "freecad": "1.1.1",
+    "occt": "7.8.1"
+  },
   "entity_refs": [
     "patch:v1:11d9194d60d59445a7055d24c4a9bf28fb0f8e246105a42f7557374ec7841e3b",
     "patch:v1:6fe4cd728bdc541426e6edfda2351d4a3b7fbf8b42e9f6e5074c4285bf6b4108",
@@ -15,5 +20,7 @@
   ],
   "mesh_authority": "DISPLAY_ONLY",
   "mesh_source": "BREP_TESSELLATION",
+  "run_source_commit": "46bc53dda6ccae07adc9576fc7f95c5b0937cf89",
+  "ui_validation": "browser_validation.md",
   "viewer": "case01_3d.html"
 }
