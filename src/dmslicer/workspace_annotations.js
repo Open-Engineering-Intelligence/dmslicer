@@ -91,6 +91,23 @@ const WorkspaceAnnotations = (() => {
    change('isolator_instance',value==='Isolator'?{owner_entity_ref:ref,name:'Isolator'}:null,'SEMANTIC_TYPE_TRANSITION');
   }
  }
+ function applyAssignment(w,refs,draft){
+  require(Array.isArray(refs)&&refs.length>0,'Select at least one object');
+  require(object(draft)&&types.includes(draft.semantic_type),'Invalid assignment draft');
+  const candidate=copy(w),unique=[...new Set(refs)];
+  require(unique.length===refs.length,'Duplicate stable object reference');
+  for(const ref of unique)require(candidate.objects.some(o=>o.entity_ref===ref),'Unknown stable object reference');
+  if(draft.semantic_type==='Source')require(typeof draft.material_id==='string'&&draft.material_id.length>0,'Source requires material_id');
+  if(draft.semantic_type==='Gradient')require(draft.material_id===undefined||draft.material_id===null,'Gradient cannot have direct material assignment');
+  for(const ref of unique){
+   decide(candidate,ref,'semantic_type',draft.semantic_type);
+   if(draft.semantic_type==='Source')decide(candidate,ref,'material_id',draft.material_id);
+   if(draft.semantic_type==='Gradient')decide(candidate,ref,'gradient_group_id',draft.gradient_group_id||'G');
+   if(Object.prototype.hasOwnProperty.call(draft,'display_override'))decide(candidate,ref,'display_override',draft.display_override);
+  }
+  Object.assign(w,candidate);
+  return w;
+ }
  function putMaterial(w,data){
   validateMaterial(data);const l=w.material_library,old=l.materials.find(m=>m.id===data.id),at=now();
   const value={...copy(data),category:data.category||'自定义',updated_at:at};
@@ -124,6 +141,6 @@ const WorkspaceAnnotations = (() => {
   }
   return {schema:'dmslicer.gradient-connection-policy.v1',source_ref:a,target_ref:b,gradient_groups:[left.gradient_group_id,right.gradient_group_id],geometry_evidence:copy(geometry||null),allowed,activated:false,reason};
  }
- return {create,geometryRole,types,library,validateLibrary,putMaterial,decide,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
+ return {create,geometryRole,types,library,validateLibrary,putMaterial,decide,applyAssignment,color,validate,restore,replaceLibrary,key,save,connectionPolicy};
 })();
 if(typeof module!=='undefined')module.exports=WorkspaceAnnotations;

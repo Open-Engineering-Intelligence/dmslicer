@@ -78,3 +78,13 @@ test('library replacement retains assignments and former revision; orphan materi
  assert.throws(()=>W.replaceLibrary(c,w,JSON.stringify({schema:'dmslicer.material-library.v1',version:0,materials:[],history:[]})),/material/i);assert.equal(JSON.stringify(w),before);
  const l=JSON.parse(JSON.stringify(w.material_library));l.materials.find(m=>m.id==='mat-a').name='Imported';W.replaceLibrary(c,w,JSON.stringify(l));assert.equal(w.objects[0].material_id,'mat-a');assert.equal(w.decisions.at(-1).before.materials.find(m=>m.id==='mat-a').name,'Material A');
 });
+test('multi-object assignment is atomic when one stable reference is missing',()=>{
+ const c=fixture(),w=W.create(c),before=JSON.stringify(w);
+ assert.throws(()=>W.applyAssignment(w,['input-a','missing'],{semantic_type:'Source',material_id:'PLA'}),/applyAssignment|Unknown stable/i);
+ assert.equal(JSON.stringify(w),before);
+});
+test('Gradient assignment clears material for every selected input',()=>{
+ const c=fixture(),w=W.create(c);
+ W.applyAssignment(w,['input-a','input-b'],{semantic_type:'Gradient',gradient_group_id:'G2',material_id:null});
+ assert.deepEqual(w.objects.slice(0,2).map(o=>[o.semantic_type,o.material_id,o.gradient_group_id]),[['Gradient',null,'G2'],['Gradient',null,'G2']]);
+});
