@@ -1,0 +1,42 @@
+{
+  "goal_id": "WORKBENCH-MATERIAL-SEMANTIC-UI-01",
+  "run_id": "browser-selection-015",
+  "implementation_commit": "273603ce16c7bcd7bb6116247a84d5aaedb98d9a",
+  "branch": "codex/workbench-material-semantic-ui-01",
+  "execution_timestamp": "2026-09-12T23:44:23.8786573Z",
+  "command": "NODE_PATH=C:/Users/ufo00/AppData/Local/npm-cache/_npx/e41f203b7505f1fb/node_modules node tests/material_semantic_preview_browser.cjs",
+  "exit_code": 0,
+  "environment": {
+    "python": "3.12.0",
+    "node": "v24.18.0",
+    "browser": "Playwright Chrome; Browser plugin not available",
+    "freecad": "NOT_INVOKED",
+    "occt": "NOT_INVOKED"
+  },
+  "inputs": [
+    {
+      "fixture": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/case01.dmslicer",
+      "input_sha256": "33aa70755b9370abcaa4884bddefb538fb071e47358f4da0cf1c9f91945cf280",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    },
+    {
+      "fixture": "tests/fixtures/unknown-labels.dmslicer",
+      "input_sha256": "27a5fbdbfa01039ced2ff50a56174fbcc39317ea116660f283afb89fe7cf7b66",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY"
+    }
+  ],
+  "checks": [
+    "CASE01 A selection and A+G multi-selection use 0.6/0.2/0.1 from confirmed package relations and retain camera state.",
+    "CASE01 displays only its confirmed patch records; no fused or remaining geometry is invented.",
+    "C02, U05, S04 and PMULTI each verify input selection, documented alpha values, camera preservation, and fused-view present/absent state.",
+    "A local unknown-labels .dmslicer package with input:x/input:y/input:z and patch:x-y imports through /package and uses stable-reference relations without display-name parsing.",
+    "A JSON fixture is rejected by the same package parser, with the current package retained.",
+    "Reset assignment retains the loaded package and preview; browser console has no unexpected errors."
+  ],
+  "tolerances": [],
+  "actual_geometry_validation_criteria": "NOT_APPLICABLE_UI_ONLY; this run renders supplied display meshes and does not validate geometry.",
+  "geometry_equivalence": "NOT_ASSESSED",
+  "scientific_experiment": "NOT_RERUN",
+  "evidence_confidence": "L",
+  "human_review": "PENDING"
+}
