@@ -1,0 +1,1 @@
+{"schema":"not-a-dmslicer-package","note":"Browser regression fixture: a JSON file must not be accepted as a .dmslicer archive."}

@@ -1,8 +1,11 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
+const path=require('node:path');
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:'chrome'}),page=await browser.newPage();
  try{
+  const consoleErrors=[];
+  page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text())});
   await page.goto(process.env.DMS_WORKBENCH_URL||'http://127.0.0.1:56811/');
   await page.waitForFunction(()=>document.documentElement.dataset.ready==='true');
   await page.locator('#samples').selectOption('case01');
@@ -15,14 +18,65 @@ const assert=require('node:assert/strict');
   assert.equal(await page.locator('.object-ref-short').count(),3,'input references use compact labels');
   assert.equal(await page.locator('.object-select').count(),3,'only three input regions appear as assignable rows');
   assert(await page.locator('#selection-summary').isVisible(),'selection controls are visible');
+  assert(await page.locator('#geometry-view').isVisible(),'geometry view separates input and fused-result modes');
+  assert.equal(await page.locator('#other-opacity').count(),0,'manual other-object opacity is replaced by selection defaults');
+  const [aRef,gRef,bRef]=await page.locator('#objects tr').evaluateAll(rows=>rows.map(row=>row.dataset.ref));
   const cameraBeforeSelection=await page.locator('#preview-canvas').getAttribute('data-camera');
   await page.locator('.object-select').first().check();
-  assert.equal((await page.locator('#preview-canvas').getAttribute('data-selection')).split(',').length,1,'one selected region reaches preview');
+  const aState=await page.locator('#preview-canvas').evaluate(node=>JSON.parse(node.dataset.layerState));
+  assert.deepEqual(aState.input_alpha,{[aRef]:.6,[gRef]:.2,[bRef]:.1},'selecting A applies the three-level opacity rule from confirmed package adjacency');
+  assert.deepEqual(aState.selected,[aRef]);
+  assert.equal(aState.related.patches.length,1,'selecting A shows its one confirmed package patch');
   assert.equal(await page.locator('#preview-canvas').getAttribute('data-camera'),cameraBeforeSelection,'selection keeps camera state');
-  await page.locator('#other-opacity').fill('0.1');
-  assert.equal(await page.locator('#preview-canvas').getAttribute('data-other-opacity'),'0.1','opacity slider changes non-selected preview opacity');
+  assert(await page.locator('#related-interfaces').getByText('A-G').isVisible(),'confirmed A-G patch is named in the related layer');
+  await page.locator('.object-select').nth(1).check();
+  const agState=await page.locator('#preview-canvas').evaluate(node=>JSON.parse(node.dataset.layerState));
+  assert.deepEqual(agState.input_alpha,{[aRef]:.6,[gRef]:.6,[bRef]:.2},'multi-select merges confirmed relationships and keeps the selected inputs at 0.6');
+  assert.equal(agState.related.patches.length,2,'multi-select shows both confirmed package patches');
   await page.locator('#clear-selection').click();
   assert.equal(await page.locator('#preview-canvas').getAttribute('data-selection'),'','clear selection restores whole preview');
+  assert.equal((await page.locator('#geometry-view option:checked').textContent()).includes('融合结果'),false,'CASE01 has no fused result in the default input view');
+  await page.locator('#samples').selectOption('c02');
+  await page.waitForFunction(()=>!document.querySelector('#geometry-view option[value="fused_result"]').disabled);
+  await page.locator('#geometry-view').selectOption('fused_result');
+  assert.equal(await page.locator('#preview-canvas').getAttribute('data-view'),'fused_result','fused geometry is available through its own view mode');
+  await page.locator('#samples').selectOption('case01');
+  await page.locator('#package-info').filter({hasText:'CASE01'}).waitFor();
+  await page.locator('#package-file').setInputFiles(path.join(__dirname,'fixtures','unknown-labels.dmslicer'));
+  await page.locator('#package-info').filter({hasText:'Unknown labels'}).waitFor();
+  assert.equal(await page.locator('.object-select').count(),3,'a locally imported package exposes only its input objects');
+  await page.locator('.object-select').first().check();
+  assert.deepEqual(await page.locator('#preview-canvas').evaluate(node=>JSON.parse(node.dataset.layerState)),{
+    view:'inputs', selected:['input:x'], input_alpha:{'input:x':.6,'input:y':.2,'input:z':.1}, related:{patches:['patch:x-y'],remaining:[]}
+  },'unknown stable references use package-confirmed adjacency without display-name parsing');
+  assert.equal(await page.locator('#geometry-view option[value="fused_result"]').evaluate(option=>option.disabled),true,'a package without a fused result explains that the separate view is unavailable');
+  await page.locator('#samples').selectOption('case01');
+  await page.locator('#package-info').filter({hasText:'CASE01'}).waitFor();
+  assert((await page.locator('#package-info').textContent()).includes('CASE01'),'sample selection remains available after an imported package');
+  const caseInfoBeforeRejectedImport=await page.locator('#package-info').textContent();
+  await page.locator('#package-file').setInputFiles(path.join(__dirname,'fixtures','not-a-result-package.json'));
+  await page.locator('#status').filter({hasText:'导入 .dmslicer 包失败'}).waitFor();
+  assert.equal(await page.locator('#package-info').textContent(),caseInfoBeforeRejectedImport,'a rejected local file leaves the current package loaded');
+  for(const key of ['c02','u05','s04','pmulti']){
+   const previousFirstRef=await page.locator('#objects tr').first().getAttribute('data-ref');
+   const packageResponse=page.waitForResponse(response=>response.url().endsWith('/package')&&response.request().method()==='POST');
+   await page.locator('#samples').selectOption(key);
+   await packageResponse;
+   await page.waitForFunction(previous=>document.querySelector('#objects tr')?.dataset.ref!==previous,previousFirstRef);
+   const sampleCanvas=page.locator('#preview-canvas'),sampleCamera=await sampleCanvas.getAttribute('data-camera');
+   const refs=await page.locator('#objects tr').evaluateAll(rows=>rows.map(row=>row.dataset.ref));
+   await page.locator('.object-select').first().check();
+   const state=await sampleCanvas.evaluate(node=>JSON.parse(node.dataset.layerState));
+   assert.equal(state.input_alpha[refs[0]],.6,key+' keeps the selected input at 0.6');
+   assert(Object.values(state.input_alpha).every(alpha=>[.1,.2,.6].includes(alpha)),key+' uses only the documented selection opacity levels');
+   assert.equal(await sampleCanvas.getAttribute('data-camera'),sampleCamera,key+' selection does not reset the camera');
+   const fused=page.locator('#geometry-view option[value="fused_result"]');
+   if(await fused.evaluate(option=>option.disabled)) assert((await fused.textContent()).includes('包内未提供'),key+' explains an absent fused view');
+   else {await page.locator('#geometry-view').selectOption('fused_result');assert.equal(await sampleCanvas.getAttribute('data-view'),'fused_result',key+' keeps fused geometry in an independent view');}
+   await page.locator('#geometry-view').selectOption('inputs');
+  }
+  await page.locator('#samples').selectOption('case01');
+  await page.locator('#package-info').filter({hasText:'CASE01'}).waitFor();
   const materialsBefore=await page.locator('#library-list .library-row').count();
   await page.locator('#add').click();
   assert(await page.locator('#material-category').isVisible(),'minimal category field is visible');
@@ -69,5 +123,7 @@ const assert=require('node:assert/strict');
   await page.getByRole('button',{name:'确认重置'}).click();
   assert.equal(await page.locator('#preview-canvas').isVisible(),true,'model preview remains mounted after clear-assignment');
   assert.equal(await page.locator('#package-info').textContent(),caseInfoAfterAssignment,'package info remains unchanged after clearing assignment');
+  assert.deepEqual(consoleErrors.filter(error=>!error.includes('the server responded with a status of 400')),
+    [],'selection and view interactions do not emit unexpected console errors');
 }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});
