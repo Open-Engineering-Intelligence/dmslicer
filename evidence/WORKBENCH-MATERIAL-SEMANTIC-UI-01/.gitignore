@@ -1,0 +1,5 @@
+# Large/local review assets are preserved by explicit allowlist in local custody.
+*.png
+*.dmslicer
+*.zip
+*.xml
