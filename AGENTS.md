@@ -14,6 +14,12 @@ Research phase, architectural responsibility, and task identifier are distinct.
 Do not mechanically extend historical 07/08 numbers with letters or invent a
 new research phase from a UI feature. Use descriptive domains such as Geometry,
 Workbench, Materials, Semantics, or Evidence when no approved stage code exists.
+Stage `09` is the approved application-workbench UI stage. Use `09A` for the
+geometry viewing and interaction workspace and `09B` for the material and
+semantic configuration workspace. Keep their UI responsibilities separate and
+exchange only stable object identities, material assignments, semantic labels,
+and display configuration. Stage `09` does not claim that a frozen research
+phase gate has passed.
 Keep established task codes for their original scope. When renaming, preserve
 the old title and unchanged Goal ID in a traceable change record. Include
 the Goal ID in the opening task prompt and stable evidence manifest. Do not
