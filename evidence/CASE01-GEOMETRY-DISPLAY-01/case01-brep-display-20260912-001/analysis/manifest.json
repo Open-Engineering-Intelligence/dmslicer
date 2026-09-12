@@ -1,0 +1,175 @@
+{
+  "analysis_input": "reimported_step",
+  "backend": "step_brep_interface",
+  "candidate_pairs": [
+    {
+      "bounds_gap_mm": 0.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:7137bb9437517eccd5ade40af16858e07fb354ff256e7cc009eeecd32cf808af",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature001"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601"
+      ],
+      "semantic_pair": [
+        "A",
+        "G"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "bounds_gap_mm": 10.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:be671d6c6c1af06d8765826766f3aa8a648463639d7c7c5ece23287ae3abaf01",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "semantic_pair": [
+        "A",
+        "B"
+      ],
+      "status": "FILTERED_OUT"
+    },
+    {
+      "bounds_gap_mm": 0.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:9704945788123e8c199618ff52727d5d9eac6bdb9e71775667f70b3cb5c9ce94",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature001",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:868c83c38b8fa17c0aa4d99aab7cc206c61db1863c56a8860fb5d6816e58d601",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "semantic_pair": [
+        "G",
+        "B"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "case_id": "CASE01_planar_agb_exact",
+  "confirmed_relations": [
+    {
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "A",
+        "G"
+      ]
+    },
+    {
+      "relation_type": "DISJOINT",
+      "semantic_pair": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "relation_type": "FULL_FACE_OVERLAP",
+      "semantic_pair": [
+        "G",
+        "B"
+      ]
+    }
+  ],
+  "environment": {
+    "freecad_version": [
+      "1",
+      "1",
+      "1",
+      "20260414 (Git shallow)",
+      "Unknown",
+      "2026/04/14 22:09:59",
+      "(HEAD detached at 0108fd4b4)",
+      "0108fd4b4850cc46e625b60e53cea7a7bbe69f8d"
+    ],
+    "headless_execution": {
+      "console_launcher": "FreeCADCmd --safe-mode -c with JSON request/response files",
+      "freecadcmd_path": "C:\\Program Files\\FreeCAD 1.1\\bin\\freecadcmd.EXE",
+      "safe_mode": true
+    },
+    "occt_version": "7.8.1"
+  },
+  "failure_rejection_information": [
+    {
+      "bounds_gap_mm": 10.0,
+      "broad_phase_method": "AABB",
+      "candidate_id": "candidate:v1:be671d6c6c1af06d8765826766f3aa8a648463639d7c7c5ece23287ae3abaf01",
+      "candidate_tolerance_mm": 0.05,
+      "occurrence_pair": [
+        "Part__Feature",
+        "Part__Feature002"
+      ],
+      "region_pair": [
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:237c95c58657fbe7e5c980105719136c21bb22a8967b1f147f11e7a00b21b653",
+        "region:v1:stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae:f4d917ce9c0ef1d221371ea7118bbcd396148938c14b7ef0a99e72f6b0712e69"
+      ],
+      "semantic_pair": [
+        "A",
+        "B"
+      ],
+      "status": "FILTERED_OUT"
+    }
+  ],
+  "geometry_digest": "sha256:6cb02617d6a1fb7a2c107d8758c7ad598d0d87df5a7244c646e79f53e061dfaa",
+  "git": {
+    "branch": "feat/case01-geometry-display-01",
+    "diff_sha256": "43b26a7626f4f4d11025a8acb7ec9e98d4ca76b05222a70cc006083a38e7df1c",
+    "dirty": true,
+    "dirty_entries": [
+      "M src/dmslicer/freecad_case01.py",
+      " M src/dmslicer/runner.py",
+      "?? src/dmslicer/case01_display.py",
+      "?? tests/test_case01_display.py"
+    ],
+    "head": "811b45b857a9bfd4397dd6e66284aaea5cc70101"
+  },
+  "implementation_deviations": [
+    {
+      "detail": "Task-required 0..30 mm geometry is a +15 mm translation from the frozen illustrative fixture; DESIGN FREEZE was not edited.",
+      "status": "IMPLEMENTATION_DECISION",
+      "subject": "CASE01 coordinate origin"
+    },
+    {
+      "detail": "Actual FreeCAD Part Python probe did not expose Generated/Modified/Deleted. This CASE01 task therefore uses explicit B-rep face-common, area-agreement and geometry-fingerprint provenance.",
+      "status": "IMPLEMENTATION_DEVIATION",
+      "subject": "FreeCAD Boolean history"
+    }
+  ],
+  "imported_solid_count": 3,
+  "interface_areas_mm2": [
+    400.0,
+    400.0
+  ],
+  "provenance_method": "DIRECT_BREP_FACE_COMMON",
+  "provenance_status": "COMPLETE_FOR_DIRECT_COMMON",
+  "runtime": {
+    "analysis_elapsed_ms": 1836.3024999998743
+  },
+  "schema_version": 1,
+  "semantic_digest": "sha256:a9c38aed8b02279940213dd7c9cc1589327bb8d0364eaf18e0ffbbb6d11b84e9",
+  "source_document_id": "stepdoc:v1:089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+  "step_sha256": "089629b5d4e081bc208f49abad3329d0dade9b1de0525e97cb06d75ef43bdbae",
+  "tolerance": {
+    "angular_same_domain_tolerance_rad": 1e-06,
+    "area_epsilon_mm2": 1e-08,
+    "area_unit": "mm2",
+    "candidate_tolerance_mm": 0.05,
+    "length_unit": "mm",
+    "near_miss_max_gap_mm": 0.05,
+    "nominal_fuzzy_value_mm": 0.0
+  },
+  "validation_status": "PASS"
+}

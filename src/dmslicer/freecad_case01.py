@@ -293,6 +293,49 @@ def _analyze(request):
         FreeCAD.closeDocument(document.Name)
 
 
+def _mesh(shape, linear_deflection):
+    """Return a JSON-safe, display-only tessellation of an authoritative B-rep."""
+    vertices, triangles = shape.tessellate(linear_deflection)
+    return {
+        "positions": [[float(point.x), float(point.y), float(point.z)] for point in vertices],
+        "triangles": [[int(index) for index in triangle] for triangle in triangles],
+        "provenance": "BREP_TESSELLATION",
+        "linear_deflection_mm": float(linear_deflection),
+    }
+
+
+def _tessellate(request):
+    """Tessellate imported solids and actual common faces; never publish mesh as truth."""
+    document = Import.open(request["step_path"]) or FreeCAD.ActiveDocument
+    if document is None:
+        raise RuntimeError("Import.open did not create an active FreeCAD document")
+    try:
+        linear_deflection = float(request.get("linear_deflection_mm", 0.25))
+        source_objects = _source_objects(document)
+        shapes = {locator["product_path"][0]: shape for shape, _, locator in source_objects}
+        entities = [
+            {"entity_kind": "REGION", "occurrence_key": locator["product_path"][0], "mesh": _mesh(shape, linear_deflection)}
+            for shape, _, locator in source_objects
+        ]
+        for occurrence_a, occurrence_b in itertools.combinations(sorted(shapes), 2):
+            for contact in _face_contacts(shapes[occurrence_a], shapes[occurrence_b]):
+                common = shapes[occurrence_a].Faces[contact["source_face_index_a"]].common(
+                    shapes[occurrence_b].Faces[contact["source_face_index_b"]]
+                )
+                for common_face in common.Faces:
+                    if common_face.Area > AREA_EPSILON_MM2:
+                        entities.append({
+                            "entity_kind": "PATCH",
+                            "occurrence_pair": [occurrence_a, occurrence_b],
+                            "source_face_index_a": contact["source_face_index_a"],
+                            "source_face_index_b": contact["source_face_index_b"],
+                            "mesh": _mesh(common_face, linear_deflection),
+                        })
+        return {"status": "SUCCEEDED", "entities": entities}
+    finally:
+        FreeCAD.closeDocument(document.Name)
+
+
 def _capability_probe(_request):
     document = FreeCAD.newDocument("CASE01CapabilityProbe")
     temporary_directory = tempfile.TemporaryDirectory()
@@ -375,6 +418,8 @@ def _run(request):
         return _generate(request)
     if action == "analyze":
         return _analyze(request)
+    if action == "tessellate":
+        return _tessellate(request)
     if action == "capability_probe":
         return _capability_probe(request)
     raise RuntimeError(f"Unknown CASE01 FreeCAD action: {action}")

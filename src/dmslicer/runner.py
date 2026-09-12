@@ -486,6 +486,7 @@ def _materialize_analysis(step_path: Path, semantics: dict[str, Any], raw: dict[
             "coverage_a": quantized_number(raw_patch["coverage_a"]),
             "coverage_b": quantized_number(raw_patch["coverage_b"]),
             "geometry_fingerprint": patch_fingerprint,
+            "geometry": raw_patch["geometry"],
             "source_face_a_id": source_face_a,
             "source_face_b_id": source_face_b,
             "extraction_method": raw_patch["extraction_method"],
