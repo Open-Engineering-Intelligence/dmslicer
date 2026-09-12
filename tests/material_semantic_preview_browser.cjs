@@ -11,6 +11,8 @@ const assert=require('node:assert/strict');
   assert(await page.locator('#object-selection').isVisible(),'object selection table is visible');
   assert.equal(await page.locator('#geometry-preview canvas').count(),1,'09B provides one minimal review preview');
   assert(await page.locator('#package-info').textContent(),'current package information is visible');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'desktop page has no horizontal overflow');
+  assert.equal(await page.locator('.object-ref-short').count(),5,'stable references use compact labels');
   const canvas=page.locator('#preview-canvas'),before=await canvas.getAttribute('data-camera');
   await canvas.hover();await page.mouse.wheel(0,-180);
   assert.notEqual(await canvas.getAttribute('data-camera'),before,'wheel changes preview camera state');
