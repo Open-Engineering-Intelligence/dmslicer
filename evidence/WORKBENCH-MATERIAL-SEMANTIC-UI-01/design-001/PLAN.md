@@ -1,0 +1,12 @@
+# Workbench material and semantic workspace implementation plan
+
+Goal: WORKBENCH-MATERIAL-SEMANTIC-UI-01. Spec: DESIGN.md. Architecture: retain Python package reader and Canvas renderer; add one pure JS annotation model and one UI controller. No new dependencies, no geometry execution. Execute inline in the existing isolated worktree; user authorized continuing after reviewable design.
+
+- [x] Inspect baseline; archive static prototype and design. Baseline 20 tests PASS.
+- [ ] State model test cycle: create `tests/workspace_annotations.test.cjs`; use literal stable references input-a/interface-ab/patch-ab and immutable fixture. Assert explicit defaults, role/material/override independence, source-scoped restore rejection, invalid data rejection, material edit identity, and failed persistence. Run `node --test tests/workspace_annotations.test.cjs`, preserve RED. Implement `src/dmslicer/workspace_annotations.js`, rerun GREEN.
+- [ ] Browser acceptance first: create `tests/material_workspace_browser.cjs` against existing page; assert default selected count, range effects on Canvas alpha, individual override, independent interface/patch, hidden evidence, material add/back, no automatic assignment, semantic activation stays false, local save/reload and file export/import, failed saves and cross-source rejection. Archive first RED.
+- [ ] UI: modify `geometry_import_viewer.html` rendering/events and add `material_workspace.js` controller; inject both through `geometry_case_viewer.py` and package metadata. Preserve native package reader and complete evidence. No React/framework migration.
+- [ ] Run new and affected Python/Node suites. Render five real source packages, desktop and narrow viewport, no page/console errors, screenshots and agent inspection. Preserve failures independently of fix.
+- [ ] Local commit implementation and tests. Generate machine-readable final manifest and reviewer notes; copy allowlisted evidence and source fixture bytes into stable local custody, verify both copies. Commit small reports and evidence index. No push or merge.
+
+Validation boundaries: unit tests enforce domain annotation schema and source identity; browser tests enforce observable operations and pixels/Canvas alpha; package hashes establish bytes only; no new CAD/scientific PASS. Unstable run-local references are never promoted to stable identities. Stored annotations are accepted only with exact source context and reference provenance; this is provenance matching, not geometry equivalence.
