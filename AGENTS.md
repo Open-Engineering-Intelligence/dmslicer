@@ -35,6 +35,47 @@ the Goal ID in the opening task prompt and stable evidence manifest. Do not
 start background repository work without a separately searchable task title,
 an explicit Goal ID, Scope, Acceptance Criteria, and Stop Conditions.
 
+## Coordination and data-contract routing
+
+`DM-Slicer｜CHAT-01 项目协调对话窗口` is the persistent top-level
+coordination task. It records decisions, routes work to separately searchable
+implementation or evidence tasks, and reports cross-task status. It must not
+become the sole location for source changes, validation evidence, or a Goal's
+completion record.
+
+`DM-Slicer｜00-09 跨层数据契约与一致性` owns the versioned contract between
+the geometry layer, material and semantic assignment, and gradient-field
+resolution. Any task that introduces, removes, renames, changes the meaning of,
+or changes the ownership of a cross-layer field, stable identity, relation,
+status, schema version, or serialization rule must route the proposal through
+`00-09` before implementation proceeds.
+
+For every proposed contract change, `00-09` must first:
+
+1. record the current and proposed contract plus the reason for the change;
+2. scan producers, consumers, validators, fixtures, adapters, import/export,
+   persistence, UI bindings, tests, and evidence manifests for impact;
+3. classify affected and unaffected interfaces explicitly;
+4. define compatibility, migration, validation, and rollback behavior; and
+5. return an approved change set to `CHAT-01` for dispatch to separately named
+   owner tasks.
+
+Do not update every interface mechanically. Update every interface proven to
+be affected by the impact scan, and record why the others are unaffected.
+During propagation, producers and consumers must support a coherent versioned
+transition or fail clearly; they must not silently reinterpret missing or old
+fields. If downstream work discovers that the contract itself is insufficient,
+pause the dependent change, route the finding back through `00-09`, revise the
+impact set, and then redispatch the affected owners through `CHAT-01`.
+
+`.dmslicer` remains an import, export, archive, and cross-process exchange
+format. A continuous internal pipeline should pass the canonical in-memory
+model forward and append layer-owned data instead of serializing and reparsing
+the package at every stage. Geometry facts remain owned by the geometry layer;
+semantic assignment may append semantics but may not rewrite geometry truth;
+gradient-field resolution may append field definitions and results but may not
+retroactively invent geometry or material assignments.
+
 ## Codex model and reasoning selection
 
 Do not use the most capable model or highest reasoning effort as a project-wide
