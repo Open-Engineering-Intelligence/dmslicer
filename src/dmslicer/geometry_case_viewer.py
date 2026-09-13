@@ -43,6 +43,29 @@ def validate_catalog(value):
                 require(mesh.get('boundary_provenance') == 'BREP_WIRE_EDGE_DISCRETIZATION', 'Missing boundary provenance')
                 for point in line:
                     require(len(point) == 3 and all(type(v) in (float, int) and math.isfinite(v) for v in point), 'Invalid boundary point')
+        links = scene.get('display_links')
+        if links is not None:
+            require(isinstance(links, dict) and links.get('schema') == 'dmslicer.display-links.v1', 'Unsupported display-links schema')
+            by_ref = {entity['entity_ref']: entity for entity in scene['entities']}
+            require(isinstance(links.get('relations'), list), 'display_links.relations must be a list')
+            for relation in links['relations']:
+                require(isinstance(relation.get('relation_ref'), str), 'Display relation requires relation_ref')
+                inputs = relation.get('input_refs')
+                require(isinstance(inputs, list) and len(inputs) >= 2 and len(inputs) == len(set(inputs)), 'Display relation requires distinct input_refs')
+                require(all(ref in by_ref and by_ref[ref].get('scene_role') == 'input' for ref in inputs), 'Display relation input_ref must target an input entity')
+                for field, roles in (
+                    ('interface_refs', {'common_interface'}),
+                    ('patch_refs', {'common_interface'}),
+                    ('remaining_refs', {'remaining'}),
+                ):
+                    values = relation.get(field, [])
+                    require(isinstance(values, list) and len(values) == len(set(values)), f'Display relation {field} must be a unique list')
+                    require(all(ref in by_ref and by_ref[ref].get('scene_role') in roles for ref in values), f'Display relation {field} targets the wrong scene role')
+                basis = relation.get('provenance_basis')
+                require(isinstance(basis, list) and basis and all(isinstance(item, str) and item for item in basis), 'Display relation requires provenance_basis')
+            fused = links.get('fused_result_refs', [])
+            require(isinstance(fused, list) and len(fused) == len(set(fused)), 'fused_result_refs must be a unique list')
+            require(all(ref in by_ref and by_ref[ref].get('scene_role') == 'fused_result' for ref in fused), 'fused_result_ref must target fused_result')
 
 
 def render_catalog(value, *, import_enabled=False):

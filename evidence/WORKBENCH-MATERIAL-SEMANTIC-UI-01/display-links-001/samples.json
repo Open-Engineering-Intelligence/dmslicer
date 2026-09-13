@@ -1,0 +1,49 @@
+{
+  "samples": [
+    {
+      "key": "case01",
+      "label": "方块：A–G–B",
+      "path": "samples/case01.dmslicer",
+      "source": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/case01.dmslicer",
+      "sha256": "335c0be6e2384c719da15052a03cd6b9fea9ae78549028025aa2ca86d7fc91b2",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "c02",
+      "label": "圆柱：偏移校正",
+      "path": "samples/c02.dmslicer",
+      "source": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/c02.dmslicer",
+      "sha256": "9b6cf5599fa68dc707eeb960fdaa10ba68a72293d8a6d694afa69687b4281942",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "u05",
+      "label": "圆柱：部分接口",
+      "path": "samples/u05.dmslicer",
+      "source": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/u05.dmslicer",
+      "sha256": "9e647352b0fff99d661be2c3f386eec7d15d12823d81dedc0a9ded5b37eb19eb",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "s04",
+      "label": "球面：完整球与上半球壳",
+      "path": "samples/s04.dmslicer",
+      "source": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/s04.dmslicer",
+      "sha256": "1064dd468ae7ebb726844c7373d839eea85600011a33fc65c6dd1451eda4d4af",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    },
+    {
+      "key": "pmulti",
+      "label": "平面：一对多公共补丁",
+      "path": "samples/pmulti.dmslicer",
+      "source": "evidence/WORKBENCH-MATERIAL-SEMANTIC-UI-01/final-001/samples/pmulti.dmslicer",
+      "sha256": "bf556463b20f9fe59a9dd3e7cb090aa3cc8a49afa48158215e81602d1771ed92",
+      "hash_semantics": "BYTE_INTEGRITY_ONLY",
+      "evidence_confidence": "L"
+    }
+  ]
+}
