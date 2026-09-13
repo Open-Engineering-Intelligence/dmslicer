@@ -76,6 +76,57 @@ semantic assignment may append semantics but may not rewrite geometry truth;
 gradient-field resolution may append field definitions and results but may not
 retroactively invent geometry or material assignments.
 
+## Reusable semantic-assignment baselines
+
+Before generating a geometry, material-assignment case, or `.dmslicer` test
+package, search the repository's stable fixture and asset indexes for an
+already validated case with the required geometry relations, contract version,
+and semantic roles. Reuse a qualified fixture instead of regenerating the same
+case or repeating manual assignment.
+
+`DM-Slicer｜09C A–G–B材料与语义赋值基准` owns the reusable baseline for
+material and semantic assignment. Its default positive case is:
+
+- three stably identified regions with confirmed `A-G` and `G-B` geometry
+  relations and no inferred `A-B` relation;
+- `A`: semantic type `Source`, with a required `material_id` that resolves to
+  the baseline PLA material record;
+- `B`: semantic type `Source`, with a required `material_id` that resolves to
+  the baseline TPU material record;
+- `G`: semantic type `Gradient`, `gradient_group_id="G"`, and no fixed
+  `material_id`; and
+- `G` connected to at least two confirmed `Source` neighbors.
+
+The labels `A`, `G`, and `B` are human-readable fixture roles, not geometry
+identity. For a differently named case, derive the assignment only from stable
+entity references and confirmed geometry relations, and record the role mapping
+explicitly. Never infer connectivity from names, ordering, display meshes, or
+file hashes.
+
+Every reusable assigned fixture must:
+
+1. preserve the original geometry package and write a versioned derived copy;
+2. record the source fixture, byte-integrity hash, geometry evidence reference,
+   contract/schema version, semantic assignment, generation command, and
+   validator result in a stable manifest;
+3. pass save, reload, and repeated-load consistency checks;
+4. appear in a stable reusable-fixture index with its supported purpose and
+   limitations; and
+5. include explicit rejection evidence when stable identity, confirmed
+   relations, required Source materials, or the two-neighbor Gradient invariant
+   is missing.
+
+Regenerate a reusable fixture only when its authoritative input changed, its
+contract version requires migration, its validation evidence is missing or
+invalid, or the required scenario is materially different. Do not regenerate
+it merely because a new test run started. Tests may create temporary copies for
+isolation, but the validated baseline and manifest remain immutable inputs.
+
+If reuse requires a new or changed cross-layer field, stable identity,
+serialization rule, or schema interpretation, pause fixture work and route the
+proposal through `DM-Slicer｜00-09 跨层数据契约与一致性` before updating
+producers or consumers.
+
 ## Codex model and reasoning selection
 
 Do not use the most capable model or highest reasoning effort as a project-wide
